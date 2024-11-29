@@ -1,9 +1,10 @@
-(#![alt](https://github.dev/pietrobonomelli/QuickByte/main/docs/images/LogoQuickByte.webp))
+<center><img src="./Images/LogoQuickByte.webp" width="220px"></center>
 
 <center>Project Plan di sviluppo del software: QuickByte, un’applicazione per la gestione di ordini di cibo a domicilio, che collega: ristoranti, clienti e corrieri attraverso un'interfaccia intuitiva.</center>
 
 <p>
 
+Sviluppato da:
 - Anes Hamza
 - Bonomelli Pietro
 - Rota Leonardo 1086029
@@ -32,8 +33,10 @@
 
 ## 1. Introduzione TODO
 Durante l’anno 2024, un team di tre studenti di Ingegneria Informatica decide di sviluppare un’applicazione per la gestione di un sistema software di delivery food, data la scarsa presenza di prodotti simili e funzionali sul mercato.
+
 L’obiettivo del progetto è di sviluppare una piattaforma che permetta all’utente, che può essere di tipo cliente, titolare di un ristorante o corriere, di: effettuare ordini, ampliare le modalità di vendita o guadagnare completando consegne.
-La squadra è composto da: Anes Hamza, Bonomelli Pietro e Rota Leonardo
+Il team di sviluppo è composto da: Anes Hamza, Bonomelli Pietro e Rota Leonardo.
+
 -TODO: conclusioni-
 
 ## 2. Modello di processo
