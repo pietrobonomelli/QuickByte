@@ -3,22 +3,35 @@ Project Plan di sviluppo del software: QuickByte, un’applicazione per la gesti
 
 
 
-INDICE
-
-
-
-
-
-
-
-
+# INDICE
 1. Introduzione
+2. Modello di processo
+3. Organizzazione del progetto:
+4. Standard, linee guida, procedure
+5. Attività di gestione
+6. Rischi
+7. Personale
+8. Metodi e tecniche
+9. Garanzia di qualità
+10. Pacchetti di lavoro (workpackages)
+11. Risorse
+12. Budget e programma
+13. Cambiamenti
+14. Consegna 
+
+
+
+
+
+
+
+## 1. Introduzione
 Durante l’anno 2024, un team di tre studenti di Ingegneria Informatica decide di sviluppare un’applicazione per la gestione di un sistema software di delivery food, data la scarsa presenza di prodotti simili e funzionali sul mercato.
 L’obiettivo del progetto è di sviluppare una piattaforma che permetta all’utente, che può essere di tipo cliente, titolare di un ristorante o corriere, di: effettuare ordini, ampliare le modalità di vendita o guadagnare completando consegne.
 La squadra è composto da: Anes Hamza, Bonomelli Pietro e Rota Leonardo
 -TODO: conclusioni-
 
-2. Modello di processo
+## 2. Modello di processo
 Il modello del ciclo di vita scelto è stato il Rational Unified Process (RUP), un modello iterativo che può essere considerato come una via di mezzo tra i metodi basati su documenti e agili. Non è stato scelto un modello puramente agile per una necessità di avere una documentazione corretta e completa.
 Dividiamo quindi il ciclo di vita del software nelle 4 fasi: (fonte wikipedia)
 
@@ -37,7 +50,7 @@ Fase di transizione, il sistema passa dall'ambiente dello sviluppo a quello del 
 
 Oltre al modello RUP, seguiremo anche un approccio Model Driven Architecture (MDA), in particolare progetteremo diagrammi UML tramite il plugin Papyrus installato sulla macchina virtuale Eclipse, ambiente di sviluppo che utilizziamo per scrivere codice Java.3. Organizzazione del progetto
 
-3. Organizzazione del progetto:
+## 3. Organizzazione del progetto:
 Il team di sviluppo si interfaccerà con i professori che seguono lo sviluppo dell’applicazione.
 Non essendoci utenti, non ci sarà interazione con degli utenti. Noi svilupperemo il software che, dopo la prima fase di implementazione, verrà presentata una versione di prova e testeremo noi stessi se stiamo seguendo le linee guida e gli obiettivi che c’eravamo posti, quindi una verifica e validazione dopo ogni fase.
 Ruoli:
@@ -47,16 +60,16 @@ La comunicazione sarà tempestiva e poco formale tra i membri del team e la docu
 
 Conoscenze richieste minime: programmazione Java, uso della lingua italiana.
 
-4. Standard, linee guida, procedure
+## 4. Standard, linee guida, procedure
 -TODO
 
-5. Attività di gestione
+## 5. Attività di gestione
 Organizzeremo brevi riunioni con cadenza aperiodica per analizzare lo stato di avanzamento del progetto, producendo un breve report come output.
 Questa fase sarà gestita anche attraverso GitHub, monitorando lo sviluppo delle classi Java.
 
 
 
-6. Rischi
+## 6. Rischi
 Mancanza di un membro del team a causa di altri impegni (es. corsi universitari).
 Soluzione: Adottare un'organizzazione del lavoro flessibile e documentare tutte le decisioni prese durante le riunioni. Inoltre, assegnare backup temporanei per i compiti critici.
 Possibili difficoltà con tecnologie e framework nuovi.
@@ -76,17 +89,17 @@ Problema: L’app potrebbe non soddisfare le aspettative dei clienti, ristorator
 Soluzione: Coinvolgere più utenti e beta tester, affinché aiutino a mettere luce sui problemi dell’applicazione, nelle fasi di prototipazione e raccolta di feedback continuo.
 
 
-7. Personale
+## 7. Personale
 Nel nostro team non esiste una gerarchia specifica, quindi tutti e tre gli sviluppatori copriranno tutti i ruoli durante le varie fasi del progetto. Vedi i punti 6.1 e 6.6 per eventuali rischi.
 
-8. Metodi e tecniche
-	OS utilizzati per lo sviluppo: 
-Windows 10
-Windows 11
-Ubuntu 24.04
-	Test (capitolo 13)
+## 8. Metodi e tecniche
+OS utilizzati per lo sviluppo: 
+	- Windows 10
+	- Windows 11
+	- Ubuntu 24.04
+	- Test (capitolo 13)
 
-9. Garanzia di qualità
+## 9. Garanzia di qualità
 (Quale organizzazione e procedure verranno utilizzate per garantire che il software in fase di sviluppo soddisfi i requisiti di qualità dichiarati?
 I molti aspetti di un Piano di Assicurazione della Qualità possono anche essere trattati in un documento separato. Il tema della garanzia della qualità è discusso nel Capitolo 6 .)
 Adotteremo le Best Practices nel coding:
@@ -95,8 +108,8 @@ Nome dei metodi e delle variabili locali in notazione camelCase
 Indentazione standard
 ecc…
 
-10. Pacchetti di lavoro (workpackages)
-	Documentazione
+## 10. Pacchetti di lavoro (workpackages)
+Documentazione
 Redazione del Project Plan (vedi punto 14)
 Aggiornamento continuo per allineare il progetto con le modifiche approvate.
 Progettazione
@@ -115,7 +128,7 @@ Test d’integrazione: Controllo del corretto funzionamento tra frontend, backen
 Test di sistema: Valutazione del comportamento dell’app nell’ambiente finale.
 Test di accettazione: Coinvolgimento del professore e beta tester per verificare il rispetto dei requisiti.
 
-11. Risorse
+## 11. Risorse
 Risorse hardware:
 PC
 Spazio condiviso Google Drive
@@ -128,12 +141,12 @@ Discord, Google Meet, applicazioni di messaggistica per la comunicazione in temp
 Github (desktop)
 
 
-12. Budget e programma
+## 12. Budget e programma
 Nello sviluppo del software non è previsto un budget economico specifico, ma è importante avere una stima dei tempi in modo accurato. Questo perché il progetto ha una scadenza fissata per gennaio 2025, con l’attività iniziata a novembre 2024.
 
 La stima dei tempi sarà quindi uno strumento essenziale per garantire il rispetto della deadline, suddividendo il lavoro in fasi ben definite e monitorando costantemente lo stato di avanzamento.
 
-13. Cambiamenti
+## 13. Cambiamenti
 Registrazione delle modifiche proposte: Ogni modifica deve essere documentata in un registro centralizzato, specificando la natura del cambiamento, la ragione della proposta e l'urgenza.
 Revisione e approvazione: Le modifiche proposte saranno discusse durante le riunioni del team, e approvate solo dopo aver valutato l’impatto sul progetto.
 Stima dell’impatto: Una volta approvata, la modifica sarà analizzata in termini di tempi di implementazione e impatti sulle funzionalità già esistenti, e quindi sulle qualità del software.
@@ -145,7 +158,7 @@ Versionamento e controllo della configurazione: Per gestire le diverse versioni 
 
 
 
-14. Consegna 
+## 14. Consegna 
 Il Project Plan, che include la pianificazione dettagliata, la gestione dei rischi e dei cambiamenti, deve essere consegnato al principale stakeholder, il professor Gargantini, almeno un mese prima della consegna finale del progetto.
 Prima della consegna definitiva, il sistema sarà sottoposto a:
 Test di accettazione (User Acceptance Testing) per verificare se sono soddisfatti i requisiti,
