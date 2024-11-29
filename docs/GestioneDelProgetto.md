@@ -1,4 +1,4 @@
-# Capito 3: Software Life Cycle
+# Capitolo 3: Software Life Cycle
 
 Il modello del ciclo di vita che adottiamo è il **Rational Unified Process (RUP)**, Strutturiamo le sue fasi:
 
@@ -43,11 +43,11 @@ Adottiamo un'organizzazione di sprint flessibile, senza un periodo di tempo fiss
 
 	
 
-# Capito 4: Configuration Managment 
+# Capitolo 4: Configuration Managment 
 Per il configuration management useremo github con i relativi comandi.
 Alcune Statistiche: (**TODO**)
 
-# Capito 5: People Management and Team Organization
+# Capitolo 5: People Management and Team Organization
 Il team è composto da 3 persone: Anes Hamza, Bonomelli Pietro, Rota Leonardo. è un team che si basa sugli approcci agili, quindi è una squadra agile, senza gerarchie interne ed è un team Cross-Funzionale cioè ogni membro del team può assumere più ruoli (sviluppatore, tester…). I membri del team sono a stretto contatto con canali di comunicazione non formali.
 
 Durante le riunioni, si possono assegnare alcuni compiti ai membri del team, ma ogni membro del team può modificare aiutando gli altri membri del team qualora abbia portato a termine i suoi compiti.
