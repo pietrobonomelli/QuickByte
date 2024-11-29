@@ -1,13 +1,17 @@
-<img src="./images/LogoQuickByte.webp" width="220px" align="center">
+<br><br>
+<img src="./images/LogoQuickByte.webp" width="200px" align="left" style="margin-right:30px">
 
 <p align="center">Project Plan di sviluppo del software: QuickByte, un’applicazione per la gestione di ordini di cibo a domicilio, che collega: ristoranti, clienti e corrieri attraverso un'interfaccia intuitiva.</p>
 
-<p>
 
 Sviluppato da:
 - Anes Hamza, 1086081
 - Bonomelli Pietro, 1087035
-- Rota Leonardo, 1086029
+-  Rota Leonardo, 1086029
+
+
+
+<br>
 
 # INDICE
 1. [Introduzione](#1-introduzione)
