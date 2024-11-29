@@ -1,4 +1,4 @@
-<center><img src="./Images/LogoQuickByte.webp" width="220px"></center>
+<center><img src="./images/LogoQuickByte.webp" width="220px"></center>
 
 <center>Project Plan di sviluppo del software: QuickByte, un’applicazione per la gestione di ordini di cibo a domicilio, che collega: ristoranti, clienti e corrieri attraverso un'interfaccia intuitiva.</center>
 
