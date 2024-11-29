@@ -4,7 +4,7 @@ Project Plan di sviluppo del software: QuickByte, un’applicazione per la gesti
 
 
 # INDICE
-1. Introduzione
+1. [Introduzione](#)
 2. Modello di processo
 3. Organizzazione del progetto:
 4. Standard, linee guida, procedure
@@ -182,17 +182,17 @@ Refactoring/documentazione sulla manutenzione del sw.
 
 
 
-Note varie: APPUNTI
+# Note varie: APPUNTI
 
-Repository seria su github
-
-Documentazione
-
-Progetto Maven su eclipse
-
-UML almeno 1 per tipo (papirus)
-
-DB (facoltativo) deve essere embedded
-
-Parte GUI (facoltativa): java swing o java swt, OPPURE pagina web con java server pages o vaadin
+	Repository seria su github
+	
+	Documentazione
+	
+	Progetto Maven su eclipse
+	
+	UML almeno 1 per tipo (papirus)
+	
+	DB (facoltativo) deve essere embedded
+	
+	Parte GUI (facoltativa): java swing o java swt, OPPURE pagina web con java server pages o vaadin
 
