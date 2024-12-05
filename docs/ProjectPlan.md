@@ -7,7 +7,7 @@
 Sviluppato da:
 - Anes Hamza, 1086081
 - Bonomelli Pietro, 1087035
--  Rota Leonardo, 1086029
+- Rota Leonardo, 1086029
 
 
 
@@ -36,35 +36,35 @@ Sviluppato da:
 
 
 ## 1. Introduzione TODO
-Durante l’anno 2024, un team di tre studenti di Ingegneria Informatica decide di sviluppare un’applicazione per la gestione di un sistema software di delivery food, data la scarsa presenza di prodotti simili e funzionali sul mercato.
+Durante l’anno 2024, un team di tre studenti di Ingegneria Informatica decide di sviluppare un’applicazione per la gestione di un sistema software di delivery food, per via della scarsa presenza di prodotti simili sul mercato.
 
-L’obiettivo del progetto è di sviluppare una piattaforma che permetta all’utente, che può essere di tipo cliente, titolare di un ristorante o corriere, di: effettuare ordini, ampliare le modalità di vendita o guadagnare completando consegne.
-Il team di sviluppo è composto da: Anes Hamza, Bonomelli Pietro e Rota Leonardo.
+L’obiettivo del progetto è quello di sviluppare una piattaforma che permetta all’utente, che può essere di tipo: cliente, titolare di un ristorante o corriere, rispettivamente di: effettuare ordini, ampliare le modalità di vendita o guadagnare completando consegne.
+Il team di sviluppo è composto da 3 partecipanti: Anes Hamza, Bonomelli Pietro e Rota Leonardo.
 
 -TODO: conclusioni-
 
 ## 2. Modello di processo
-Il modello del ciclo di vita scelto è stato il Rational Unified Process (RUP), un modello iterativo che può essere considerato come una via di mezzo tra i metodi basati su documenti e agili. Non è stato scelto un modello puramente agile per una necessità di avere una documentazione corretta e completa.
-Dividiamo quindi il ciclo di vita del software nelle 4 fasi: (fonte wikipedia)
+Il modello del ciclo di vita che verrà usato è il Rational Unified Process (RUP).
+È un modello iterativo che può essere considerato come una via di mezzo tra i metodi basati su documenti tramite lo sviluppo agile. Non è stato scelto un modello puramente agile per la necessità di avere una documentazione corretta e soprattutto completa, tenendo quindi conto anche di un'asse temporale.
+Dividiamo perciò il ciclo di vita del software nelle 4 fasi del RUP: (fonte wikipedia)
 
-- Fase iniziale, si concentra sull’ottenimento di obiettivi chiari. Questo include la pianificazione iniziale del progetto, la valutazione dei rischi, una definizione grossolana dei requisiti e così via. Se il progetto non supera questa milestone, detta "Lifecycle Objective Milestone", esso dovrà essere abbandonato o ridefinito.
+- Fase iniziale: si concentra sull’ottenimento di obiettivi chiari. Questo include la pianificazione iniziale del progetto, la [valutazione dei rischi](#6-rischi) ed una definizione grossolana dei requisiti. Se il progetto non supera questa milestone, detta "Lifecycle Objective Milestone", dovrà essere ridefinita questa fase per procedere alla successiva.
 
-- Fase di elaborazione, nella quale verranno portati a termine questi punti fondamentali:
-deve essere stato sviluppato un modello dei casi d'uso completo all'80%
-dev'essere fornita la descrizione dell'architettura del sistema
-dev'essere stata sviluppata un'"architettura eseguibile" che dimostri il completamento degli use case significativi
-dev'essere eseguita una revisione del business case e dei rischi
+- Fase di elaborazione: nella quale verranno portati a termine questi punti fondamentali:
+deve essere stato sviluppato un modello dei casi d'uso parzialmente completo
+dev'essere fornita la descrizione dell'architettura del sistema e questa deve essere sviluppata ed eseguibile, in modo che dimostri il completamento degli use case significativi
 dev'essere completata una pianificazione del progetto complessivo
 
-- Fase di costruzione, in questa fase viene portato a termine il grosso degli sviluppi. Viene prodotta la prima release del sistema. La milestone di questa fase si chiama "Initial Operational Capability" e rappresenta la prima disponibilità delle funzionalità del sistema in termini di implementazione. DEFINIRE MILESTONE
+- Fase di costruzione: durante questa fase viene sviluppato gran parte del progetto. Viene prodotta la prima versione del sistema. 
+La milestone di questa fase viene chiamata "Initial Operational Capability" e rappresenta la prima forma funzionale del sistema.
 
-- Fase di transizione, il sistema passa dall'ambiente dello sviluppo a quello del cliente finale. Vengono condotte le attività di training degli utenti e il beta testing del sistema a scopo di verifica e validazione. Si deve in particolare verificare che il prodotto sia conforme alle aspettative descritte nella fase di Inception. Se questo non è vero si procede a ripetere l'intero ciclo; altrimenti, si raggiunge la milestone detta "Product Release" e lo sviluppo termina.
+- Fase di transizione: il sistema passa dall'ambiente dello sviluppo a quello del cliente. Vengono condotte alcune attività tra cui il beta testing del sistema a scopo di verifica e validazione. Viene verificato che il prodotto è conforme alle aspettative descritte nella fase iniziale. Qualora i requisiti descritti nella prima fase non fossero soddisfatti, si procederà a ripetere l'intero ciclo. In caso contrario, si raggiunge la milestone detta "Product Release" e lo sviluppo del software termina.
 
-Oltre al modello **RUP**, seguiremo anche un approccio **Model Driven Architecture (MDA)**, in particolare progetteremo diagrammi UML tramite il plugin Papyrus installato sulla macchina virtuale Eclipse, ambiente di sviluppo che utilizziamo per scrivere codice Java.3.
+Oltre al modello **RUP**, seguiremo anche un approccio **Model Driven Architecture (MDA)**, in particolare progetteremo diagrammi UML tramite il plugin Papyrus installato sulla macchina virtuale Eclipse, ambiente di sviluppo che utilizziamo per scrivere codice Java.
 
 ## 3. Organizzazione del progetto:
 Il team di sviluppo si interfaccerà con i professori che seguono lo sviluppo dell’applicazione.
-Non essendoci utenti, non ci sarà interazione con degli utenti. Noi svilupperemo il software che, dopo la prima fase di implementazione, verrà presentata una versione di prova e testeremo noi stessi se stiamo seguendo le linee guida e gli obiettivi che c’eravamo posti, quindi una verifica e validazione dopo ogni fase.
+Non essendoci utenti, non ci sarà interazione con degli utenti. Verrà sviluppato il software di cui, dopo la prima fase di implementazione, verrà presentata una versione di prova e testeremo noi stessi se stiamo seguendo le linee guida e gli obiettivi che c’eravamo posti, quindi una verifica e validazione dopo ogni fase da parte dei programmatori.
 
 **Ruoli:**
 
@@ -74,8 +74,64 @@ La comunicazione sarà tempestiva e poco formale tra i membri del team e la docu
 
 Conoscenze richieste minime: programmazione Java, uso della lingua italiana.
 
-## 4. Standard, linee guida, procedure TODO
--TODO
+## 4. Standard, linee guida, procedure
+All’interno del progetto è necessario che ogni membro segua determinati standard e linee guida, in modo tale che il progetto sia di semplice comprensione per tutti i membri del team, e quindi facilitare la manutenibilità.
+
+- Standard di codifica
+Per garantire leggibilità e manutenibilità del codice, adottiamo le seguenti convenzioni, che sono le classiche di Oracle per Java:
+
+	- Nomi delle variabili:
+		- Variabili globali in MAIUSCOLO.
+		- Variabili locali in camelCase (evitando gli underscore).
+		- Nomi dei metodi in camelCase, presenti di commento che descrive lo scopo del metodo.
+		- Costanti: dichiarate come static final e in MAIUSCOLO con underscore per separare le parole.
+	- Indentazione: "tab" per ogni livello di indentazione.
+	- Commenti:
+		- Commenti inline (//) per spiegare logiche.
+		- Commenti Javadoc per documentare classi, metodi e interfacce pubbliche.
+	- Linee guida per la documentazione:
+		- La documentazione sarà esaustiva e aggiornata regolarmente su documenti tramite GitHub.
+		- Lingua: italiano, tecnico per quanto possibile, l'importante è che sia comprensibile.
+		- Struttura: Ogni documento deve includere un'intestazione, data di creazione e ultima modifica.
+	
+	- Procedure di gestione del codice
+		- Il codice sorgente sarà gestito attraverso una repository GitHub, seguendo queste pratiche:
+
+	- Branching:
+	Branch principale (main) per versioni stabili.
+	Branch secondari per lo sviluppo di nuove funzionalità (es: feature/gestione-ordini).
+	Commit:
+	Ogni commit deve avere un messaggio descrittivo che inizi con un verbo all'infinito (es: "Aggiungi gestione degli ordini").
+	Pull request:
+	Ogni modifica al codice dovrà passare attraverso una pull request, da sottoporre a revisione da parte almeno di un altro membro del team.
+	Standard di design
+	Architettura software: Progettazione modulare con un chiaro separazione tra:
+	Modello: Gestione dei dati e interazione con il database.
+	Controller: Logica di business e gestione delle richieste.
+	Vista: Interfaccia utente, realizzata con Java Swing o SWT.
+	Database: Embedded, con struttura progettata secondo i principi dello schema ER.
+	Diagrammi UML:
+	Diagramma dei casi d'uso per definire le funzionalità principali.
+	Diagramma delle classi per descrivere l'architettura del codice.
+	Diagrammi di sequenza per rappresentare i flussi di interazione tra componenti.
+	Procedure di testing
+	Durante tutte le fasi di sviluppo, saranno implementati test per garantire la qualità del software:
+
+	Test unitari: Realizzati per ogni funzione o classe.
+	Test d’integrazione: Per verificare il corretto funzionamento delle interazioni tra componenti.
+	Test di sistema: Simulazione dell'applicazione in condizioni reali.
+	Test di accettazione: Con coinvolgimento di beta tester e professori.
+	Procedure di gestione dei requisiti
+	Ogni requisito sarà tracciato in un registro centralizzato con:
+	ID univoco.
+	Descrizione dettagliata.
+	Stato attuale (in lavorazione, completato, validato).
+	I cambiamenti ai requisiti saranno sottoposti a revisione, documentati e tracciati attraverso GitHub.
+	Procedure di comunicazione
+	Riunioni settimanali tramite Discord o Google Meet per aggiornamenti.
+	Un canale GitHub Issues dedicato per tracciare bug e richieste di nuove funzionalità.
+	Documentazione delle decisioni principali in un file condiviso su Google Drive.
+
 
 ## 5. Attività di gestione
 Organizzeremo brevi riunioni con cadenza aperiodica per analizzare lo stato di avanzamento del progetto, producendo un breve report come output.
