@@ -77,60 +77,58 @@ Conoscenze richieste minime: programmazione Java, uso della lingua italiana.
 ## 4. Standard, linee guida, procedure
 All’interno del progetto è necessario che ogni membro segua determinati standard e linee guida, in modo tale che il progetto sia di semplice comprensione per tutti i membri del team, e quindi facilitare la manutenibilità.
 
-- Standard di codifica
+**Standard di codifica**
 Per garantire leggibilità e manutenibilità del codice, adottiamo le seguenti convenzioni, che sono le classiche di Oracle per Java:
 
-	- Nomi delle variabili:
-		- Variabili globali in MAIUSCOLO.
-		- Variabili locali in camelCase (evitando gli underscore).
-		- Nomi dei metodi in camelCase, presenti di commento che descrive lo scopo del metodo.
-		- Costanti: dichiarate come static final e in MAIUSCOLO con underscore per separare le parole.
-	- Indentazione: "tab" per ogni livello di indentazione.
-	- Commenti:
-		- Commenti inline (//) per spiegare logiche.
-		- Commenti Javadoc per documentare classi, metodi e interfacce pubbliche.
-	- Linee guida per la documentazione:
-		- La documentazione sarà esaustiva e aggiornata regolarmente su documenti tramite GitHub.
-		- Lingua: italiano, tecnico per quanto possibile, l'importante è che sia comprensibile.
-		- Struttura: Ogni documento deve includere un'intestazione, data di creazione e ultima modifica.
-	
-	- Procedure di gestione del codice
-		- Il codice sorgente sarà gestito attraverso una repository GitHub, seguendo queste pratiche:
+- Nomi delle variabili:
+	- Variabili globali in MAIUSCOLO.
+	- Variabili locali in camelCase (evitando gli underscore).
+	- Nomi dei metodi in camelCase, presenti di commento che descrive lo scopo del metodo.
+	- Costanti: dichiarate come static final e in MAIUSCOLO con underscore per separare le parole.
+- Indentazione: "tab" per ogni livello di indentazione.
+- Commenti:
+	- Commenti inline (//) per spiegare logiche.
+	- Commenti Javadoc per documentare classi, metodi e interfacce pubbliche.
+- Linee guida per la documentazione:
+	- La documentazione sarà esaustiva e aggiornata regolarmente su documenti tramite GitHub.
+	- Lingua: italiano, tecnico per quanto possibile, l'importante è che sia comprensibile.
+	- Struttura: Ogni documento deve includere un'intestazione, data di creazione e ultima modifica.
+- Procedure di gestione del codice
+	- Il codice sorgente sarà gestito attraverso una repository GitHub, seguendo queste pratiche:
+- Branching:
+	- Branch principale (main) per versioni stabili.
+	- Branch secondari per lo sviluppo di nuove feature che non sono ancora pienamente funzionanti
+- Commit:
+	I commit devono avere un nome chiaro e se necessario una descrizione esaustiva di cos'è stato implementato.
+- Pull request:
+	- Ogni modifica al codice deve passare attraverso una pull request, da sottoporre a revisione da parte almeno di un altro membro del team per verificare che sia funzionante e priva di errori che rendando il codice non eseguibile.
+- Standard di design
+- Progettazione modulare con un chiaro separazione tra:
+	- Modello: Gestione dei dati e delle interazione con il database.
+	- Controller: coordinatore tra Modello e Vista, per separare FrontEnd e BackEnd.
+	- Vista: Interfaccia utente, realizzata con Java Swing o SWT.
+	- Database: Embedded, con struttura progettata lo schema ER.
+	- Diagrammi UML:
+		- Diagramma dei casi d'uso per definire le principali funzionalità del sw.
+		- Diagramma delle classi per descrivere l'architettura del codice.
+		- Diagrammi di sequenza per rappresentare i flussi di interazione tra i vari componenti.
+		
+**Procedure di testing** Durante tutte le fasi di sviluppo, saranno svolti test per garantire la qualità del software:
+- Test unitari: Realizzati per ogni funzione o classe.
+- Test d’integrazione: Per verificare il corretto funzionamento delle interazioni tra componenti.
+- Test di sistema: Simulazione dell'applicazione in condizioni reali.
+- Test di accettazione: Con coinvolgimento di beta tester e professori.
 
-	- Branching:
-	Branch principale (main) per versioni stabili.
-	Branch secondari per lo sviluppo di nuove funzionalità (es: feature/gestione-ordini).
-	Commit:
-	Ogni commit deve avere un messaggio descrittivo che inizi con un verbo all'infinito (es: "Aggiungi gestione degli ordini").
-	Pull request:
-	Ogni modifica al codice dovrà passare attraverso una pull request, da sottoporre a revisione da parte almeno di un altro membro del team.
-	Standard di design
-	Architettura software: Progettazione modulare con un chiaro separazione tra:
-	Modello: Gestione dei dati e interazione con il database.
-	Controller: Logica di business e gestione delle richieste.
-	Vista: Interfaccia utente, realizzata con Java Swing o SWT.
-	Database: Embedded, con struttura progettata secondo i principi dello schema ER.
-	Diagrammi UML:
-	Diagramma dei casi d'uso per definire le funzionalità principali.
-	Diagramma delle classi per descrivere l'architettura del codice.
-	Diagrammi di sequenza per rappresentare i flussi di interazione tra componenti.
-	Procedure di testing
-	Durante tutte le fasi di sviluppo, saranno implementati test per garantire la qualità del software:
-
-	Test unitari: Realizzati per ogni funzione o classe.
-	Test d’integrazione: Per verificare il corretto funzionamento delle interazioni tra componenti.
-	Test di sistema: Simulazione dell'applicazione in condizioni reali.
-	Test di accettazione: Con coinvolgimento di beta tester e professori.
-	Procedure di gestione dei requisiti
-	Ogni requisito sarà tracciato in un registro centralizzato con:
-	ID univoco.
-	Descrizione dettagliata.
-	Stato attuale (in lavorazione, completato, validato).
-	I cambiamenti ai requisiti saranno sottoposti a revisione, documentati e tracciati attraverso GitHub.
-	Procedure di comunicazione
-	Riunioni settimanali tramite Discord o Google Meet per aggiornamenti.
-	Un canale GitHub Issues dedicato per tracciare bug e richieste di nuove funzionalità.
-	Documentazione delle decisioni principali in un file condiviso su Google Drive.
+Procedure di gestione dei requisiti
+Ogni requisito sarà tracciato in un registro centralizzato con:
+ID univoco.
+Descrizione dettagliata.
+Stato attuale (in lavorazione, completato, validato).
+I cambiamenti ai requisiti saranno sottoposti a revisione, documentati e tracciati attraverso GitHub.
+Procedure di comunicazione
+Riunioni settimanali tramite Discord o Google Meet per aggiornamenti.
+Un canale GitHub Issues dedicato per tracciare bug e richieste di nuove funzionalità.
+Documentazione delle decisioni principali in un file condiviso su Google Drive.
 
 
 ## 5. Attività di gestione
