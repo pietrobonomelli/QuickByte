@@ -1,10 +1,11 @@
 # QuickByte
-
-<img src="docs/images/LogoQuickByte.webp" width="220px" align="center">
+<p align="center">
+  <img src="docs/images/LogoQuickByte.webp" alt="Logo QuickByte" width="220px" align="center">
+<p>
 
 -----------
 
-Project Plan di sviluppo del software: QuickByte, un’applicazione per la gestione di ordini di cibo a domicilio, che collega: ristoranti, clienti e corrieri attraverso un'interfaccia intuitiva.
+QuickByte, un’applicazione per la gestione di ordini di cibo a domicilio, che collega: ristoranti, clienti e corrieri attraverso un'interfaccia intuitiva.
 
 Sviluppato da:
 - Anes Hamza, 1086081
