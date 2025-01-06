@@ -259,22 +259,7 @@ I documenti consegnati devono contenere:
 - Refactoring/documentazione sulla manutenzione del sw.
 
 
-
-# Note varie: APPUNTI
-
-	Repository seria su github
-	
-	Documentazione
-	
-	Progetto Maven su eclipse
-	
-	UML almeno 1 per tipo (papirus)
-	
-	DB (facoltativo) deve essere embedded
-	
-	Parte GUI (facoltativa): java swing o java swt, OPPURE pagina web con java server pages o vaadin
-
-
 ---
+
 *Data di creazione: 06/11/2024 \
-Ultima modifica: 05/12/2024*
+Ultima modifica: 06/01/2024*
