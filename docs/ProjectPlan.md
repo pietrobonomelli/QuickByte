@@ -130,6 +130,13 @@ Organizzeremo brevi riunioni con cadenza aperiodica per analizzare lo stato di a
 Questa fase sarà gestita utilizzando anche GitHub, con cui verrà moinitorato lo sviluppo delle classi Java.
 Utilizzeremo una metodologia MoSCoW tramite una board condivisa, il che permetterà di evidenziare rapidamente qual è la prossima task da eseguire.
 
+Utilizziamo la KanBan board integrata su GitHub, tenendo traccai di:
+- Task assolutamente da svolgere (must-have);
+- Task in fase di implementazione;
+- Task fase di verifica e test;
+- Task terminate;
+- Task possibili da svolgere in futuro non necessarie (could-have).
+
 
 ## 6. Rischi
 #### 6.1: Mancanza di un membro del team a causa di altri impegni (es. corsi universitari).
