@@ -68,9 +68,13 @@ Seguendo lo standard IEEE 830:
 3.2 Richieste funzionali
 
 - 3.2.1. **Cliente**
-  - 3.2.1.1. Visualizzare i menu dei ristoranti disponibili.
-  - 3.2.1.2. Effettuare un ordine e ricevere conferma.
-  - 3.2.1.3. Monitorare lo stato dell’ordine.
+  - 3.2.1.1. Creare un account fornendo nome, email, password e numero di telefono.
+  - 3.2.1.2. Visualizzare i menu dei ristoranti disponibili.
+  - 3.2.1.3. Selezionare un ristorante.
+  - Visualizzare i dettagli del ristorante (menu, orari di apertura, valutazioni, recensioni).
+  - 3.2.1.4. Selezionare il menu.
+  - 3.2.1.5. Effettuare un ordine e ricevere conferma.
+  - 3.2.1.6. Monitorare lo stato dell’ordine.
 - 3.2.2. **Ristorante**
   - 3.2.2.1. Creare e modificare menu.
   - 3.2.2.2. Visualizzare e gestire ordini ricevuti.
