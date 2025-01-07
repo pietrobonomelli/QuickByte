@@ -68,7 +68,7 @@ Seguendo lo standard IEEE 830:
 3.2 Richieste funzionali
 
 - 3.2.1. **Cliente**
-  - 3.2.1.1. Creare un account fornendo nome, email, password e numero di telefono.
+  - 3.2.1.1. Creare e modificare un account Cliente fornendo nome, email, password e numero di telefono (con possibilità di cancellarlo).
   - 3.2.1.2. Visualizzare la lista dei ristoranti disponibili.
   - 3.2.1.3. Cliccare su un ristorante.
   - 3.2.1.4. Visualizzare i dettagli del ristorante (menu con lista dei piatti e rispettivi prezzi, orari di apertura, valutazione media, recensioni).
@@ -78,11 +78,13 @@ Seguendo lo standard IEEE 830:
   - 3.2.1.8. Riceve la conferma che l'ordine è stato preso in carica dal corriere.
   - 3.2.1.9. Monitorare lo stato dell’ordine.
   - 3.2.1.10. Recensire il ristorante da cui ha acquistato.
+  - 3.2.1.11. Eliminare il proprio account dalla piattaforma.
 - 3.2.2. **Titolare**
-  - 3.2.2.1. Creare il ristorante aggiungendo i vari dati (menu con lista dei piatti e rispettivi prezzi, orari di apertura, valutazione media, recensioni).
-  - 3.2.2.2. Gestire e modificare i dati dei suoi ristoranti.
-  - 3.2.2.3. Visualizzare e gestire ordini ricevuti.
-  - 3.2.2.4. Visualizzare le recensioni riguardanti il ristorante.
+  - 3.2.2.1. Creare e modificare un account Titolare fornendo nome, email, password e numero di telefono (con possibilità di cancellarlo).
+  - 3.2.2.2. Creare e modificare il ristorante aggiungendo i vari dati (menu con lista dei piatti e rispettivi prezzi, orari di apertura, valutazione media, recensioni).
+  - 3.2.2.3. Gestire e modificare i dati dei suoi ristoranti.
+  - 3.2.2.4. Visualizzare e gestire ordini ricevuti.
+  - 3.2.2.5. Visualizzare le recensioni riguardanti il ristorante.
 - 3.2.3. **Corriere**
   - 3.2.3.1. Visualizzare consegne disponibili.
   - 3.2.3.2. Prendere in carica un'ordinazione.
