@@ -68,27 +68,30 @@ Seguendo lo standard IEEE 830:
 3.2 Richieste funzionali
 
 - 3.2.1. **Cliente**
-  - 3.2.1.1. Creare e modificare un account Cliente fornendo nome, email, password e numero di telefono (con possibilità di cancellarlo).
-  - 3.2.1.2. Visualizzare la lista dei ristoranti disponibili.
-  - 3.2.1.3. Cliccare su un ristorante.
-  - 3.2.1.4. Visualizzare i dettagli del ristorante (menu con lista dei piatti e rispettivi prezzi, orari di apertura, valutazione media, recensioni).
-  - 3.2.1.5. Aggiungere i piatti al carrello specificando la quantità.
-  - 3.2.1.6. Effettuare un ordine inserendo i dati della carta e l'indirizzo. 
-  - 3.2.1.7. Riceve la conferma che l'ordine è stato accettato dal ristorante.
-  - 3.2.1.8. Riceve la conferma che l'ordine è stato preso in carica dal corriere.
-  - 3.2.1.9. Monitorare lo stato dell’ordine.
-  - 3.2.1.10. Recensire il ristorante da cui ha acquistato.
-  - 3.2.1.11. Eliminare il proprio account dalla piattaforma.
+  - Creare e modificare un account Cliente fornendo nome, email, password e numero di telefono (con possibilità di cancellarlo).
+  - Visualizzare la lista dei ristoranti disponibili.
+  - Cliccare su un ristorante.
+  - Visualizzare i dettagli del ristorante (menu con lista dei piatti e rispettivi prezzi, orari di apertura, valutazione media, recensioni).
+  - Aggiungere i piatti al carrello specificando la quantità.
+  - Effettuare un ordine inserendo i dati della carta e l'indirizzo. 
+  - Riceve la conferma che l'ordine è stato accettato dal ristorante.
+  - Riceve la conferma che l'ordine è stato preso in carica dal corriere.
+  - Monitorare lo stato dell’ordine.
+  - Recensire il ristorante da cui ha acquistato.
+  - Eliminare il proprio account dalla piattaforma.
 - 3.2.2. **Titolare**
-  - 3.2.2.1. Creare e modificare un account Titolare fornendo nome, email, password e numero di telefono (con possibilità di cancellarlo).
-  - 3.2.2.2. Creare e modificare il ristorante aggiungendo i vari dati (menu con lista dei piatti e rispettivi prezzi, orari di apertura, valutazione media, recensioni).
-  - 3.2.2.3. Gestire e modificare i dati dei suoi ristoranti.
-  - 3.2.2.4. Visualizzare e gestire ordini ricevuti.
-  - 3.2.2.5. Visualizzare le recensioni riguardanti il ristorante.
+  - Creare e modificare un account Titolare fornendo nome, email, password e numero di telefono (con possibilità di cancellarlo).
+  - Creare e modificare il ristorante aggiungendo i vari dati (menu con lista dei piatti e rispettivi prezzi, orari di apertura, valutazione media, recensioni).
+  - Gestire e modificare i dati dei suoi ristoranti.
+  - Visualizzare e gestire ordini ricevuti.
+  - Visualizzare le recensioni riguardanti il ristorante.
 - 3.2.3. **Corriere**
-  - 3.2.3.1. Visualizzare consegne disponibili.
-  - 3.2.3.2. Prendere in carica un'ordinazione.
-  - 3.2.3.3. Aggiornare lo stato di una consegna.
+  - Creare e modificare un account Corriere fornendo nome, email, password e numero di telefono (con possibilità di cancellarlo).
+  - Dare la disponibilità se può prendere consegne in quel momento o meno.
+  - Visualizzare le consegne disponibili e selezionarne una.
+  - Visualizzare i dati inerenti all'ordinazione e i dati del cliente.
+  - Prendere in carica un'ordinazione.
+  - Aggiornare lo stato di una consegna.
 
 3.3 Requisiti di prestazione
 - 3.3.1. Supportare 1'000 utenti simultanei senza degrado delle prestazioni.
