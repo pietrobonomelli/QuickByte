@@ -37,7 +37,7 @@
     </node>
     <node xmi:type="uml:MergeNode" xmi:id="_6UA8wM3EEe-g_rxynA4UQw" incoming="_VNoDgM3FEe-g_rxynA4UQw _356m8M3GEe-g_rxynA4UQw" outgoing="_BJ9g4M3FEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw"/>
     <node xmi:type="uml:MergeNode" xmi:id="_Gd3DcM3FEe-g_rxynA4UQw" incoming="_HpXNQM3FEe-g_rxynA4UQw" outgoing="_zW49IM3FEe-g_rxynA4UQw _356m8M3GEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw"/>
-    <node xmi:type="uml:CreateObjectAction" xmi:id="_dREVgM3FEe-g_rxynA4UQw" name="Seleziona Piatti" incoming="_zW49IM3FEe-g_rxynA4UQw" outgoing="_0pJ2QM3FEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw"/>
+    <node xmi:type="uml:CreateObjectAction" xmi:id="_dREVgM3FEe-g_rxynA4UQw" name="Seleziona piatti" incoming="_zW49IM3FEe-g_rxynA4UQw" outgoing="_0pJ2QM3FEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw"/>
     <node xmi:type="uml:CreateObjectAction" xmi:id="_mwXhgM3FEe-g_rxynA4UQw" name="Effettua Ordinazione" incoming="_0pJ2QM3FEe-g_rxynA4UQw" outgoing="_KikZkM3GEe-g_rxynA4UQw" inPartition="_6uC2EM2zEe-g_rxynA4UQw"/>
     <node xmi:type="uml:ActivityFinalNode" xmi:id="_GoZDAM3GEe-g_rxynA4UQw" name="" incoming="_Wv88cM3GEe-g_rxynA4UQw" inPartition="_6uC2EM2zEe-g_rxynA4UQw"/>
     <node xmi:type="uml:MergeNode" xmi:id="_Jeg7kM3GEe-g_rxynA4UQw" name="" incoming="_KikZkM3GEe-g_rxynA4UQw" outgoing="_Wv88cM3GEe-g_rxynA4UQw _dVzPEM3GEe-g_rxynA4UQw" inPartition="_6uC2EM2zEe-g_rxynA4UQw"/>

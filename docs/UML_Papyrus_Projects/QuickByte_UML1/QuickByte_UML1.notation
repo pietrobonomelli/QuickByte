@@ -18,41 +18,41 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_CVbxVM3MEe-1UfhOIe2-gQ" type="Pseudostate_DeepHistoryStereotypeLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_CVbxVc3MEe-1UfhOIe2-gQ" x="25" y="-10"/>
               </children>
-              <element xmi:type="uml:Pseudostate" href="UML_Leo.uml#_CVYuAM3MEe-1UfhOIe2-gQ"/>
+              <element xmi:type="uml:Pseudostate" href="QuickByte_UML1.uml#_CVYuAM3MEe-1UfhOIe2-gQ"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CVbxUc3MEe-1UfhOIe2-gQ" x="391" y="139"/>
             </children>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lwFsJ80IEe-iY7XYh7sm_w"/>
           </children>
-          <element xmi:type="uml:Region" href="UML_Leo.uml#_lwCo0M0IEe-iY7XYh7sm_w"/>
+          <element xmi:type="uml:Region" href="QuickByte_UML1.uml#_lwCo0M0IEe-iY7XYh7sm_w"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lwFsKM0IEe-iY7XYh7sm_w" width="700" height="280"/>
         </children>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lwFsKc0IEe-iY7XYh7sm_w" y="20" width="700" height="280"/>
       </children>
-      <element xmi:type="uml:StateMachine" href="UML_Leo.uml#_lvjgoM0IEe-iY7XYh7sm_w"/>
+      <element xmi:type="uml:StateMachine" href="QuickByte_UML1.uml#_lvjgoM0IEe-iY7XYh7sm_w"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lwFsKs0IEe-iY7XYh7sm_w" x="30" y="30" width="700" height="300"/>
     </children>
     <styles xmi:type="notation:StringValueStyle" xmi:id="_lwFsK80IEe-iY7XYh7sm_w" name="diagram_compatibility_version" stringValue="1.4.0"/>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_lwFsLM0IEe-iY7XYh7sm_w"/>
     <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_lwFsLc0IEe-iY7XYh7sm_w" diagramKindId="org.eclipse.papyrus.uml.diagram.stateMachine">
-      <owner xmi:type="uml:Model" href="UML_Leo.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
+      <owner xmi:type="uml:Model" href="QuickByte_UML1.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
     </styles>
-    <element xmi:type="uml:StateMachine" href="UML_Leo.uml#_lvjgoM0IEe-iY7XYh7sm_w"/>
+    <element xmi:type="uml:StateMachine" href="QuickByte_UML1.uml#_lvjgoM0IEe-iY7XYh7sm_w"/>
   </notation:Diagram>
   <notation:Diagram xmi:id="_lwIvcM0IEe-iY7XYh7sm_w" type="PapyrusUMLTimingDiagram" name="Timing Diagram" measurementUnit="Pixel">
     <styles xmi:type="notation:StringValueStyle" xmi:id="_lwIvcc0IEe-iY7XYh7sm_w" name="diagram_compatibility_version" stringValue="1.4.0"/>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_lwIvcs0IEe-iY7XYh7sm_w"/>
     <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_lwIvc80IEe-iY7XYh7sm_w" diagramKindId="org.eclipse.papyrus.uml.diagram.timing">
-      <owner xmi:type="uml:Model" href="UML_Leo.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
+      <owner xmi:type="uml:Model" href="QuickByte_UML1.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
     </styles>
-    <element xmi:type="uml:Model" href="UML_Leo.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
+    <element xmi:type="uml:Model" href="QuickByte_UML1.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
   </notation:Diagram>
   <notation:Diagram xmi:id="_lwLLsM0IEe-iY7XYh7sm_w" type="PapyrusUMLComponentDiagram" name="Component Diagram" measurementUnit="Pixel">
     <styles xmi:type="notation:StringValueStyle" xmi:id="_lwLLsc0IEe-iY7XYh7sm_w" name="diagram_compatibility_version" stringValue="1.4.0"/>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_lwLLss0IEe-iY7XYh7sm_w"/>
     <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_lwLLs80IEe-iY7XYh7sm_w" diagramKindId="org.eclipse.papyrus.uml.diagram.component.root.package">
-      <owner xmi:type="uml:Model" href="UML_Leo.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
+      <owner xmi:type="uml:Model" href="QuickByte_UML1.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
     </styles>
-    <element xmi:type="uml:Model" href="UML_Leo.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
+    <element xmi:type="uml:Model" href="QuickByte_UML1.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
   </notation:Diagram>
   <notation:Diagram xmi:id="_lwSgcM0IEe-iY7XYh7sm_w" type="PapyrusUMLCommunicationDiagram" name="Communication Diagram" measurementUnit="Pixel">
     <children xmi:type="notation:Shape" xmi:id="_lwSgcc0IEe-iY7XYh7sm_w" type="Interaction_Shape">
@@ -63,15 +63,15 @@
       <children xmi:type="notation:BasicCompartment" xmi:id="_lwSgdc0IEe-iY7XYh7sm_w" type="Interaction_SubfragmentCompartment">
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lwSgds0IEe-iY7XYh7sm_w"/>
       </children>
-      <element xmi:type="uml:Interaction" href="UML_Leo.uml#_lwO2EM0IEe-iY7XYh7sm_w"/>
+      <element xmi:type="uml:Interaction" href="QuickByte_UML1.uml#_lwO2EM0IEe-iY7XYh7sm_w"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lwSgd80IEe-iY7XYh7sm_w"/>
     </children>
     <styles xmi:type="notation:StringValueStyle" xmi:id="_lwSgeM0IEe-iY7XYh7sm_w" name="diagram_compatibility_version" stringValue="1.4.0"/>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_lwSgec0IEe-iY7XYh7sm_w"/>
     <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_lwSges0IEe-iY7XYh7sm_w" diagramKindId="org.eclipse.papyrus.uml.diagram.communication">
-      <owner xmi:type="uml:Model" href="UML_Leo.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
+      <owner xmi:type="uml:Model" href="QuickByte_UML1.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
     </styles>
-    <element xmi:type="uml:Interaction" href="UML_Leo.uml#_lwO2EM0IEe-iY7XYh7sm_w"/>
+    <element xmi:type="uml:Interaction" href="QuickByte_UML1.uml#_lwO2EM0IEe-iY7XYh7sm_w"/>
   </notation:Diagram>
   <notation:Diagram xmi:id="_lwVjwM0IEe-iY7XYh7sm_w" type="PapyrusUMLSequenceDiagram" name="Sequence Diagram" measurementUnit="Pixel">
     <children xmi:type="notation:Shape" xmi:id="_lwVjwc0IEe-iY7XYh7sm_w" type="Interaction_Shape">
@@ -79,15 +79,15 @@
       <children xmi:type="notation:BasicCompartment" xmi:id="_lwVjw80IEe-iY7XYh7sm_w" type="Interaction_SubfragmentCompartment">
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lwVjxM0IEe-iY7XYh7sm_w"/>
       </children>
-      <element xmi:type="uml:Interaction" href="UML_Leo.uml#_lwTukM0IEe-iY7XYh7sm_w"/>
+      <element xmi:type="uml:Interaction" href="QuickByte_UML1.uml#_lwTukM0IEe-iY7XYh7sm_w"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lwVjxc0IEe-iY7XYh7sm_w"/>
     </children>
     <styles xmi:type="notation:StringValueStyle" xmi:id="_lwVjxs0IEe-iY7XYh7sm_w" name="diagram_compatibility_version" stringValue="1.4.0"/>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_lwVjx80IEe-iY7XYh7sm_w"/>
     <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_lwVjyM0IEe-iY7XYh7sm_w" diagramKindId="org.eclipse.papyrus.uml.diagram.sequence">
-      <owner xmi:type="uml:Model" href="UML_Leo.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
+      <owner xmi:type="uml:Model" href="QuickByte_UML1.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
     </styles>
-    <element xmi:type="uml:Interaction" href="UML_Leo.uml#_lwTukM0IEe-iY7XYh7sm_w"/>
+    <element xmi:type="uml:Interaction" href="QuickByte_UML1.uml#_lwTukM0IEe-iY7XYh7sm_w"/>
   </notation:Diagram>
   <notation:Diagram xmi:id="_lwdfkM0IEe-iY7XYh7sm_w" type="PapyrusUMLActivityDiagram" name="Activity Diagram" measurementUnit="Pixel">
     <children xmi:type="notation:Shape" xmi:id="_lwdfkc0IEe-iY7XYh7sm_w" type="Activity_Shape">
@@ -122,7 +122,7 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_V6RW0s20Ee-g_rxynA4UQw" type="InitialNode_StereotypeLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_V6RW0820Ee-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:InitialNode" href="UML_Leo.uml#_V6L3QM20Ee-g_rxynA4UQw"/>
+              <element xmi:type="uml:InitialNode" href="QuickByte_UML1.uml#_V6L3QM20Ee-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_V6Qvwc20Ee-g_rxynA4UQw" x="34" y="75"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_nlYGoM20Ee-g_rxynA4UQw" type="CreateObjectAction_Shape">
@@ -130,7 +130,7 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_nlYGo820Ee-g_rxynA4UQw" type="CreateObjectAction_FloatingNameLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_nlYGpM20Ee-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:CreateObjectAction" href="UML_Leo.uml#_nlVDUM20Ee-g_rxynA4UQw"/>
+              <element xmi:type="uml:CreateObjectAction" href="QuickByte_UML1.uml#_nlVDUM20Ee-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nlYGoc20Ee-g_rxynA4UQw" x="234" y="75" width="140"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_proBcM20Ee-g_rxynA4UQw" type="CreateLinkAction_Shape">
@@ -138,7 +138,7 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_proBc820Ee-g_rxynA4UQw" type="CreateLinkAction_FloatingNameLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_proBdM20Ee-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:CreateLinkAction" href="UML_Leo.uml#_prhTwM20Ee-g_rxynA4UQw"/>
+              <element xmi:type="uml:CreateLinkAction" href="QuickByte_UML1.uml#_prhTwM20Ee-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_proBcc20Ee-g_rxynA4UQw" x="454" y="75"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_6UFOMM3EEe-g_rxynA4UQw" type="MergeNode_Shape">
@@ -148,7 +148,7 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_6UFONM3EEe-g_rxynA4UQw" type="MergeNode_StereotypeLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_6UFONc3EEe-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:MergeNode" href="UML_Leo.uml#_6UA8wM3EEe-g_rxynA4UQw"/>
+              <element xmi:type="uml:MergeNode" href="QuickByte_UML1.uml#_6UA8wM3EEe-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6UFOMc3EEe-g_rxynA4UQw" x="174" y="75"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_Gd9xIM3FEe-g_rxynA4UQw" type="MergeNode_Shape">
@@ -158,7 +158,7 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_Gd-YMs3FEe-g_rxynA4UQw" type="MergeNode_StereotypeLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_Gd-YM83FEe-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:MergeNode" href="UML_Leo.uml#_Gd3DcM3FEe-g_rxynA4UQw"/>
+              <element xmi:type="uml:MergeNode" href="QuickByte_UML1.uml#_Gd3DcM3FEe-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Gd9xIc3FEe-g_rxynA4UQw" x="634" y="75"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_dRJ1EM3FEe-g_rxynA4UQw" type="CreateObjectAction_Shape">
@@ -166,7 +166,7 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_dRJ1E83FEe-g_rxynA4UQw" type="CreateObjectAction_FloatingNameLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_dRJ1FM3FEe-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:CreateObjectAction" href="UML_Leo.uml#_dREVgM3FEe-g_rxynA4UQw"/>
+              <element xmi:type="uml:CreateObjectAction" href="QuickByte_UML1.uml#_dREVgM3FEe-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dRJ1Ec3FEe-g_rxynA4UQw" x="714" y="75"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_aGdv0M3HEe-g_rxynA4UQw" type="CreateObjectAction_Shape">
@@ -174,7 +174,7 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_aGdv083HEe-g_rxynA4UQw" type="CreateObjectAction_FloatingNameLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_aGdv1M3HEe-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:CreateObjectAction" href="UML_Leo.uml#_aGXCIM3HEe-g_rxynA4UQw"/>
+              <element xmi:type="uml:CreateObjectAction" href="QuickByte_UML1.uml#_aGXCIM3HEe-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aGdv0c3HEe-g_rxynA4UQw" x="934" y="15"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_hTNDUM3HEe-g_rxynA4UQw" type="DecisionNode_Shape">
@@ -187,7 +187,7 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_hTNqYM3HEe-g_rxynA4UQw" type="DecisionNode_StereotypeLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_hTNqYc3HEe-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:DecisionNode" href="UML_Leo.uml#_hTFukM3HEe-g_rxynA4UQw"/>
+              <element xmi:type="uml:DecisionNode" href="QuickByte_UML1.uml#_hTFukM3HEe-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_hTNDUc3HEe-g_rxynA4UQw" x="994" y="115"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_n1RpMM3HEe-g_rxynA4UQw" type="ActivityFinalNode_Shape">
@@ -197,12 +197,12 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_n1SQQs3HEe-g_rxynA4UQw" type="ActivityFinalNode_StereotypeLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_n1SQQ83HEe-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:ActivityFinalNode" href="UML_Leo.uml#_n1KUcM3HEe-g_rxynA4UQw"/>
-              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_n1RpMc3HEe-g_rxynA4UQw" x="1146" y="95"/>
+              <element xmi:type="uml:ActivityFinalNode" href="QuickByte_UML1.uml#_n1KUcM3HEe-g_rxynA4UQw"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_n1RpMc3HEe-g_rxynA4UQw" x="1134" y="115"/>
             </children>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3OJAtM2zEe-g_rxynA4UQw"/>
           </children>
-          <element xmi:type="uml:ActivityPartition" href="UML_Leo.uml#_3OFWUM2zEe-g_rxynA4UQw"/>
+          <element xmi:type="uml:ActivityPartition" href="QuickByte_UML1.uml#_3OFWUM2zEe-g_rxynA4UQw"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3OIZoc2zEe-g_rxynA4UQw" x="55" y="68" width="1281" height="241"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_6uHHgM2zEe-g_rxynA4UQw" type="ActivityPartition_Shape">
@@ -216,7 +216,7 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_mwdBE83FEe-g_rxynA4UQw" type="CreateObjectAction_FloatingNameLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_mwdBFM3FEe-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:CreateObjectAction" href="UML_Leo.uml#_mwXhgM3FEe-g_rxynA4UQw"/>
+              <element xmi:type="uml:CreateObjectAction" href="QuickByte_UML1.uml#_mwXhgM3FEe-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mwdBEc3FEe-g_rxynA4UQw" x="414" y="55"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_God7gM3GEe-g_rxynA4UQw" type="ActivityFinalNode_Shape">
@@ -226,7 +226,7 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_God7hM3GEe-g_rxynA4UQw" type="ActivityFinalNode_StereotypeLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_God7hc3GEe-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:ActivityFinalNode" href="UML_Leo.uml#_GoZDAM3GEe-g_rxynA4UQw"/>
+              <element xmi:type="uml:ActivityFinalNode" href="QuickByte_UML1.uml#_GoZDAM3GEe-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_God7gc3GEe-g_rxynA4UQw" x="714" y="35"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_JenCMM3GEe-g_rxynA4UQw" type="MergeNode_Shape">
@@ -236,7 +236,7 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_JenCNM3GEe-g_rxynA4UQw" type="MergeNode_StereotypeLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_JenCNc3GEe-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:MergeNode" href="UML_Leo.uml#_Jeg7kM3GEe-g_rxynA4UQw"/>
+              <element xmi:type="uml:MergeNode" href="QuickByte_UML1.uml#_Jeg7kM3GEe-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JenCMc3GEe-g_rxynA4UQw" x="574" y="55"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_bAm5UM3GEe-g_rxynA4UQw" type="CreateObjectAction_Shape">
@@ -244,12 +244,12 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_bAm5U83GEe-g_rxynA4UQw" type="CreateObjectAction_FloatingNameLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_bAm5VM3GEe-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:CreateObjectAction" href="UML_Leo.uml#_bAchQM3GEe-g_rxynA4UQw"/>
+              <element xmi:type="uml:CreateObjectAction" href="QuickByte_UML1.uml#_bAchQM3GEe-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_bAm5Uc3GEe-g_rxynA4UQw" x="694" y="75"/>
             </children>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6uHulM2zEe-g_rxynA4UQw"/>
           </children>
-          <element xmi:type="uml:ActivityPartition" href="UML_Leo.uml#_6uC2EM2zEe-g_rxynA4UQw"/>
+          <element xmi:type="uml:ActivityPartition" href="QuickByte_UML1.uml#_6uC2EM2zEe-g_rxynA4UQw"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6uHHgc2zEe-g_rxynA4UQw" x="55" y="328" width="1281" height="221"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_8fe-gM2zEe-g_rxynA4UQw" type="ActivityPartition_Shape">
@@ -263,7 +263,7 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_Hh_vE83HEe-g_rxynA4UQw" type="CreateObjectAction_FloatingNameLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_Hh_vFM3HEe-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:CreateObjectAction" href="UML_Leo.uml#_Hh4aUM3HEe-g_rxynA4UQw"/>
+              <element xmi:type="uml:CreateObjectAction" href="QuickByte_UML1.uml#_Hh4aUM3HEe-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Hh_vEc3HEe-g_rxynA4UQw" x="571" y="96"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_N7K3oM3HEe-g_rxynA4UQw" type="CreateObjectAction_Shape">
@@ -271,7 +271,7 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_N7K3o83HEe-g_rxynA4UQw" type="CreateObjectAction_FloatingNameLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_N7K3pM3HEe-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:CreateObjectAction" href="UML_Leo.uml#_N7ExAM3HEe-g_rxynA4UQw"/>
+              <element xmi:type="uml:CreateObjectAction" href="QuickByte_UML1.uml#_N7ExAM3HEe-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_N7K3oc3HEe-g_rxynA4UQw" x="814" y="95"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_PuTCIM3HEe-g_rxynA4UQw" type="CreateObjectAction_Shape">
@@ -279,25 +279,25 @@
               <children xmi:type="notation:DecorationNode" xmi:id="_PuTpMM3HEe-g_rxynA4UQw" type="CreateObjectAction_FloatingNameLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_PuTpMc3HEe-g_rxynA4UQw" y="15"/>
               </children>
-              <element xmi:type="uml:CreateObjectAction" href="UML_Leo.uml#_PuM7gM3HEe-g_rxynA4UQw"/>
+              <element xmi:type="uml:CreateObjectAction" href="QuickByte_UML1.uml#_PuM7gM3HEe-g_rxynA4UQw"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_PuTCIc3HEe-g_rxynA4UQw" x="1054" y="95"/>
             </children>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_8fe-hs2zEe-g_rxynA4UQw"/>
           </children>
-          <element xmi:type="uml:ActivityPartition" href="UML_Leo.uml#_8fciQM2zEe-g_rxynA4UQw"/>
+          <element xmi:type="uml:ActivityPartition" href="QuickByte_UML1.uml#_8fciQM2zEe-g_rxynA4UQw"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_8fe-gc2zEe-g_rxynA4UQw" x="55" y="568" width="1281" height="301"/>
         </children>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lwdfoc0IEe-iY7XYh7sm_w"/>
       </children>
-      <element xmi:type="uml:Activity" href="UML_Leo.uml#_lwZOIM0IEe-iY7XYh7sm_w"/>
+      <element xmi:type="uml:Activity" href="QuickByte_UML1.uml#_lwZOIM0IEe-iY7XYh7sm_w"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lwdfos0IEe-iY7XYh7sm_w" width="1461" height="981"/>
     </children>
     <styles xmi:type="notation:StringValueStyle" xmi:id="_lwdfo80IEe-iY7XYh7sm_w" name="diagram_compatibility_version" stringValue="1.4.0"/>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_lwdfpM0IEe-iY7XYh7sm_w"/>
     <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_lwdfpc0IEe-iY7XYh7sm_w" diagramKindId="org.eclipse.papyrus.uml.diagram.activity">
-      <owner xmi:type="uml:Model" href="UML_Leo.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
+      <owner xmi:type="uml:Model" href="QuickByte_UML1.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
     </styles>
-    <element xmi:type="uml:Activity" href="UML_Leo.uml#_lwZOIM0IEe-iY7XYh7sm_w"/>
+    <element xmi:type="uml:Activity" href="QuickByte_UML1.uml#_lwZOIM0IEe-iY7XYh7sm_w"/>
     <edges xmi:type="notation:Connector" xmi:id="_BKByUM3FEe-g_rxynA4UQw" type="ControlFlow_Edge" source="_6UFOMM3EEe-g_rxynA4UQw" target="_nlYGoM20Ee-g_rxynA4UQw">
       <children xmi:type="notation:DecorationNode" xmi:id="_BKByU83FEe-g_rxynA4UQw" type="ControlFlow_NameLabel">
         <styles xmi:type="notation:BooleanValueStyle" xmi:id="_CjWVsM3FEe-g_rxynA4UQw" name="IS_UPDATED_POSITION" booleanValue="true"/>
@@ -316,7 +316,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_BKByWs3FEe-g_rxynA4UQw" y="-20"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_BKByUc3FEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_BJ9g4M3FEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_BJ9g4M3FEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_BKByUs3FEe-g_rxynA4UQw" points="[256, 220, -643984, -643984]$[320, 220, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_BKSRAM3FEe-g_rxynA4UQw" id="(0.8333333333333343,0.6666666666666666)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_BKSRAc3FEe-g_rxynA4UQw" id="(0.0,0.5)"/>
@@ -339,7 +339,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_D9jp583FEe-g_rxynA4UQw" y="-20"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_D9jC0c3FEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_D9af8M3FEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_D9af8M3FEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_D9jC0s3FEe-g_rxynA4UQw" points="[460, 220, -643984, -643984]$[560, 220, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_D962QM3FEe-g_rxynA4UQw" id="(1.0,0.5)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_D962Qc3FEe-g_rxynA4UQw" id="(0.0,0.5)"/>
@@ -362,7 +362,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_Hpg-R83FEe-g_rxynA4UQw" x="2" y="-17"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_HpgXMc3FEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_HpXNQM3FEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_HpXNQM3FEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_HpgXMs3FEe-g_rxynA4UQw" points="[674, 220, -643984, -643984]$[740, 214, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Hp1HUM3FEe-g_rxynA4UQw" id="(0.9947826086956529,0.5)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Hp1uYM3FEe-g_rxynA4UQw" id="(0.0,0.5)"/>
@@ -381,7 +381,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_VNvYSs3FEe-g_rxynA4UQw" y="-20"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_VNvYQc3FEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_VNoDgM3FEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_VNoDgM3FEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_VNvYQs3FEe-g_rxynA4UQw" points="[116, 213, -643984, -643984]$[240, 214, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_VN6-cM3FEe-g_rxynA4UQw" id="(0.8542553191489368,0.6914893617021292)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_VN6-cc3FEe-g_rxynA4UQw" id="(0.0,0.5)"/>
@@ -400,7 +400,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_zW_Dx83FEe-g_rxynA4UQw" y="-20"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_zW-csc3FEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_zW49IM3FEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_zW49IM3FEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_zW-css3FEe-g_rxynA4UQw" points="[716, 220, -643984, -643984]$[780, 220, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_zXLRAM3FEe-g_rxynA4UQw" id="(0.8333333333333371,0.6666666666666666)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_zXLRAc3FEe-g_rxynA4UQw" id="(0.0,0.5)"/>
@@ -423,7 +423,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_0pVcd83FEe-g_rxynA4UQw" y="-19"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_0pU1Yc3FEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_0pJ2QM3FEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_0pJ2QM3FEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_0pU1Ys3FEe-g_rxynA4UQw" points="[870, 220, -643984, -643984]$[780, 440, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_0pqMkM3FEe-g_rxynA4UQw" id="(0.978021978021978,0.5)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_0pqMkc3FEe-g_rxynA4UQw" id="(0.6451612903225806,0.0)"/>
@@ -442,7 +442,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_Kitjh83GEe-g_rxynA4UQw" y="-20"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_Kis8cc3GEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_KikZkM3GEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_KikZkM3GEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Kis8cs3GEe-g_rxynA4UQw" points="[572, 460, -643984, -643984]$[640, 454, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Ki7l8M3GEe-g_rxynA4UQw" id="(0.9978494623655921,0.5)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Ki7l8c3GEe-g_rxynA4UQw" id="(0.0,0.5)"/>
@@ -465,7 +465,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_WwERNc3GEe-g_rxynA4UQw" x="2" y="-17"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_WwDqIc3GEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_Wv88cM3GEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_Wv88cM3GEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_WwDqIs3GEe-g_rxynA4UQw" points="[660, 454, -643984, -643984]$[740, 429, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_WwRskM3GEe-g_rxynA4UQw" id="(1.0,0.5)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_WwRskc3GEe-g_rxynA4UQw" id="(0.05,0.4964285714285694)"/>
@@ -484,7 +484,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_dV6j183GEe-g_rxynA4UQw" y="-20"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_dV58wc3GEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_dVzPEM3GEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_dVzPEM3GEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_dV58ws3GEe-g_rxynA4UQw" points="[656, 460, -643984, -643984]$[780, 480, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_dWImQM3GEe-g_rxynA4UQw" id="(0.8333333333333315,0.6666666666666666)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_dWImQc3GEe-g_rxynA4UQw" id="(0.0,0.6)"/>
@@ -507,7 +507,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_36BUp83GEe-g_rxynA4UQw" x="1" y="-19"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_36Atkc3GEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_356m8M3GEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_356m8M3GEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_36Atks3GEe-g_rxynA4UQw" points="[717, 220, -643984, -643984]$[716, 280, -643984, -643984]$[242, 280, -643984, -643984]$[243, 220, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_36RMQM3GEe-g_rxynA4UQw" id="(0.8,0.6666666666666666)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_36RMQc3GEe-g_rxynA4UQw" id="(0.1,0.6666666666666666)"/>
@@ -526,7 +526,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_KlD3dc3HEe-g_rxynA4UQw" y="-20"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_KlDQYc3HEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_Kk3DIM3HEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_Kk3DIM3HEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_KlDQYs3HEe-g_rxynA4UQw" points="[820, 500, -643984, -643984]$[800, 720, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_KlR54M3HEe-g_rxynA4UQw" id="(0.43795620437956206,1.0)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_KlR54c3HEe-g_rxynA4UQw" id="(0.4911242603550296,0.0)"/>
@@ -545,7 +545,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_R3cf-s3HEe-g_rxynA4UQw" y="-20"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_R3cf8c3HEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_R3Su8M3HEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_R3Su8M3HEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_R3cf8s3HEe-g_rxynA4UQw" points="[805, 740, -643984, -643984]$[880, 740, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_R3rwgM3HEe-g_rxynA4UQw" id="(0.9976331360946747,0.475)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_R3rwgc3HEe-g_rxynA4UQw" id="(0.0,0.5)"/>
@@ -568,7 +568,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_Sh1gys3HEe-g_rxynA4UQw" y="-20"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_Sh1gwc3HEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_ShneUM3HEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_ShneUM3HEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Sh1gws3HEe-g_rxynA4UQw" points="[972, 740, -643984, -643984]$[1040, 740, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SiKQ4M3HEe-g_rxynA4UQw" id="(0.9978494623655921,0.5)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SiKQ4c3HEe-g_rxynA4UQw" id="(0.0,0.5)"/>
@@ -591,7 +591,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_dQ8u1c3HEe-g_rxynA4UQw" y="-19"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_dQ8Hwc3HEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_dQusYM3HEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_dQusYM3HEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_dQ8Hws3HEe-g_rxynA4UQw" points="[1152, 720, -643984, -643984]$[1060, 230, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_dRLYUM3HEe-g_rxynA4UQw" id="(0.20125786163522014,0.0)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_dRLYUc3HEe-g_rxynA4UQw" id="(0.8,0.6666666666666666)"/>
@@ -614,26 +614,30 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_k0zh2s3HEe-g_rxynA4UQw" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_k0zh0c3HEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_k0qX4M3HEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_k0qX4M3HEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_k0zh0s3HEe-g_rxynA4UQw" points="[1070, 240, -643984, -643984]$[1060, 180, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_k1KuMM3HEe-g_rxynA4UQw" id="(0.45,0.0)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_k1LVQM3HEe-g_rxynA4UQw" id="(0.4878048780487805,1.0)"/>
     </edges>
     <edges xmi:type="notation:Connector" xmi:id="_pXx9wM3HEe-g_rxynA4UQw" type="ControlFlow_Edge" source="_hTNDUM3HEe-g_rxynA4UQw" target="_n1RpMM3HEe-g_rxynA4UQw">
       <children xmi:type="notation:DecorationNode" xmi:id="_pXyk0M3HEe-g_rxynA4UQw" type="ControlFlow_NameLabel">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_pXyk0c3HEe-g_rxynA4UQw" y="20"/>
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_EMEacM3aEe-WwfhifJ885A" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_pXyk0c3HEe-g_rxynA4UQw" x="-22" y="35"/>
       </children>
       <children xmi:type="notation:DecorationNode" xmi:id="_pXyk0s3HEe-g_rxynA4UQw" type="ControlFlow_WeightLabel">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_pXyk083HEe-g_rxynA4UQw" y="20"/>
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_EMNkYM3aEe-WwfhifJ885A" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_pXyk083HEe-g_rxynA4UQw" y="19"/>
       </children>
       <children xmi:type="notation:DecorationNode" xmi:id="_pXyk1M3HEe-g_rxynA4UQw" type="ControlFlow_GuardLabel">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_pXyk1c3HEe-g_rxynA4UQw" y="20"/>
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_EMWuUM3aEe-WwfhifJ885A" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_pXyk1c3HEe-g_rxynA4UQw" x="16" y="19"/>
       </children>
       <children xmi:type="notation:DecorationNode" xmi:id="_pXyk1s3HEe-g_rxynA4UQw" type="ControlFlow_StereotypeLabel">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_pXyk183HEe-g_rxynA4UQw" y="-20"/>
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_EMfRMM3aEe-WwfhifJ885A" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_pXyk183HEe-g_rxynA4UQw" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_pXx9wc3HEe-g_rxynA4UQw"/>
-      <element xmi:type="uml:ControlFlow" href="UML_Leo.uml#_pXm-oM3HEe-g_rxynA4UQw"/>
+      <element xmi:type="uml:ControlFlow" href="QuickByte_UML1.uml#_pXm-oM3HEe-g_rxynA4UQw"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_pXx9ws3HEe-g_rxynA4UQw" points="[1076, 260, -643984, -643984]$[1212, 229, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_pYDDgM3HEe-g_rxynA4UQw" id="(0.8333333333333371,0.6666666666666666)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_pYDDgc3HEe-g_rxynA4UQw" id="(0.05,0.5125000000000057)"/>
@@ -643,11 +647,11 @@
     <styles xmi:type="notation:StringValueStyle" xmi:id="_lwgi4c0IEe-iY7XYh7sm_w" name="diagram_compatibility_version" stringValue="1.4.0"/>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_lwgi4s0IEe-iY7XYh7sm_w"/>
     <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_lwgi480IEe-iY7XYh7sm_w" diagramKindId="org.eclipse.papyrus.uml.diagram.class">
-      <owner xmi:type="uml:Model" href="UML_Leo.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
+      <owner xmi:type="uml:Model" href="QuickByte_UML1.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
     </styles>
-    <element xmi:type="uml:Model" href="UML_Leo.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
+    <element xmi:type="uml:Model" href="QuickByte_UML1.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
   </notation:Diagram>
-  <notation:Diagram xmi:id="_lwiYEM0IEe-iY7XYh7sm_w" type="UseCase" name="QuickByte_Use Case Diagram" measurementUnit="Pixel">
+  <notation:Diagram xmi:id="_lwiYEM0IEe-iY7XYh7sm_w" type="UseCase" name="Use Case Diagram" measurementUnit="Pixel">
     <children xmi:type="notation:Shape" xmi:id="_9aq-MM0gEe-t6e0ozX1yvA" type="Actor_Shape">
       <children xmi:type="notation:DecorationNode" xmi:id="_9atacM0gEe-t6e0ozX1yvA" type="Actor_NameLabel">
         <layoutConstraint xmi:type="notation:Location" xmi:id="_9atacc0gEe-t6e0ozX1yvA" x="-20" y="-40"/>
@@ -661,7 +665,7 @@
       <children xmi:type="notation:DecorationNode" xmi:id="_9auBhM0gEe-t6e0ozX1yvA" type="Actor_FloatingNameLabel">
         <layoutConstraint xmi:type="notation:Location" xmi:id="_9auBhc0gEe-t6e0ozX1yvA" y="15"/>
       </children>
-      <element xmi:type="uml:Actor" href="UML_Leo.uml#_9ac7wM0gEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Actor" href="QuickByte_UML1.uml#_9ac7wM0gEe-t6e0ozX1yvA"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9aq-Mc0gEe-t6e0ozX1yvA" x="181" y="542"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_9yS0AM0gEe-t6e0ozX1yvA" type="Actor_Shape">
@@ -677,7 +681,7 @@
       <children xmi:type="notation:DecorationNode" xmi:id="_9yTbEs0gEe-t6e0ozX1yvA" type="Actor_FloatingNameLabel">
         <layoutConstraint xmi:type="notation:Location" xmi:id="_9yTbE80gEe-t6e0ozX1yvA" y="15"/>
       </children>
-      <element xmi:type="uml:Actor" href="UML_Leo.uml#_9yQXwM0gEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Actor" href="QuickByte_UML1.uml#_9yQXwM0gEe-t6e0ozX1yvA"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9yS0Ac0gEe-t6e0ozX1yvA" x="180" y="240"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_kWWvsM0hEe-t6e0ozX1yvA" type="Actor_Shape">
@@ -693,7 +697,7 @@
       <children xmi:type="notation:DecorationNode" xmi:id="_kWXWxs0hEe-t6e0ozX1yvA" type="Actor_FloatingNameLabel">
         <layoutConstraint xmi:type="notation:Location" xmi:id="_kWXWx80hEe-t6e0ozX1yvA" y="15"/>
       </children>
-      <element xmi:type="uml:Actor" href="UML_Leo.uml#_kWTFUM0hEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Actor" href="QuickByte_UML1.uml#_kWTFUM0hEe-t6e0ozX1yvA"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kWWvsc0hEe-t6e0ozX1yvA" x="160" y="800"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_lTUHMM0hEe-t6e0ozX1yvA" type="Actor_Shape">
@@ -709,7 +713,7 @@
       <children xmi:type="notation:DecorationNode" xmi:id="_lTUHOM0hEe-t6e0ozX1yvA" type="Actor_FloatingNameLabel">
         <layoutConstraint xmi:type="notation:Location" xmi:id="_lTUuQM0hEe-t6e0ozX1yvA" y="15"/>
       </children>
-      <element xmi:type="uml:Actor" href="UML_Leo.uml#_lTSSAM0hEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Actor" href="QuickByte_UML1.uml#_lTSSAM0hEe-t6e0ozX1yvA"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lTUHMc0hEe-t6e0ozX1yvA" x="1260" y="760"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_JQaLMM0jEe-t6e0ozX1yvA" type="Package_Shape">
@@ -725,7 +729,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_9LcvF80jEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9LcvGM0jEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_9LTlIM0jEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_9LTlIM0jEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9LcvEc0jEe-t6e0ozX1yvA" x="14" y="372"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_-EDLAM0jEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -738,7 +742,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_-EDyFc0jEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-EDyFs0jEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_-D7PMM0jEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_-D7PMM0jEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-EDLAc0jEe-t6e0ozX1yvA" x="174" y="372"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_K1HCsM0kEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -751,7 +755,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_K1Hpw80kEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_K1HpxM0kEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_K1BjIM0kEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_K1BjIM0kEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_K1HCsc0kEe-t6e0ozX1yvA" x="74" y="12" width="201" height="61"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_YACL4M0kEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -764,7 +768,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_YACL580kEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_YACL6M0kEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_X_8FQM0kEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_X_8FQM0kEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_YACL4c0kEe-t6e0ozX1yvA" x="294" y="12"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_nyO5UM0kEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -777,7 +781,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_nyPgYs0kEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nyPgY80kEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_nyILoM0kEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_nyILoM0kEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nyO5Uc0kEe-t6e0ozX1yvA" x="274" y="92"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_wqrgsM0kEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -790,7 +794,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_wqsHxc0kEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wqsHxs0kEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_wqeFUM0kEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_wqeFUM0kEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wqrgsc0kEe-t6e0ozX1yvA" x="294" y="172"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_VlJoYM0lEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -803,7 +807,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_VlKPcs0lEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_VlKPc80lEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_Vk-CMM0lEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_Vk-CMM0lEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_VlJoYc0lEe-t6e0ozX1yvA" x="274" y="252"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_j8PpwM0lEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -816,7 +820,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_j8Ppx80lEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_j8PpyM0lEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_j8IVAM0lEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_j8IVAM0lEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_j8Ppwc0lEe-t6e0ozX1yvA" x="194" y="812"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_uyezgM0lEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -829,7 +833,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_uyfalc0lEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uyfals0lEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_uyUbcM0lEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_uyUbcM0lEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uyezgc0lEe-t6e0ozX1yvA" x="334" y="472"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_SL9pkM0mEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -842,7 +846,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_SL-Qpc0mEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SL-Qps0mEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_SL274M0mEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_SL274M0mEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SL9pkc0mEe-t6e0ozX1yvA" x="188" y="640"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_AUVEMM0nEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -855,7 +859,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_AUVEN80nEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_AUVEOM0nEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_AUOWgM0nEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_AUOWgM0nEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_AUVEMc0nEe-t6e0ozX1yvA" x="634" y="512" width="221"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_HW5IAM0nEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -868,7 +872,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_HW5vFc0nEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_HW5vFs0nEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_HWxzQM0nEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_HWxzQM0nEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_HW5IAc0nEe-t6e0ozX1yvA" x="654" y="712"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_Np_dwM0nEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -881,7 +885,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_NqAE1c0nEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NqAE1s0nEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_Np3h8M0nEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_Np3h8M0nEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Np_dwc0nEe-t6e0ozX1yvA" x="634" y="592"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_ajueYM0pEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -894,7 +898,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_ajueZ80pEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ajueaM0pEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_ajnJoM0pEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_ajnJoM0pEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ajueYc0pEe-t6e0ozX1yvA" x="194" y="732"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_bkxrsM0pEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -907,7 +911,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_bkxrt80pEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_bkxruM0pEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_bkqW8M0pEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_bkqW8M0pEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_bkxrsc0pEe-t6e0ozX1yvA" x="354" y="732"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="__QDcYM0pEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -920,7 +924,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="__QDcZ80pEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="__QDcaM0pEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#__P3PIM0pEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#__P3PIM0pEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="__QDcYc0pEe-t6e0ozX1yvA" x="34" y="732"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_W8V1oM2lEe-by_MUyB9_og" type="UseCase_Shape_CN">
@@ -933,7 +937,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_W8dKZc2lEe-by_MUyB9_og"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_W8dKZs2lEe-by_MUyB9_og"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_W7gIIM2lEe-by_MUyB9_og"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_W7gIIM2lEe-by_MUyB9_og"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_W8V1oc2lEe-by_MUyB9_og" x="654" y="812"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_0GOgcM2mEe-by_MUyB9_og" type="UseCase_Shape_CN">
@@ -946,7 +950,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_0GPHhc2mEe-by_MUyB9_og"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0GPHhs2mEe-by_MUyB9_og"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_0GAeAM2mEe-by_MUyB9_og"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_0GAeAM2mEe-by_MUyB9_og"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0GOgcc2mEe-by_MUyB9_og" x="554" y="432"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_0ZkTMM2mEe-by_MUyB9_og" type="UseCase_Shape_CN">
@@ -959,7 +963,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_0Zk6Rc2mEe-by_MUyB9_og"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0Zk6Rs2mEe-by_MUyB9_og"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_0ZZ7IM2mEe-by_MUyB9_og"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_0ZZ7IM2mEe-by_MUyB9_og"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0ZkTMc2mEe-by_MUyB9_og" x="474" y="372"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_fxMJIM0mEe-t6e0ozX1yvA" type="UseCase_Shape_CN">
@@ -972,13 +976,13 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_fxMJJ80mEe-t6e0ozX1yvA"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fxMJKM0mEe-t6e0ozX1yvA"/>
           </children>
-          <element xmi:type="uml:UseCase" href="UML_Leo.uml#_fw-GsM0mEe-t6e0ozX1yvA"/>
+          <element xmi:type="uml:UseCase" href="QuickByte_UML1.uml#_fw-GsM0mEe-t6e0ozX1yvA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fxMJIc0mEe-t6e0ozX1yvA" x="154" y="432"/>
         </children>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JQayQc0jEe-t6e0ozX1yvA"/>
       </children>
-      <element xmi:type="uml:Package" href="UML_Leo.uml#_JQYWAM0jEe-t6e0ozX1yvA"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JQaLMc0jEe-t6e0ozX1yvA" x="240" y="60" width="901" height="1001"/>
+      <element xmi:type="uml:Package" href="QuickByte_UML1.uml#_JQYWAM0jEe-t6e0ozX1yvA"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JQaLMc0jEe-t6e0ozX1yvA" x="240" y="60" width="901" height="941"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_QzJR8M0lEe-t6e0ozX1yvA" type="Actor_Shape">
       <children xmi:type="notation:DecorationNode" xmi:id="_QzJ5AM0lEe-t6e0ozX1yvA" type="Actor_NameLabel">
@@ -993,22 +997,22 @@
       <children xmi:type="notation:DecorationNode" xmi:id="_QzJ5Bs0lEe-t6e0ozX1yvA" type="Actor_FloatingNameLabel">
         <layoutConstraint xmi:type="notation:Location" xmi:id="_QzJ5B80lEe-t6e0ozX1yvA" y="15"/>
       </children>
-      <element xmi:type="uml:Actor" href="UML_Leo.uml#_QzHcwM0lEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Actor" href="QuickByte_UML1.uml#_QzHcwM0lEe-t6e0ozX1yvA"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QzJR8c0lEe-t6e0ozX1yvA" x="120" y="360"/>
     </children>
     <styles xmi:type="notation:StringValueStyle" xmi:id="_lwiYEc0IEe-iY7XYh7sm_w" name="diagram_compatibility_version" stringValue="1.4.0"/>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_lwiYEs0IEe-iY7XYh7sm_w"/>
     <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_lwiYE80IEe-iY7XYh7sm_w" diagramKindId="org.eclipse.papyrus.uml.diagram.useCase">
-      <owner xmi:type="uml:Model" href="UML_Leo.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
+      <owner xmi:type="uml:Model" href="QuickByte_UML1.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
     </styles>
-    <element xmi:type="uml:Model" href="UML_Leo.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
+    <element xmi:type="uml:Model" href="QuickByte_UML1.uml#_lvRz0M0IEe-iY7XYh7sm_w"/>
     <edges xmi:type="notation:Connector" xmi:id="_aF46kM0jEe-t6e0ozX1yvA" type="Generalization_Edge" source="_9yS0AM0gEe-t6e0ozX1yvA" target="_9aq-MM0gEe-t6e0ozX1yvA">
       <children xmi:type="notation:DecorationNode" xmi:id="_aF6vwM0jEe-t6e0ozX1yvA" type="Generalization_StereotypeLabel">
         <styles xmi:type="notation:BooleanValueStyle" xmi:id="_dROOIM0jEe-t6e0ozX1yvA" name="IS_UPDATED_POSITION" booleanValue="true"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_aF7W0M0jEe-t6e0ozX1yvA" x="-2" y="-17"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_aF5hoM0jEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Generalization" href="UML_Leo.uml#_aFbAgM0jEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Generalization" href="QuickByte_UML1.uml#_aFbAgM0jEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_aF5hoc0jEe-t6e0ozX1yvA" points="[110, 445, -643984, -643984]$[160, 305, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_aGrkwM0jEe-t6e0ozX1yvA" id="(0.0,0.9866666666666667)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_aGrkwc0jEe-t6e0ozX1yvA" id="(0.0,0.36)"/>
@@ -1019,7 +1023,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_a1qxsc0jEe-t6e0ozX1yvA" y="-20"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_a1qKoc0jEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Generalization" href="UML_Leo.uml#_a1ekcM0jEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Generalization" href="QuickByte_UML1.uml#_a1ekcM0jEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_a1qKos0jEe-t6e0ozX1yvA" points="[160, 445, -643984, -643984]$[160, 305, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a17QYM0jEe-t6e0ozX1yvA" id="(0.6666666666666666,0.0)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a17QYc0jEe-t6e0ozX1yvA" id="(0.0,0.76)"/>
@@ -1030,7 +1034,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_bi2Awc0jEe-t6e0ozX1yvA" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_bi1Zsc0jEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Generalization" href="UML_Leo.uml#_birosM0jEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Generalization" href="QuickByte_UML1.uml#_birosM0jEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_bi1Zss0jEe-t6e0ozX1yvA" points="[270, 445, -643984, -643984]$[190, 325, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_bjFRUM0jEe-t6e0ozX1yvA" id="(0.0,0.8)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_bjFRUc0jEe-t6e0ozX1yvA" id="(0.6333333333333333,1.0)"/>
@@ -1045,7 +1049,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_P3pvgs0kEe-t6e0ozX1yvA" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_P3pIcc0kEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_P3mFIM0kEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_P3mFIM0kEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_P3pIcs0kEe-t6e0ozX1yvA" points="[330, 230, -643984, -643984]$[520, 300, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_P4O-UM0kEe-t6e0ozX1yvA" id="(1.0,0.8)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_P4O-Uc0kEe-t6e0ozX1yvA" id="(0.0,0.4918032786885246)"/>
@@ -1060,7 +1064,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_TPq0M80kEe-t6e0ozX1yvA" x="-1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_TPqNIc0kEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_TPo_AM0kEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_TPo_AM0kEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_TPqNIs0kEe-t6e0ozX1yvA" points="[350, 530, -643984, -643984]$[500, 400, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TQAycM0kEe-t6e0ozX1yvA" id="(1.0,0.76)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TQAycc0kEe-t6e0ozX1yvA" id="(0.0,0.4666666666666667)"/>
@@ -1075,7 +1079,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_UeBds80kEe-t6e0ozX1yvA" x="2" y="-17"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_UeA2oc0kEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_Ud_ogM0kEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_Ud_ogM0kEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_UeA2os0kEe-t6e0ozX1yvA" points="[350, 530, -643984, -643984]$[500, 460, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UeYDAM0kEe-t6e0ozX1yvA" id="(1.0,0.76)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UeYDAc0kEe-t6e0ozX1yvA" id="(0.0,0.4666666666666667)"/>
@@ -1090,7 +1094,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_cNTdlc0kEe-t6e0ozX1yvA" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_cNTdkM0kEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_cNRBUM0kEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_cNRBUM0kEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cNTdkc0kEe-t6e0ozX1yvA" points="[330, 210, -643984, -643984]$[520, 220, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cNiuIM0kEe-t6e0ozX1yvA" id="(1.0,0.8)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cNiuIc0kEe-t6e0ozX1yvA" id="(0.0,0.5)"/>
@@ -1105,7 +1109,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_sjAgts0kEe-t6e0ozX1yvA" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_sjAgsc0kEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_si_5oM0kEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_si_5oM0kEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_sjAgss0kEe-t6e0ozX1yvA" points="[330, 230, -643984, -643984]$[720, 200, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_sjRmcM0kEe-t6e0ozX1yvA" id="(1.0,0.8)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_sjRmcc0kEe-t6e0ozX1yvA" id="(0.0,0.5)"/>
@@ -1120,7 +1124,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_3gHHc80kEe-t6e0ozX1yvA" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_3gGgYc0kEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_3gErMM0kEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_3gErMM0kEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_3gGgYs0kEe-t6e0ozX1yvA" points="[330, 230, -643984, -643984]$[760, 460, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_3gkacM0kEe-t6e0ozX1yvA" id="(1.0,0.8)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_3gkacc0kEe-t6e0ozX1yvA" id="(0.0,0.5)"/>
@@ -1135,7 +1139,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_fWEI080lEe-t6e0ozX1yvA" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_fWDhwc0lEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_fWBskM0lEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_fWBskM0lEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_fWDhws0lEe-t6e0ozX1yvA" points="[270, 410, -643984, -643984]$[540, 580, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_fWV1oM0lEe-t6e0ozX1yvA" id="(1.0,0.4)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_fWV1oc0lEe-t6e0ozX1yvA" id="(0.0,0.4666666666666667)"/>
@@ -1150,7 +1154,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_gdLh5s0lEe-t6e0ozX1yvA" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_gdLh4c0lEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_gdJssM0lEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_gdJssM0lEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_gdLh4s0lEe-t6e0ozX1yvA" points="[330, 230, -643984, -643984]$[540, 580, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_gdj8YM0lEe-t6e0ozX1yvA" id="(1.0,0.8)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_gdj8Yc0lEe-t6e0ozX1yvA" id="(0.0,0.5)"/>
@@ -1165,7 +1169,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_lVKkhs0lEe-t6e0ozX1yvA" x="-1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_lVKkgc0lEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_lVIvUM0lEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_lVIvUM0lEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_lVKkgs0lEe-t6e0ozX1yvA" points="[330, 690, -643984, -643984]$[580, 700, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_lVcRUM0lEe-t6e0ozX1yvA" id="(1.0,0.8)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_lVcRUc0lEe-t6e0ozX1yvA" id="(0.0,0.4666666666666667)"/>
@@ -1180,7 +1184,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_wpR9E80lEe-t6e0ozX1yvA" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_wpRWAc0lEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_wpQu8M0lEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_wpQu8M0lEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_wpRWAs0lEe-t6e0ozX1yvA" points="[350, 530, -643984, -643984]$[500, 520, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_wpjp4M0lEe-t6e0ozX1yvA" id="(1.0,0.76)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_wpjp4c0lEe-t6e0ozX1yvA" id="(0.0,0.4666666666666667)"/>
@@ -1195,7 +1199,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_VRZwg80mEe-t6e0ozX1yvA" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_VRZJcc0mEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_VRX7UM0mEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_VRX7UM0mEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_VRZJcs0mEe-t6e0ozX1yvA" points="[330, 690, -643984, -643984]$[420, 640, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_VRwV0M0mEe-t6e0ozX1yvA" id="(1.0,0.8)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_VRwV0c0mEe-t6e0ozX1yvA" id="(0.0,0.5333333333333333)"/>
@@ -1210,7 +1214,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_iN5cI80mEe-t6e0ozX1yvA" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_iN41Ec0mEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_iN3m8M0mEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_iN3m8M0mEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_iN41Es0mEe-t6e0ozX1yvA" points="[350, 530, -643984, -643984]$[640, 500, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_iOWvIM0mEe-t6e0ozX1yvA" id="(1.0,0.76)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_iOYkUM0mEe-t6e0ozX1yvA" id="(0.0,0.4666666666666667)"/>
@@ -1225,7 +1229,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_PKKQA80nEe-t6e0ozX1yvA" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_PKJo8c0nEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_PKHMsM0nEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_PKHMsM0nEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_PKJo8s0nEe-t6e0ozX1yvA" points="[370, 850, -643984, -643984]$[500, 820, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_PKjRkM0nEe-t6e0ozX1yvA" id="(0.0,0.8)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_PKj4oM0nEe-t6e0ozX1yvA" id="(1.0,0.5333333333333333)"/>
@@ -1240,7 +1244,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_PrWRg80nEe-t6e0ozX1yvA" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_PrVqcc0nEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_PrT1QM0nEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_PrT1QM0nEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_PrVqcs0nEe-t6e0ozX1yvA" points="[370, 850, -643984, -643984]$[520, 900, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_PrpMcM0nEe-t6e0ozX1yvA" id="(0.0,0.8)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_PrpMcc0nEe-t6e0ozX1yvA" id="(1.0,0.3333333333333333)"/>
@@ -1251,7 +1255,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_DOUoxM0qEe-t6e0ozX1yvA" x="-1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_DOUowc0qEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Generalization" href="UML_Leo.uml#_DOAfsM0qEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Generalization" href="QuickByte_UML1.uml#_DOAfsM0qEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_DOUows0qEe-t6e0ozX1yvA" points="[550, 705, -643984, -643984]$[545, 645, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_DOuRYM0qEe-t6e0ozX1yvA" id="(0.38961038961038963,0.0)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_DOuRYc0qEe-t6e0ozX1yvA" id="(0.42857142857142855,0.9833333333333333)"/>
@@ -1262,7 +1266,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_EQfQZM0qEe-t6e0ozX1yvA" x="-1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_EQfQYc0qEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Generalization" href="UML_Leo.uml#_EQP_0M0qEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Generalization" href="QuickByte_UML1.uml#_EQP_0M0qEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_EQfQYs0qEe-t6e0ozX1yvA" points="[710, 705, -643984, -643984]$[545, 645, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_EQ3D0M0qEe-t6e0ozX1yvA" id="(0.42857142857142855,0.0)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_EQ3D0c0qEe-t6e0ozX1yvA" id="(0.8571428571428571,0.8333333333333334)"/>
@@ -1277,7 +1281,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_XrURZs0qEe-t6e0ozX1yvA" x="1" y="-18"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_XrURYc0qEe-t6e0ozX1yvA"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_XrTDQM0qEe-t6e0ozX1yvA"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_XrTDQM0qEe-t6e0ozX1yvA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_XrURYs0qEe-t6e0ozX1yvA" points="[330, 690, -643984, -643984]$[420, 720, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Xr3D8M0qEe-t6e0ozX1yvA" id="(1.0,0.8)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Xr3D8c0qEe-t6e0ozX1yvA" id="(0.0,0.4666666666666667)"/>
@@ -1292,7 +1296,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_bndg882lEe-by_MUyB9_og" y="-19"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_bnbEsc2lEe-by_MUyB9_og"/>
-      <element xmi:type="uml:Association" href="UML_Leo.uml#_bnZPgM2lEe-by_MUyB9_og"/>
+      <element xmi:type="uml:Association" href="QuickByte_UML1.uml#_bnZPgM2lEe-by_MUyB9_og"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_bnbEss2lEe-by_MUyB9_og" points="[1360, 670, -643984, -643984]$[1222, 850, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_boGaIM2lEe-by_MUyB9_og" id="(0.0,0.8)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_boGaIc2lEe-by_MUyB9_og" id="(1.0,0.3333333333333333)"/>
@@ -1303,7 +1307,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_6wZSY82mEe-by_MUyB9_og" x="-1" y="-17"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_6wZSYM2mEe-by_MUyB9_og"/>
-      <element xmi:type="uml:Generalization" href="UML_Leo.uml#_6v_pwM2mEe-by_MUyB9_og"/>
+      <element xmi:type="uml:Generalization" href="QuickByte_UML1.uml#_6v_pwM2mEe-by_MUyB9_og"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6wZSYc2mEe-by_MUyB9_og" points="[310, 657, -643984, -643984]$[390, 594, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_6wv3sM2mEe-by_MUyB9_og" id="(0.0,0.5)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_6wv3sc2mEe-by_MUyB9_og" id="(1.0,0.5)"/>
@@ -1314,20 +1318,22 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_74XAAc2mEe-by_MUyB9_og" y="-19"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_74WY8c2mEe-by_MUyB9_og"/>
-      <element xmi:type="uml:Generalization" href="UML_Leo.uml#_74KLsM2mEe-by_MUyB9_og"/>
+      <element xmi:type="uml:Generalization" href="QuickByte_UML1.uml#_74KLsM2mEe-by_MUyB9_og"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_74WY8s2mEe-by_MUyB9_og" points="[550, 618, -643984, -643984]$[410, 594, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_74s-QM2mEe-by_MUyB9_og" id="(0.40540540540540543,0.9833333333333333)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_74s-Qc2mEe-by_MUyB9_og" id="(0.9642857142857143,0.3333333333333333)"/>
     </edges>
     <edges xmi:type="notation:Connector" xmi:id="_tJlB8M2nEe-by_MUyB9_og" type="Extend_Edge" source="_Np_dwM0nEe-t6e0ozX1yvA" target="_HW5IAM0nEe-t6e0ozX1yvA">
       <children xmi:type="notation:DecorationNode" xmi:id="_tJlB882nEe-by_MUyB9_og" type="Extend_KeywordLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_AotocM3aEe-WwfhifJ885A" name="IS_UPDATED_POSITION" booleanValue="true"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_tJlpAM2nEe-by_MUyB9_og" y="20"/>
       </children>
       <children xmi:type="notation:DecorationNode" xmi:id="_tJlpAc2nEe-by_MUyB9_og" type="Extend_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_Ao3ZcM3aEe-WwfhifJ885A" name="IS_UPDATED_POSITION" booleanValue="true"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_tJlpAs2nEe-by_MUyB9_og" y="-20"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_tJlB8c2nEe-by_MUyB9_og"/>
-      <element xmi:type="uml:Extend" href="UML_Leo.uml#_tJPqwM2nEe-by_MUyB9_og"/>
+      <element xmi:type="uml:Extend" href="QuickByte_UML1.uml#_tJPqwM2nEe-by_MUyB9_og"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_tJlB8s2nEe-by_MUyB9_og" points="[970, 735, -643984, -643984]$[970, 795, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_tJ9ccM2nEe-by_MUyB9_og" id="(0.5025125628140703,1.0)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_tJ9ccc2nEe-by_MUyB9_og" id="(0.42105263157894735,0.0)"/>
