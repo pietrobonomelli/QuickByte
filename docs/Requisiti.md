@@ -52,7 +52,7 @@ Seguendo lo standard IEEE 830:
 
 - 2.3. Caratteristiche dell'utente
     - 2.3.1. **Cliente**: Navigare tra i ristoranti, visualizzare menu, effettuare ordini e visualizzare lo stato.
-    - 2.3.2. **Ristorante**: Gestire i menu, visualizzare e gestire gli ordini.
+    - 2.3.2. **Titolare**: Gestire i menu, visualizzare e gestire gli ordini.
     - 2.3.3. **Corriere**: Visualizzare e accettare consegne disponibili, aggiornarne lo stato.
 - 2.4. Vincoli
 - 2.5. Presupposti e dipendenze
@@ -67,7 +67,7 @@ Seguendo lo standard IEEE 830:
 
 3.2 Richieste funzionali
 
-- 3.2.1. **Cliente**
+- 3.2.1. **Cliente** può:
   - Creare e modificare un account Cliente fornendo nome, email, password e numero di telefono (con possibilità di cancellarlo).
   - Visualizzare la lista dei ristoranti disponibili.
   - Cliccare su un ristorante.
@@ -79,19 +79,18 @@ Seguendo lo standard IEEE 830:
   - Monitorare lo stato dell’ordine.
   - Recensire il ristorante da cui ha acquistato.
   - Eliminare il proprio account dalla piattaforma.
-- 3.2.2. **Titolare**
+- 3.2.2. **Titolare** può:
   - Creare e modificare un account Titolare fornendo nome, email, password e numero di telefono (con possibilità di cancellarlo).
-  - Creare e modificare il ristorante aggiungendo i vari dati (menu con lista dei piatti e rispettivi prezzi, orari di apertura, valutazione media, recensioni).
-  - Gestire e modificare i dati dei suoi ristoranti.
-  - Visualizzare e gestire ordini ricevuti.
+  - Creare e modificare il ristorante aggiungendo i vari dati (menu con lista dei piatti e rispettivi prezzi, orari di apertura).
+  - Visualizzare e gestire ordini ricevuti (visualizzare contatti clientie, monitora stato ordine, accetta o rifiuta ordine).
   - Visualizzare le recensioni riguardanti il ristorante.
-- 3.2.3. **Corriere**
+- 3.2.3. **Corriere** può:
   - Creare e modificare un account Corriere fornendo nome, email, password e numero di telefono (con possibilità di cancellarlo).
   - Dare la disponibilità se può prendere consegne in quel momento o meno.
   - Visualizzare le consegne disponibili e selezionarne una.
   - Visualizzare i dati inerenti all'ordinazione e i dati del cliente.
   - Prendere in carica un'ordinazione.
-  - Aggiornare lo stato di una consegna.
+  - Aggiornare lo stato di una consegna (presa in carico, terminata).
 
 3.3 Requisiti di prestazione
 - 3.3.1. Supportare 1'000 utenti simultanei senza degrado delle prestazioni.
