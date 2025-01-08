@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<environment:ConstraintEnvironment
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:environment="http://www.eclipse.org/papyrus/constraints/environment/0.9">
+  <constraintTypes
+      xmi:id="_eEFrcLrNEe-Oj5TQtqoF8A"/>
+</environment:ConstraintEnvironment>
