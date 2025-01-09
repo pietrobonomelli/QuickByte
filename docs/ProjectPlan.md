@@ -80,8 +80,8 @@ Per garantire leggibilità e manutenibilità del codice, adottiamo le seguenti c
 
 - Nomi delle variabili:
 	- Variabili globali in MAIUSCOLO.
-	- Variabili locali in camelCase (evitando gli underscore).
-	- Nomi dei metodi in camelCase, presenti di commento che descrive lo scopo del metodo.
+	- Variabili locali in CamelCase (evitando gli underscore).
+	- Nomi dei metodi in CamelCase, presenti di commento che descrive lo scopo del metodo.
 	- Costanti: dichiarate come static final e in MAIUSCOLO con underscore per separare le parole.
 - Indentazione: "tab" per ogni livello di indentazione.
 - Commenti:
@@ -109,10 +109,15 @@ Per garantire leggibilità e manutenibilità del codice, adottiamo le seguenti c
 	- Vista: Interfaccia utente, realizzata con Java Swing o SWT.
 	- Database: Embedded, con struttura progettata lo schema ER.
 	- Diagrammi UML:
-		- Diagramma dei casi d'uso per definire le principali funzionalità del sw.
-		- Diagramma delle classi per descrivere l'architettura del codice.
-		- Diagrammi di sequenza per rappresentare i flussi di interazione tra i vari componenti.
-		
+		- Diagramma del tempo: descrive la cronologia degli eventi e il loro ordine temporale.
+		- Diagramma dei componenti: illustra la struttura fisica del sistema e le sue dipendenze tra moduli.
+		- Diagramma delle classi: descrive l'architettura del codice rappresentando le classi e le relazioni tra di esse.
+		- Diagramma dei casi d'uso: definisce le principali funzionalità del software e come gli attori interagiscono con il sistema.
+		- Diagramma State Machine: rappresenta gli stati di un oggetto e le transizioni tra di essi.
+		- Diagramma delle comunicazioni: mostra come gli oggetti interagiscono tramite messaggi.
+		- Diagramma di sequenza: rappresenta l'ordine temporale dei messaggi scambiati tra oggetti.
+		- Diagramma delle attività: descrive il flusso di controllo o di attività in un processo.
+
 #### 4.5 Procedure di testing 
 Durante tutte le fasi di sviluppo, saranno svolti test per garantire la qualità del software:
 

@@ -73,7 +73,7 @@ Seguendo lo standard IEEE 830:
   - Cliccare su un ristorante.
   - Visualizzare i dettagli del ristorante (menu con lista dei piatti e rispettivi prezzi, orari di apertura, valutazione media, recensioni).
   - Aggiungere i piatti al carrello specificando la quantità.
-  - Effettuare un ordine inserendo i dati della carta e l'indirizzo. 
+  - Effettuare un ordine inserendo i dati della carta (con la possibilità di decidere di memorizzare il metodo di pagamento) e l'indirizzo(da inserire ogni volta).  
   - Riceve la conferma che l'ordine è stato accettato dal ristorante.
   - Riceve la conferma che l'ordine è stato preso in carica dal corriere.
   - Monitorare lo stato dell’ordine.
