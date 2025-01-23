@@ -1,32 +1,42 @@
 package quickbyte;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import database.DatabaseManager;
+import gui.LoginScreen;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Main {
+public class Main extends Application {
+
     public static void main(String[] args) {
         System.out.println("Avvio applicazione...");
+        launch(args);
+    }
 
-        // Inizializzazione del database
-        try {
-            System.out.println("Connessione al database...");
-            Connection conn = DatabaseManager.connect();
-            if (conn != null) {
-                System.out.println("Connessione stabilita con successo.");
-            }
+    @Override
+    public void start(Stage primaryStage) {
+        System.out.println("Avvio interfaccia grafica...");
+        
+        // Crea le tabelle del database (se non esistono già)
+        DatabaseManager.createTables();
 
-            // Creazione delle tabelle
-            System.out.println("Creazione delle tabelle...");
-            DatabaseManager.createTables();
+        // Imposta il titolo della finestra
+        primaryStage.setTitle("Food Delivery - QuickByte");
 
-            // Chiusura connessione
-            conn.close();
-            System.out.println("Database inizializzato correttamente.");
-        } catch (SQLException e) {
-            System.err.println("Errore durante l'inizializzazione del database: " + e.getMessage());
-        }
+        // Crea la schermata di login (LoginScreen)
+        LoginScreen loginScreen = new LoginScreen();
 
-        // Qui puoi aggiungere altre logiche di avvio dell'applicazione
-        System.out.println("Applicazione avviata correttamente!");
+        // Imposta la scena con la LoginScreen
+        Scene scene = new Scene(loginScreen, 400, 300);  // 400x300 è la dimensione della finestra
+        
+        // Carica il CSS
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+
+        primaryStage.setScene(scene);
+
+        // Mostra la finestra
+        primaryStage.show();
+
+        System.out.println("Interfaccia grafica avviata correttamente!");
     }
 }

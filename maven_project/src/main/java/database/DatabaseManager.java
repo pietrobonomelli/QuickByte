@@ -1,4 +1,4 @@
-package quickbyte;
+package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,6 +17,7 @@ public class DatabaseManager {
     public static void createTables() {
         String createUtenteTable = "CREATE TABLE IF NOT EXISTS Utente (" +
                 "email TEXT PRIMARY KEY, " +
+                "password TEXT NOT NULL, " +
                 "nome TEXT NOT NULL, " +
                 "telefono TEXT NOT NULL" +
                 ");";

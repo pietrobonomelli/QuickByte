@@ -5,18 +5,12 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>QuickByte</name>
   
-  <build>
-  	<plugins>
-    <plugin>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.8</version>
-        <configuration>
-            <mainClass>HelloFX</mainClass>
-        </configuration>
-    </plugin>
-</plugins>
-  </build>
+  <repositories>
+    <repository>
+        <id>openjfx</id>
+        <url>https://maven.openjfx.io</url>
+    </repository>
+</repositories>
   
   <dependencies>
   	<!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
@@ -29,8 +23,35 @@
 	<dependency>
     <groupId>org.openjfx</groupId>
     <artifactId>javafx-controls</artifactId>
-    <version>23.0.1</version>
+    <version>23</version>
   </dependency>
   
+  <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-fxml</artifactId>
+        <version>23</version>
+    </dependency>
+  
   </dependencies>
+ 
+ <build>
+  <plugins>
+    <plugin>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-maven-plugin</artifactId>
+            <version>0.0.8</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>run</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <mainClass>quickbyte.Main</mainClass>
+            </configuration>
+        </plugin>
+</plugins>
+ </build>
+  
 </project>
