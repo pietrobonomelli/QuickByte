@@ -1,38 +1,82 @@
-/* Imposta lo sfondo arancione per la finestra */
-.root {
-    -fx-background-color: #FFA500; /* Arancione */
-    -fx-alignment: center;
-}
-
-/* Centra i contenuti verticalmente e orizzontalmente */
+/* Contenitore principale */
 .login-container {
-    -fx-alignment: center;
-    -fx-spacing: 10px;
-    -fx-padding: 20px;
-}
-
-/* Aggiungi bordi smussati alle textfield e passwordfield */
-.text-field, .password-field {
-    -fx-background-radius: 15px;
+    -fx-background-color: white;
+    -fx-padding: 30px;
     -fx-border-radius: 15px;
-    -fx-border-color: #ccc;
-    -fx-padding: 10px;
-    -fx-pref-width: 300px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);
+    -fx-max-width: 400px;
+    -fx-alignment: center;
+    -fx-spacing: 20px;
 }
 
-/* Colore del pulsante di login */
-.button {
-    -fx-background-color: #FF6347; /* Rosso */
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-padding: 10px 20px;
-    -fx-background-radius: 15px;
+/* Stile per il logo */
+.logo {
+    -fx-max-width: 150px;
+    -fx-alignment: center;
 }
 
-/* Cambia il font per il titolo */
-.label {
-    -fx-font-family: 'Arial';
-    -fx-font-weight: bold;
+/* Titolo */
+.title {
     -fx-font-size: 24px;
-    -fx-text-fill: #FFFFFF; /* Bianco */
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-text-alignment: center;
+}
+
+/* Campi di testo */
+.text-field, .password-field {
+    -fx-pref-width: 100%;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-focus-color: #4caf50;
+    -fx-faint-focus-color: rgba(76, 175, 80, 0.3);
+}
+
+/* Pulsanti */
+.button {
+    -fx-pref-width: 150px; /* Larghezza uniforme */
+    -fx-padding: 12px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-color: #4caf50; /* Verde per il pulsante di login */
+    -fx-text-fill: white;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-alignment: center;
+}
+
+.button:hover {
+    -fx-background-color: #45a049; /* Colore più scuro al passaggio del mouse */
+}
+
+/* Pulsante Registrati */
+.button-secondary {
+    -fx-pref-width: 150px; /* Larghezza uniforme */
+    -fx-padding: 12px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-color: #007bff; /* Blu per il pulsante di registrazione */
+    -fx-text-fill: white;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.button-secondary:hover {
+    -fx-background-color: #0056b3; /* Colore più scuro al passaggio del mouse */
+}
+
+/* Messaggio di benvenuto */
+.welcome-message {
+    -fx-font-size: 16px;
+    -fx-text-fill: #555555;
+    -fx-text-alignment: center;
+    -fx-padding: 10px;
+}
+
+/* Spaziatura tra i campi */
+.spacing {
+    -fx-spacing: 10px;
 }

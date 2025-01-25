@@ -1,15 +1,20 @@
 package gui;
 
 import database.DatabaseConnection;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,10 +25,15 @@ public class LoginScreen extends VBox {
     public LoginScreen() {
         // Imposta la classe CSS per il layout principale
         this.getStyleClass().add("login-container");
+        this.setAlignment(Pos.CENTER);
+        this.setSpacing(20);
+
+        // Aggiungi il logo
+        ImageView logoView = createLogo();
 
         // Titolo con font maggiore
-        Text title = new Text("QuickByte");
-        title.getStyleClass().add("label");
+        Text title = new Text("Benvenuto su QuickByte");
+        title.getStyleClass().add("title");
 
         // Crea i campi di input per email e password
         TextField emailField = new TextField();
@@ -40,7 +50,7 @@ public class LoginScreen extends VBox {
 
         // Crea il pulsante per la registrazione
         Button registerButton = new Button("Registrati");
-        registerButton.getStyleClass().add("button");
+        registerButton.getStyleClass().add("button-secondary");
 
         // Gestisci il click del pulsante di login
         loginButton.setOnAction(e -> {
@@ -59,13 +69,29 @@ public class LoginScreen extends VBox {
             Stage registrationStage = new Stage();
             Registrazione registrationScreen = new Registrazione();
             Scene registrationScene = new Scene(registrationScreen, 400, 300);
+            registrationScene.getStylesheets().add("style.css");
             registrationStage.setTitle("Registrazione");
             registrationStage.setScene(registrationScene);
             registrationStage.show();
         });
 
         // Aggiungi gli elementi al layout
-        this.getChildren().addAll(title, emailField, passwordField, loginButton, registerButton);
+        this.getChildren().addAll(logoView, title, emailField, passwordField, loginButton, registerButton);
+    }
+
+    // Metodo per creare il logo
+    private ImageView createLogo() {
+        try {
+            FileInputStream logoStream = new FileInputStream("C:\\Users\\hamza\\Desktop\\Unibg\\Ingegneria del sw\\QuickByte\\docs\\images\\LogoQuickByte.png");
+            Image logoImage = new Image(logoStream);
+            ImageView logoView = new ImageView(logoImage);
+            logoView.setFitWidth(150);
+            logoView.setPreserveRatio(true);
+            return logoView;
+        } catch (FileNotFoundException e) {
+            System.out.println("Errore: Immagine del logo non trovata.");
+            return new ImageView();
+        }
     }
 
     // Metodo per verificare l'utente nel database
