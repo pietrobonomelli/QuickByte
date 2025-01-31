@@ -66,13 +66,18 @@ public class LoginScreen extends VBox {
 
         // Gestisci il click del pulsante di registrazione
         registerButton.setOnAction(e -> {
-            Stage registrationStage = new Stage();
+        	// Creiamo un nuovo layout per la schermata di registrazione
             Registrazione registrationScreen = new Registrazione();
-            Scene registrationScene = new Scene(registrationScreen, 400, 300);
+
+            // Otteniamo la finestra attuale
+            Stage primaryStage = (Stage) registerButton.getScene().getWindow();
+
+            // Creiamo una nuova scena con la stessa dimensione della finestra attuale
+            Scene registrationScene = new Scene(registrationScreen, primaryStage.getWidth(), primaryStage.getHeight());
             registrationScene.getStylesheets().add("style.css");
-            registrationStage.setTitle("Registrazione");
-            registrationStage.setScene(registrationScene);
-            registrationStage.show();
+
+            // Impostiamo la nuova scena senza cambiare le dimensioni della finestra
+            primaryStage.setScene(registrationScene);
         });
 
         // Aggiungi gli elementi al layout
@@ -82,7 +87,7 @@ public class LoginScreen extends VBox {
     // Metodo per creare il logo
     private ImageView createLogo() {
         try {
-            FileInputStream logoStream = new FileInputStream("C:\\Users\\hamza\\Desktop\\Unibg\\Ingegneria del sw\\QuickByte\\docs\\images\\LogoQuickByte.png");
+            FileInputStream logoStream = new FileInputStream("/quickbyte/src/main/java/gui/LogoQuickByte.png");
             Image logoImage = new Image(logoStream);
             ImageView logoView = new ImageView(logoImage);
             logoView.setFitWidth(150);

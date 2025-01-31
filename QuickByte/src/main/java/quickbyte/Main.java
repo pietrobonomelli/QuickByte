@@ -27,7 +27,7 @@ public class Main extends Application {
         LoginScreen loginScreen = new LoginScreen();
 
         // Imposta la scena con la LoginScreen
-        Scene scene = new Scene(loginScreen, 400, 300);  // 400x300 è la dimensione della finestra
+        Scene scene = new Scene(loginScreen, 800, 600);  // 400x300 è la dimensione della finestra
         
         // Carica il CSS
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
