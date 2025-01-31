@@ -6,6 +6,13 @@ public class Ristorante {
     private String telefono;
     private String indirizzo;
     
+    public Ristorante(int idRistorante, String nome, String telefono, String indirizzo) {
+        this.idRistorante = idRistorante;
+        this.nome = nome;
+        this.telefono = telefono;
+        this.indirizzo = indirizzo;
+    }
+    
     public int getIdRistorante() {
         return idRistorante;
     }

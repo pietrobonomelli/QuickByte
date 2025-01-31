@@ -1,6 +1,10 @@
 package quickbyte;
 
 public class Corriere extends Utente {
+	public Corriere(String email, String password, String nome, String telefono) {
+        super(email, password, nome, telefono);
+    }
+	
     private boolean staLavorando;
     
     public boolean isStaLavorando() {

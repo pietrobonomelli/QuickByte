@@ -7,6 +7,14 @@ public class Piatto {
     private String allergeni;
     private String foto;
     
+    public Piatto(String nome, boolean disponibile, String prezzo, String allergeni, String foto) {
+        this.nome = nome;
+        this.disponibile = disponibile;
+        this.prezzo = prezzo;
+        this.allergeni = allergeni;
+        this.foto = foto;
+    }
+    
     public String getNome() {
         return nome;
     }

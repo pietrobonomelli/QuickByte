@@ -5,6 +5,12 @@ public class MetodoDiPagamento {
     private String numeroCarta;
     private String scadenza;
     
+    public MetodoDiPagamento(String nominativo, String numeroCarta, String scadenza) {
+        this.nominativo = nominativo;
+        this.numeroCarta = numeroCarta;
+        this.scadenza = scadenza;
+    }
+    
     public String getNominativo() {
         return nominativo;
     }

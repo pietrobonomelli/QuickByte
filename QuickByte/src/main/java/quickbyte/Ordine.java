@@ -8,6 +8,15 @@ public class Ordine {
     private boolean pagato;
     private String indirizzo;
     
+    public Ordine(int idOrdine, StatoOrdine stato, double costo, String dataOraOrdine, boolean pagato, String indirizzo) {
+        this.idOrdine = idOrdine;
+        this.stato = stato;
+        this.costo = costo;
+        this.dataOraOrdine = dataOraOrdine;
+        this.pagato = pagato;
+        this.indirizzo = indirizzo;
+    }
+    
     public int getIdOrdine() {
         return idOrdine;
     }

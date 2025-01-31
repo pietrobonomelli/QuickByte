@@ -3,6 +3,11 @@ package quickbyte;
 public class Carrello {
     private int idCarrello;
     private int quantitaPiatti;
+    
+    public Carrello(int idCarrello, int quantitaPiatti) {
+        this.idCarrello = idCarrello;
+        this.quantitaPiatti = quantitaPiatti;
+    }
 
     public int getIdCarrello() {
         return idCarrello;
