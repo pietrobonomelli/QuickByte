@@ -105,3 +105,8 @@ Seguendo lo standard IEEE 830:
 
 3.6. Altri requisiti
 - 3.6.1.	Il sistema deve essere in italiano.
+
+---
+
+*Data di creazione: 10/12/2024 \
+Ultima modifica: 05/02/2025*
