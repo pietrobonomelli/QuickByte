@@ -1,4 +1,4 @@
-package quickbyte;
+package logica.utenti;
 
 public class Cliente extends Utente {
 	 public Cliente(String email, String password, String nome, String telefono) {

@@ -1,4 +1,4 @@
-package quickbyte;
+package logica.ristorante;
 
 public class Ristorante {
 	private int idRistorante;

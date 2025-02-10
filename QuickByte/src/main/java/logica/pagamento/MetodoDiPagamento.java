@@ -1,4 +1,4 @@
-package quickbyte;
+package logica.pagamento;
 
 public class MetodoDiPagamento {
     private String nominativo;

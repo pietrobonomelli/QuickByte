@@ -1,4 +1,4 @@
-package quickbyte;
+package logica.utenti;
 
 import java.sql.*;
 import database.DatabaseConnection;

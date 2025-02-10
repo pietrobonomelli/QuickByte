@@ -1,7 +1,7 @@
-package quickbyte;
+package gui.main;
 
 import database.DatabaseManager;
-import gui.LoginScreen;
+import gui.controller.LoginScreen;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

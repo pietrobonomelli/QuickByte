@@ -1,4 +1,4 @@
-package gui;
+package gui.controller;
 
 import database.DatabaseConnection;
 import javafx.geometry.Pos;
@@ -87,7 +87,7 @@ public class LoginScreen extends VBox {
     // Metodo per creare il logo
     private ImageView createLogo() {
         try {
-            FileInputStream logoStream = new FileInputStream("/quickbyte/src/main/java/gui/LogoQuickByte.png");
+            FileInputStream logoStream = new FileInputStream("/logica/src/main/java/gui/LogoQuickByte.png");
             Image logoImage = new Image(logoStream);
             ImageView logoView = new ImageView(logoImage);
             logoView.setFitWidth(150);

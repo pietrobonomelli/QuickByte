@@ -1,4 +1,4 @@
-package quickbyte;
+package logica.ordine;
 
 public class Ordine {
     private int idOrdine;

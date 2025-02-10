@@ -1,4 +1,4 @@
-package quickbyte;
+package logica.ristorante;
 
 public class Menu {
 	private String nome;
