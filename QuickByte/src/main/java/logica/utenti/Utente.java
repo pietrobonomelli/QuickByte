@@ -57,7 +57,7 @@ public class Utente {
             statement.setString(3, nome);
             statement.setString(4, telefono);
             statement.executeUpdate();
-            System.out.println("Registrazione completata con successo.");
+            System.out.println("RegisterScreen completata con successo.");
         } catch (SQLException e) {
             e.printStackTrace();
         }

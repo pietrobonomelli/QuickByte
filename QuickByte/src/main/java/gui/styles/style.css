@@ -1,6 +1,6 @@
 /* Contenitore principale */
 .login-container {
-    -fx-background-color: white;
+    -fx-background-color: black;
     -fx-padding: 30px;
     -fx-border-radius: 15px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);

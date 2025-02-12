@@ -13,8 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,7 +66,7 @@ public class LoginScreen extends VBox {
         // Gestisci il click del pulsante di registrazione
         registerButton.setOnAction(e -> {
         	// Creiamo un nuovo layout per la schermata di registrazione
-            Registrazione registrationScreen = new Registrazione();
+            RegisterScreen registrationScreen = new RegisterScreen();
 
             // Otteniamo la finestra attuale
             Stage primaryStage = (Stage) registerButton.getScene().getWindow();
@@ -86,17 +85,18 @@ public class LoginScreen extends VBox {
 
     // Metodo per creare il logo
     private ImageView createLogo() {
-        try {
-            FileInputStream logoStream = new FileInputStream("/logica/src/main/java/gui/LogoQuickByte.png");
-            Image logoImage = new Image(logoStream);
-            ImageView logoView = new ImageView(logoImage);
-            logoView.setFitWidth(150);
-            logoView.setPreserveRatio(true);
-            return logoView;
-        } catch (FileNotFoundException e) {
-            System.out.println("Errore: Immagine del logo non trovata.");
-            return new ImageView();
-        }
+    	InputStream logoStream = getClass().getResourceAsStream("/images/LogoQuickByte.png");
+    	if (logoStream == null) {
+    	    System.out.println("Errore: immagine del logo non trovata.");
+    	} else {
+    	    System.out.println("Logo caricato con successo!");
+    	}
+
+        Image logoImage = new Image(logoStream);
+        ImageView logoView = new ImageView(logoImage);
+        logoView.setFitWidth(150);
+        logoView.setPreserveRatio(true);
+        return logoView;		
     }
 
     // Metodo per verificare l'utente nel database

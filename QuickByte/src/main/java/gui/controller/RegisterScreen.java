@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class Registrazione extends VBox {
+public class RegisterScreen extends VBox {
 
     private TextField emailField;
     private TextField nameField;
@@ -18,12 +18,12 @@ public class Registrazione extends VBox {
     private PasswordField passwordField;
     private Button registerButton;
 
-    public Registrazione() {
+    public RegisterScreen() {
         setAlignment(Pos.CENTER);
         setSpacing(10);
         setStyle("-fx-background-color: orange;");
 
-        Label titleLabel = new Label("Registrazione");
+        Label titleLabel = new Label("RegisterScreen");
         titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
         emailField = new TextField();
@@ -59,7 +59,7 @@ public class Registrazione extends VBox {
             showError("Email già in uso");
         } else {
             saveUser(email, name, phone, password);
-            showSuccess("Registrazione avvenuta con successo!");
+            showSuccess("RegisterScreen avvenuta con successo!");
         }
     }
 

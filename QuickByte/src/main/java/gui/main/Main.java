@@ -5,6 +5,7 @@ import gui.controller.LoginScreen;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.net.URL;
 
 public class Main extends Application {
 
@@ -30,8 +31,14 @@ public class Main extends Application {
         Scene scene = new Scene(loginScreen, 800, 600);  // 400x300 è la dimensione della finestra
         
         // Carica il CSS
-        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        URL cssUrl = getClass().getResource("/gui/styles/style.css");
+        if (cssUrl == null) {
+            System.out.println("Errore: file CSS non trovato.");
+        } else {
+            scene.getStylesheets().add(cssUrl.toExternalForm());
+        }
 
+        
         primaryStage.setScene(scene);
 
         // Mostra la finestra

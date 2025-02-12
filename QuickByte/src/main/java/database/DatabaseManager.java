@@ -96,8 +96,8 @@ public class DatabaseManager {
     }
 
     // Metodo main per testare la creazione del database
-    public static void main(String[] args) {
-        createTables();
-    }
+	/* public static void main(String[] args) {
+	   		createTables();
+	   } */
 }
 
