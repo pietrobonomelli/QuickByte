@@ -58,6 +58,8 @@ public class LoginScreen extends VBox {
 
             if (verifyUser(email, password)) {
                 showAlert(AlertType.INFORMATION, "Login riuscito", "Benvenuto, " + email);
+                //QUA SWITCHO ALLA MAIN PAGE
+                switchToMainScreen();
             } else {
                 showAlert(AlertType.ERROR, "Login fallito", "Email o password errati.");
             }
@@ -81,6 +83,17 @@ public class LoginScreen extends VBox {
 
         // Aggiungi gli elementi al layout
         this.getChildren().addAll(logoView, title, emailField, passwordField, loginButton, registerButton);
+    }
+    
+    private void switchToMainScreen() {
+        // Ottieni il contesto della scena corrente
+        Scene currentScene = getScene();
+
+        // Crea la nuova schermata main
+        MainScreen mainScreen = new MainScreen(); 
+
+        // Cambia la scena con quella main
+        currentScene.setRoot(mainScreen);
     }
 
     // Metodo per creare il logo
