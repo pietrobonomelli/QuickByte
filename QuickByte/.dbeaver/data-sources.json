@@ -7,15 +7,16 @@
 			"name": "database_embedded.db",
 			"save-password": true,
 			"configuration": {
-				"database": "C:\\Users\\hamza\\Desktop\\Unibg\\Ingegneria del sw\\QuickByte\\QuickByte\\target\\classes\\database_embedded.db",
-				"url": "jdbc:sqlite:C:\\Users\\hamza\\Desktop\\Unibg\\Ingegneria del sw\\QuickByte\\QuickByte\\target\\classes\\database_embedded.db",
-				"configurationType": "URL",
+				"database": "C:\\QuickByte\\QuickByte\\QuickByte\\src\\main\\resources\\database_embedded.db",
+				"url": "jdbc:sqlite:C:\\QuickByte\\QuickByte\\QuickByte\\src\\main\\resources\\database_embedded.db",
+				"configurationType": "MANUAL",
 				"type": "dev",
 				"closeIdleConnection": true,
 				"auth-model": "native"
 			}
 		}
 	},
+	"virtual-models": {"sqlite_jdbc-194a3cc896d-6d4524f5000d63ea":{"@properties":{"erd.diagram.state":{"serialized":"\u003cdiagram version\u003d\"1\" name\u003d\"empty\" time\u003d\"202502131716\"\u003e\u003centities\u003e\u003cdata-source id\u003d\"sqlite_jdbc-194a3cc896d-6d4524f5000d63ea\"\u003e\u003centity id\u003d\"1\" name\u003d\"Carrello\" fq-name\u003d\"Carrello\" order\u003d\"0\" x\u003d\"40\" y\u003d\"265\"/\u003e\u003centity id\u003d\"2\" name\u003d\"Menu\" fq-name\u003d\"Menu\" order\u003d\"1\" x\u003d\"226\" y\u003d\"80\"/\u003e\u003centity id\u003d\"3\" name\u003d\"MetodoDiPagamento\" fq-name\u003d\"MetodoDiPagamento\" order\u003d\"2\" x\u003d\"502\" y\u003d\"346\"/\u003e\u003centity id\u003d\"4\" name\u003d\"Ordine\" fq-name\u003d\"Ordine\" order\u003d\"3\" x\u003d\"226\" y\u003d\"225\"/\u003e\u003centity id\u003d\"5\" name\u003d\"Piatto\" fq-name\u003d\"Piatto\" order\u003d\"4\" x\u003d\"40\" y\u003d\"40\"/\u003e\u003centity id\u003d\"6\" name\u003d\"Ristorante\" fq-name\u003d\"Ristorante\" order\u003d\"5\" x\u003d\"427\" y\u003d\"16\"/\u003e\u003centity id\u003d\"7\" name\u003d\"Utente\" fq-name\u003d\"Utente\" order\u003d\"6\" x\u003d\"632\" y\u003d\"147\"/\u003e\u003c/data-source\u003e\u003c/entities\u003e\u003crelations\u003e\u003crelation name\u003d\"Piatto_Menu_FK\" fq-name\u003d\"Piatto.Piatto_Menu_FK\" type\u003d\"fk\" pk-ref\u003d\"2\" fk-ref\u003d\"5\"/\u003e\u003crelation name\u003d\"Ordine_Ristorante_FK\" fq-name\u003d\"Ordine.Ordine_Ristorante_FK\" type\u003d\"fk\" pk-ref\u003d\"6\" fk-ref\u003d\"4\"/\u003e\u003crelation name\u003d\"Menu_Ristorante_FK\" fq-name\u003d\"Menu.Menu_Ristorante_FK\" type\u003d\"fk\" pk-ref\u003d\"6\" fk-ref\u003d\"2\"/\u003e\u003crelation name\u003d\"Ordine_Ristorante_FK\" fq-name\u003d\"Ordine.Ordine_Ristorante_FK\" type\u003d\"fk\" pk-ref\u003d\"6\" fk-ref\u003d\"4\"/\u003e\u003crelation name\u003d\"MetodoDiPagamento_Utente_FK\" fq-name\u003d\"MetodoDiPagamento.MetodoDiPagamento_Utente_FK\" type\u003d\"fk\" pk-ref\u003d\"7\" fk-ref\u003d\"3\"/\u003e\u003crelation name\u003d\"Ristorante_Utente_FK\" fq-name\u003d\"Ristorante.Ristorante_Utente_FK\" type\u003d\"fk\" pk-ref\u003d\"7\" fk-ref\u003d\"6\"/\u003e\u003crelation name\u003d\"Ordine_Utente_FK\" fq-name\u003d\"Ordine.Ordine_Utente_FK\" type\u003d\"fk\" pk-ref\u003d\"7\" fk-ref\u003d\"4\"/\u003e\u003crelation name\u003d\"Ordine_Utente_FK_1\" fq-name\u003d\"Ordine.Ordine_Utente_FK_1\" type\u003d\"fk\" pk-ref\u003d\"7\" fk-ref\u003d\"4\"/\u003e\u003c/relations\u003e\u003c/diagram\u003e"}}}},
 	"connection-types": {
 		"dev": {
 			"name": "Development",

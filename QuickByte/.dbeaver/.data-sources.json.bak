@@ -1,0 +1,35 @@
+{
+	"folders": {},
+	"connections": {
+		"sqlite_jdbc-194a3cc896d-6d4524f5000d63ea": {
+			"provider": "sqlite",
+			"driver": "sqlite_jdbc",
+			"name": "database_embedded.db",
+			"save-password": true,
+			"configuration": {
+				"database": "C:\\QuickByte\\QuickByte\\QuickByte\\src\\main\\resources\\database_embedded.db",
+				"url": "jdbc:sqlite:C:\\QuickByte\\QuickByte\\QuickByte\\src\\main\\resources\\database_embedded.db",
+				"configurationType": "MANUAL",
+				"type": "dev",
+				"closeIdleConnection": true,
+				"auth-model": "native"
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"smart-commit": false,
+			"smart-commit-recover": true,
+			"auto-close-transactions": true,
+			"close-transactions-period": 1800,
+			"auto-close-connections": true,
+			"close-connections-period": 14400
+		}
+	}
+}
