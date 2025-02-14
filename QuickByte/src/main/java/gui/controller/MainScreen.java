@@ -1,12 +1,12 @@
 package gui.controller;
 
+import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 
-public class MainScreen extends VBox {
-
+public abstract class MainScreen extends VBox {
+    
     public MainScreen() {
-        // Qui puoi aggiungere eventuali componenti o configurazioni per la schermata
-        // Ad esempio:
-        // this.getChildren().add(new Button("Clicca me"));
+        this.setAlignment(Pos.CENTER);
+        this.setSpacing(20);
     }
 }

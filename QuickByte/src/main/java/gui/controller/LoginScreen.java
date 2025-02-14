@@ -57,9 +57,10 @@ public class LoginScreen extends VBox {
             String password = passwordField.getText();
 
             if (verifyUser(email, password)) {
+                // Salva l'email nella sessione
+                SessioneUtente.setEmail(email);
                 showAlert(AlertType.INFORMATION, "Login riuscito", "Benvenuto, " + email);
-                //QUA SWITCHO ALLA MAIN PAGE
-                switchToMainScreen();
+                switchToMainScreen(email);
             } else {
                 showAlert(AlertType.ERROR, "Login fallito", "Email o password errati.");
             }
@@ -67,7 +68,7 @@ public class LoginScreen extends VBox {
 
         // Gestisci il click del pulsante di registrazione
         registerButton.setOnAction(e -> {
-        	// Creiamo un nuovo layout per la schermata di registrazione
+            // Creiamo un nuovo layout per la schermata di registrazione
             RegisterScreen registrationScreen = new RegisterScreen();
 
             // Otteniamo la finestra attuale
@@ -84,32 +85,57 @@ public class LoginScreen extends VBox {
         // Aggiungi gli elementi al layout
         this.getChildren().addAll(logoView, title, emailField, passwordField, loginButton, registerButton);
     }
-    
-    private void switchToMainScreen() {
-        // Ottieni il contesto della scena corrente
-        Scene currentScene = getScene();
 
-        // Crea la nuova schermata main
-        MainScreen mainScreen = new MainScreen(); 
+    private void switchToMainScreen(String email) {
+        String tipoUtente = getUserType(email);
 
-        // Cambia la scena con quella main
-        currentScene.setRoot(mainScreen);
+        if (tipoUtente == null) {
+            showAlert(AlertType.ERROR, "Errore", "Impossibile determinare il tipo di utente.");
+            return;
+        }
+
+        Stage primaryStage = (Stage) getScene().getWindow();
+        Scene newScene;
+
+        // Verifica che il tipo utente esista prima di continuare
+        if (tipoUtente != null) {
+            switch (tipoUtente) {
+                case "Cliente":
+                    newScene = new Scene(new MainScreenCliente(), primaryStage.getWidth(), primaryStage.getHeight());
+                    break;
+                case "Corriere":
+                    newScene = new Scene(new MainScreenCorriere(), primaryStage.getWidth(), primaryStage.getHeight());
+                    break;
+                case "Titolare":
+                    newScene = new Scene(new MainScreenTitolare(), primaryStage.getWidth(), primaryStage.getHeight());
+                    break;
+                default:
+                    showAlert(AlertType.ERROR, "Errore", "Tipo utente non riconosciuto.");
+                    return;
+            }
+
+            newScene.getStylesheets().add("style.css");
+            primaryStage.setScene(newScene);
+        } else {
+            showAlert(AlertType.ERROR, "Errore", "Tipo utente non valido.");
+        }
     }
+
 
     // Metodo per creare il logo
     private ImageView createLogo() {
-    	InputStream logoStream = getClass().getResourceAsStream("/images/LogoQuickByte.png");
-    	if (logoStream == null) {
-    	    System.out.println("Errore: immagine del logo non trovata.");
-    	} else {
-    	    System.out.println("Logo caricato con successo!");
-    	}
+        InputStream logoStream = getClass().getResourceAsStream("/images/LogoQuickByte.png");
+        if (logoStream == null) {
+            System.out.println("Errore: immagine del logo non trovata.");
+        } else {
+            System.out.println("Logo caricato con successo!");
+        }
 
         Image logoImage = new Image(logoStream);
         ImageView logoView = new ImageView(logoImage);
         logoView.setFitWidth(150);
         logoView.setPreserveRatio(true);
-        return logoView;		
+        return logoView;
     }
 
     // Metodo per verificare l'utente nel database
@@ -137,5 +163,22 @@ public class LoginScreen extends VBox {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private String getUserType(String email) {
+        String query = "SELECT tipoUtente FROM Utente WHERE email = ?";
+        try (Connection connection = DatabaseConnection.connect();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("tipoUtente");
+            }
+        } catch (SQLException e) {
+            System.out.println("Errore durante il recupero del tipo di utente: " + e.getMessage());
+        }
+        return null;
     }
 }
