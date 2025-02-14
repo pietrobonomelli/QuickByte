@@ -63,10 +63,12 @@ public class DatabaseManager {
                 ");";
 
         String createMenuTable = "CREATE TABLE IF NOT EXISTS Menu (" +
-                "nome TEXT PRIMARY KEY, " +
-                "idRistorante INTEGER, " +
-                "FOREIGN KEY(idRistorante) REFERENCES Ristorante(idRistorante)" +
+                "nome TEXT NOT NULL, " +
+                "idRistorante INTEGER NOT NULL, " +
+                "PRIMARY KEY (nome, idRistorante), " +  // Chiave primaria composta
+                "FOREIGN KEY (idRistorante) REFERENCES Ristorante(idRistorante)" +
                 ");";
+
 
         String createPiattoTable = "CREATE TABLE IF NOT EXISTS Piatto (" +
                 "nome TEXT PRIMARY KEY, " +

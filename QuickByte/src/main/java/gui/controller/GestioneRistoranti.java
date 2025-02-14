@@ -9,83 +9,60 @@ import java.sql.*;
 
 public class GestioneRistoranti extends VBox {
 
-    private VBox container; // Contenitore verticale per i ristoranti
-
+    private VBox container;
+    private int idRistorante;
+    
     public GestioneRistoranti() {
-        super(10); // Spazio tra gli elementi
+        super(10);
         this.setStyle("-fx-padding: 10;");
-
-        // Inizializza container PRIMA di chiamare loadRistoranti()
         container = new VBox(10);
-        
-        // Carica i ristoranti dal database
         loadRistoranti();
-
-        // Aggiungi il container alla vista
         this.getChildren().add(container);
 
-        // Crea una HBox per i pulsanti (Torna alla pagina principale e Inserisci nuovo ristorante)
-        HBox buttonContainer = new HBox(10); // 10 è la distanza tra i pulsanti
+        HBox buttonContainer = new HBox(10);
         buttonContainer.setStyle("-fx-padding: 10;");
 
-        // Pulsante "Torna alla pagina principale"
         Button tornaButton = new Button("Torna alla pagina principale");
-        tornaButton.setOnAction(e -> switchToMainScreen()); // Torna alla pagina principale
+        tornaButton.setOnAction(e -> switchToMainScreen());
         buttonContainer.getChildren().add(tornaButton);
 
-        // Pulsante "Inserisci nuovo Ristorante"
         Button inserisciRistoranteButton = new Button("Inserisci nuovo Ristorante");
         inserisciRistoranteButton.setOnAction(e -> switchToInserisciRistorante());
         buttonContainer.getChildren().add(inserisciRistoranteButton);
 
-        // Aggiungi la HBox con i pulsanti alla vista principale
         this.getChildren().add(buttonContainer);
     }
 
     private void loadRistoranti() {
-        String emailTitolare = SessioneUtente.getEmail(); // Ottieni l'email dell'utente dalla sessione
+        String emailTitolare = SessioneUtente.getEmail();
 
-        // Connessione al database e query per recuperare i ristoranti dell'utente
         try (Connection conn = DatabaseConnection.connect()) {
             String query = "SELECT nome FROM Ristorante WHERE emailTitolare = ?";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, emailTitolare); // Imposta l'email del titolare
-
+                stmt.setString(1, emailTitolare);
                 ResultSet rs = stmt.executeQuery();
-
                 ObservableList<String> ristoranti = FXCollections.observableArrayList();
                 while (rs.next()) {
-                    String nomeRistorante = rs.getString("nome");
-                    ristoranti.add(nomeRistorante); // Aggiungi il nome del ristorante alla lista
+                    ristoranti.add(rs.getString("nome"));
                 }
 
-                // Carica i ristoranti nell'interfaccia
                 for (String ristorante : ristoranti) {
-                    // Crea il box per ogni ristorante
                     HBox ristoranteBox = new HBox(10);
                     ristoranteBox.setStyle("-fx-padding: 10;");
-
-                    // Etichetta con il nome del ristorante
                     Label nomeRistorante = new Label(ristorante);
 
-                    // Pulsante per eliminare
                     Button eliminaButton = new Button("Elimina");
-                    eliminaButton.setOnAction(e -> eliminaRistorante(ristorante));
+                    eliminaButton.setOnAction(e -> confermaEliminazione(ristorante));
 
-                    // Pulsante per modificare il menù
-                    Button modificaMenuButton = new Button("Modifica Menù");
-                    modificaMenuButton.setOnAction(e -> modificaMenu(ristorante));
+                    Button modificaButton = new Button("Modifica");
+                    modificaButton.setOnAction(e -> switchToModificaRistorante(ristorante));
+                    
+                    Button gestisciMenuButton = new Button("Gestisci Menu");
+                    gestisciMenuButton.setOnAction(e -> switchToGestisciMenu(ristorante));
 
-                    // Aggiungi gli elementi al box
-                    ristoranteBox.getChildren().addAll(nomeRistorante, eliminaButton, modificaMenuButton);
-
-                    // Aggiungi il box alla vista principale
+                    ristoranteBox.getChildren().addAll(nomeRistorante, eliminaButton, modificaButton, gestisciMenuButton);
                     container.getChildren().add(ristoranteBox);
                 }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                showAlert("Errore", "Errore di connessione al database.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -93,25 +70,61 @@ public class GestioneRistoranti extends VBox {
         }
     }
 
-    private void eliminaRistorante(String ristorante) {
-        // Logica per eliminare un ristorante dal database
-        System.out.println("Eliminando ristorante: " + ristorante);
-        // Codice per eliminare il ristorante dal database
+    private void confermaEliminazione(String ristorante) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Conferma eliminazione");
+        alert.setHeaderText("Stai per eliminare " + ristorante);
+        alert.setContentText("Sei sicuro?");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                eliminaRistorante(ristorante);
+            }
+        });
     }
 
-    private void modificaMenu(String ristorante) {
-        // Logica per modificare il menù di un ristorante
-        System.out.println("Modificando menù per: " + ristorante);
-        // Codice per modificare il menù del ristorante
+    private void eliminaRistorante(String ristorante) {
+        try (Connection conn = DatabaseConnection.connect()) {
+            String query = "DELETE FROM Ristorante WHERE nome = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, ristorante);
+                int affectedRows = stmt.executeUpdate();
+                if (affectedRows > 0) {
+                    showAlert("Successo", "Ristorante eliminato con successo.");
+                    container.getChildren().clear();
+                    loadRistoranti();
+                } else {
+                    showAlert("Errore", "Impossibile eliminare il ristorante.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Errore", "Errore durante l'eliminazione del ristorante.");
+        }
+    }
+
+    private void switchToModificaRistorante(String ristorante) {
+        ModificaRistorante modificaRistoranteScreen = new ModificaRistorante(ristorante);
+        this.getScene().setRoot(modificaRistoranteScreen);
+    }
+
+    private void switchToGestisciMenu(String ristorante) {
+        // Recupera l'ID del ristorante dal database
+        int id = getRistoranteIdByName(ristorante);
+        // Imposta l'ID nella sessione
+        SessioneRistorante.setId(id);
+
+        // Crea la schermata per gestire il menu, passando l'ID dalla sessione
+        GestisciMenu gestisciMenuScreen = new GestisciMenu(SessioneRistorante.getId());
+        this.getScene().setRoot(gestisciMenuScreen);
     }
 
     private void switchToInserisciRistorante() {
         InserisciRistorante inserisciRistoranteScreen = new InserisciRistorante();
-        this.getScene().setRoot(inserisciRistoranteScreen); // Imposta direttamente la nuova schermata
+        this.getScene().setRoot(inserisciRistoranteScreen);
     }
 
     private void switchToMainScreen() {
-        // Logica per tornare alla pagina principale, ad esempio passando alla schermata principale
         MainScreenTitolare mainScreenTitolare = new MainScreenTitolare();
         this.getScene().setRoot(mainScreenTitolare);
     }
@@ -123,8 +136,26 @@ public class GestioneRistoranti extends VBox {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-    public VBox getContainer() {
-        return container; // Restituisce il VBox contenente la lista dei ristoranti
+    
+    private int getRistoranteIdByName(String nome) {
+        int id = -1;
+        String emailTitolare = SessioneUtente.getEmail();
+        
+        try (Connection conn = DatabaseConnection.connect()) {
+            String query = "SELECT idRistorante FROM Ristorante WHERE nome = ? AND emailTitolare = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, nome);
+                stmt.setString(2, emailTitolare);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    id = rs.getInt("idRistorante");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Errore", "Errore durante il recupero dell'ID del ristorante.");
+        }
+        return id;
     }
+
 }
