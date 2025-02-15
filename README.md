@@ -18,15 +18,15 @@ QuickByte, un’applicazione per la gestione di ordini di cibo a domicilio, che 
 - Git ([Link](https://git-scm.com/downloads/win))
 
 ## Come eseguire l'applicazione QuickByte:
-#### 1. Clonare la directory 
+#### 1. Clonare la directory in una qualsiasi posizione
 ```
 git clone https://github.com/pietrobonomelli/QuickByte
 ```
-#### 2. Spostarsi nella directory del progetto
+#### 2. Spostarsi nella directory del progetto Maven
 ```
 cd QuickByte\QuickByte
 ```
-#### 3. Successivamente esegurie il :
+#### 3. Successivamente eseguire l'applicazione
 ```
 mvn clean javafx:run
 ```
