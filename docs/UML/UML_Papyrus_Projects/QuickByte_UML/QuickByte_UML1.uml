@@ -9,31 +9,47 @@
     </region>
   </packagedElement>
   <packagedElement xmi:type="uml:Interaction" xmi:id="_lwO2EM0IEe-iY7XYh7sm_w" name="Interaction2"/>
-  <packagedElement xmi:type="uml:Interaction" xmi:id="_lwTukM0IEe-iY7XYh7sm_w" name="Interaction3"/>
-  <packagedElement xmi:type="uml:Activity" xmi:id="_lwZOIM0IEe-iY7XYh7sm_w" name="Activity4" node="_bAchQM3GEe-g_rxynA4UQw _Jeg7kM3GEe-g_rxynA4UQw _GoZDAM3GEe-g_rxynA4UQw _mwXhgM3FEe-g_rxynA4UQw _dREVgM3FEe-g_rxynA4UQw _Gd3DcM3FEe-g_rxynA4UQw _6UA8wM3EEe-g_rxynA4UQw _prhTwM20Ee-g_rxynA4UQw _nlVDUM20Ee-g_rxynA4UQw _V6L3QM20Ee-g_rxynA4UQw _Hh4aUM3HEe-g_rxynA4UQw _N7ExAM3HEe-g_rxynA4UQw _PuM7gM3HEe-g_rxynA4UQw _aGXCIM3HEe-g_rxynA4UQw _hTFukM3HEe-g_rxynA4UQw _n1KUcM3HEe-g_rxynA4UQw _33rt4M5sEe-7iIsng61VkA _XtKcQM5uEe-7iIsng61VkA _ihYh4M5wEe-7iIsng61VkA" group="_6uC2EM2zEe-g_rxynA4UQw _3OFWUM2zEe-g_rxynA4UQw _8fciQM2zEe-g_rxynA4UQw">
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_lwTukM0IEe-iY7XYh7sm_w" name="Interaction3">
+    <fragment xmi:type="uml:CombinedFragment" xmi:id="_1Q_GyevfEe-7fL1cgKtjXA" name="CombinedFragment54" interactionOperator="opt">
+      <operand xmi:type="uml:InteractionOperand" xmi:id="_1Q_GyuvfEe-7fL1cgKtjXA" name="InteractionOperand0">
+        <guard xmi:type="uml:InteractionConstraint" xmi:id="_1Q_G0OvfEe-7fL1cgKtjXA" name="guard"/>
+      </operand>
+    </fragment>
+    <fragment xmi:type="uml:CombinedFragment" xmi:id="_2glGYuvfEe-7fL1cgKtjXA" name="CombinedFragment54" interactionOperator="opt">
+      <operand xmi:type="uml:InteractionOperand" xmi:id="_2glGY-vfEe-7fL1cgKtjXA" name="InteractionOperand0">
+        <guard xmi:type="uml:InteractionConstraint" xmi:id="_2glGaevfEe-7fL1cgKtjXA" name="guard"/>
+      </operand>
+    </fragment>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Activity" xmi:id="_lwZOIM0IEe-iY7XYh7sm_w" name="Activity4" node="_bAchQM3GEe-g_rxynA4UQw _GoZDAM3GEe-g_rxynA4UQw _dREVgM3FEe-g_rxynA4UQw _Gd3DcM3FEe-g_rxynA4UQw _6UA8wM3EEe-g_rxynA4UQw _prhTwM20Ee-g_rxynA4UQw _nlVDUM20Ee-g_rxynA4UQw _V6L3QM20Ee-g_rxynA4UQw _Hh4aUM3HEe-g_rxynA4UQw _N7ExAM3HEe-g_rxynA4UQw _PuM7gM3HEe-g_rxynA4UQw _aGXCIM3HEe-g_rxynA4UQw _hTFukM3HEe-g_rxynA4UQw _n1KUcM3HEe-g_rxynA4UQw _iP6ogOvqEe--jociH6hsdw _FyX0YOvrEe--jociH6hsdw _lDresOvsEe--jociH6hsdw _nZW8oOvsEe--jociH6hsdw" group="_8fciQM2zEe-g_rxynA4UQw _6uC2EM2zEe-g_rxynA4UQw _3OFWUM2zEe-g_rxynA4UQw _FyX0YOvrEe--jociH6hsdw">
     <edge xmi:type="uml:ControlFlow" xmi:id="_BJ9g4M3FEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw" target="_nlVDUM20Ee-g_rxynA4UQw" source="_6UA8wM3EEe-g_rxynA4UQw"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_D9af8M3FEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw" target="_prhTwM20Ee-g_rxynA4UQw" source="_nlVDUM20Ee-g_rxynA4UQw"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_HpXNQM3FEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw" target="_Gd3DcM3FEe-g_rxynA4UQw" source="_prhTwM20Ee-g_rxynA4UQw"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_VNoDgM3FEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw" target="_6UA8wM3EEe-g_rxynA4UQw" source="_V6L3QM20Ee-g_rxynA4UQw"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_zW49IM3FEe-g_rxynA4UQw" name="[Scelto ristorante]" inPartition="_3OFWUM2zEe-g_rxynA4UQw" target="_dREVgM3FEe-g_rxynA4UQw" source="_Gd3DcM3FEe-g_rxynA4UQw"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_0pJ2QM3FEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw" target="_mwXhgM3FEe-g_rxynA4UQw" source="_dREVgM3FEe-g_rxynA4UQw"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_KikZkM3GEe-g_rxynA4UQw" inPartition="_6uC2EM2zEe-g_rxynA4UQw" target="_Jeg7kM3GEe-g_rxynA4UQw" source="_mwXhgM3FEe-g_rxynA4UQw"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_Wv88cM3GEe-g_rxynA4UQw" name="[Ordinazione rifiutata]" inPartition="_6uC2EM2zEe-g_rxynA4UQw" target="_GoZDAM3GEe-g_rxynA4UQw" source="_Jeg7kM3GEe-g_rxynA4UQw"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_dVzPEM3GEe-g_rxynA4UQw" name="[Ordinzione accettata]" inPartition="_6uC2EM2zEe-g_rxynA4UQw" target="_bAchQM3GEe-g_rxynA4UQw" source="_Jeg7kM3GEe-g_rxynA4UQw"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_356m8M3GEe-g_rxynA4UQw" name="[Cambia ristorante]" inPartition="_3OFWUM2zEe-g_rxynA4UQw" target="_6UA8wM3EEe-g_rxynA4UQw" source="_Gd3DcM3FEe-g_rxynA4UQw"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_Kk3DIM3HEe-g_rxynA4UQw" inPartition="_6uC2EM2zEe-g_rxynA4UQw" target="_nZW8oOvsEe--jociH6hsdw" source="_bAchQM3GEe-g_rxynA4UQw"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_R3Su8M3HEe-g_rxynA4UQw" inPartition="_8fciQM2zEe-g_rxynA4UQw" target="_N7ExAM3HEe-g_rxynA4UQw" source="_Hh4aUM3HEe-g_rxynA4UQw"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_ShneUM3HEe-g_rxynA4UQw" inPartition="_8fciQM2zEe-g_rxynA4UQw" target="_PuM7gM3HEe-g_rxynA4UQw" source="_N7ExAM3HEe-g_rxynA4UQw"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_dQusYM3HEe-g_rxynA4UQw" target="_hTFukM3HEe-g_rxynA4UQw" source="_PuM7gM3HEe-g_rxynA4UQw"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_k0qX4M3HEe-g_rxynA4UQw" name="[Vuole lasciare recensione]" inPartition="_3OFWUM2zEe-g_rxynA4UQw" target="_aGXCIM3HEe-g_rxynA4UQw" source="_hTFukM3HEe-g_rxynA4UQw"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_pXm-oM3HEe-g_rxynA4UQw" name="[Non vuole lasciare recensione]" inPartition="_3OFWUM2zEe-g_rxynA4UQw" target="_n1KUcM3HEe-g_rxynA4UQw" source="_hTFukM3HEe-g_rxynA4UQw"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_KF0uwM5sEe-7iIsng61VkA" target="_Jeg7kM3GEe-g_rxynA4UQw" source="_mwXhgM3FEe-g_rxynA4UQw"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_STOOAM5sEe-7iIsng61VkA" inPartition="_6uC2EM2zEe-g_rxynA4UQw" target="_33rt4M5sEe-7iIsng61VkA" source="_bAchQM3GEe-g_rxynA4UQw"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_fR2q0M5wEe-7iIsng61VkA" target="_ihYh4M5wEe-7iIsng61VkA" source="_33rt4M5sEe-7iIsng61VkA"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_jxiiMM5wEe-7iIsng61VkA" name="Rifiuta ordinazione" inPartition="_8fciQM2zEe-g_rxynA4UQw" target="_ihYh4M5wEe-7iIsng61VkA" source="_XtKcQM5uEe-7iIsng61VkA"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_mX1PAM5wEe-7iIsng61VkA" name="Accetta ordinazione" inPartition="_8fciQM2zEe-g_rxynA4UQw" target="_Hh4aUM3HEe-g_rxynA4UQw" source="_XtKcQM5uEe-7iIsng61VkA"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_y6ihoM5wEe-7iIsng61VkA" inPartition="_8fciQM2zEe-g_rxynA4UQw" target="_XtKcQM5uEe-7iIsng61VkA" source="_ihYh4M5wEe-7iIsng61VkA"/>
-    <group xmi:type="uml:ActivityPartition" xmi:id="_3OFWUM2zEe-g_rxynA4UQw" name="Cliente" node="_V6L3QM20Ee-g_rxynA4UQw _nlVDUM20Ee-g_rxynA4UQw _prhTwM20Ee-g_rxynA4UQw _6UA8wM3EEe-g_rxynA4UQw _Gd3DcM3FEe-g_rxynA4UQw _dREVgM3FEe-g_rxynA4UQw _aGXCIM3HEe-g_rxynA4UQw _hTFukM3HEe-g_rxynA4UQw _n1KUcM3HEe-g_rxynA4UQw _mwXhgM3FEe-g_rxynA4UQw" edge="_BJ9g4M3FEe-g_rxynA4UQw _D9af8M3FEe-g_rxynA4UQw _HpXNQM3FEe-g_rxynA4UQw _VNoDgM3FEe-g_rxynA4UQw _zW49IM3FEe-g_rxynA4UQw _0pJ2QM3FEe-g_rxynA4UQw _356m8M3GEe-g_rxynA4UQw _k0qX4M3HEe-g_rxynA4UQw _pXm-oM3HEe-g_rxynA4UQw"/>
-    <group xmi:type="uml:ActivityPartition" xmi:id="_6uC2EM2zEe-g_rxynA4UQw" name="Titolare" node="_GoZDAM3GEe-g_rxynA4UQw _Jeg7kM3GEe-g_rxynA4UQw _bAchQM3GEe-g_rxynA4UQw _33rt4M5sEe-7iIsng61VkA" edge="_Wv88cM3GEe-g_rxynA4UQw _dVzPEM3GEe-g_rxynA4UQw _STOOAM5sEe-7iIsng61VkA"/>
-    <group xmi:type="uml:ActivityPartition" xmi:id="_8fciQM2zEe-g_rxynA4UQw" name="Corriere" node="_Hh4aUM3HEe-g_rxynA4UQw _N7ExAM3HEe-g_rxynA4UQw _PuM7gM3HEe-g_rxynA4UQw _XtKcQM5uEe-7iIsng61VkA _ihYh4M5wEe-7iIsng61VkA" edge="_R3Su8M3HEe-g_rxynA4UQw _ShneUM3HEe-g_rxynA4UQw _jxiiMM5wEe-7iIsng61VkA _mX1PAM5wEe-7iIsng61VkA _y6ihoM5wEe-7iIsng61VkA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_zk4eUOvsEe--jociH6hsdw" target="_lDresOvsEe--jociH6hsdw" source="_nZW8oOvsEe--jociH6hsdw"/>
+    <structuredNode xmi:type="uml:ExpansionRegion" xmi:id="_FyX0YOvrEe--jociH6hsdw" name="Interruptible Activity Region" inPartition="_6uC2EM2zEe-g_rxynA4UQw" mode="stream">
+      <handler xmi:type="uml:ExceptionHandler" xmi:id="_iQgeYOvqEe--jociH6hsdw"/>
+      <node xmi:type="uml:CreateObjectAction" xmi:id="_mwXhgM3FEe-g_rxynA4UQw" name="Effettua Ordinazione" incoming="_0pJ2QM3FEe-g_rxynA4UQw" outgoing="_KikZkM3GEe-g_rxynA4UQw" inPartition="_6uC2EM2zEe-g_rxynA4UQw">
+        <handler xmi:type="uml:ExceptionHandler" xmi:id="_NnclIOvpEe--jociH6hsdw"/>
+        <handler xmi:type="uml:ExceptionHandler" xmi:id="_eF4GcOvpEe--jociH6hsdw"/>
+      </node>
+      <node xmi:type="uml:MergeNode" xmi:id="_Jeg7kM3GEe-g_rxynA4UQw" name="" incoming="_KikZkM3GEe-g_rxynA4UQw" outgoing="_Wv88cM3GEe-g_rxynA4UQw _dVzPEM3GEe-g_rxynA4UQw" inPartition="_6uC2EM2zEe-g_rxynA4UQw"/>
+    </structuredNode>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_3OFWUM2zEe-g_rxynA4UQw" name="Cliente" node="_V6L3QM20Ee-g_rxynA4UQw _nlVDUM20Ee-g_rxynA4UQw _prhTwM20Ee-g_rxynA4UQw _6UA8wM3EEe-g_rxynA4UQw _Gd3DcM3FEe-g_rxynA4UQw _dREVgM3FEe-g_rxynA4UQw _aGXCIM3HEe-g_rxynA4UQw _hTFukM3HEe-g_rxynA4UQw _n1KUcM3HEe-g_rxynA4UQw" edge="_BJ9g4M3FEe-g_rxynA4UQw _D9af8M3FEe-g_rxynA4UQw _HpXNQM3FEe-g_rxynA4UQw _VNoDgM3FEe-g_rxynA4UQw _zW49IM3FEe-g_rxynA4UQw _0pJ2QM3FEe-g_rxynA4UQw _356m8M3GEe-g_rxynA4UQw _k0qX4M3HEe-g_rxynA4UQw _pXm-oM3HEe-g_rxynA4UQw"/>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_6uC2EM2zEe-g_rxynA4UQw" name="Titolare" node="_mwXhgM3FEe-g_rxynA4UQw _GoZDAM3GEe-g_rxynA4UQw _Jeg7kM3GEe-g_rxynA4UQw _bAchQM3GEe-g_rxynA4UQw _iP6ogOvqEe--jociH6hsdw _FyX0YOvrEe--jociH6hsdw _nZW8oOvsEe--jociH6hsdw" edge="_KikZkM3GEe-g_rxynA4UQw _Wv88cM3GEe-g_rxynA4UQw _dVzPEM3GEe-g_rxynA4UQw _Kk3DIM3HEe-g_rxynA4UQw"/>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_8fciQM2zEe-g_rxynA4UQw" name="Corriere" node="_Hh4aUM3HEe-g_rxynA4UQw _N7ExAM3HEe-g_rxynA4UQw _PuM7gM3HEe-g_rxynA4UQw _lDresOvsEe--jociH6hsdw" edge="_R3Su8M3HEe-g_rxynA4UQw _ShneUM3HEe-g_rxynA4UQw"/>
     <node xmi:type="uml:InitialNode" xmi:id="_V6L3QM20Ee-g_rxynA4UQw" name="Start" outgoing="_VNoDgM3FEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw"/>
     <node xmi:type="uml:CreateObjectAction" xmi:id="_nlVDUM20Ee-g_rxynA4UQw" name="Visualizza lista ristoranti" incoming="_BJ9g4M3FEe-g_rxynA4UQw" outgoing="_D9af8M3FEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw"/>
     <node xmi:type="uml:CreateLinkAction" xmi:id="_prhTwM20Ee-g_rxynA4UQw" name="Seleziona ristorante" incoming="_D9af8M3FEe-g_rxynA4UQw" outgoing="_HpXNQM3FEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw">
@@ -41,20 +57,18 @@
     </node>
     <node xmi:type="uml:MergeNode" xmi:id="_6UA8wM3EEe-g_rxynA4UQw" incoming="_VNoDgM3FEe-g_rxynA4UQw _356m8M3GEe-g_rxynA4UQw" outgoing="_BJ9g4M3FEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw"/>
     <node xmi:type="uml:MergeNode" xmi:id="_Gd3DcM3FEe-g_rxynA4UQw" incoming="_HpXNQM3FEe-g_rxynA4UQw" outgoing="_zW49IM3FEe-g_rxynA4UQw _356m8M3GEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw"/>
-    <node xmi:type="uml:CreateObjectAction" xmi:id="_dREVgM3FEe-g_rxynA4UQw" name="Seleziona piatti" incoming="_zW49IM3FEe-g_rxynA4UQw" outgoing="_0pJ2QM3FEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw"/>
-    <node xmi:type="uml:CreateObjectAction" xmi:id="_mwXhgM3FEe-g_rxynA4UQw" name="Effettua Ordinazione" incoming="_0pJ2QM3FEe-g_rxynA4UQw" outgoing="_KF0uwM5sEe-7iIsng61VkA" inPartition="_3OFWUM2zEe-g_rxynA4UQw"/>
+    <node xmi:type="uml:CreateObjectAction" xmi:id="_dREVgM3FEe-g_rxynA4UQw" name="Seleziona Piatti" incoming="_zW49IM3FEe-g_rxynA4UQw" outgoing="_0pJ2QM3FEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw"/>
     <node xmi:type="uml:ActivityFinalNode" xmi:id="_GoZDAM3GEe-g_rxynA4UQw" name="" incoming="_Wv88cM3GEe-g_rxynA4UQw" inPartition="_6uC2EM2zEe-g_rxynA4UQw"/>
-    <node xmi:type="uml:MergeNode" xmi:id="_Jeg7kM3GEe-g_rxynA4UQw" name="" incoming="_KF0uwM5sEe-7iIsng61VkA" outgoing="_Wv88cM3GEe-g_rxynA4UQw _dVzPEM3GEe-g_rxynA4UQw" inPartition="_6uC2EM2zEe-g_rxynA4UQw"/>
-    <node xmi:type="uml:CreateObjectAction" xmi:id="_bAchQM3GEe-g_rxynA4UQw" name="Produci cibo e bevande" incoming="_dVzPEM3GEe-g_rxynA4UQw" outgoing="_STOOAM5sEe-7iIsng61VkA" inPartition="_6uC2EM2zEe-g_rxynA4UQw"/>
-    <node xmi:type="uml:CreateObjectAction" xmi:id="_Hh4aUM3HEe-g_rxynA4UQw" name="Prende in carico l'ordinazione" incoming="_mX1PAM5wEe-7iIsng61VkA" outgoing="_R3Su8M3HEe-g_rxynA4UQw" inPartition="_8fciQM2zEe-g_rxynA4UQw"/>
+    <node xmi:type="uml:CreateObjectAction" xmi:id="_bAchQM3GEe-g_rxynA4UQw" name="Produci cibo e bevande" incoming="_dVzPEM3GEe-g_rxynA4UQw" outgoing="_Kk3DIM3HEe-g_rxynA4UQw" inPartition="_6uC2EM2zEe-g_rxynA4UQw"/>
+    <node xmi:type="uml:CreateObjectAction" xmi:id="_Hh4aUM3HEe-g_rxynA4UQw" name="Prende in carico l'ordinazione" outgoing="_R3Su8M3HEe-g_rxynA4UQw" inPartition="_8fciQM2zEe-g_rxynA4UQw"/>
     <node xmi:type="uml:CreateObjectAction" xmi:id="_N7ExAM3HEe-g_rxynA4UQw" name="Prende l'ordine al ristorante" incoming="_R3Su8M3HEe-g_rxynA4UQw" outgoing="_ShneUM3HEe-g_rxynA4UQw" inPartition="_8fciQM2zEe-g_rxynA4UQw"/>
     <node xmi:type="uml:CreateObjectAction" xmi:id="_PuM7gM3HEe-g_rxynA4UQw" name="Consegna l'ordine al cliente" incoming="_ShneUM3HEe-g_rxynA4UQw" outgoing="_dQusYM3HEe-g_rxynA4UQw" inPartition="_8fciQM2zEe-g_rxynA4UQw"/>
     <node xmi:type="uml:CreateObjectAction" xmi:id="_aGXCIM3HEe-g_rxynA4UQw" name="Recensisce ristorante" incoming="_k0qX4M3HEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw"/>
     <node xmi:type="uml:DecisionNode" xmi:id="_hTFukM3HEe-g_rxynA4UQw" name="" incoming="_dQusYM3HEe-g_rxynA4UQw" outgoing="_k0qX4M3HEe-g_rxynA4UQw _pXm-oM3HEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw"/>
     <node xmi:type="uml:ActivityFinalNode" xmi:id="_n1KUcM3HEe-g_rxynA4UQw" name="" incoming="_pXm-oM3HEe-g_rxynA4UQw" inPartition="_3OFWUM2zEe-g_rxynA4UQw"/>
-    <node xmi:type="uml:SendSignalAction" xmi:id="_33rt4M5sEe-7iIsng61VkA" name="Segnala ai corrieri che c'è un'ordinazione" visibility="public" incoming="_STOOAM5sEe-7iIsng61VkA" outgoing="_fR2q0M5wEe-7iIsng61VkA" inPartition="_6uC2EM2zEe-g_rxynA4UQw"/>
-    <node xmi:type="uml:DecisionNode" xmi:id="_XtKcQM5uEe-7iIsng61VkA" incoming="_y6ihoM5wEe-7iIsng61VkA" outgoing="_jxiiMM5wEe-7iIsng61VkA _mX1PAM5wEe-7iIsng61VkA" inPartition="_8fciQM2zEe-g_rxynA4UQw"/>
-    <node xmi:type="uml:CreateObjectAction" xmi:id="_ihYh4M5wEe-7iIsng61VkA" name="Valuta se ci sono ordinazioni appetibili" incoming="_jxiiMM5wEe-7iIsng61VkA _fR2q0M5wEe-7iIsng61VkA" outgoing="_y6ihoM5wEe-7iIsng61VkA" inPartition="_8fciQM2zEe-g_rxynA4UQw"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_iP6ogOvqEe--jociH6hsdw" name="Mostra errore e richiedi un nuovo metodo di pagamento" inPartition="_6uC2EM2zEe-g_rxynA4UQw"/>
+    <node xmi:type="uml:AcceptEventAction" xmi:id="_lDresOvsEe--jociH6hsdw" name="Ordine pronto ricevuto" incoming="_zk4eUOvsEe--jociH6hsdw" inPartition="_8fciQM2zEe-g_rxynA4UQw"/>
+    <node xmi:type="uml:SendSignalAction" xmi:id="_nZW8oOvsEe--jociH6hsdw" name="Ordine pronto per ritiro" incoming="_Kk3DIM3HEe-g_rxynA4UQw" outgoing="_zk4eUOvsEe--jociH6hsdw" inPartition="_6uC2EM2zEe-g_rxynA4UQw"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Actor" xmi:id="_9ac7wM0gEe-t6e0ozX1yvA" name="{abstract} Utente "/>
   <packagedElement xmi:type="uml:Actor" xmi:id="_9yQXwM0gEe-t6e0ozX1yvA" name="Cliente">
@@ -123,4 +137,16 @@
   <packagedElement xmi:type="uml:Association" xmi:id="_bnZPgM2lEe-by_MUyB9_og"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_rUYs0M2lEe-by_MUyB9_og"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_vDQLQM2lEe-by_MUyB9_og"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_an3k8OvdEe-jSY9k47st0Q" name="WebApp">
+    <packagedElement xmi:type="uml:Usage" xmi:id="_9MvuQOvdEe-jSY9k47st0Q" client="_an3k8OvdEe-jSY9k47st0Q" supplier="_ffxIAOvdEe-jSY9k47st0Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_fHB34OvdEe-jSY9k47st0Q" name="Database">
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_CLPBgOveEe-jSY9k47st0Q" client="_fHB34OvdEe-jSY9k47st0Q" supplier="_fSkZgOvdEe-jSY9k47st0Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_EBgmoOveEe-jSY9k47st0Q" client="_fHB34OvdEe-jSY9k47st0Q" supplier="_fsO2sOvdEe-jSY9k47st0Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_fSkZgOvdEe-jSY9k47st0Q" name="Payment"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_ffxIAOvdEe-jSY9k47st0Q" name="Backend">
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_AWVVYOveEe-jSY9k47st0Q" client="_ffxIAOvdEe-jSY9k47st0Q" supplier="_fHB34OvdEe-jSY9k47st0Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_fsO2sOvdEe-jSY9k47st0Q" name="Notifiche"/>
 </uml:Model>
