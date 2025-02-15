@@ -1,4 +1,4 @@
-package gui.controller;
+package gui.main;
 
 public class SessioneRistorante {
     private static int id;

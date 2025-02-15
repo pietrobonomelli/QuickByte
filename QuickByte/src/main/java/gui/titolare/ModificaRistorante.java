@@ -1,8 +1,10 @@
-package gui.controller;
+package gui.titolare;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import database.DatabaseConnection;
+import gui.main.SessioneUtente;
+
 import java.sql.*;
 
 public class ModificaRistorante extends VBox {
@@ -32,7 +34,7 @@ public class ModificaRistorante extends VBox {
         
         // Pulsante per tornare alla gestione ristoranti
         Button tornaButton = new Button("Torna alla Gestione Ristoranti");
-        tornaButton.setOnAction(e -> getScene().setRoot(new GestioneRistoranti()));
+        tornaButton.setOnAction(e -> getScene().setRoot(new MainScreenTitolare()));
 
         // Aggiunta elementi al layout
         this.getChildren().addAll(titolo, nomeField, telefonoField, indirizzoField, salvaButton, tornaButton);
@@ -79,7 +81,7 @@ public class ModificaRistorante extends VBox {
                 int rowsAffected = stmt.executeUpdate();
                 if (rowsAffected > 0) {
                     showAlert("Successo", "Ristorante modificato con successo!");
-                    getScene().setRoot(new GestioneRistoranti());
+                    getScene().setRoot(new MainScreenTitolare());
                 } else {
                     showAlert("Errore", "Modifica non riuscita.");
                 }

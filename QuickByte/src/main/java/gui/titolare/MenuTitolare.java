@@ -1,20 +1,22 @@
-package gui.controller;
+package gui.titolare;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import database.DatabaseConnection;
+import gui.main.*;
+
 import java.sql.*;
 
-public class GestisciMenu extends VBox {
+public class MenuTitolare extends VBox {
 
     private VBox container;
     private int ristorante;
 
-    public GestisciMenu(int ristorante) {
+    public MenuTitolare() {
         super(10);
-        this.ristorante = ristorante;
+        this.ristorante = SessioneRistorante.getId();
         System.out.println("Ristorante passato a GestisciMenu: " + ristorante);  // Debug
         this.setStyle("-fx-padding: 10;");
         container = new VBox(10);
@@ -25,11 +27,11 @@ public class GestisciMenu extends VBox {
         buttonContainer.setStyle("-fx-padding: 10;");
 
         Button tornaButton = new Button("Torna a gestione ristoranti");
-        tornaButton.setOnAction(e -> switchToGestioneRistoranti());
+        tornaButton.setOnAction(e -> swirchToMainScreenTitolare());
         buttonContainer.getChildren().add(tornaButton);
 
         Button inserisciMenuButton = new Button("Inserisci Menu");
-        inserisciMenuButton.setOnAction(e -> switchToInserisciMenu(ristorante));
+        inserisciMenuButton.setOnAction(e -> switchToInserisciMenu());
         buttonContainer.getChildren().add(inserisciMenuButton);
 
         this.getChildren().add(buttonContainer);
@@ -41,20 +43,25 @@ public class GestisciMenu extends VBox {
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setInt(1, ristorante);
                 ResultSet rs = stmt.executeQuery();
-                ObservableList<String> menuList = FXCollections.observableArrayList();
                 while (rs.next()) {
                     String nomeMenu = rs.getString("nome");
                     HBox menuBox = new HBox(10);
                     menuBox.setStyle("-fx-padding: 10;");
                     Label nomeMenuLabel = new Label(nomeMenu);
 
-                    Button eliminaButton = new Button("Elimina");
-                    eliminaButton.setOnAction(e -> confermaEliminazione(nomeMenu));
+                    // Aggiungi un evento di click sul nome del menu
+                    nomeMenuLabel.setOnMouseClicked(e -> switchToPiattiTitolare(nomeMenu));
 
-                    Button modificaButton = new Button("Modifica");
-                    modificaButton.setOnAction(e -> switchToModificaMenu(nomeMenu, ristorante));
+                    MenuButton optionsButton = new MenuButton("⋮");
+                    MenuItem modificaItem = new MenuItem("Modifica");
+                    modificaItem.setOnAction(e -> switchToModificaMenu(nomeMenu));
 
-                    menuBox.getChildren().addAll(nomeMenuLabel, eliminaButton, modificaButton);
+                    MenuItem eliminaItem = new MenuItem("Elimina");
+                    eliminaItem.setOnAction(e -> confermaEliminazione(nomeMenu));
+
+                    optionsButton.getItems().addAll(modificaItem, eliminaItem);
+
+                    menuBox.getChildren().addAll(nomeMenuLabel, optionsButton);
                     container.getChildren().add(menuBox);
                 }
             }
@@ -79,9 +86,11 @@ public class GestisciMenu extends VBox {
 
     private void eliminaMenu(String nomeMenu) {
         try (Connection conn = DatabaseConnection.connect()) {
-            String query = "DELETE FROM Menu WHERE nome = ?";
+            String query = "DELETE FROM Menu WHERE nome = ? AND idRistorante = ?";
+
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, nomeMenu);
+                stmt.setInt(2, SessioneRistorante.getId());
                 int affectedRows = stmt.executeUpdate();
                 if (affectedRows > 0) {
                     showAlert("Successo", "Menu eliminato con successo.");
@@ -97,19 +106,34 @@ public class GestisciMenu extends VBox {
         }
     }
 
-    private void switchToModificaMenu(String nomeMenu, int ristorante) {
-        ModificaMenu modificaMenuScreen = new ModificaMenu(nomeMenu, ristorante);
-        this.getScene().setRoot(modificaMenuScreen);
+    private void switchToPiattiTitolare(String nomeMenu) {
+        // Salva il nome del menu nella sessione
+        SessioneMenu.setNome(nomeMenu);
+
+        // Passa alla pagina PiattiTitolare
+        PiattiTitolare piattiTitolareScreen = new PiattiTitolare();
+        this.getScene().setRoot(piattiTitolareScreen);
     }
 
-    private void switchToInserisciMenu(int ristorante) {
-        InserisciMenu inserisciMenuScreen = new InserisciMenu(ristorante);
+    private void switchToModificaMenu(String nomeMenu) {
+        // Imposta il nome del menu nella sessione
+        SessioneMenu.setNome(nomeMenu);
+
+        // Crea l'istanza di PiattiTitolare
+        PiattiTitolare piattiMenuScreen = new PiattiTitolare();
+        
+        // Cambia la scena per visualizzare la pagina PiattiMenu
+        this.getScene().setRoot(piattiMenuScreen);
+    }
+
+    private void switchToInserisciMenu() {
+        InserisciMenu inserisciMenuScreen = new InserisciMenu();
         this.getScene().setRoot(inserisciMenuScreen);
     }
 
-    private void switchToGestioneRistoranti() {
-        GestioneRistoranti gestioneRistorantiScreen = new GestioneRistoranti();
-        this.getScene().setRoot(gestioneRistorantiScreen);
+    private void swirchToMainScreenTitolare() {
+        MainScreenTitolare MainScreenTitolareScreen = new MainScreenTitolare();
+        this.getScene().setRoot(MainScreenTitolareScreen);
     }
 
     private void showAlert(String title, String message) {

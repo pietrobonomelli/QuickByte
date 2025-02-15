@@ -1,6 +1,8 @@
 package gui.controller;
 
 import database.DatabaseConnection;
+import gui.main.SessioneUtente;
+import gui.titolare.MainScreenTitolare;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;

@@ -1,8 +1,9 @@
-package gui.controller;
+package gui.titolare;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import database.DatabaseConnection;
+import gui.main.SessioneUtente;
 
 import java.sql.*;
 
@@ -76,7 +77,7 @@ public class InserisciRistorante extends VBox {
                     showAlert("Successo", "Ristorante inserito con successo!");
                     
                     // Torna alla schermata di gestione ristoranti
-                    getScene().setRoot(new GestioneRistoranti());
+                    getScene().setRoot(new MainScreenTitolare());
 
                 } else {
                     showAlert("Errore", "Impossibile inserire il ristorante.");
@@ -90,7 +91,7 @@ public class InserisciRistorante extends VBox {
 
     private void tornaAllaGestioneRistoranti() {
         // Torna alla schermata di gestione ristoranti
-        getScene().setRoot(new GestioneRistoranti());
+        getScene().setRoot(new MainScreenTitolare());
     }
 
     private void showAlert(String title, String message) {

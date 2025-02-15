@@ -66,18 +66,19 @@ public class DatabaseManager {
                 "nome TEXT NOT NULL, " +
                 "idRistorante INTEGER NOT NULL, " +
                 "PRIMARY KEY (nome, idRistorante), " +  // Chiave primaria composta
-                "FOREIGN KEY (idRistorante) REFERENCES Ristorante(idRistorante)" +
+                "FOREIGN KEY (idRistorante) REFERENCES Ristorante(idRistorante) ON DELETE CASCADE" +
                 ");";
 
-
+        // Modifica della tabella Piatto: aggiunta dell'ID autoincrementale
         String createPiattoTable = "CREATE TABLE IF NOT EXISTS Piatto (" +
-                "nome TEXT PRIMARY KEY, " +
+                "idPiatto INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "nome TEXT NOT NULL, " +
                 "disponibile INTEGER NOT NULL, " +
                 "prezzo TEXT NOT NULL, " +
                 "allergeni TEXT, " +
                 "foto TEXT, " +
                 "nomeMenu TEXT, " +
-                "FOREIGN KEY(nomeMenu) REFERENCES Menu(nome)" +
+                "FOREIGN KEY(nomeMenu) REFERENCES Menu(nome) ON DELETE CASCADE" +
                 ");";
 
         try (Connection conn = connect();

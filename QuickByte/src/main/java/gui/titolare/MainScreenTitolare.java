@@ -1,19 +1,25 @@
-package gui.controller;
+package gui.titolare;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.input.MouseButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import database.DatabaseConnection;
+import gui.main.*;
+
 import java.sql.*;
 
-public class GestioneRistoranti extends VBox {
+public class MainScreenTitolare extends VBox {
 
+    private String email;
     private VBox container;
-    private int idRistorante;
-    
-    public GestioneRistoranti() {
+
+    public MainScreenTitolare() {
         super(10);
+
+        this.email = SessioneUtente.getEmail();
+
         this.setStyle("-fx-padding: 10;");
         container = new VBox(10);
         loadRistoranti();
@@ -21,10 +27,6 @@ public class GestioneRistoranti extends VBox {
 
         HBox buttonContainer = new HBox(10);
         buttonContainer.setStyle("-fx-padding: 10;");
-
-        Button tornaButton = new Button("Torna alla pagina principale");
-        tornaButton.setOnAction(e -> switchToMainScreen());
-        buttonContainer.getChildren().add(tornaButton);
 
         Button inserisciRistoranteButton = new Button("Inserisci nuovo Ristorante");
         inserisciRistoranteButton.setOnAction(e -> switchToInserisciRistorante());
@@ -34,12 +36,10 @@ public class GestioneRistoranti extends VBox {
     }
 
     private void loadRistoranti() {
-        String emailTitolare = SessioneUtente.getEmail();
-
         try (Connection conn = DatabaseConnection.connect()) {
-            String query = "SELECT nome FROM Ristorante WHERE emailTitolare = ?";
+            String query = "SELECT idRistorante, nome FROM Ristorante WHERE emailTitolare = ?";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, emailTitolare);
+                stmt.setString(1, this.email);
                 ResultSet rs = stmt.executeQuery();
                 ObservableList<String> ristoranti = FXCollections.observableArrayList();
                 while (rs.next()) {
@@ -51,16 +51,23 @@ public class GestioneRistoranti extends VBox {
                     ristoranteBox.setStyle("-fx-padding: 10;");
                     Label nomeRistorante = new Label(ristorante);
 
-                    Button eliminaButton = new Button("Elimina");
-                    eliminaButton.setOnAction(e -> confermaEliminazione(ristorante));
+                    nomeRistorante.setOnMouseClicked(event -> {
+                        if (event.getButton() == MouseButton.PRIMARY) {
+                            setRistoranteInSessione(ristorante);
+                            switchToMenuTitolare();
+                        }
+                    });
 
-                    Button modificaButton = new Button("Modifica");
-                    modificaButton.setOnAction(e -> switchToModificaRistorante(ristorante));
-                    
-                    Button gestisciMenuButton = new Button("Gestisci Menu");
-                    gestisciMenuButton.setOnAction(e -> switchToGestisciMenu(ristorante));
+                    MenuButton menuButton = new MenuButton("...");
+                    MenuItem modificaItem = new MenuItem("Modifica");
+                    MenuItem eliminaItem = new MenuItem("Elimina");
 
-                    ristoranteBox.getChildren().addAll(nomeRistorante, eliminaButton, modificaButton, gestisciMenuButton);
+                    modificaItem.setOnAction(e -> switchToModificaRistorante(ristorante));
+                    eliminaItem.setOnAction(e -> confermaEliminazione(ristorante));
+
+                    menuButton.getItems().addAll(modificaItem, eliminaItem);
+
+                    ristoranteBox.getChildren().addAll(nomeRistorante, menuButton);
                     container.getChildren().add(ristoranteBox);
                 }
             }
@@ -68,6 +75,28 @@ public class GestioneRistoranti extends VBox {
             e.printStackTrace();
             showAlert("Errore", "Errore di connessione al database.");
         }
+    }
+
+    private void setRistoranteInSessione(String nomeRistorante) {
+        try (Connection conn = DatabaseConnection.connect()) {
+            String query = "SELECT idRistorante FROM Ristorante WHERE nome = ? AND emailTitolare = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, nomeRistorante);
+                stmt.setString(2, this.email);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    int idRistorante = rs.getInt("idRistorante");
+                    SessioneRistorante.setId(idRistorante); // Imposta l'ID del ristorante in sessione
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void switchToMenuTitolare() {
+        MenuTitolare menuTitolareScreen = new MenuTitolare(); // Ora la schermata MenuTitolare prende l'ID dal sessione
+        this.getScene().setRoot(menuTitolareScreen);
     }
 
     private void confermaEliminazione(String ristorante) {
@@ -108,25 +137,9 @@ public class GestioneRistoranti extends VBox {
         this.getScene().setRoot(modificaRistoranteScreen);
     }
 
-    private void switchToGestisciMenu(String ristorante) {
-        // Recupera l'ID del ristorante dal database
-        int id = getRistoranteIdByName(ristorante);
-        // Imposta l'ID nella sessione
-        SessioneRistorante.setId(id);
-
-        // Crea la schermata per gestire il menu, passando l'ID dalla sessione
-        GestisciMenu gestisciMenuScreen = new GestisciMenu(SessioneRistorante.getId());
-        this.getScene().setRoot(gestisciMenuScreen);
-    }
-
     private void switchToInserisciRistorante() {
         InserisciRistorante inserisciRistoranteScreen = new InserisciRistorante();
         this.getScene().setRoot(inserisciRistoranteScreen);
-    }
-
-    private void switchToMainScreen() {
-        MainScreenTitolare mainScreenTitolare = new MainScreenTitolare();
-        this.getScene().setRoot(mainScreenTitolare);
     }
 
     private void showAlert(String title, String message) {
@@ -136,26 +149,4 @@ public class GestioneRistoranti extends VBox {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    
-    private int getRistoranteIdByName(String nome) {
-        int id = -1;
-        String emailTitolare = SessioneUtente.getEmail();
-        
-        try (Connection conn = DatabaseConnection.connect()) {
-            String query = "SELECT idRistorante FROM Ristorante WHERE nome = ? AND emailTitolare = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, nome);
-                stmt.setString(2, emailTitolare);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    id = rs.getInt("idRistorante");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Errore", "Errore durante il recupero dell'ID del ristorante.");
-        }
-        return id;
-    }
-
 }
