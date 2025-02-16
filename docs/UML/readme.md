@@ -1,6 +1,6 @@
 # Progetti Papyrus - QuickByte
 
- Per questioni di comodità, i file Papyrus contenenti gli UML sono stati caricati separatamente in queste cartelle.
+I file UML sono contenuti nella cartella QuickByte_UML.
 
 ## Contenuto della cartella
 
