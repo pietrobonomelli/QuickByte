@@ -3,8 +3,6 @@ package gui.cliente;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.input.MouseButton;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import database.DatabaseConnection;
 import gui.main.*;
 import java.sql.*;
@@ -60,11 +58,14 @@ public class MenuCliente extends VBox {
             showAlert("Errore", "Errore nel caricamento dei menu.");
         }
 
+
+        Button carrelloButton = new Button("Vai al Carrello");
+        carrelloButton.setOnAction(event -> switchToCarrello());
+        this.getChildren().add(carrelloButton);
+        
         // Aggiungi il pulsante "Torna alla lista dei ristoranti"
         Button tornaAllaListaRistorantiButton = new Button("Torna alla lista dei ristoranti");
         tornaAllaListaRistorantiButton.setOnAction(event -> tornaAllaListaRistoranti());
-
-        // Aggiungi il pulsante alla schermata
         container.getChildren().add(tornaAllaListaRistorantiButton);
     }
 
@@ -84,5 +85,10 @@ public class MenuCliente extends VBox {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    
+    private void switchToCarrello() {
+        Carrello carrelloScreen = new Carrello();
+        this.getScene().setRoot(carrelloScreen);
     }
 }

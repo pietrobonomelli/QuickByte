@@ -33,7 +33,6 @@ public class PiattoCliente extends VBox {
                     String prezzoPiatto = rs.getString("prezzo");  // Modifica per trattare il prezzo come stringa
                     String allergeni = rs.getString("allergeni");
                     String fotoPiatto = rs.getString("foto");  // Se disponibile, per esempio un URL o path dell'immagine
-                    String nomeMenu = rs.getString("nomeMenu");
 
                     // Aggiungi un titolo per il piatto
                     Label nomeLabel = new Label(nomePiatto);

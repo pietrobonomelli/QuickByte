@@ -37,16 +37,18 @@ public class DatabaseManager {
                 "FOREIGN KEY(idRistorante) REFERENCES Ristorante(idRistorante)" +
                 ");";
 
-        String createCarrelloTable = "CREATE TABLE IF NOT EXISTS Carrello (" +
+        String createCarrelloTable = "CREATE TABLE IF NOT EXISTS Carrello (" + 
                 "idCarrello INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "quantitaPiatti INTEGER NOT NULL, " +
-                "idPiatto INTEGER NOT NULL, " +  // Modificato da 'piatto' a 'idPiatto' di tipo INTEGER
-                "ordine INTEGER NOT NULL, " +
+                "idPiatto INTEGER NOT NULL, " +
+                "ordine INTEGER, " +  // Modificato per rimuovere il NOT NULL
                 "emailUtente TEXT, " +  // Nuovo campo per legare il carrello a un utente
                 "FOREIGN KEY(idPiatto) REFERENCES Piatto(idPiatto), " + // Modifica della foreign key
                 "FOREIGN KEY(ordine) REFERENCES Ordine(idOrdine), " +
-                "FOREIGN KEY(emailUtente) REFERENCES Utente(email)" + // Associazione con l'utente
+                "FOREIGN KEY(emailUtente) REFERENCES Utente(email), " + // Associazione con l'utente
+                "UNIQUE(emailUtente, idPiatto)" + 
                 ");";
+
 
 
         String createMetodoDiPagamentoTable = "CREATE TABLE IF NOT EXISTS MetodoDiPagamento (" +
@@ -94,6 +96,17 @@ public class DatabaseManager {
                 "FOREIGN KEY(idOrdine) REFERENCES Ordine(idOrdine), " +
                 "FOREIGN KEY(idPiatto) REFERENCES Piatto(idPiatto)" +
                 ");";
+        
+        String createIndirizzoTable = "CREATE TABLE IF NOT EXISTS Indirizzo (" +
+                "idIndirizzo INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "indirizzo TEXT NOT NULL, " +
+                "citta TEXT NOT NULL, " +
+                "cap TEXT NOT NULL, " +
+                "provincia TEXT NOT NULL, " +
+                "emailUtente TEXT, " +
+                "FOREIGN KEY(emailUtente) REFERENCES Utente(email) ON DELETE CASCADE" +  // Collegamento all'utente
+                ");";
+
 
 
 
@@ -122,6 +135,8 @@ public class DatabaseManager {
         	    stmt.execute(createMenuTable);
         	    stmt.execute(createPiattoTable);
         	    stmt.execute(createDettaglioOrdineTable);
+        	    stmt.execute(createIndirizzoTable);
+
 
         	    System.out.println("Tabelle create con successo!");
         	} catch (SQLException e) {

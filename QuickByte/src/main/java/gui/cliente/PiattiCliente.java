@@ -8,6 +8,7 @@ import java.sql.*;
 
 public class PiattiCliente extends VBox {
 
+	private String emailCliente;
     private String nomeMenu;
     private int idRistorante;
 
@@ -16,6 +17,7 @@ public class PiattiCliente extends VBox {
 
         this.idRistorante = SessioneRistorante.getId();
         this.nomeMenu = SessioneMenu.getNome();  // Recupera il nome del menu selezionato dalla sessione
+        this.emailCliente = SessioneUtente.getEmail();
 
         this.setStyle("-fx-padding: 10;");
         loadPiatti(idRistorante, nomeMenu);
@@ -71,12 +73,91 @@ public class PiattiCliente extends VBox {
         this.getChildren().add(tornaAllaListaMenuButton);
     }
 
+ 
+    
     private void aggiungiAlCarrello(int idPiatto) {
-        // TODO Qui puoi implementare la logica per aggiungere il piatto al carrello
-        // Ad esempio, potresti avere un carrello in sessione o un'altra struttura dati
-        // Questo è solo un esempio di base:
-        System.out.println("Piatto " + idPiatto + " aggiunto al carrello.");
+        boolean pieno = SessioneCarrello.getPieno();
+        int idRistoranteCarrello = SessioneCarrello.getIdRistorante();
+
+        if (!pieno) {
+            // Se il carrello è vuoto, imposto l'idRistorante in sessione e aggiungo il piatto
+            SessioneCarrello.setIdRistorante(idRistorante);
+            SessioneCarrello.setPieno(true);
+            aggiungiPiattoAlCarrello(idPiatto);
+        } else {
+            if (idRistoranteCarrello == idRistorante) {
+                // Se il ristorante è lo stesso, aggiungo il piatto
+                aggiungiPiattoAlCarrello(idPiatto);
+            } else {
+                // Se il ristorante è diverso, mostro il popup di conferma con Alert
+                mostraPopupConferma(idPiatto);
+            }
+        }
     }
+
+    private void aggiungiPiattoAlCarrello(int idPiatto) {
+        String sql = "INSERT INTO Carrello (quantitaPiatti, idPiatto, ordine, emailUtente) " +
+                     "VALUES (1, ?, NULL, ?) " +
+                     "ON CONFLICT (idPiatto, emailUtente) DO UPDATE SET quantitaPiatti = quantitaPiatti + 1";
+
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idPiatto);
+            pstmt.setString(2, this.emailCliente);
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Piatto aggiunto al carrello.");
+            } else {
+                System.out.println("Errore nell'aggiunta del piatto al carrello.");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Errore SQL: " + e.getMessage());
+        }
+    }
+
+    private void mostraPopupConferma(int idPiatto) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Attenzione");
+        alert.setHeaderText("Hai già piatti di un altro ristorante nel carrello.");
+        alert.setContentText("Vuoi svuotare il carrello e procedere con il nuovo ristorante?");
+
+        ButtonType btnProcedi = new ButtonType("Procedi");
+        ButtonType btnAnnulla = new ButtonType("Annulla", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(btnProcedi, btnAnnulla);
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == btnProcedi) {
+                svuotaCarrello(this.emailCliente);
+                SessioneCarrello.setIdRistorante(idRistorante);
+                aggiungiPiattoAlCarrello(idPiatto);
+            }
+        });
+    }
+
+    private void svuotaCarrello(String emailUtente) {
+        String sql = "DELETE FROM Carrello WHERE emailUtente = ?";
+
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, emailUtente);
+            pstmt.executeUpdate();
+
+            SessioneCarrello.setPieno(false);
+            System.out.println("Carrello svuotato.");
+        } catch (SQLException e) {
+            System.err.println("Errore SQL nello svuotamento del carrello: " + e.getMessage());
+        }
+    }
+
+
+
+
+
 
     private void switchToPiattoCliente() {
         PiattoCliente piattoClienteScreen = new PiattoCliente(); // La schermata PiattoCliente prenderà l'idPiatto dalla sessione

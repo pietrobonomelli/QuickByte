@@ -13,15 +13,13 @@ import java.sql.*;
 public class MainScreenCliente extends VBox {
 
     private VBox container;
-    private String email;
 
     public MainScreenCliente() {
         super(10);
-        this.email = SessioneUtente.getEmail();
         this.setStyle("-fx-padding: 10;");
         container = new VBox(10);
-        loadRistoranti();
         this.getChildren().add(container);
+        loadRistoranti();
     }
 
     private void loadRistoranti() {
@@ -48,7 +46,6 @@ public class MainScreenCliente extends VBox {
                         }
                     });
 
-
                     ristoranteBox.getChildren().addAll(nomeRistorante);
                     container.getChildren().add(ristoranteBox);
                 }
@@ -63,7 +60,7 @@ public class MainScreenCliente extends VBox {
         MenuCliente menuClienteScreen = new MenuCliente(); // La schermata MenuCliente prende l'ID del ristorante dalla sessione
         this.getScene().setRoot(menuClienteScreen);
     }
-
+    
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
