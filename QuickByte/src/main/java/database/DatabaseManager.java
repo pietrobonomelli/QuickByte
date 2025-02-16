@@ -85,7 +85,15 @@ public class DatabaseManager {
         	    "idRistorante INTEGER NOT NULL, " +
         	    "FOREIGN KEY(nomeMenu, idRistorante) REFERENCES Menu(nome, idRistorante) ON DELETE CASCADE" +
         	");";
-
+        
+        String createDettaglioOrdineTable = "CREATE TABLE IF NOT EXISTS DettaglioOrdine (" +
+                "idOrdine INTEGER, " +
+                "idPiatto INTEGER, " +
+                "quantita INTEGER NOT NULL, " +
+                "PRIMARY KEY (idOrdine, idPiatto), " +
+                "FOREIGN KEY(idOrdine) REFERENCES Ordine(idOrdine), " +
+                "FOREIGN KEY(idPiatto) REFERENCES Piatto(idPiatto)" +
+                ");";
 
 
 
@@ -113,70 +121,12 @@ public class DatabaseManager {
         	    stmt.execute(createRistoranteTable);
         	    stmt.execute(createMenuTable);
         	    stmt.execute(createPiattoTable);
+        	    stmt.execute(createDettaglioOrdineTable);
 
         	    System.out.println("Tabelle create con successo!");
         	} catch (SQLException e) {
         	    System.err.println("Errore durante la creazione delle tabelle: " + e.getMessage());
         	}
         
-        
-        try (Connection conn = connect();
-        	    Statement stmt = conn.createStatement()) {
-
-        	    // Controlla le foreign keys per la tabella 'Utente'
-        	    try (ResultSet rs = stmt.executeQuery("PRAGMA foreign_key_list(Utente);")) {
-        	        System.out.println("Foreign keys per la tabella Utente:");
-        	        while (rs.next()) {
-        	            System.out.println(
-        	                "id: " + rs.getInt("id") +
-        	                ", tabella riferimento: " + rs.getString("table") +
-        	                ", colonna riferimento: " + rs.getString("to")
-        	            );
-        	        }
-        	    }
-
-        	    // Controlla le foreign keys per la tabella 'Ristorante'
-        	    try (ResultSet rs = stmt.executeQuery("PRAGMA foreign_key_list(Ristorante);")) {
-        	        System.out.println("Foreign keys per la tabella Ristorante:");
-        	        while (rs.next()) {
-        	            System.out.println(
-        	                "id: " + rs.getInt("id") +
-        	                ", tabella riferimento: " + rs.getString("table") +
-        	                ", colonna riferimento: " + rs.getString("to")
-        	            );
-        	        }
-        	    }
-
-        	    // Controlla le foreign keys per la tabella 'Menu'
-        	    try (ResultSet rs = stmt.executeQuery("PRAGMA foreign_key_list(Menu);")) {
-        	        System.out.println("Foreign keys per la tabella Menu:");
-        	        while (rs.next()) {
-        	            System.out.println(
-        	                "id: " + rs.getInt("id") +
-        	                ", tabella riferimento: " + rs.getString("table") +
-        	                ", colonna riferimento: " + rs.getString("to")
-        	            );
-        	        }
-        	    }
-
-        	    // Controlla le foreign keys per la tabella 'Piatto'
-        	    try (ResultSet rs = stmt.executeQuery("PRAGMA foreign_key_list(Piatto);")) {
-        	        System.out.println("Foreign keys per la tabella Piatto:");
-        	        while (rs.next()) {
-        	            System.out.println(
-        	                "id: " + rs.getInt("id") +
-        	                ", tabella riferimento: " + rs.getString("table") +
-        	                ", colonna riferimento: " + rs.getString("to")
-        	            );
-        	        }
-        	    }
-
-        	} catch (SQLException e) {
-        	    System.err.println("Errore durante la verifica delle foreign keys: " + e.getMessage());
-        	}
-
-
-
-
     }
 }

@@ -46,8 +46,11 @@ public class RegisterScreen extends VBox {
         registerButton = new Button("Registrati");
         registerButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
         registerButton.setOnAction(e -> handleRegistration());
+        
+        Button tornaButton = new Button("Torna al Login");
+        tornaButton.setOnAction(e -> switchToLoginScreen());
 
-        getChildren().addAll(titleLabel, emailField, nameField, phoneField, passwordField, userTypeComboBox, registerButton);
+        getChildren().addAll(titleLabel, emailField, nameField, phoneField, passwordField, userTypeComboBox, registerButton, tornaButton);
     }
 
     private void handleRegistration() {
