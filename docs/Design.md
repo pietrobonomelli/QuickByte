@@ -28,3 +28,5 @@ Per garantire la qualità del codice, usiamo strumenti di analisi:
 (screen)
 •	SonarLint per identificare potenziali problemi di qualità e complessità.
 (screen)
+
+
