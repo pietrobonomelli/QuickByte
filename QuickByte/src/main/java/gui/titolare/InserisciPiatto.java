@@ -15,10 +15,12 @@ public class InserisciPiatto extends VBox {
     private CheckBox disponibilitaCheckBox;
     private Label nomeMenuLabel;
     private String nomeMenu;
+    private int idRistorante;
 
     public InserisciPiatto() {
         super(10);
         this.nomeMenu = SessioneMenu.getNome();
+        this.idRistorante = SessioneRistorante.getId();
         this.setStyle("-fx-padding: 10;");
         
         Label titolo = new Label("Inserisci nuovo piatto");
@@ -61,7 +63,7 @@ public class InserisciPiatto extends VBox {
         
         try (Connection conn = DatabaseConnection.connect()) {
             // Esegui l'inserimento senza il controllo duplicato
-            String query = "INSERT INTO Piatto (nome, disponibile, prezzo, allergeni, foto, nomeMenu) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Piatto (nome, disponibile, prezzo, allergeni, foto, nomeMenu, idRistorante) VALUES (?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, nome);
                 stmt.setInt(2, disponibilita);
@@ -69,6 +71,7 @@ public class InserisciPiatto extends VBox {
                 stmt.setString(4, allergeni);
                 stmt.setString(5, foto);
                 stmt.setString(6, nomeMenu);
+                stmt.setInt(7, idRistorante);  // Aggiungi l'idRistorante
                 stmt.executeUpdate();
                 tornaAiPiatti(); // Torna automaticamente ai piatti dopo l'inserimento
             }
@@ -76,6 +79,7 @@ public class InserisciPiatto extends VBox {
             e.printStackTrace();
             showAlert("Errore", "Errore durante l'inserimento del piatto");
         }
+
     }
     
     private void tornaAiPiatti() {

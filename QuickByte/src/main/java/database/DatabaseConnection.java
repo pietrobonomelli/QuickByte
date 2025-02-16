@@ -3,6 +3,7 @@ package database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DatabaseConnection {
 
@@ -18,6 +19,14 @@ public class DatabaseConnection {
 
         if (connection != null) {
             System.out.println("Connessione al database riuscita!");
+
+            // Attiva il supporto per le foreign keys
+            try (Statement stmt = connection.createStatement()) {
+                stmt.execute("PRAGMA foreign_keys = ON;");
+                System.out.println("Le foreign keys sono ATTIVE");
+            } catch (SQLException e) {
+                System.err.println("Errore durante l'attivazione delle foreign keys: " + e.getMessage());
+            }
         } else {
             System.out.println("Connessione al database fallita!");
         }

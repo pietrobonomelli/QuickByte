@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,11 +40,14 @@ public class DatabaseManager {
         String createCarrelloTable = "CREATE TABLE IF NOT EXISTS Carrello (" +
                 "idCarrello INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "quantitaPiatti INTEGER NOT NULL, " +
-                "piatto TEXT NOT NULL, " +
+                "idPiatto INTEGER NOT NULL, " +  // Modificato da 'piatto' a 'idPiatto' di tipo INTEGER
                 "ordine INTEGER NOT NULL, " +
-                "FOREIGN KEY(piatto) REFERENCES Piatto(nome), " +
-                "FOREIGN KEY(ordine) REFERENCES Ordine(idOrdine)" +
+                "emailUtente TEXT, " +  // Nuovo campo per legare il carrello a un utente
+                "FOREIGN KEY(idPiatto) REFERENCES Piatto(idPiatto), " + // Modifica della foreign key
+                "FOREIGN KEY(ordine) REFERENCES Ordine(idOrdine), " +
+                "FOREIGN KEY(emailUtente) REFERENCES Utente(email)" + // Associazione con l'utente
                 ");";
+
 
         String createMetodoDiPagamentoTable = "CREATE TABLE IF NOT EXISTS MetodoDiPagamento (" +
                 "nominativo TEXT NOT NULL, " +
@@ -59,40 +63,120 @@ public class DatabaseManager {
                 "telefono TEXT NOT NULL, " +
                 "indirizzo TEXT NOT NULL, " +
                 "emailTitolare TEXT, " +
-                "FOREIGN KEY(emailTitolare) REFERENCES Utente(email)" +
+                "FOREIGN KEY(emailTitolare) REFERENCES Utente(email) ON DELETE CASCADE" +  // ← Questa riga assicura che eliminando l'utente, si elimini il ristorante
                 ");";
 
         String createMenuTable = "CREATE TABLE IF NOT EXISTS Menu (" +
                 "nome TEXT NOT NULL, " +
                 "idRistorante INTEGER NOT NULL, " +
-                "PRIMARY KEY (nome, idRistorante), " +  // Chiave primaria composta
-                "FOREIGN KEY (idRistorante) REFERENCES Ristorante(idRistorante) ON DELETE CASCADE" +
+                "PRIMARY KEY (nome, idRistorante), " +
+                "FOREIGN KEY (idRistorante) REFERENCES Ristorante(idRistorante) ON DELETE CASCADE" +  // ← Questa riga fa eliminare i menu con il ristorante
                 ");";
 
-        // Modifica della tabella Piatto: aggiunta dell'ID autoincrementale
+
         String createPiattoTable = "CREATE TABLE IF NOT EXISTS Piatto (" +
-                "idPiatto INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "nome TEXT NOT NULL, " +
-                "disponibile INTEGER NOT NULL, " +
-                "prezzo TEXT NOT NULL, " +
-                "allergeni TEXT, " +
-                "foto TEXT, " +
-                "nomeMenu TEXT, " +
-                "FOREIGN KEY(nomeMenu) REFERENCES Menu(nome) ON DELETE CASCADE" +
-                ");";
+        	    "idPiatto INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        	    "nome TEXT NOT NULL, " +
+        	    "disponibile INTEGER NOT NULL, " +
+        	    "prezzo TEXT NOT NULL, " +
+        	    "allergeni TEXT, " +
+        	    "foto TEXT, " +
+        	    "nomeMenu TEXT NOT NULL, " +
+        	    "idRistorante INTEGER NOT NULL, " +
+        	    "FOREIGN KEY(nomeMenu, idRistorante) REFERENCES Menu(nome, idRistorante) ON DELETE CASCADE" +
+        	");";
+
+
+
+
 
         try (Connection conn = connect();
-             Statement stmt = conn.createStatement()) {
-            stmt.execute(createUtenteTable);
-            stmt.execute(createOrdineTable);
-            stmt.execute(createCarrelloTable);
-            stmt.execute(createMetodoDiPagamentoTable);
-            stmt.execute(createRistoranteTable);
-            stmt.execute(createMenuTable);
-            stmt.execute(createPiattoTable);
-            System.out.println("Tabelle create con successo!");
-        } catch (SQLException e) {
-            System.err.println("Errore durante la creazione delle tabelle: " + e.getMessage());
-        }
+        	    Statement stmt = conn.createStatement()) {
+        	    // Abilita le foreign keys PRIMA di creare le tabelle
+        	    stmt.execute("PRAGMA foreign_keys = ON;");
+        	    System.out.println("PRAGMA foreign_keys = ON");
+
+        	    // Controlla se le foreign keys sono attive
+        	    ResultSet rs = stmt.executeQuery("PRAGMA foreign_keys;");
+        	    if (rs.next() && rs.getInt(1) == 1) {
+        	        System.out.println("Le foreign keys sono ATTIVE");
+        	    } else {
+        	        System.out.println("Le foreign keys NON sono attive!");
+        	    }
+        	    rs.close();
+
+        	    // Creazione delle tabelle
+        	    stmt.execute(createUtenteTable);
+        	    stmt.execute(createOrdineTable);
+        	    stmt.execute(createCarrelloTable);
+        	    stmt.execute(createMetodoDiPagamentoTable);
+        	    stmt.execute(createRistoranteTable);
+        	    stmt.execute(createMenuTable);
+        	    stmt.execute(createPiattoTable);
+
+        	    System.out.println("Tabelle create con successo!");
+        	} catch (SQLException e) {
+        	    System.err.println("Errore durante la creazione delle tabelle: " + e.getMessage());
+        	}
+        
+        
+        try (Connection conn = connect();
+        	    Statement stmt = conn.createStatement()) {
+
+        	    // Controlla le foreign keys per la tabella 'Utente'
+        	    try (ResultSet rs = stmt.executeQuery("PRAGMA foreign_key_list(Utente);")) {
+        	        System.out.println("Foreign keys per la tabella Utente:");
+        	        while (rs.next()) {
+        	            System.out.println(
+        	                "id: " + rs.getInt("id") +
+        	                ", tabella riferimento: " + rs.getString("table") +
+        	                ", colonna riferimento: " + rs.getString("to")
+        	            );
+        	        }
+        	    }
+
+        	    // Controlla le foreign keys per la tabella 'Ristorante'
+        	    try (ResultSet rs = stmt.executeQuery("PRAGMA foreign_key_list(Ristorante);")) {
+        	        System.out.println("Foreign keys per la tabella Ristorante:");
+        	        while (rs.next()) {
+        	            System.out.println(
+        	                "id: " + rs.getInt("id") +
+        	                ", tabella riferimento: " + rs.getString("table") +
+        	                ", colonna riferimento: " + rs.getString("to")
+        	            );
+        	        }
+        	    }
+
+        	    // Controlla le foreign keys per la tabella 'Menu'
+        	    try (ResultSet rs = stmt.executeQuery("PRAGMA foreign_key_list(Menu);")) {
+        	        System.out.println("Foreign keys per la tabella Menu:");
+        	        while (rs.next()) {
+        	            System.out.println(
+        	                "id: " + rs.getInt("id") +
+        	                ", tabella riferimento: " + rs.getString("table") +
+        	                ", colonna riferimento: " + rs.getString("to")
+        	            );
+        	        }
+        	    }
+
+        	    // Controlla le foreign keys per la tabella 'Piatto'
+        	    try (ResultSet rs = stmt.executeQuery("PRAGMA foreign_key_list(Piatto);")) {
+        	        System.out.println("Foreign keys per la tabella Piatto:");
+        	        while (rs.next()) {
+        	            System.out.println(
+        	                "id: " + rs.getInt("id") +
+        	                ", tabella riferimento: " + rs.getString("table") +
+        	                ", colonna riferimento: " + rs.getString("to")
+        	            );
+        	        }
+        	    }
+
+        	} catch (SQLException e) {
+        	    System.err.println("Errore durante la verifica delle foreign keys: " + e.getMessage());
+        	}
+
+
+
+
     }
 }
