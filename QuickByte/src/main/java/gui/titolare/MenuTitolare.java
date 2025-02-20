@@ -2,12 +2,15 @@ package gui.titolare;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import dao.MenuDAO;
 import database.DatabaseConnection;
 import gui.main.*;
+import model.Menu;
+import sessione.SessioneMenu;
+import sessione.SessioneRistorante;
 
 import java.sql.*;
+import java.util.List;
 
 public class MenuTitolare extends VBox {
 
@@ -39,31 +42,29 @@ public class MenuTitolare extends VBox {
 
     private void loadMenu() {
         try (Connection conn = DatabaseConnection.connect()) {
-            String query = "SELECT nome FROM Menu WHERE idRistorante = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setInt(1, ristorante);
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    String nomeMenu = rs.getString("nome");
-                    HBox menuBox = new HBox(10);
-                    menuBox.setStyle("-fx-padding: 10;");
-                    Label nomeMenuLabel = new Label(nomeMenu);
+            MenuDAO menuDAO = new MenuDAO(conn);
+            List<Menu> menuList = menuDAO.getMenuByRistorante(ristorante);
+            
+            for (Menu menu : menuList) {
+                String nomeMenu = menu.getNome();
+                HBox menuBox = new HBox(10);
+                menuBox.setStyle("-fx-padding: 10;");
+                Label nomeMenuLabel = new Label(nomeMenu);
 
-                    // Aggiungi un evento di click sul nome del menu
-                    nomeMenuLabel.setOnMouseClicked(e -> switchToPiattiTitolare(nomeMenu));
+                // Aggiungi un evento di click sul nome del menu
+                nomeMenuLabel.setOnMouseClicked(e -> switchToPiattiTitolare(nomeMenu));
 
-                    MenuButton optionsButton = new MenuButton("⋮");
-                    MenuItem modificaItem = new MenuItem("Modifica");
-                    modificaItem.setOnAction(e -> switchToModificaMenu(nomeMenu));
+                MenuButton optionsButton = new MenuButton("⋮");
+                MenuItem modificaItem = new MenuItem("Modifica");
+                modificaItem.setOnAction(e -> switchToModificaMenu(nomeMenu));
 
-                    MenuItem eliminaItem = new MenuItem("Elimina");
-                    eliminaItem.setOnAction(e -> confermaEliminazione(nomeMenu));
+                MenuItem eliminaItem = new MenuItem("Elimina");
+                eliminaItem.setOnAction(e -> confermaEliminazione(nomeMenu));
 
-                    optionsButton.getItems().addAll(modificaItem, eliminaItem);
+                optionsButton.getItems().addAll(modificaItem, eliminaItem);
 
-                    menuBox.getChildren().addAll(nomeMenuLabel, optionsButton);
-                    container.getChildren().add(menuBox);
-                }
+                menuBox.getChildren().addAll(nomeMenuLabel, optionsButton);
+                container.getChildren().add(menuBox);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,20 +87,11 @@ public class MenuTitolare extends VBox {
 
     private void eliminaMenu(String nomeMenu) {
         try (Connection conn = DatabaseConnection.connect()) {
-            String query = "DELETE FROM Menu WHERE nome = ? AND idRistorante = ?";
-
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, nomeMenu);
-                stmt.setInt(2, SessioneRistorante.getId());
-                int affectedRows = stmt.executeUpdate();
-                if (affectedRows > 0) {
-                    showAlert("Successo", "Menu eliminato con successo.");
-                    container.getChildren().clear();
-                    loadMenu();
-                } else {
-                    showAlert("Errore", "Impossibile eliminare il menu.");
-                }
-            }
+            MenuDAO menuDAO = new MenuDAO(conn);
+            menuDAO.rimuoviMenu(nomeMenu, ristorante);
+            showAlert("Successo", "Menu eliminato con successo.");
+            container.getChildren().clear();
+            loadMenu();
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Errore", "Errore durante l'eliminazione del menu.");

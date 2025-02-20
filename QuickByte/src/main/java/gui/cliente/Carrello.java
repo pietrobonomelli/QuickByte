@@ -2,6 +2,9 @@ package gui.cliente;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import sessione.SessioneCarrello;
+import sessione.SessioneRistorante;
+import sessione.SessioneUtente;
 import javafx.scene.Scene;
 import database.DatabaseConnection;
 import gui.main.*;

@@ -2,8 +2,8 @@ package gui.titolare;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import sessione.SessioneUtente;
 import database.DatabaseConnection;
-import gui.main.SessioneUtente;
 
 import java.sql.*;
 

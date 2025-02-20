@@ -1,7 +1,7 @@
 package gui.controller;
 
-import gui.main.SessioneUtente;
 import javafx.scene.control.Label;
+import sessione.SessioneUtente;
 
 public class MainScreenCorriere extends MainScreen {
     

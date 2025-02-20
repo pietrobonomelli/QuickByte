@@ -2,6 +2,8 @@ package gui.cliente;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import sessione.SessioneMenu;
+import sessione.SessioneRistorante;
 import javafx.scene.input.MouseButton;
 import database.DatabaseConnection;
 import gui.main.*;

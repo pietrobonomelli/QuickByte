@@ -1,14 +1,11 @@
 package gui.controller;
 
-import database.DatabaseConnection;
+import dao.UtenteDAO;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import model.*;
 
 public class RegisterScreen extends VBox {
 
@@ -75,54 +72,42 @@ public class RegisterScreen extends VBox {
             return;
         }
 
-        if (isEmailTaken(email)) {
+        // Controlla se l'email è già in uso
+        UtenteDAO utenteDAO = new UtenteDAO();
+        if (utenteDAO.getUtenteByEmail(email) != null) {
             showError("Email già in uso.");
         } else {
-            saveUser(email, name, phone, password, userType);
-            showSuccess("Registrazione avvenuta con successo!");
-            switchToLoginScreen();
+            // Crea l'oggetto utente e lo inserisce nel database
+            Utente utente = null;
+            switch (userType) {
+                case "Cliente":
+                    utente = new Cliente(email, password, name, phone);
+                    break;
+                case "Titolare":
+                    utente = new Titolare(email, password, name, phone);
+                    break;
+                case "Corriere":
+                    utente = new Corriere(email, password, name, phone);
+                    break;
+            }
+
+            // Inserisce l'utente nel database tramite il DAO
+            if (utente != null) {
+                boolean success = utenteDAO.insertUtente(utente, userType);
+                if (success) {
+                    showSuccess("Registrazione avvenuta con successo!");
+                    switchToLoginScreen();
+                } else {
+                    showError("Errore durante la registrazione. Riprova.");
+                }
+            }
         }
     }
     
-    //QUESTO RIPORTA AL LOGIN
     private void switchToLoginScreen() {
-        // Ottieni il contesto della scena corrente
         Scene currentScene = getScene();
-
-        // Crea la nuova schermata di login
         LoginScreen loginScreen = new LoginScreen(); 
-
-        // Cambia la scena con quella di login
         currentScene.setRoot(loginScreen);
-    }
-
-    private boolean isEmailTaken(String email) {
-        try (Connection connection = DatabaseConnection.connect();
-             PreparedStatement statement = connection.prepareStatement("SELECT 1 FROM Utente WHERE email = ?")) {
-            statement.setString(1, email);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    private void saveUser(String email, String name, String phone, String password, String userType) {
-        try (Connection connection = DatabaseConnection.connect();
-             PreparedStatement statement = connection.prepareStatement(
-                     "INSERT INTO Utente (email, nome, telefono, password, tipoUtente) VALUES (?, ?, ?, ?, ?)")
-        ) {
-            statement.setString(1, email);
-            statement.setString(2, name);
-            statement.setString(3, phone);
-            statement.setString(4, password);
-            statement.setString(5, userType);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showError("Errore durante la registrazione. Riprova.");
-        }
     }
 
     private void showError(String message) {

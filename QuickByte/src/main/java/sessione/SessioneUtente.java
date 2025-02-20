@@ -1,4 +1,4 @@
-package gui.main;
+package sessione;
 
 public class SessioneUtente {
     private static String email;

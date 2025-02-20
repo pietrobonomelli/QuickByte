@@ -2,6 +2,7 @@ package gui.cliente;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import sessione.SessioneRistorante;
 import javafx.scene.input.MouseButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

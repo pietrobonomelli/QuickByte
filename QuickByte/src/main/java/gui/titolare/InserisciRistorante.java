@@ -2,8 +2,9 @@ package gui.titolare;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import sessione.SessioneUtente;
 import database.DatabaseConnection;
-import gui.main.SessioneUtente;
+import dao.RistoranteDAO;  // Importa la classe DAO che gestisce l'inserimento nel database
 
 import java.sql.*;
 
@@ -33,7 +34,14 @@ public class InserisciRistorante extends VBox {
 
         // Pulsante per confermare l'inserimento
         Button confermaButton = new Button("Inserisci Ristorante");
-        confermaButton.setOnAction(e -> inserisciRistorante());
+        confermaButton.setOnAction(e -> {
+			try {
+				inserisciRistorante();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 
         // Pulsante per tornare alla schermata di gestione ristoranti
         Button tornaButton = new Button("Torna alla gestione ristoranti");
@@ -50,11 +58,12 @@ public class InserisciRistorante extends VBox {
         );
     }
 
-    private void inserisciRistorante() {
+    private void inserisciRistorante() throws SQLException {
         // Recupera i dati dai campi di input
         String nome = nomeRistoranteField.getText();
         String telefono = telefonoField.getText();
         String indirizzo = indirizzoField.getText();
+        String emailTitolare = SessioneUtente.getEmail(); // Recupera l'email del titolare dalla sessione
 
         if (nome.isEmpty() || telefono.isEmpty() || indirizzo.isEmpty()) {
             // Mostra un messaggio di errore se qualche campo è vuoto
@@ -62,32 +71,17 @@ public class InserisciRistorante extends VBox {
             return;
         }
 
-        // Connessione al database e inserimento dei dati
-        try (Connection conn = DatabaseConnection.connect()) {
-            String query = "INSERT INTO Ristorante (nome, telefono, indirizzo, emailTitolare) VALUES (?, ?, ?, ?)";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, nome);
-                stmt.setString(2, telefono);
-                stmt.setString(3, indirizzo);
-                stmt.setString(4, emailTitolare);
+        // Utilizza il DAO per inserire il ristorante nel database
+        RistoranteDAO ristoranteDAO = new RistoranteDAO();
+        ristoranteDAO.inserisciRistorante(nome, telefono, indirizzo, emailTitolare);
 
-                int rowsAffected = stmt.executeUpdate();
-                if (rowsAffected > 0) {
-                    // Successo, mostra un messaggio di conferma
-                    showAlert("Successo", "Ristorante inserito con successo!");
-                    
-                    // Torna alla schermata di gestione ristoranti
-                    getScene().setRoot(new MainScreenTitolare());
+        // Successo, mostra un messaggio di conferma
+        showAlert("Successo", "Ristorante inserito con successo!");
 
-                } else {
-                    showAlert("Errore", "Impossibile inserire il ristorante.");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Errore", "Errore di connessione al database.");
-        }
+        // Torna alla schermata di gestione ristoranti
+        getScene().setRoot(new MainScreenTitolare());
     }
+
 
     private void tornaAllaGestioneRistoranti() {
         // Torna alla schermata di gestione ristoranti

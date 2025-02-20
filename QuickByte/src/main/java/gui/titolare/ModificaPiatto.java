@@ -3,6 +3,8 @@ package gui.titolare;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
+import sessione.SessioneMenu;
+import sessione.SessionePiatto;
 import database.DatabaseConnection;
 import gui.main.*;
 import java.io.File;

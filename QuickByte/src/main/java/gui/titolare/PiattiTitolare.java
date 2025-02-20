@@ -2,6 +2,8 @@ package gui.titolare;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import sessione.SessioneMenu;
+import sessione.SessionePiatto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import database.DatabaseConnection;

@@ -2,6 +2,7 @@ package gui.cliente;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import sessione.SessionePiatto;
 import javafx.scene.Scene;
 import database.DatabaseConnection;
 import gui.main.*;

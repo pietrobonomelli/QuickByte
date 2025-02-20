@@ -1,4 +1,4 @@
-package logica.ordine;
+package model;
 
 public enum StatoOrdine {
     ACCETTATO,

@@ -1,37 +1,31 @@
-package logica.pagamento;
+package model;
 
 public class MetodoDiPagamento {
     private String nominativo;
     private String numeroCarta;
     private String scadenza;
-    
-    public MetodoDiPagamento(String nominativo, String numeroCarta, String scadenza) {
+    private String emailCliente;
+
+    public MetodoDiPagamento(String nominativo, String numeroCarta, String scadenza, String emailCliente) {
         this.nominativo = nominativo;
         this.numeroCarta = numeroCarta;
         this.scadenza = scadenza;
-    }
-    
-    public String getNominativo() {
-        return nominativo;
+        this.emailCliente = emailCliente;
     }
 
-    public void setNominativo(String nominativo) {
-        this.nominativo = nominativo;
+    public String getNominativo() {
+        return nominativo;
     }
 
     public String getNumeroCarta() {
         return numeroCarta;
     }
 
-    public void setNumeroCarta(String numeroCarta) {
-        this.numeroCarta = numeroCarta;
-    }
-
     public String getScadenza() {
         return scadenza;
     }
 
-    public void setScadenza(String scadenza) {
-        this.scadenza = scadenza;
+    public String getEmailCliente() {
+        return emailCliente;
     }
 }

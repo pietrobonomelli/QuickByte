@@ -2,9 +2,9 @@ package gui.titolare;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import sessione.SessioneMenu;
+import sessione.SessioneRistorante;
 import database.DatabaseConnection;
-import gui.main.SessioneMenu;
-import gui.main.SessioneRistorante;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

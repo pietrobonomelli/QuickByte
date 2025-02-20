@@ -1,10 +1,10 @@
 package gui.cliente;
 
 import database.DatabaseConnection;
-import gui.main.SessioneUtente;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import sessione.SessioneUtente;
 import javafx.scene.Scene;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
