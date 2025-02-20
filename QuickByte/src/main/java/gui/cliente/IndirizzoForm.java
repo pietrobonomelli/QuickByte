@@ -1,13 +1,14 @@
 package gui.cliente;
 
+import dao.IndirizzoDAO;
 import database.DatabaseConnection;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import sessione.SessioneUtente;
 import javafx.scene.Scene;
+import model.Indirizzo;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class IndirizzoForm extends VBox {
@@ -45,7 +46,9 @@ public class IndirizzoForm extends VBox {
                 return;
             }
 
-            salvaIndirizzo(emailUtente, indirizzo, citta, cap, provincia);
+            // Crea un oggetto Indirizzo e passa al DAO
+            Indirizzo nuovoIndirizzo = new Indirizzo(0, indirizzo, citta, cap, provincia, emailUtente);
+            salvaIndirizzo(nuovoIndirizzo);
         });
 
         Button annullaButton = new Button("Annulla");
@@ -54,22 +57,12 @@ public class IndirizzoForm extends VBox {
         getChildren().addAll(titolo, indirizzoField, cittaField, capField, provinciaField, salvaButton, annullaButton);
     }
 
-    private void salvaIndirizzo(String email, String indirizzo, String citta, String cap, String provincia) {
-        String sql = "INSERT INTO Indirizzo (indirizzo, citta, cap, provincia, emailUtente) VALUES (?, ?, ?, ?, ?)";
-
-        try (Connection conn = DatabaseConnection.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, indirizzo);
-            pstmt.setString(2, citta);
-            pstmt.setString(3, cap);
-            pstmt.setString(4, provincia);
-            pstmt.setString(5, email);
-            pstmt.executeUpdate();
-
+    private void salvaIndirizzo(Indirizzo indirizzo) {
+        try (Connection conn = DatabaseConnection.connect()) {
+            IndirizzoDAO indirizzoDAO = new IndirizzoDAO(conn);
+            indirizzoDAO.aggiungiIndirizzo(indirizzo); // Usa il DAO per salvare l'indirizzo
             showAlert("Successo", "Indirizzo salvato correttamente!");
-            tornaIndietro(); // Torna alla schermata precedente
-
+            tornaIndietro(); // Torna alla schermata principale del cliente
         } catch (SQLException e) {
             showAlert("Errore", "Errore nel salvataggio dell'indirizzo.");
             e.printStackTrace();

@@ -7,17 +7,20 @@ import sessione.SessioneMenu;
 import sessione.SessionePiatto;
 import sessione.SessioneRistorante;
 import sessione.SessioneUtente;
-import database.DatabaseConnection;
 import gui.main.*;
+import dao.PiattoDAO;
+import model.Piatto;
 import java.sql.*;
+import java.util.List;
 
 public class PiattiCliente extends VBox {
 
-	private String emailCliente;
+    private String emailCliente;
     private String nomeMenu;
     private int idRistorante;
+    private PiattoDAO piattoDAO;
 
-    public PiattiCliente() {
+    public PiattiCliente() throws SQLException {
         super(10);
 
         this.idRistorante = SessioneRistorante.getId();
@@ -25,45 +28,50 @@ public class PiattiCliente extends VBox {
         this.emailCliente = SessioneUtente.getEmail();
 
         this.setStyle("-fx-padding: 10;");
-        loadPiatti(idRistorante, nomeMenu);
+        this.piattoDAO = new PiattoDAO();
+        loadPiatti();
     }
 
-    private void loadPiatti(int idRistorante, String nomeMenu) {
-        try (Connection conn = DatabaseConnection.connect()) {
-            // Query per recuperare i piatti associati all'idRistorante e al nomeMenu
-            String query = "SELECT idPiatto, nome FROM Piatto WHERE idRistorante = ? AND nomeMenu = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setInt(1, idRistorante);
-                stmt.setString(2, nomeMenu);
-                ResultSet rs = stmt.executeQuery();
+    private void loadPiatti() {
+        try {
+            // Ottieni i piatti dal DAO
+            List<Piatto> piatti = piattoDAO.getPiattiByMenuAndIdRistorante(nomeMenu, idRistorante);
 
-                while (rs.next()) {
-                    int idPiatto = rs.getInt("idPiatto");
-                    String nomePiatto = rs.getString("nome");
+            for (Piatto piatto : piatti) {
+                // Crea un box per ogni piatto
+                HBox piattoBox = new HBox(10);
+                piattoBox.setStyle("-fx-padding: 10;");
 
-                    // Crea un box per ogni piatto
-                    HBox piattoBox = new HBox(10);
-                    piattoBox.setStyle("-fx-padding: 10;");
+                // Crea l'etichetta con il nome del piatto
+                Label nomeLabel = new Label(piatto.getNome());
 
-                    // Crea l'etichetta con il nome del piatto
-                    Label nomeLabel = new Label(nomePiatto);
+                // Crea il pulsante per aggiungere al carrello
+                Button aggiungiCarrelloButton = new Button("Aggiungi al carrello");
 
-                    // Crea il pulsante per aggiungere al carrello
-                    Button aggiungiCarrelloButton = new Button("Aggiungi al carrello");
+                // Quando clicchi sul nome del piatto, salva l'idPiatto nella sessione e vai alla pagina PiattoCliente
+                nomeLabel.setOnMouseClicked(event -> {
+                    SessionePiatto.setId(piatto.getIdPiatto());  // Salviamo l'ID del piatto nella sessione
+                    try {
+						switchToPiattoCliente();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}          // Vai alla pagina PiattoCliente
+                });
 
-                    // Quando clicchi sul nome del piatto, salva l'idPiatto nella sessione e vai alla pagina PiattoCliente
-                    nomeLabel.setOnMouseClicked(event -> {
-                        SessionePiatto.setId(idPiatto);  // Salviamo l'ID del piatto nella sessione
-                        switchToPiattoCliente();          // Vai alla pagina PiattoCliente
-                    });
+                // Quando clicchi sul pulsante "Aggiungi al carrello", passiamo l'idPiatto al metodo
+                aggiungiCarrelloButton.setOnAction(event -> {
+					try {
+						aggiungiAlCarrello(piatto.getIdPiatto());
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				});
 
-                    // Quando clicchi sul pulsante "Aggiungi al carrello", passiamo l'idPiatto al metodo
-                    aggiungiCarrelloButton.setOnAction(event -> aggiungiAlCarrello(idPiatto));
-
-                    // Aggiungi gli elementi al box
-                    piattoBox.getChildren().addAll(nomeLabel, aggiungiCarrelloButton);
-                    this.getChildren().add(piattoBox);
-                }
+                // Aggiungi gli elementi al box
+                piattoBox.getChildren().addAll(nomeLabel, aggiungiCarrelloButton);
+                this.getChildren().add(piattoBox);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,9 +86,7 @@ public class PiattiCliente extends VBox {
         this.getChildren().add(tornaAllaListaMenuButton);
     }
 
- 
-    
-    private void aggiungiAlCarrello(int idPiatto) {
+    private void aggiungiAlCarrello(int idPiatto) throws SQLException {
         boolean pieno = SessioneCarrello.getPieno();
         int idRistoranteCarrello = SessioneCarrello.getIdRistorante();
 
@@ -88,38 +94,15 @@ public class PiattiCliente extends VBox {
             // Se il carrello è vuoto, imposto l'idRistorante in sessione e aggiungo il piatto
             SessioneCarrello.setIdRistorante(idRistorante);
             SessioneCarrello.setPieno(true);
-            aggiungiPiattoAlCarrello(idPiatto);
+            piattoDAO.aggiungiPiattoAlCarrello(idPiatto, emailCliente);
         } else {
             if (idRistoranteCarrello == idRistorante) {
                 // Se il ristorante è lo stesso, aggiungo il piatto
-                aggiungiPiattoAlCarrello(idPiatto);
+                piattoDAO.aggiungiPiattoAlCarrello(idPiatto, emailCliente);
             } else {
                 // Se il ristorante è diverso, mostro il popup di conferma con Alert
                 mostraPopupConferma(idPiatto);
             }
-        }
-    }
-
-    private void aggiungiPiattoAlCarrello(int idPiatto) {
-        String sql = "INSERT INTO Carrello (quantitaPiatti, idPiatto, ordine, emailUtente) " +
-                     "VALUES (1, ?, NULL, ?) " +
-                     "ON CONFLICT (idPiatto, emailUtente) DO UPDATE SET quantitaPiatti = quantitaPiatti + 1";
-
-        try (Connection conn = DatabaseConnection.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, idPiatto);
-            pstmt.setString(2, this.emailCliente);
-
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Piatto aggiunto al carrello.");
-            } else {
-                System.out.println("Errore nell'aggiunta del piatto al carrello.");
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Errore SQL: " + e.getMessage());
         }
     }
 
@@ -136,22 +119,21 @@ public class PiattiCliente extends VBox {
 
         alert.showAndWait().ifPresent(response -> {
             if (response == btnProcedi) {
-                svuotaCarrello(this.emailCliente);
+                svuotaCarrello(emailCliente);
                 SessioneCarrello.setIdRistorante(idRistorante);
-                aggiungiPiattoAlCarrello(idPiatto);
+                try {
+					piattoDAO.aggiungiPiattoAlCarrello(idPiatto, emailCliente);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
     }
 
     private void svuotaCarrello(String emailUtente) {
-        String sql = "DELETE FROM Carrello WHERE emailUtente = ?";
-
-        try (Connection conn = DatabaseConnection.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, emailUtente);
-            pstmt.executeUpdate();
-
+        try {
+            piattoDAO.svuotaCarrello(emailUtente);
             SessioneCarrello.setPieno(false);
             System.out.println("Carrello svuotato.");
         } catch (SQLException e) {
@@ -159,12 +141,7 @@ public class PiattiCliente extends VBox {
         }
     }
 
-
-
-
-
-
-    private void switchToPiattoCliente() {
+    private void switchToPiattoCliente() throws SQLException {
         PiattoCliente piattoClienteScreen = new PiattoCliente(); // La schermata PiattoCliente prenderà l'idPiatto dalla sessione
         this.getScene().setRoot(piattoClienteScreen);
     }

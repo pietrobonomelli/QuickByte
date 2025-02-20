@@ -1,4 +1,4 @@
-package gui.controller;
+package gui.main;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;

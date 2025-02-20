@@ -5,9 +5,10 @@ import javafx.scene.layout.*;
 import sessione.SessioneMenu;
 import sessione.SessioneRistorante;
 import database.DatabaseConnection;
+import dao.PiattoDAO;
+import model.Piatto;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class InserisciPiatto extends VBox {
@@ -44,7 +45,14 @@ public class InserisciPiatto extends VBox {
         inserisciButton.setOnAction(e -> inserisciPiatto());
         
         Button tornaIndietroButton = new Button("Torna ai Piatti");
-        tornaIndietroButton.setOnAction(e -> tornaAiPiatti());
+        tornaIndietroButton.setOnAction(e -> {
+			try {
+				tornaAiPiatti();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
         
         this.getChildren().addAll(titolo, nomeField, prezzoField, allergeniField, disponibilitaCheckBox, fotoField, nomeMenuLabel, inserisciButton, tornaIndietroButton);
     }
@@ -53,7 +61,7 @@ public class InserisciPiatto extends VBox {
         String nome = nomeField.getText();
         String prezzo = prezzoField.getText();
         String allergeni = allergeniField.getText();
-        int disponibilita = disponibilitaCheckBox.isSelected() ? 1 : 0;
+        boolean disponibilita = disponibilitaCheckBox.isSelected();
         String foto = fotoField.getText();
         
         if (nome.isEmpty() || prezzo.isEmpty()) {
@@ -62,27 +70,17 @@ public class InserisciPiatto extends VBox {
         }
         
         try (Connection conn = DatabaseConnection.connect()) {
-            // Esegui l'inserimento senza il controllo duplicato
-            String query = "INSERT INTO Piatto (nome, disponibile, prezzo, allergeni, foto, nomeMenu, idRistorante) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, nome);
-                stmt.setInt(2, disponibilita);
-                stmt.setString(3, prezzo);
-                stmt.setString(4, allergeni);
-                stmt.setString(5, foto);
-                stmt.setString(6, nomeMenu);
-                stmt.setInt(7, idRistorante);  // Aggiungi l'idRistorante
-                stmt.executeUpdate();
-                tornaAiPiatti(); // Torna automaticamente ai piatti dopo l'inserimento
-            }
+            PiattoDAO piattoDAO = new PiattoDAO();
+            Piatto piatto = new Piatto(0, nome, disponibilita, prezzo, allergeni, foto, nomeMenu, idRistorante);
+            piattoDAO.aggiungiPiatto(piatto);
+            tornaAiPiatti();
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Errore", "Errore durante l'inserimento del piatto");
         }
-
     }
     
-    private void tornaAiPiatti() {
+    private void tornaAiPiatti() throws SQLException {
         PiattiTitolare piattiScreen = new PiattiTitolare();
         this.getScene().setRoot(piattiScreen);
     }

@@ -3,23 +3,27 @@ package gui.titolare;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import sessione.SessioneMenu;
+import sessione.SessioneRistorante;
 import sessione.SessionePiatto;
+import dao.PiattoDAO;
+import model.Piatto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import database.DatabaseConnection;
 import java.sql.*;
-import gui.main.*;
+import java.util.List;
 
 public class PiattiTitolare extends VBox {
 
     private VBox container;
     private String nomeMenu;
     private int idPiatto;
+    private PiattoDAO piattoDAO;
 
-    public PiattiTitolare() {
+    public PiattiTitolare() throws SQLException {
         super(10);
         this.nomeMenu = SessioneMenu.getNome();
         this.idPiatto = SessionePiatto.getId();
+        this.piattoDAO = new PiattoDAO();
         this.setStyle("-fx-padding: 10;");
         container = new VBox(10);
         loadPiatti();
@@ -39,28 +43,32 @@ public class PiattiTitolare extends VBox {
     }
 
     private void loadPiatti() {
-        try (Connection conn = DatabaseConnection.connect()) {
-            String query = "SELECT nome FROM Piatto WHERE nomeMenu = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, this.nomeMenu);
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    String nomePiatto = rs.getString("nome");
-                    HBox piattoBox = new HBox(10);
-                    piattoBox.setStyle("-fx-padding: 10;");
-                    Label nomePiattoLabel = new Label(nomePiatto);
-                    
-                    MenuButton menuButton = new MenuButton("⋮");
-                    MenuItem eliminaItem = new MenuItem("Elimina");
-                    eliminaItem.setOnAction(e -> eliminaPiatto(nomePiatto));
-                    
-                    MenuItem modificaItem = new MenuItem("Modifica");
-                    modificaItem.setOnAction(e -> switchToModificaPiatto());
-                    
-                    menuButton.getItems().addAll(modificaItem, eliminaItem);
-                    piattoBox.getChildren().addAll(nomePiattoLabel, menuButton);
-                    container.getChildren().add(piattoBox);
-                }
+        try {
+            // Modifica: ottenere piatti dal database tramite DAO
+            List<Piatto> piatti = piattoDAO.getPiattiByMenuAndIdRistorante(nomeMenu, SessioneRistorante.getId());
+            
+            for (Piatto piatto : piatti) {
+                HBox piattoBox = new HBox(10);
+                piattoBox.setStyle("-fx-padding: 10;");
+                Label nomePiattoLabel = new Label(piatto.getNome());
+                
+                MenuButton menuButton = new MenuButton("⋮");
+                MenuItem eliminaItem = new MenuItem("Elimina");
+                eliminaItem.setOnAction(e -> eliminaPiatto(piatto.getIdPiatto()));
+                
+                MenuItem modificaItem = new MenuItem("Modifica");
+                modificaItem.setOnAction(e -> {
+					try {
+						switchToModificaPiatto();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				});
+                
+                menuButton.getItems().addAll(modificaItem, eliminaItem);
+                piattoBox.getChildren().addAll(nomePiattoLabel, menuButton);
+                container.getChildren().add(piattoBox);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,22 +76,18 @@ public class PiattiTitolare extends VBox {
         }
     }
 
-    private void eliminaPiatto(String nomePiatto) {
-        try (Connection conn = DatabaseConnection.connect()) {
-            String query = "DELETE FROM Piatto WHERE idPiatto = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setInt(1, idPiatto);
-                stmt.executeUpdate();
-                container.getChildren().clear();
-                loadPiatti();
-            }
+    private void eliminaPiatto(int idPiatto) {
+        try {
+            piattoDAO.rimuoviPiatto(idPiatto);
+            container.getChildren().clear();
+            loadPiatti();
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Errore", "Errore durante l'eliminazione del piatto.");
         }
     }
 
-    private void switchToModificaPiatto() {
+    private void switchToModificaPiatto() throws SQLException {
         ModificaPiatto modificaPiattoScreen = new ModificaPiatto();
         this.getScene().setRoot(modificaPiattoScreen);
     }

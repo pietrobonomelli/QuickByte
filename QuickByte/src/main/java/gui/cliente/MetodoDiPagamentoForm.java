@@ -1,22 +1,25 @@
 package gui.cliente;
 
-import database.DatabaseConnection;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import sessione.SessioneUtente;
 import javafx.scene.Scene;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+
 import java.sql.SQLException;
+
+import dao.MetodoDiPagamentoDAO;
+import model.MetodoDiPagamento;
 
 public class MetodoDiPagamentoForm extends VBox {
 
     private String emailUtente;
+    private MetodoDiPagamentoDAO metodoDiPagamentoDAO;
 
-    public MetodoDiPagamentoForm() {
+    public MetodoDiPagamentoForm() throws SQLException {
         super(10);
         this.emailUtente = SessioneUtente.getEmail();
+        this.metodoDiPagamentoDAO = new MetodoDiPagamentoDAO();
         setAlignment(Pos.CENTER);
 
         Label titolo = new Label("Aggiungi un metodo di pagamento");
@@ -46,7 +49,8 @@ public class MetodoDiPagamentoForm extends VBox {
                 return;
             }
 
-            salvaMetodoDiPagamento(emailUtente, nominativo, numeroCarta, scadenza);
+            MetodoDiPagamento metodo = new MetodoDiPagamento(nominativo, numeroCarta, scadenza, emailUtente);
+            salvaMetodoDiPagamento(metodo);
         });
 
         Button annullaButton = new Button("Annulla");
@@ -55,21 +59,11 @@ public class MetodoDiPagamentoForm extends VBox {
         getChildren().addAll(titolo, nominativoField, numeroCartaField, scadenzaField, salvaButton, annullaButton);
     }
 
-    private void salvaMetodoDiPagamento(String email, String nominativo, String numeroCarta, String scadenza) {
-        String sql = "INSERT INTO MetodoDiPagamento (nominativo, numeroCarta, scadenza, emailCliente) VALUES (?, ?, ?, ?)";
-
-        try (Connection conn = DatabaseConnection.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, nominativo);
-            pstmt.setString(2, numeroCarta);
-            pstmt.setString(3, scadenza);
-            pstmt.setString(4, email);
-            pstmt.executeUpdate();
-
+    private void salvaMetodoDiPagamento(MetodoDiPagamento metodo) {
+        try {
+            metodoDiPagamentoDAO.aggiungiMetodo(metodo);
             showAlert("Successo", "Metodo di pagamento salvato correttamente!");
             tornaIndietro(); // Torna alla schermata precedente
-
         } catch (SQLException e) {
             showAlert("Errore", "Errore nel salvataggio del metodo di pagamento.");
             e.printStackTrace();
@@ -77,11 +71,10 @@ public class MetodoDiPagamentoForm extends VBox {
     }
 
     private void tornaIndietro() {
-        Carrello mainClienteScreen = new Carrello();  // Torna alla schermata dei piatti
+        CarrelloView mainClienteScreen = new CarrelloView();  // Torna alla schermata precedente
         Scene currentScene = this.getScene();
         currentScene.setRoot(mainClienteScreen);
     }
-
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

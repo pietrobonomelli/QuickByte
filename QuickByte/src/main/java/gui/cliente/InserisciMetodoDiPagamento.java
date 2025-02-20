@@ -3,12 +3,10 @@ package gui.cliente;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import sessione.SessioneUtente;
-import database.DatabaseConnection;
-import gui.main.*;
 import javafx.scene.Scene;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import dao.MetodoDiPagamentoDAO;
+import model.MetodoDiPagamento;
 
 public class InserisciMetodoDiPagamento extends VBox {
     
@@ -40,16 +38,14 @@ public class InserisciMetodoDiPagamento extends VBox {
         Button confermaButton = new Button("Aggiungi Metodo");
         confermaButton.setOnAction(event -> aggiungiMetodoDiPagamento());
         
-     // Aggiungi un pulsante per tornare alla lista di piatti
         Button tornaAllaListaButton = new Button("Torna indetro");
         tornaAllaListaButton.setOnAction(event -> tornaAllaLista());
-        this.getChildren().add(tornaAllaListaButton);
         
         this.getChildren().addAll(titolo, nominativoField, numeroCartaField, scadenzaField, confermaButton, tornaAllaListaButton);
     }
     
     private void tornaAllaLista() {
-        MainScreenCliente mainClienteScreen = new MainScreenCliente();  // Torna alla schermata dei piatti
+        MainScreenCliente mainClienteScreen = new MainScreenCliente();  // Torna alla schermata principale
         Scene currentScene = this.getScene();
         currentScene.setRoot(mainClienteScreen);
     }
@@ -63,22 +59,20 @@ public class InserisciMetodoDiPagamento extends VBox {
             showAlert("Errore", "Tutti i campi sono obbligatori.");
             return;
         }
+
+        // Crea un oggetto MetodoDiPagamento con i dati inseriti
+        MetodoDiPagamento metodo = new MetodoDiPagamento(nominativo, numeroCarta, scadenza, emailUtente);
         
-        try (Connection conn = DatabaseConnection.connect()) {
-            String sql = "INSERT INTO MetodoDiPagamento (nominativo, numeroCarta, scadenza, emailCliente) VALUES (?, ?, ?, ?)";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, nominativo);
-                stmt.setString(2, numeroCarta);
-                stmt.setString(3, scadenza);
-                stmt.setString(4, emailUtente);
-                stmt.executeUpdate();
-                showAlert("Successo", "Metodo di pagamento aggiunto con successo.");
-            }
+        try {
+            MetodoDiPagamentoDAO metodoDAO = new MetodoDiPagamentoDAO();
+            metodoDAO.aggiungiMetodo(metodo);  // Passa l'oggetto MetodoDiPagamento
+            showAlert("Successo", "Metodo di pagamento aggiunto con successo.");
         } catch (SQLException e) {
-            showAlert("Errore", "Errore durante l'inserimento del metodo di pagamento.");
+            showAlert("Errore", "Errore di connessione al database.");
             e.printStackTrace();
         }
     }
+
     
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

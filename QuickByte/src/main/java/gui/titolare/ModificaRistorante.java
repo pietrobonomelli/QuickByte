@@ -3,19 +3,27 @@ package gui.titolare;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import sessione.SessioneUtente;
-import database.DatabaseConnection;
-
-import java.sql.*;
+import dao.RistoranteDAO;
+import model.Ristorante;
+import java.sql.SQLException;
 
 public class ModificaRistorante extends VBox {
     private TextField nomeField, telefonoField, indirizzoField;
     private String emailTitolare = SessioneUtente.getEmail();
     private String nomeRistorante;
+    private RistoranteDAO ristoranteDAO;
 
     public ModificaRistorante(String nomeRistorante) {
         super(10);
         this.nomeRistorante = nomeRistorante;
         this.setStyle("-fx-padding: 10;");
+
+        try {
+            this.ristoranteDAO = new RistoranteDAO();
+        } catch (SQLException e) {
+            showAlert("Errore", "Errore di connessione al database.");
+            return;
+        }
 
         // Titolo
         Label titolo = new Label("Modifica Ristorante: " + nomeRistorante);
@@ -41,17 +49,14 @@ public class ModificaRistorante extends VBox {
     }
 
     private void caricaDatiRistorante() {
-        try (Connection conn = DatabaseConnection.connect()) {
-            String query = "SELECT nome, telefono, indirizzo FROM Ristorante WHERE nome = ? AND emailTitolare = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, nomeRistorante);
-                stmt.setString(2, emailTitolare);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    nomeField.setText(rs.getString("nome"));
-                    telefonoField.setText(rs.getString("telefono"));
-                    indirizzoField.setText(rs.getString("indirizzo"));
-                }
+        try {
+            Ristorante ristorante = ristoranteDAO.getRistoranteByNome(nomeRistorante, emailTitolare);
+            if (ristorante != null) {
+                nomeField.setText(ristorante.getNome());
+                telefonoField.setText(ristorante.getTelefono());
+                indirizzoField.setText(ristorante.getIndirizzo());
+            } else {
+                showAlert("Errore", "Ristorante non trovato.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,22 +74,15 @@ public class ModificaRistorante extends VBox {
             return;
         }
 
-        try (Connection conn = DatabaseConnection.connect()) {
-            String query = "UPDATE Ristorante SET nome = ?, telefono = ?, indirizzo = ? WHERE nome = ? AND emailTitolare = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, nuovoNome);
-                stmt.setString(2, nuovoTelefono);
-                stmt.setString(3, nuovoIndirizzo);
-                stmt.setString(4, nomeRistorante);
-                stmt.setString(5, emailTitolare);
-                
-                int rowsAffected = stmt.executeUpdate();
-                if (rowsAffected > 0) {
-                    showAlert("Successo", "Ristorante modificato con successo!");
-                    getScene().setRoot(new MainScreenTitolare());
-                } else {
-                    showAlert("Errore", "Modifica non riuscita.");
-                }
+        try {
+            Ristorante ristorante = new Ristorante(nuovoNome, nuovoTelefono, nuovoIndirizzo, emailTitolare);
+            boolean success = ristoranteDAO.aggiornaRistorante(ristorante ,nomeRistorante);
+            
+            if (success) {
+                showAlert("Successo", "Ristorante modificato con successo!");
+                getScene().setRoot(new MainScreenTitolare());
+            } else {
+                showAlert("Errore", "Modifica non riuscita.");
             }
         } catch (SQLException e) {
             e.printStackTrace();

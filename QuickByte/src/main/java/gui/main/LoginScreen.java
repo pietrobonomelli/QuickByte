@@ -1,4 +1,4 @@
-package gui.controller;
+package gui.main;
 
 import database.DatabaseConnection;
 import dao.LoginDAO;

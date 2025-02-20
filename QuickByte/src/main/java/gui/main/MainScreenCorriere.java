@@ -1,4 +1,4 @@
-package gui.controller;
+package gui.main;
 
 import javafx.scene.control.Label;
 import sessione.SessioneUtente;

@@ -6,9 +6,13 @@ import javafx.stage.FileChooser;
 import sessione.SessioneMenu;
 import sessione.SessionePiatto;
 import database.DatabaseConnection;
+import dao.PiattoDAO;
+import model.Piatto;
 import gui.main.*;
+
 import java.io.File;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class ModificaPiatto extends VBox {
     private TextField prezzoField;
@@ -21,15 +25,23 @@ public class ModificaPiatto extends VBox {
     
     private int idPiatto;
     private String nomeMenu;
+    private PiattoDAO piattoDAO;
 
-    public ModificaPiatto() {
+    public ModificaPiatto() throws SQLException {
         super(10);
         this.setStyle("-fx-padding: 10;");
         this.idPiatto = SessionePiatto.getId();
         this.nomeMenu = SessioneMenu.getNome();
-        
-        Label titoloLabel = new Label("Modifica Piatto: " + idPiatto);	//TODO METTERE UN GETNOMEPIATTOBYID
-        
+
+        try (Connection conn = DatabaseConnection.connect()) {
+            piattoDAO = new PiattoDAO();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Errore", "Impossibile connettersi al database.");
+        }
+
+        Label titoloLabel = new Label("Modifica Piatto: " + idPiatto); 
+
         Label prezzoLabel = new Label("Prezzo:");
         prezzoField = new TextField();
         
@@ -46,7 +58,14 @@ public class ModificaPiatto extends VBox {
         salvaButton.setOnAction(e -> salvaModifiche());
         
         tornaIndietroButton = new Button("Torna ai Piatti");
-        tornaIndietroButton.setOnAction(e -> tornaAiPiatti());
+        tornaIndietroButton.setOnAction(e -> {
+			try {
+				tornaAiPiatti();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
         
         loadPiattoData();
         
@@ -54,38 +73,27 @@ public class ModificaPiatto extends VBox {
                 disponibilitaLabel, disponibilitaCheckBox, scegliFotoButton, salvaButton, tornaIndietroButton);
     }
 
-    private void loadPiattoData() {
-        try (Connection conn = DatabaseConnection.connect()) {
-            String query = "SELECT prezzo, allergeni, disponibile FROM Piatto WHERE idPiatto = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setInt(1, idPiatto);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    prezzoField.setText(rs.getString("prezzo"));
-                    allergeniField.setText(rs.getString("allergeni"));
-                    disponibilitaCheckBox.setSelected(rs.getInt("disponibile") == 1);
-                }
+    private void loadPiattoData() throws SQLException {
+            piattoDAO = new PiattoDAO();
+            Piatto piatto = piattoDAO.getPiattoById(idPiatto);
+            if (piatto != null) {
+                prezzoField.setText(piatto.getPrezzo());
+                allergeniField.setText(piatto.getAllergeni());
+                disponibilitaCheckBox.setSelected(piatto.isDisponibile());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Errore", "Errore nel caricamento dei dati del piatto.");
-        }
+        
     }
 
     private void salvaModifiche() {
         try (Connection conn = DatabaseConnection.connect()) {
-            String query = "UPDATE Piatto SET prezzo = ?, allergeni = ?, disponibile = ? WHERE idPiatto = ? AND nomeMenu = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, prezzoField.getText());
-                stmt.setString(2, allergeniField.getText());
-                stmt.setInt(3, disponibilitaCheckBox.isSelected() ? 1 : 0);
-                stmt.setInt(4, idPiatto);
-                stmt.setString(5, nomeMenu);
-                stmt.executeUpdate();
-                
-                showAlert("Successo", "Modifiche salvate correttamente.");
-                tornaAiPiatti(); // Ritorna automaticamente alla lista piatti
-            }
+            piattoDAO = new PiattoDAO();
+            Piatto piatto = new Piatto(idPiatto, "", disponibilitaCheckBox.isSelected(), 
+                                       prezzoField.getText(), allergeniField.getText(), 
+                                       fotoFile != null ? fotoFile.getAbsolutePath() : null, nomeMenu, 0);
+            piattoDAO.aggiornaPiatto(piatto);
+            
+            showAlert("Successo", "Modifiche salvate correttamente.");
+            tornaAiPiatti(); 
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Errore", "Errore nel salvataggio delle modifiche.");
@@ -101,7 +109,7 @@ public class ModificaPiatto extends VBox {
         }
     }
     
-    private void tornaAiPiatti() {
+    private void tornaAiPiatti() throws SQLException {
         PiattiTitolare piattiScreen = new PiattiTitolare();
         this.getScene().setRoot(piattiScreen);
     }

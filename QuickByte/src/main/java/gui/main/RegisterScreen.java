@@ -1,4 +1,4 @@
-package gui.controller;
+package gui.main;
 
 import dao.UtenteDAO;
 import javafx.geometry.Pos;

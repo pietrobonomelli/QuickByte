@@ -52,11 +52,25 @@ public class MenuTitolare extends VBox {
                 Label nomeMenuLabel = new Label(nomeMenu);
 
                 // Aggiungi un evento di click sul nome del menu
-                nomeMenuLabel.setOnMouseClicked(e -> switchToPiattiTitolare(nomeMenu));
+                nomeMenuLabel.setOnMouseClicked(e -> {
+					try {
+						switchToPiattiTitolare(nomeMenu);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				});
 
                 MenuButton optionsButton = new MenuButton("⋮");
                 MenuItem modificaItem = new MenuItem("Modifica");
-                modificaItem.setOnAction(e -> switchToModificaMenu(nomeMenu));
+                modificaItem.setOnAction(e -> {
+					try {
+						switchToModificaMenu(nomeMenu);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				});
 
                 MenuItem eliminaItem = new MenuItem("Elimina");
                 eliminaItem.setOnAction(e -> confermaEliminazione(nomeMenu));
@@ -98,7 +112,7 @@ public class MenuTitolare extends VBox {
         }
     }
 
-    private void switchToPiattiTitolare(String nomeMenu) {
+    private void switchToPiattiTitolare(String nomeMenu) throws SQLException {
         // Salva il nome del menu nella sessione
         SessioneMenu.setNome(nomeMenu);
 
@@ -107,7 +121,7 @@ public class MenuTitolare extends VBox {
         this.getScene().setRoot(piattiTitolareScreen);
     }
 
-    private void switchToModificaMenu(String nomeMenu) {
+    private void switchToModificaMenu(String nomeMenu) throws SQLException {
         // Imposta il nome del menu nella sessione
         SessioneMenu.setNome(nomeMenu);
 
