@@ -114,34 +114,24 @@ public class OrdineDAO {
         return ordini;
     }
     
-    public List<Ordine> getOrdiniByIdRistoranti(List<Integer> idRistoranti) {
+    public List<Ordine> getOrdiniByIdRistorante(int idRistorante) {
         List<Ordine> ordini = new ArrayList<>();
+        System.out.println("ID RISTORANTE IN GET ORDINI BY ID: " + idRistorante);
         
-        // Costruzione della query con la clausola IN per la lista di ID
-        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Ordine WHERE idRistorante IN (");
-        for (int i = 0; i < idRistoranti.size(); i++) {
-            queryBuilder.append("?");
-            if (i < idRistoranti.size() - 1) {
-                queryBuilder.append(", ");
-            }
-        }
-        queryBuilder.append(")");
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Ordine WHERE idRistorante = ?");
 
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement stmt = conn.prepareStatement(queryBuilder.toString())) {
+        	 stmt.setInt(1, idRistorante);
+        	 ResultSet rs = stmt.executeQuery();
 
-            // Impostiamo i parametri per la query
-            for (int i = 0; i < idRistoranti.size(); i++) {
-                stmt.setInt(i + 1, idRistoranti.get(i));
-            }
+        	 while (rs.next()) {
+        		    System.out.println("Dati ordine: ID=" + rs.getInt("idOrdine") + ", Costo=" + rs.getDouble("costo"));
+        		    Ordine ordine = creaOrdineDaResultSet(rs);
+        		    System.out.println("Ordine creato: " + ordine);
+        		    ordini.add(ordine);
+        		}
 
-            // Eseguiamo la query
-            ResultSet rs = stmt.executeQuery();
-
-            // Creiamo gli oggetti Ordine a partire dal ResultSet
-            while (rs.next()) {
-                ordini.add(creaOrdineDaResultSet(rs));
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -178,8 +168,8 @@ public class OrdineDAO {
             try (PreparedStatement stmt = conn.prepareStatement(insertOrdineSQL, Statement.RETURN_GENERATED_KEYS)) {
                 stmt.setString(1, emailUtente);
                 stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
-                stmt.setString(3, indirizzo);
-                stmt.setString(4, StatoOrdine.PENDENTE.name());
+                stmt.setString(3, StatoOrdine.PENDENTE.name());
+                stmt.setString(4, indirizzo);
                 stmt.setDouble(5, costoTotale);
                 stmt.setInt(6, SessioneRistorante.getId());
                 stmt.executeUpdate();

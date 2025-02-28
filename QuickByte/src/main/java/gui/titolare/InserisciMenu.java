@@ -41,7 +41,7 @@ public class InserisciMenu extends VBox {
     private String getNomeRistorante(int idRistorante) {
         String nomeRistorante = "";
         try {
-            MenuDAO menuDAO = new MenuDAO(DatabaseConnection.connect());
+            MenuDAO menuDAO = new MenuDAO();
             nomeRistorante = menuDAO.getNomeRistorante(idRistorante);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -49,7 +49,6 @@ public class InserisciMenu extends VBox {
         return nomeRistorante;
     }
 
-    // Usa il DAO per inserire il menu
     private void inserisciMenu() {
         String nomeMenu = nomeMenuField.getText().trim();
         if (nomeMenu.isEmpty()) {
@@ -60,11 +59,11 @@ public class InserisciMenu extends VBox {
         Menu menu = new Menu(nomeMenu, idRistorante);
 
         try {
-            MenuDAO menuDAO = new MenuDAO(DatabaseConnection.connect());
+            MenuDAO menuDAO = new MenuDAO();
             menuDAO.aggiungiMenu(menu);
             showAlert("Successo", "Menu inserito correttamente.");
             nomeMenuField.clear();
-            switchToMenuTitolare(); // Torna alla schermata MenuTitolare dopo l'inserimento
+            switchToMenuTitolare();
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Errore", "Errore durante l'inserimento del menu.");

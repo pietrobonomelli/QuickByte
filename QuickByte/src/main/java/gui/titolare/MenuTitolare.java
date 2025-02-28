@@ -2,9 +2,9 @@ package gui.titolare;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import dao.MenuDAO;
+import dao.*;
 import database.DatabaseConnection;
-import gui.main.*;
+import model.*;
 import model.Menu;
 import sessione.SessioneMenu;
 import sessione.SessioneRistorante;
@@ -16,6 +16,8 @@ public class MenuTitolare extends VBox {
 
     private VBox container;
     private int ristorante;
+
+    private OrdineDAO ordineDAO = new OrdineDAO();
 
     public MenuTitolare() {
         super(10);
@@ -38,11 +40,14 @@ public class MenuTitolare extends VBox {
         buttonContainer.getChildren().add(inserisciMenuButton);
 
         this.getChildren().add(buttonContainer);
+        
+        
+        loadOrdini();
     }
 
     private void loadMenu() {
         try (Connection conn = DatabaseConnection.connect()) {
-            MenuDAO menuDAO = new MenuDAO(conn);
+            MenuDAO menuDAO = new MenuDAO();
             List<Menu> menuList = menuDAO.getMenuByRistorante(ristorante);
             
             for (Menu menu : menuList) {
@@ -51,12 +56,10 @@ public class MenuTitolare extends VBox {
                 menuBox.setStyle("-fx-padding: 10;");
                 Label nomeMenuLabel = new Label(nomeMenu);
 
-                // Aggiungi un evento di click sul nome del menu
                 nomeMenuLabel.setOnMouseClicked(e -> {
 					try {
 						switchToPiattiTitolare(nomeMenu);
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				});
@@ -67,7 +70,6 @@ public class MenuTitolare extends VBox {
 					try {
 						switchToModificaMenu(nomeMenu);
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				});
@@ -85,6 +87,44 @@ public class MenuTitolare extends VBox {
             showAlert("Errore", "Errore di connessione al database.");
         }
     }
+    
+    
+    private void loadOrdini() {
+        try (Connection conn = DatabaseConnection.connect()) {
+            VBox ordiniContainer = new VBox(10);  // Creazione del container per gli ordini
+            ordiniContainer.setStyle("-fx-padding: 10;");
+            Label ordiniLabel = new Label("Ordini:");
+            ordiniContainer.getChildren().add(ordiniLabel);
+
+            List<Ordine> ordiniList = ordineDAO.getOrdiniByIdRistorante(ristorante);
+
+            for (Ordine ordine : ordiniList) {
+                HBox ordineBox = new HBox(10);
+                ordineBox.setStyle("-fx-padding: 10;");
+                Label ordineInfo = new Label("Ordine ID: " + ordine.getIdOrdine() + " - Costo: " + ordine.getCosto() + "€");
+                Button accettaButton = new Button("Accetta");
+
+                accettaButton.setOnAction(e -> accettaOrdine(ordine));
+
+                ordineBox.getChildren().addAll(ordineInfo, accettaButton);
+                ordiniContainer.getChildren().add(ordineBox);  // Aggiungi l'ordine al container
+            }
+            this.getChildren().add(ordiniContainer);  // Aggiungi ordiniContainer solo una volta alla scena
+            System.out.println("OrdiniContainer aggiunto alla GUI");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Errore", "Errore di connessione al database.");
+        }
+    }
+
+    
+    private void accettaOrdine(Ordine ordine) {
+        ordineDAO.aggiornaStatoOrdine(ordine.getIdOrdine(), StatoOrdine.ACCETTATO.name());
+        showAlert("Successo", "Hai accettato l'ordine " + ordine.getIdOrdine());
+        loadOrdini();  // Ricarica solo gli ordini
+   }
+
+    
 
     private void confermaEliminazione(String nomeMenu) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -101,7 +141,7 @@ public class MenuTitolare extends VBox {
 
     private void eliminaMenu(String nomeMenu) {
         try (Connection conn = DatabaseConnection.connect()) {
-            MenuDAO menuDAO = new MenuDAO(conn);
+            MenuDAO menuDAO = new MenuDAO();
             menuDAO.rimuoviMenu(nomeMenu, ristorante);
             showAlert("Successo", "Menu eliminato con successo.");
             container.getChildren().clear();
@@ -113,22 +153,14 @@ public class MenuTitolare extends VBox {
     }
 
     private void switchToPiattiTitolare(String nomeMenu) throws SQLException {
-        // Salva il nome del menu nella sessione
         SessioneMenu.setNome(nomeMenu);
-
-        // Passa alla pagina PiattiTitolare
         PiattiTitolare piattiTitolareScreen = new PiattiTitolare();
         this.getScene().setRoot(piattiTitolareScreen);
     }
 
     private void switchToModificaMenu(String nomeMenu) throws SQLException {
-        // Imposta il nome del menu nella sessione
         SessioneMenu.setNome(nomeMenu);
-
-        // Crea l'istanza di PiattiTitolare
         PiattiTitolare piattiMenuScreen = new PiattiTitolare();
-        
-        // Cambia la scena per visualizzare la pagina PiattiMenu
         this.getScene().setRoot(piattiMenuScreen);
     }
 

@@ -22,10 +22,7 @@ public class MenuCliente extends VBox {
 
     public MenuCliente() {
         super(10);
-
-        // Recupero l'ID del ristorante dalla sessione
         this.idRistorante = SessioneRistorante.getId();
-
         this.setStyle("-fx-padding: 10;");
         container = new VBox(10);
         loadMenu();
@@ -34,7 +31,7 @@ public class MenuCliente extends VBox {
 
     private void loadMenu() {
         try (Connection conn = DatabaseConnection.connect()) {
-            MenuDAO menuDAO = new MenuDAO(conn);
+            MenuDAO menuDAO = new MenuDAO();
             List<Menu> menuList = menuDAO.getMenuByRistorante(idRistorante);
             
             if (menuList.isEmpty()) {
@@ -65,8 +62,7 @@ public class MenuCliente extends VBox {
 						}
                     }
                 });
-
-                // Aggiungi la Label all'interfaccia
+                
                 container.getChildren().add(menuLabel);
             }
 

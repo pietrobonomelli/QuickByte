@@ -9,7 +9,6 @@ import java.util.List;
 
 public class UtenteDAO {
     
-    // 📌 Ottenere un utente tramite email
     public Utente getUtenteByEmail(String email) {
         String query = "SELECT * FROM Utente WHERE email = ?";
         try (Connection conn = DatabaseConnection.connect();
@@ -19,15 +18,16 @@ public class UtenteDAO {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
+            	System.out.println("ritorna utente esistente");
                 return creaUtenteDaResultSet(rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.println("ritorna nessun utente esistente");
         return null;
     }
 
-    // 📌 Ottenere tutti gli utenti
     public List<Utente> getAllUtenti() {
         List<Utente> utenti = new ArrayList<>();
         String query = "SELECT * FROM Utente";
@@ -45,7 +45,6 @@ public class UtenteDAO {
         return utenti;
     }
 
-    // 📌 Inserire un nuovo utente
     public boolean insertUtente(Utente utente, String tipoUtente) {
         String query = "INSERT INTO Utente (email, password, nome, telefono, tipoUtente) VALUES (?, ?, ?, ?, ?)";
 
@@ -65,7 +64,6 @@ public class UtenteDAO {
         return false;
     }
 
-    // 📌 Eliminare un utente tramite email
     public boolean deleteUtente(String email) {
         String query = "DELETE FROM Utente WHERE email = ?";
 
@@ -81,7 +79,6 @@ public class UtenteDAO {
         return false;
     }
 
-    // 📌 Aggiornare i dati di un utente
     public boolean updateUtente(Utente utente) {
         String query = "UPDATE Utente SET password = ?, nome = ?, telefono = ? WHERE email = ?";
 
@@ -101,7 +98,6 @@ public class UtenteDAO {
         return false;
     }
 
-    // 📌 Metodo per creare l'oggetto corretto dal database
     private Utente creaUtenteDaResultSet(ResultSet rs) throws SQLException {
         String email = rs.getString("email");
         String password = rs.getString("password");
@@ -109,11 +105,11 @@ public class UtenteDAO {
         String telefono = rs.getString("telefono");
         String tipoUtente = rs.getString("tipoUtente");
 
-        if ("CLIENTE".equals(tipoUtente)) {
+        if ("Cliente".equals(tipoUtente)) {
             return new Cliente(email, password, nome, telefono);
-        } else if ("TITOLARE".equals(tipoUtente)) {
+        } else if ("Titolare".equals(tipoUtente)) {
             return new Titolare(email, password, nome, telefono);
-        } else if ("CORRIERE".equals(tipoUtente)) {
+        } else if ("Corriere".equals(tipoUtente)) {
             return new Corriere(email, password, nome, telefono);
         } else {
             return null;

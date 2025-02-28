@@ -4,13 +4,14 @@ import java.sql.*;
 import model.Menu;
 import java.util.ArrayList;
 import java.util.List;
+import database.DatabaseConnection;
 
 public class MenuDAO {
 
     private Connection connection;
 
-    public MenuDAO(Connection connection) {
-        this.connection = connection;
+    public MenuDAO() throws SQLException {
+        this.connection = DatabaseConnection.connect();
     }
 
     // Metodo per creare la tabella Menu

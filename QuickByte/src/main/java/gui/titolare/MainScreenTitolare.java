@@ -10,7 +10,6 @@ import model.*;
 import sessione.SessioneRistorante;
 import sessione.SessioneUtente;
 import java.sql.SQLException;
-import java.util.List;
 import gui.main.*;
 
 public class MainScreenTitolare extends VBox {
@@ -18,7 +17,6 @@ public class MainScreenTitolare extends VBox {
     private String email;
     private VBox container;
     private RistoranteDAO ristoranteDAO;
-    private OrdineDAO ordineDAO;
 
     public MainScreenTitolare() {
         super(10);
@@ -26,7 +24,6 @@ public class MainScreenTitolare extends VBox {
 
         try {
             ristoranteDAO = new RistoranteDAO();
-            ordineDAO = new OrdineDAO();
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Errore", "Errore durante la connessione al database.");
@@ -79,46 +76,11 @@ public class MainScreenTitolare extends VBox {
 
                 ristoranteBox.getChildren().addAll(nomeRistorante, menuButton);
                 container.getChildren().add(ristoranteBox);
-
-                loadOrdiniPerRistorante(ristorante);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Errore", "Errore durante il caricamento dei ristoranti.");
         }
-    }
-
-    private void loadOrdiniPerRistorante(Ristorante ristorante) throws SQLException {
-    	TitolareDAO titolareDao = new TitolareDAO();
-        List<Ordine> ordini = ordineDAO.getOrdiniByIdRistoranti(titolareDao.getRistorantiByEmail());
-        VBox ordiniContainer = new VBox(10);
-        ordiniContainer.setStyle("-fx-padding: 10;");
-        Label ordiniLabel = new Label("Ordini per " + ristorante.getNome());
-
-        ordiniContainer.getChildren().add(ordiniLabel);
-
-        for (Ordine ordine : ordini) {
-            if (ordine.getIdRistorante() == ristorante.getIdRistorante()) {
-                HBox ordineBox = new HBox(10);
-                ordineBox.setStyle("-fx-padding: 10;");
-                Label ordineInfo = new Label("Ordine ID: " + ordine.getIdOrdine() + " - Costo: " + ordine.getCosto() + "€");
-                Button accettaButton = new Button("Accetta");
-
-                accettaButton.setOnAction(e -> accettaOrdine(ordine));
-
-                ordineBox.getChildren().addAll(ordineInfo, accettaButton);
-                ordiniContainer.getChildren().add(ordineBox);
-            }
-        }
-
-        container.getChildren().add(ordiniContainer);
-    }
-
-    private void accettaOrdine(Ordine ordine) {
-        ordineDAO.aggiornaStatoOrdine(ordine.getIdOrdine(), StatoOrdine.IN_CONSEGNA.name());
-        showAlert("Successo", "Hai accettato l'ordine " + ordine.getIdOrdine());
-        container.getChildren().clear();
-        loadRistoranti();
     }
 
     private void switchToInserisciRistorante() {

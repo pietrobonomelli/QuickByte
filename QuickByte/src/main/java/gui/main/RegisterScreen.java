@@ -66,7 +66,7 @@ public class RegisterScreen extends VBox {
             showError("Formato email non valido.");
             return;
         }
-
+        
         if (!phone.matches("\\d{10,15}")) {
             showError("Numero di telefono non valido.");
             return;
@@ -74,6 +74,7 @@ public class RegisterScreen extends VBox {
 
         // Controlla se l'email è già in uso
         UtenteDAO utenteDAO = new UtenteDAO();
+        System.out.println("return del get utente by email: " + utenteDAO.getUtenteByEmail(email));
         if (utenteDAO.getUtenteByEmail(email) != null) {
             showError("Email già in uso.");
         } else {
