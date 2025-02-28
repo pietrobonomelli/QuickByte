@@ -3,6 +3,7 @@ package gui.main;
 import database.DatabaseConnection;
 import dao.LoginDAO;
 import gui.cliente.MainScreenCliente;
+import gui.corriere.MainScreenCorriere;
 import gui.titolare.MainScreenTitolare;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

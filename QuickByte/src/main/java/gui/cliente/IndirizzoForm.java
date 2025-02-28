@@ -5,11 +5,11 @@ import database.DatabaseConnection;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import sessione.SessioneUtente;
 import javafx.scene.Scene;
 import model.Indirizzo;
 import java.sql.Connection;
 import java.sql.SQLException;
+import sessione.*;
 
 public class IndirizzoForm extends VBox {
 
@@ -59,7 +59,7 @@ public class IndirizzoForm extends VBox {
 
     private void salvaIndirizzo(Indirizzo indirizzo) {
         try (Connection conn = DatabaseConnection.connect()) {
-            IndirizzoDAO indirizzoDAO = new IndirizzoDAO(conn);
+            IndirizzoDAO indirizzoDAO = new IndirizzoDAO();
             indirizzoDAO.aggiungiIndirizzo(indirizzo); // Usa il DAO per salvare l'indirizzo
             showAlert("Successo", "Indirizzo salvato correttamente!");
             tornaIndietro(); // Torna alla schermata principale del cliente
@@ -70,7 +70,7 @@ public class IndirizzoForm extends VBox {
     }
 
     private void tornaIndietro() {
-        MainScreenCliente mainClienteScreen = new MainScreenCliente();  // Torna alla schermata principale del cliente
+        CarrelloView mainClienteScreen = new CarrelloView();  // Torna alla schermata precedente
         Scene currentScene = this.getScene();
         currentScene.setRoot(mainClienteScreen);
     }

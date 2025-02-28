@@ -2,12 +2,14 @@ package gui.cliente;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import sessione.SessioneUtente;
+import sessione.*;
 import javafx.scene.Scene;
-import dao.CarrelloDAO;
-import model.Carrello;
+import dao.*;
+import model.*;
 import java.sql.*;
 import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CarrelloView extends VBox {
     
@@ -55,7 +57,14 @@ public class CarrelloView extends VBox {
         }
 
         Button confermaOrdineButton = new Button("Conferma Ordine");
-        confermaOrdineButton.setOnAction(event -> confermaOrdine());
+        confermaOrdineButton.setOnAction(event -> {
+			try {
+				confermaOrdine();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
         this.getChildren().add(confermaOrdineButton);
 
         Button tornaAllaListaButton = new Button("Torna indetro");
@@ -73,10 +82,6 @@ public class CarrelloView extends VBox {
         }
     }
 
-    private void confermaOrdine() {
-        // Logica di conferma ordine (introdurre il DAO anche per le altre operazioni correlate)
-    }
-
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -90,4 +95,75 @@ public class CarrelloView extends VBox {
         Scene currentScene = this.getScene();
         currentScene.setRoot(mainClienteScreen);
     }
+    
+
+    public String getDataOraCorrente() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return now.format(formatter);
+    }  
+    
+    private void confermaOrdine() throws SQLException {
+        MetodoDiPagamentoDAO pagamentoDAO = new MetodoDiPagamentoDAO();
+        List<String> metodiPagamento = pagamentoDAO.getMetodiPagamento(emailUtente);
+
+        ChoiceDialog<String> sceltaCarta = new ChoiceDialog<>("Aggiungi metodo di pagamento", metodiPagamento);
+        sceltaCarta.setTitle("Metodo di Pagamento");
+        sceltaCarta.setHeaderText("Seleziona un metodo di pagamento:");
+        sceltaCarta.setContentText("Metodo di pagamento:");
+
+        sceltaCarta.showAndWait().ifPresent(cartaSelezionata -> {
+            if (cartaSelezionata.equals("Aggiungi metodo di pagamento")) {
+                try {
+                    this.getChildren().setAll(new MetodoDiPagamentoForm());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                selezionaIndirizzo();
+            }
+        });
+    }
+
+    private void selezionaIndirizzo() {
+        IndirizzoDAO indirizzoDAO = new IndirizzoDAO();
+        List<String> indirizzi = indirizzoDAO.getIndirizzi(emailUtente);
+
+        ChoiceDialog<String> sceltaIndirizzo = new ChoiceDialog<>("Aggiungi indirizzo", indirizzi);
+        sceltaIndirizzo.setTitle("Indirizzo di Consegna");
+        sceltaIndirizzo.setHeaderText("Seleziona un indirizzo di consegna:");
+        sceltaIndirizzo.setContentText("Indirizzo:");
+
+        sceltaIndirizzo.showAndWait().ifPresent(indirizzoSelezionato -> {
+            if (indirizzoSelezionato.equals("Aggiungi indirizzo")) {
+                this.getChildren().setAll(new IndirizzoForm());
+            } else {
+                registraOrdine(indirizzoSelezionato);
+            }
+        });
+    }
+
+    private void registraOrdine(String indirizzo) {
+        OrdineDAO ordineDAO = new OrdineDAO();
+        boolean success = ordineDAO.registraOrdine(emailUtente, indirizzo);
+
+        if (success) {
+            showAlert("Ordine Confermato", "Il tuo ordine è stato pagato con successo!");
+            loadCarrello();
+        } else {
+            showAlert("Errore", "Errore durante la conferma dell'ordine.");
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 }

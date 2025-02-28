@@ -1,37 +1,14 @@
 package dao;
 
 import database.DatabaseConnection;
+import sessione.*;
 import model.Ordine;
-
+import model.StatoOrdine;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrdineDAO {
-
-    // 📌 Creare un nuovo ordine
-    public boolean insertOrdine(Ordine ordine) {
-        String query = "INSERT INTO Ordine (stato, costo, dataOraOrdine, pagato, indirizzo, emailCliente, emailCorriere, idRistorante) " +
-                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection conn = DatabaseConnection.connect();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setString(1, ordine.getStato());
-            stmt.setDouble(2, ordine.getCosto());
-            stmt.setString(3, ordine.getDataOraOrdine());
-            stmt.setInt(4, ordine.getPagato());
-            stmt.setString(5, ordine.getIndirizzo());
-            stmt.setString(6, ordine.getEmailCliente());
-            stmt.setString(7, ordine.getEmailCorriere());
-            stmt.setInt(8, ordine.getIdRistorante());
-
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
     // 📌 Recuperare un ordine tramite ID
     public Ordine getOrdineById(int idOrdine) {
@@ -102,7 +79,7 @@ public class OrdineDAO {
         return false;
     }
 
-    // 📌 Metodo per creare l'oggetto Ordine dal ResultSet
+    
     private Ordine creaOrdineDaResultSet(ResultSet rs) throws SQLException {
         int idOrdine = rs.getInt("idOrdine");
         String stato = rs.getString("stato");
@@ -116,4 +93,123 @@ public class OrdineDAO {
 
         return new Ordine(idOrdine, stato, costo, dataOraOrdine, pagato, indirizzo, emailCliente, emailCorriere, idRistorante);
     }
+    
+    
+    public List<Ordine> getOrdiniByStato(String stato) {
+        List<Ordine> ordini = new ArrayList<>();
+        String query = "SELECT * FROM Ordine WHERE stato = ?";
+
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, stato);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                ordini.add(creaOrdineDaResultSet(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ordini;
+    }
+    
+    public List<Ordine> getOrdiniByIdRistoranti(List<Integer> idRistoranti) {
+        List<Ordine> ordini = new ArrayList<>();
+        
+        // Costruzione della query con la clausola IN per la lista di ID
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Ordine WHERE idRistorante IN (");
+        for (int i = 0; i < idRistoranti.size(); i++) {
+            queryBuilder.append("?");
+            if (i < idRistoranti.size() - 1) {
+                queryBuilder.append(", ");
+            }
+        }
+        queryBuilder.append(")");
+
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(queryBuilder.toString())) {
+
+            // Impostiamo i parametri per la query
+            for (int i = 0; i < idRistoranti.size(); i++) {
+                stmt.setInt(i + 1, idRistoranti.get(i));
+            }
+
+            // Eseguiamo la query
+            ResultSet rs = stmt.executeQuery();
+
+            // Creiamo gli oggetti Ordine a partire dal ResultSet
+            while (rs.next()) {
+                ordini.add(creaOrdineDaResultSet(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ordini;
+    }
+
+
+ // 📌 Aggiornare lo stato di un ordine
+    public boolean aggiornaStatoOrdine(int idOrdine, String nuovoStato) {
+        String query = "UPDATE Ordine SET stato = ? WHERE idOrdine = ?";
+
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, nuovoStato);
+            stmt.setInt(2, idOrdine);
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    
+    public boolean registraOrdine(String emailUtente, String indirizzo) {
+        String insertOrdineSQL = "INSERT INTO Ordine (emailCliente, dataOraOrdine, stato, pagato, indirizzo, costo, idRistorante) VALUES (?, ?, ?, 1, ?, ?, ?)";
+        String insertDettagliSQL = "INSERT INTO DettaglioOrdine (idOrdine, idPiatto, quantita) SELECT ?, idPiatto, quantitaPiatti FROM Carrello WHERE emailUtente = ?";
+        String deleteCarrelloSQL = "DELETE FROM Carrello WHERE emailUtente = ?";
+        
+        try (Connection conn = DatabaseConnection.connect()) {
+            double costoTotale = new CarrelloDAO().calcolaCostoTotale(emailUtente);
+            
+            try (PreparedStatement stmt = conn.prepareStatement(insertOrdineSQL, Statement.RETURN_GENERATED_KEYS)) {
+                stmt.setString(1, emailUtente);
+                stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+                stmt.setString(3, indirizzo);
+                stmt.setString(4, StatoOrdine.PENDENTE.name());
+                stmt.setDouble(5, costoTotale);
+                stmt.setInt(6, SessioneRistorante.getId());
+                stmt.executeUpdate();
+
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int idOrdine = generatedKeys.getInt(1);
+
+                        try (PreparedStatement carrelloStmt = conn.prepareStatement(insertDettagliSQL)) {
+                            carrelloStmt.setInt(1, idOrdine);
+                            carrelloStmt.setString(2, emailUtente);
+                            carrelloStmt.executeUpdate();
+                        }
+
+                        try (PreparedStatement deleteStmt = conn.prepareStatement(deleteCarrelloSQL)) {
+                            deleteStmt.setString(1, emailUtente);
+                            deleteStmt.executeUpdate();
+                        }
+
+                        SessioneCarrello.setPieno(false);
+                        return true;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return false;
+    }
+
+
 }

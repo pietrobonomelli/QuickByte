@@ -1,8 +1,10 @@
 package dao;
 
-import database.DatabaseManager; // Importa il DatabaseManager
+import database.*; 
+import java.util.List;
+import java.util.ArrayList;
 import java.sql.*;
-import model.MetodoDiPagamento; // Assicurati di avere la classe MetodoDiPagamento nel package model
+import model.MetodoDiPagamento;
 
 public class MetodoDiPagamentoDAO {
 
@@ -10,7 +12,7 @@ public class MetodoDiPagamentoDAO {
 
     // Costruttore che utilizza DatabaseManager.connect()
     public MetodoDiPagamentoDAO() throws SQLException {
-        this.connection = DatabaseManager.connect(); // Usa DatabaseManager per la connessione
+        this.connection = DatabaseConnection.connect(); 
     }
 
     // Metodo per creare la tabella MetodoDiPagamento
@@ -77,5 +79,24 @@ public class MetodoDiPagamentoDAO {
             ps.setString(1, numeroCarta);
             ps.executeUpdate();
         }
+    }
+    
+    public List<String> getMetodiPagamento(String emailUtente) {
+        List<String> metodi = new ArrayList<>();
+        String sql = "SELECT numeroCarta, nominativo FROM MetodoDiPagamento WHERE emailCliente = ?";
+
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, emailUtente);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                metodi.add(rs.getString("numeroCarta") + " - " + rs.getString("nominativo"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return metodi;
     }
 }

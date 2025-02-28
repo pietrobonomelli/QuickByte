@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.*;
+import database.*;
 import java.util.ArrayList;
 import java.util.List;
 import model.Indirizzo;
@@ -9,8 +10,13 @@ public class IndirizzoDAO {
 
     private Connection connection;
 
-    public IndirizzoDAO(Connection connection) {
-        this.connection = connection;
+    public IndirizzoDAO() {
+    	try {
+			this.connection = DatabaseConnection.connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     // Metodo per creare la tabella Indirizzo
@@ -82,5 +88,24 @@ public class IndirizzoDAO {
             ps.setInt(1, idIndirizzo);
             ps.executeUpdate();
         }
+    }
+    
+    public List<String> getIndirizzi(String emailUtente) {
+        List<String> indirizzi = new ArrayList<>();
+        String sql = "SELECT indirizzo FROM Indirizzo WHERE emailUtente = ?";
+
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, emailUtente);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                indirizzi.add(rs.getString("indirizzo"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return indirizzi;
     }
 }

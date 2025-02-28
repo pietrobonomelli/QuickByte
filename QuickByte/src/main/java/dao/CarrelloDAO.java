@@ -56,4 +56,41 @@ public class CarrelloDAO {
             statement.executeUpdate();
         }
     }
+    
+ // Metodo per ottenere il prezzo di un piatto in base all'idPiatto
+    public double getPrezzoPiattoById(int idPiatto) throws SQLException {
+        String query = "SELECT prezzo FROM Piatto WHERE idPiatto = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, idPiatto);
+            ResultSet resultSet = statement.executeQuery();
+            
+            if (resultSet.next()) {
+                return resultSet.getDouble("prezzo");
+            }
+        }
+        return 0;  // Restituisce 0 se il piatto non è trovato
+    }
+
+    
+    public double calcolaCostoTotale(String emailUtente) {
+        double costoTotale = 0.0;
+        String sql = "SELECT p.prezzo, c.quantitaPiatti FROM Carrello c JOIN Piatto p ON c.idPiatto = p.idPiatto WHERE c.emailUtente = ?";
+
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, emailUtente);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                double prezzo = rs.getDouble("prezzo");
+                int quantita = rs.getInt("quantitaPiatti");
+                costoTotale += prezzo * quantita;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return costoTotale;
+    }
+    
 }

@@ -1,6 +1,7 @@
 package gui.cliente;
 
 import javafx.scene.control.*;
+import gui.main.*;
 import javafx.scene.layout.*;
 import sessione.SessioneRistorante;
 import javafx.scene.input.MouseButton;
@@ -28,6 +29,11 @@ public class MainScreenCliente extends VBox {
             e.printStackTrace();
             showAlert("Errore", "Errore durante l'inizializzazione della connessione al database.");
         }
+        
+        Button logoutButton = new Button("Logout");
+        logoutButton.setOnAction(e -> switchToLoginScreen());
+        logoutButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+        this.getChildren().add(logoutButton);
     }
 
     private void loadRistoranti() {
@@ -64,6 +70,11 @@ public class MainScreenCliente extends VBox {
         this.getScene().setRoot(menuClienteScreen);
     }
 
+    private void switchToLoginScreen() {
+        LoginScreen loginScreen = new LoginScreen();
+        this.getScene().setRoot(loginScreen);
+    }
+    
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
