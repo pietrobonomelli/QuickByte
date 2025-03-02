@@ -98,7 +98,7 @@ public class UtenteDAO {
         return false;
     }
 
-    private Utente creaUtenteDaResultSet(ResultSet rs) throws SQLException {
+    public Utente creaUtenteDaResultSet(ResultSet rs) throws SQLException {
         String email = rs.getString("email");
         String password = rs.getString("password");
         String nome = rs.getString("nome");

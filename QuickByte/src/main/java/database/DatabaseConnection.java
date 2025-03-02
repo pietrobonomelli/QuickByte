@@ -7,8 +7,12 @@ import java.sql.Statement;
 
 public class DatabaseConnection {
 
-    // Modifica il percorso con il corretto percorso relativo o assoluto del database
-    private static final String DATABASE_URL = "jdbc:sqlite:src/main/resources/database_embedded.db"; // Usa il percorso corretto
+	private static String DATABASE_URL = "jdbc:sqlite:src/main/resources/database_embedded.db"; // Percorso predefinito del DB
+
+    // Permette di cambiare il database per i test
+    public static void setDatabaseUrl(String url) {
+        DATABASE_URL = url;
+    }
 
     // Metodo per ottenere la connessione
     public static Connection connect() throws SQLException {

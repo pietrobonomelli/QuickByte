@@ -144,4 +144,17 @@ public class DatabaseManager {
         	}
         
     }
+    public static void printExistingTables() {
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT name FROM sqlite_master WHERE type='table'")) {
+
+            System.out.println("Tabelle esistenti nel database:");
+            while (rs.next()) {
+                System.out.println("- " + rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Errore nel recupero delle tabelle: " + e.getMessage());
+        }
+    }
 }
