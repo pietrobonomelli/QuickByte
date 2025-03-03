@@ -49,7 +49,6 @@ public class InserisciPiatto extends VBox {
 			try {
 				tornaAiPiatti();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});

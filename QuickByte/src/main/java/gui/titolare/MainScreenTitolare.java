@@ -2,73 +2,131 @@ package gui.titolare;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.input.MouseButton;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import dao.*;
 import model.*;
-import sessione.SessioneRistorante;
-import sessione.SessioneUtente;
+import sessione.*;
 import java.sql.SQLException;
 import gui.main.*;
 
 public class MainScreenTitolare extends VBox {
 
     private String email;
-    private VBox container;
+    private TableView<Ristorante> tableView;
 
     public MainScreenTitolare() {
         super(10);
         this.email = SessioneUtente.getEmail();
-
         this.setStyle("-fx-padding: 10;");
-        container = new VBox(10);
-        loadRistoranti();
-        this.getChildren().add(container);
+
+        Label titolo = new Label("Gestione Ristoranti");
+        titolo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+
+        tableView = new TableView<>();
+        setupTable(); // Mantieni la configurazione della tabella
 
         HBox buttonContainer = new HBox(10);
         buttonContainer.setStyle("-fx-padding: 10;");
 
         Button inserisciRistoranteButton = new Button("Inserisci nuovo Ristorante");
         inserisciRistoranteButton.setOnAction(e -> switchToInserisciRistorante());
-        buttonContainer.getChildren().add(inserisciRistoranteButton);
-
-        this.getChildren().add(buttonContainer);
 
         Button logoutButton = new Button("Logout");
         logoutButton.setOnAction(e -> switchToLoginScreen());
         logoutButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
-        this.getChildren().add(logoutButton);
+
+        buttonContainer.getChildren().addAll(inserisciRistoranteButton, logoutButton);
+
+        // Aggiungi gli elementi nell'ordine corretto: Titolo -> Tabella -> Pulsanti
+        this.getChildren().addAll(titolo, tableView, buttonContainer);
+
+        loadRistoranti(); // Carica i ristoranti
+    }
+
+    private void setupTable() {
+        // Crea la colonna per il nome del ristorante
+        TableColumn<Ristorante, String> colNome = new TableColumn<>("Nome Ristorante");
+        colNome.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
+
+        // Crea la colonna per il pulsante "Visualizza Menu"
+        TableColumn<Ristorante, Void> colVisualizzaMenu = new TableColumn<>("Visualizza Menu");
+        colVisualizzaMenu.setCellFactory(param -> new TableCell<Ristorante, Void>() {
+            private final Button visualizzaMenuButton = new Button("Visualizza Menu");
+
+            {
+                visualizzaMenuButton.setOnAction(event -> {
+                    Ristorante ristorante = getTableView().getItems().get(getIndex());
+                    switchToMenuTitolare(ristorante.getIdRistorante());  
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(visualizzaMenuButton);
+                }
+            }
+        });
+
+        // Crea la colonna per il pulsante "Modifica"
+        TableColumn<Ristorante, Void> colModifica = new TableColumn<>("Modifica");
+        colModifica.setCellFactory(param -> new TableCell<Ristorante, Void>() {
+            private final Button modificaButton = new Button("Modifica");
+
+            {
+                modificaButton.setOnAction(event -> {
+                    Ristorante ristorante = getTableView().getItems().get(getIndex());
+                    switchToModificaRistorante(ristorante.getNome());  
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(modificaButton);
+                }
+            }
+        });
+
+        // Crea la colonna per il pulsante "Elimina"
+        TableColumn<Ristorante, Void> colElimina = new TableColumn<>("Elimina");
+        colElimina.setCellFactory(param -> new TableCell<Ristorante, Void>() {
+            private final Button eliminaButton = new Button("Elimina");
+
+            {
+                eliminaButton.setOnAction(event -> {
+                    Ristorante ristorante = getTableView().getItems().get(getIndex());
+                    confermaEliminazione(ristorante);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(eliminaButton);
+                }
+            }
+        });
+
+        // Aggiungi le colonne alla TableView
+        tableView.getColumns().addAll(colNome, colVisualizzaMenu, colModifica, colElimina);
     }
 
     private void loadRistoranti() {
         try {
             ObservableList<Ristorante> ristoranti = FXCollections.observableArrayList(RistoranteDAO.getInstance().getRistorantiByEmail(this.email));
-            for (Ristorante ristorante : ristoranti) {
-                HBox ristoranteBox = new HBox(10);
-                ristoranteBox.setStyle("-fx-padding: 10;");
-
-                Label nomeRistorante = new Label(ristorante.getNome());
-
-                nomeRistorante.setOnMouseClicked(event -> {
-                    if (event.getButton() == MouseButton.PRIMARY) {
-                        SessioneRistorante.setId(ristorante.getIdRistorante());
-                        switchToMenuTitolare();
-                    }
-                });
-
-                MenuButton menuButton = new MenuButton("...");
-                MenuItem modificaItem = new MenuItem("Modifica");
-                MenuItem eliminaItem = new MenuItem("Elimina");
-
-                modificaItem.setOnAction(e -> switchToModificaRistorante(ristorante.getNome()));
-                eliminaItem.setOnAction(e -> confermaEliminazione(ristorante));
-
-                menuButton.getItems().addAll(modificaItem, eliminaItem);
-
-                ristoranteBox.getChildren().addAll(nomeRistorante, menuButton);
-                container.getChildren().add(ristoranteBox);
-            }
+            tableView.setItems(ristoranti);
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Errore", "Errore durante il caricamento dei ristoranti.");
@@ -76,13 +134,20 @@ public class MainScreenTitolare extends VBox {
     }
 
     private void switchToInserisciRistorante() {
-        InserisciRistorante inserisciRistoranteScreen = new InserisciRistorante();
-        this.getScene().setRoot(inserisciRistoranteScreen);
+        this.getScene().setRoot(new InserisciRistorante());
     }
 
-    private void switchToMenuTitolare() {
-        MenuTitolare menuTitolareScreen = new MenuTitolare();
-        this.getScene().setRoot(menuTitolareScreen);
+    private void switchToModificaRistorante(String nomeRistorante) {
+        this.getScene().setRoot(new ModificaRistorante(nomeRistorante));
+    }
+
+    private void switchToMenuTitolare(int idRistorante) {
+        SessioneRistorante.setId(idRistorante); // Imposta l'id del ristorante nella sessione
+        this.getScene().setRoot(new MenuTitolare());
+    }
+
+    private void switchToLoginScreen() {
+        this.getScene().setRoot(new LoginScreen());
     }
 
     private void confermaEliminazione(Ristorante ristorante) {
@@ -102,22 +167,11 @@ public class MainScreenTitolare extends VBox {
         try {
             RistoranteDAO.getInstance().rimuoviRistorante(ristorante.getIdRistorante());
             showAlert("Successo", "Ristorante eliminato con successo.");
-            container.getChildren().clear();
-            loadRistoranti();
+            loadRistoranti(); // Ricarica la lista dei ristoranti dopo la cancellazione
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Errore", "Errore durante l'eliminazione del ristorante.");
         }
-    }
-
-    private void switchToModificaRistorante(String nomeRistorante) {
-        ModificaRistorante modificaRistoranteScreen = new ModificaRistorante(nomeRistorante);
-        this.getScene().setRoot(modificaRistoranteScreen);
-    }
-
-    private void switchToLoginScreen() {
-        LoginScreen loginScreen = new LoginScreen();
-        this.getScene().setRoot(loginScreen);
     }
 
     private void showAlert(String title, String message) {

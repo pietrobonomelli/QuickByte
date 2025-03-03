@@ -32,7 +32,9 @@ public class ModificaPiatto extends VBox {
         this.idPiatto = SessionePiatto.getId();
         this.nomeMenu = SessioneMenu.getNome();
 
-        Label titoloLabel = new Label("Modifica Piatto: " + idPiatto); 
+        // Large Title
+        Label titoloLabel = new Label("MODIFICA PIATTO");
+        titoloLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
         Label prezzoLabel = new Label("Prezzo:");
         prezzoField = new TextField();
@@ -54,15 +56,18 @@ public class ModificaPiatto extends VBox {
 			try {
 				tornaAiPiatti();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});
         
         loadPiattoData();
         
+        // HBox for buttons to align them on the same row
+        HBox buttonsBox = new HBox(10, scegliFotoButton, salvaButton, tornaIndietroButton);
+        buttonsBox.setStyle("-fx-alignment: center;");
+
         this.getChildren().addAll(titoloLabel, prezzoLabel, prezzoField, allergeniLabel, allergeniField,
-                disponibilitaLabel, disponibilitaCheckBox, scegliFotoButton, salvaButton, tornaIndietroButton);
+                disponibilitaLabel, disponibilitaCheckBox, buttonsBox);
     }
 
     private void loadPiattoData() throws SQLException {
@@ -72,7 +77,6 @@ public class ModificaPiatto extends VBox {
                 allergeniField.setText(piatto.getAllergeni());
                 disponibilitaCheckBox.setSelected(piatto.isDisponibile());
             }
-        
     }
 
     private void salvaModifiche() {

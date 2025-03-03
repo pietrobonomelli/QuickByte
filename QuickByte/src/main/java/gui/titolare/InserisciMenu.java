@@ -37,7 +37,6 @@ public class InserisciMenu extends VBox {
         this.getChildren().add(formContainer);
     }
 
-    // Usa il DAO per ottenere il nome del ristorante
     private String getNomeRistorante(int idRistorante) {
         String nomeRistorante = "";
         try {

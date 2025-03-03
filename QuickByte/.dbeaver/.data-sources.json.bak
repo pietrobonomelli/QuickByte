@@ -1,20 +1,6 @@
 {
 	"folders": {},
 	"connections": {
-		"sqlite_jdbc-194a3cc896d-6d4524f5000d63ea": {
-			"provider": "sqlite",
-			"driver": "sqlite_jdbc",
-			"name": "database_embedded.db",
-			"save-password": true,
-			"configuration": {
-				"database": "C:\\QuickByte\\QuickByte\\QuickByte\\src\\main\\resources\\database_embedded.db",
-				"url": "jdbc:sqlite:C:\\QuickByte\\QuickByte\\QuickByte\\src\\main\\resources\\database_embedded.db",
-				"configurationType": "MANUAL",
-				"type": "dev",
-				"closeIdleConnection": true,
-				"auth-model": "native"
-			}
-		},
 		"sqlite_jdbc-19523c61841-987d179df22dbbb": {
 			"provider": "sqlite",
 			"driver": "sqlite_jdbc",
@@ -30,7 +16,6 @@
 			}
 		}
 	},
-	"virtual-models": {"sqlite_jdbc-194a3cc896d-6d4524f5000d63ea":{"@properties":{"erd.diagram.state":{"serialized":"\u003cdiagram version\u003d\"1\" name\u003d\"empty\" time\u003d\"202502162231\"\u003e\u003centities\u003e\u003cdata-source id\u003d\"sqlite_jdbc-194a3cc896d-6d4524f5000d63ea\"\u003e\u003centity id\u003d\"1\" name\u003d\"Carrello\" fq-name\u003d\"Carrello\" order\u003d\"0\" x\u003d\"155\" y\u003d\"356\"/\u003e\u003centity id\u003d\"2\" name\u003d\"DettaglioOrdine\" fq-name\u003d\"DettaglioOrdine\" order\u003d\"1\" x\u003d\"46\" y\u003d\"165\"/\u003e\u003centity id\u003d\"3\" name\u003d\"Indirizzo\" fq-name\u003d\"Indirizzo\" order\u003d\"2\" x\u003d\"1007\" y\u003d\"63\"/\u003e\u003centity id\u003d\"4\" name\u003d\"Menu\" fq-name\u003d\"Menu\" order\u003d\"3\" x\u003d\"432\" y\u003d\"75\"/\u003e\u003centity id\u003d\"5\" name\u003d\"MetodoDiPagamento\" fq-name\u003d\"MetodoDiPagamento\" order\u003d\"4\" x\u003d\"750\" y\u003d\"418\"/\u003e\u003centity id\u003d\"6\" name\u003d\"Ordine\" fq-name\u003d\"Ordine\" order\u003d\"5\" x\u003d\"462\" y\u003d\"320\"/\u003e\u003centity id\u003d\"7\" name\u003d\"Piatto\" fq-name\u003d\"Piatto\" order\u003d\"6\" x\u003d\"267\" y\u003d\"40\"/\u003e\u003centity id\u003d\"8\" name\u003d\"Ristorante\" fq-name\u003d\"Ristorante\" order\u003d\"7\" border-width\u003d\"3\" x\u003d\"637\" y\u003d\"35\"/\u003e\u003centity id\u003d\"9\" name\u003d\"Utente\" fq-name\u003d\"Utente\" order\u003d\"8\" x\u003d\"817\" y\u003d\"207\"/\u003e\u003c/data-source\u003e\u003c/entities\u003e\u003crelations\u003e\u003crelation name\u003d\"FK_Piatto_Menu\" fq-name\u003d\"Piatto.FK_Piatto_Menu\" type\u003d\"fk\" pk-ref\u003d\"4\" fk-ref\u003d\"7\"/\u003e\u003crelation name\u003d\"FK_Carrello_Ordine\" fq-name\u003d\"Carrello.FK_Carrello_Ordine\" type\u003d\"fk\" pk-ref\u003d\"6\" fk-ref\u003d\"1\"/\u003e\u003crelation name\u003d\"FK_DettaglioOrdine_Ordine\" fq-name\u003d\"DettaglioOrdine.FK_DettaglioOrdine_Ordine\" type\u003d\"fk\" pk-ref\u003d\"6\" fk-ref\u003d\"2\"/\u003e\u003crelation name\u003d\"FK_Carrello_Piatto_2\" fq-name\u003d\"Carrello.FK_Carrello_Piatto_2\" type\u003d\"fk\" pk-ref\u003d\"7\" fk-ref\u003d\"1\"/\u003e\u003crelation name\u003d\"FK_DettaglioOrdine_Piatto_2\" fq-name\u003d\"DettaglioOrdine.FK_DettaglioOrdine_Piatto_2\" type\u003d\"fk\" pk-ref\u003d\"7\" fk-ref\u003d\"2\"/\u003e\u003crelation name\u003d\"FK_Menu_Ristorante\" fq-name\u003d\"Menu.FK_Menu_Ristorante\" type\u003d\"fk\" pk-ref\u003d\"8\" fk-ref\u003d\"4\"/\u003e\u003crelation name\u003d\"FK_Ordine_Ristorante\" fq-name\u003d\"Ordine.FK_Ordine_Ristorante\" type\u003d\"fk\" pk-ref\u003d\"8\" fk-ref\u003d\"6\"/\u003e\u003crelation name\u003d\"FK_Carrello_Utente_3\" fq-name\u003d\"Carrello.FK_Carrello_Utente_3\" type\u003d\"fk\" pk-ref\u003d\"9\" fk-ref\u003d\"1\"/\u003e\u003crelation name\u003d\"FK_Indirizzo_Utente\" fq-name\u003d\"Indirizzo.FK_Indirizzo_Utente\" type\u003d\"fk\" pk-ref\u003d\"9\" fk-ref\u003d\"3\"/\u003e\u003crelation name\u003d\"FK_MetodoDiPagamento_Utente\" fq-name\u003d\"MetodoDiPagamento.FK_MetodoDiPagamento_Utente\" type\u003d\"fk\" pk-ref\u003d\"9\" fk-ref\u003d\"5\"/\u003e\u003crelation name\u003d\"FK_Ordine_Utente_2\" fq-name\u003d\"Ordine.FK_Ordine_Utente_2\" type\u003d\"fk\" pk-ref\u003d\"9\" fk-ref\u003d\"6\"/\u003e\u003crelation name\u003d\"FK_Ordine_Utente_3\" fq-name\u003d\"Ordine.FK_Ordine_Utente_3\" type\u003d\"fk\" pk-ref\u003d\"9\" fk-ref\u003d\"6\"/\u003e\u003crelation name\u003d\"FK_Ristorante_Utente\" fq-name\u003d\"Ristorante.FK_Ristorante_Utente\" type\u003d\"fk\" pk-ref\u003d\"9\" fk-ref\u003d\"8\"/\u003e\u003c/relations\u003e\u003c/diagram\u003e"}}}},
 	"connection-types": {
 		"dev": {
 			"name": "Development",

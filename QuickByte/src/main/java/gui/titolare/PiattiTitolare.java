@@ -2,11 +2,13 @@ package gui.titolare;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import sessione.SessioneMenu;
-import sessione.SessioneRistorante;
-import sessione.SessionePiatto;
 import dao.PiattoDAO;
 import model.Piatto;
+import sessione.*;
+import sessione.SessionePiatto;
+import sessione.SessioneMenu;
+import sessione.SessioneRistorante;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.*;
@@ -24,6 +26,13 @@ public class PiattiTitolare extends VBox {
         this.idPiatto = SessionePiatto.getId();
         this.setStyle("-fx-padding: 10;");
         container = new VBox(10);
+        
+        // Titolo in grande
+        Label titleLabel = new Label("Piatti");
+        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        container.getChildren().add(titleLabel);
+        
+        // Carica i piatti
         loadPiatti();
         this.getChildren().add(container);
 
@@ -45,28 +54,73 @@ public class PiattiTitolare extends VBox {
             // Modifica: ottenere piatti dal database tramite DAO
             List<Piatto> piatti = PiattoDAO.getInstance().getPiattiByMenuAndIdRistorante(nomeMenu, SessioneRistorante.getId());
             
-            for (Piatto piatto : piatti) {
-                HBox piattoBox = new HBox(10);
-                piattoBox.setStyle("-fx-padding: 10;");
-                Label nomePiattoLabel = new Label(piatto.getNome());
-                
-                MenuButton menuButton = new MenuButton("⋮");
-                MenuItem eliminaItem = new MenuItem("Elimina");
-                eliminaItem.setOnAction(e -> eliminaPiatto(piatto.getIdPiatto()));
-                
-                MenuItem modificaItem = new MenuItem("Modifica");
-                modificaItem.setOnAction(e -> {
-					try {
-						switchToModificaPiatto();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-				});
-                
-                menuButton.getItems().addAll(modificaItem, eliminaItem);
-                piattoBox.getChildren().addAll(nomePiattoLabel, menuButton);
-                container.getChildren().add(piattoBox);
-            }
+            // Creazione della TableView per i piatti
+            TableView<Piatto> tablePiatti = new TableView<>();
+            tablePiatti.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+
+            // Creazione delle colonne
+            TableColumn<Piatto, String> colNomePiatto = new TableColumn<>("Nome Piatto");
+            colNomePiatto.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
+
+            TableColumn<Piatto, Void> colModifica = new TableColumn<>("Modifica");
+            colModifica.setCellFactory(param -> new TableCell<Piatto, Void>() {
+                private final Button modificaButton = new Button("Modifica");
+
+                {
+                    modificaButton.setOnAction(event -> {
+                        Piatto piatto = getTableView().getItems().get(getIndex());
+                        try {
+                            SessionePiatto.setId(piatto.getIdPiatto()); // Salviamo l'ID del piatto selezionato
+                            switchToModificaPiatto();
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
+                    });
+                }
+
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(modificaButton);
+                    }
+                }
+            });
+
+            TableColumn<Piatto, Void> colElimina = new TableColumn<>("Elimina");
+            colElimina.setCellFactory(param -> new TableCell<Piatto, Void>() {
+                private final Button eliminaButton = new Button("Elimina");
+
+                {
+                    eliminaButton.setOnAction(event -> {
+                        Piatto piatto = getTableView().getItems().get(getIndex());
+                        eliminaPiatto(piatto.getIdPiatto());
+                    });
+                }
+
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(eliminaButton);
+                    }
+                }
+            });
+
+            // Aggiungere le colonne alla TableView
+            tablePiatti.getColumns().addAll(colNomePiatto, colModifica, colElimina);
+
+            // Popolare la tabella con i piatti
+            ObservableList<Piatto> piattiList = FXCollections.observableArrayList(piatti);
+            tablePiatti.setItems(piattiList);
+
+            // Aggiungere la TableView alla scena
+            container.getChildren().add(tablePiatti);
+
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Errore", "Errore di connessione al database.");
@@ -76,8 +130,7 @@ public class PiattiTitolare extends VBox {
     private void eliminaPiatto(int idPiatto) {
         try {
             PiattoDAO.getInstance().rimuoviPiatto(idPiatto);
-            container.getChildren().clear();
-            loadPiatti();
+            loadPiatti(); // Ricarica i piatti dopo l'eliminazione
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Errore", "Errore durante l'eliminazione del piatto.");

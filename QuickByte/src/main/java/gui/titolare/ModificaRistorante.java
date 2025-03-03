@@ -17,13 +17,27 @@ public class ModificaRistorante extends VBox {
         this.nomeRistorante = nomeRistorante;
         this.setStyle("-fx-padding: 10;");
         
-        // Titolo
+        // Titolo grande
         Label titolo = new Label("Modifica Ristorante: " + nomeRistorante);
+        titolo.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
-        // Campi di input
+        // Crea un HBox per il titolo (senza il pulsante torna indietro in alto)
+        HBox header = new HBox(10);
+        header.getChildren().addAll(titolo);
+        header.setStyle("-fx-padding: 10;");
+        
+        // Campi di input con i rispettivi Label
+        Label nomeLabel = new Label("Nome Pizzeria");
         nomeField = new TextField();
+        nomeField.setPromptText("Nome pizzeria");
+        
+        Label telefonoLabel = new Label("Numero di Telefono");
         telefonoField = new TextField();
+        telefonoField.setPromptText("Numero di telefono");
+        
+        Label indirizzoLabel = new Label("Indirizzo");
         indirizzoField = new TextField();
+        indirizzoField.setPromptText("Indirizzo");
 
         // Carica i dati attuali
         caricaDatiRistorante();
@@ -33,11 +47,15 @@ public class ModificaRistorante extends VBox {
         salvaButton.setOnAction(e -> salvaModifiche());
         
         // Pulsante per tornare alla gestione ristoranti
-        Button tornaButton = new Button("Torna alla Gestione Ristoranti");
-        tornaButton.setOnAction(e -> getScene().setRoot(new MainScreenTitolare()));
+        Button tornaButton2 = new Button("Torna alla Gestione Ristoranti");
+        tornaButton2.setOnAction(e -> getScene().setRoot(new MainScreenTitolare()));
 
-        // Aggiunta elementi al layout
-        this.getChildren().addAll(titolo, nomeField, telefonoField, indirizzoField, salvaButton, tornaButton);
+        // Aggiunta degli elementi al layout
+        HBox buttonContainer = new HBox(10);
+        buttonContainer.setStyle("-fx-padding: 10;");
+        buttonContainer.getChildren().addAll(salvaButton, tornaButton2);
+
+        this.getChildren().addAll(header, nomeLabel, nomeField, telefonoLabel, telefonoField, indirizzoLabel, indirizzoField, buttonContainer);
     }
 
     private void caricaDatiRistorante() {

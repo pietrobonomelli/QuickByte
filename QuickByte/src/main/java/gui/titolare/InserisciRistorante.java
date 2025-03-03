@@ -3,14 +3,11 @@ package gui.titolare;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import sessione.SessioneUtente;
-import database.DatabaseConnection;
-import dao.RistoranteDAO;  // Importa la classe DAO che gestisce l'inserimento nel database
-
+import dao.RistoranteDAO;
 import java.sql.*;
 
 public class InserisciRistorante extends VBox {
 
-    private VBox container; // Contenitore per l'inserimento
     private TextField nomeRistoranteField, telefonoField, indirizzoField;
     private Label emailTitolareLabel;
     private String emailTitolare = SessioneUtente.getEmail();
@@ -19,13 +16,20 @@ public class InserisciRistorante extends VBox {
         super(10); // Imposta il padding tra i componenti
         this.setStyle("-fx-padding: 10;");
 
-        // Crea i campi di inserimento
+        // Titolo grande
+        Label titolo = new Label("Inserisci Ristorante");
+        titolo.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+
+        // Crea i campi di inserimento con le Label sopra
+        Label nomeLabel = new Label("Nome Ristorante");
         nomeRistoranteField = new TextField();
         nomeRistoranteField.setPromptText("Nome del ristorante");
 
+        Label telefonoLabel = new Label("Numero di Telefono");
         telefonoField = new TextField();
         telefonoField.setPromptText("Numero di telefono");
 
+        Label indirizzoLabel = new Label("Indirizzo");
         indirizzoField = new TextField();
         indirizzoField.setPromptText("Indirizzo");
 
@@ -35,26 +39,30 @@ public class InserisciRistorante extends VBox {
         // Pulsante per confermare l'inserimento
         Button confermaButton = new Button("Inserisci Ristorante");
         confermaButton.setOnAction(e -> {
-			try {
-				inserisciRistorante();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
+            try {
+                inserisciRistorante();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        });
 
         // Pulsante per tornare alla schermata di gestione ristoranti
         Button tornaButton = new Button("Torna alla gestione ristoranti");
         tornaButton.setOnAction(e -> tornaAllaGestioneRistoranti());
 
-        // Aggiungi gli elementi al layout
+        // Aggiungi i pulsanti in una HBox (vicini)
+        HBox buttonContainer = new HBox(10);
+        buttonContainer.setStyle("-fx-padding: 10;");
+        buttonContainer.getChildren().addAll(confermaButton, tornaButton);
+
+        // Aggiungi tutti gli elementi al layout
         this.getChildren().addAll(
-            nomeRistoranteField,
-            telefonoField,
-            indirizzoField,
-            emailTitolareLabel,
-            confermaButton,
-            tornaButton
+            titolo, 
+            nomeLabel, nomeRistoranteField, 
+            telefonoLabel, telefonoField, 
+            indirizzoLabel, indirizzoField, 
+            emailTitolareLabel, 
+            buttonContainer
         );
     }
 
@@ -81,7 +89,6 @@ public class InserisciRistorante extends VBox {
         getScene().setRoot(new MainScreenTitolare());
     }
 
-
     private void tornaAllaGestioneRistoranti() {
         // Torna alla schermata di gestione ristoranti
         getScene().setRoot(new MainScreenTitolare());
@@ -93,9 +100,5 @@ public class InserisciRistorante extends VBox {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    public VBox getContainer() {
-        return container; // Restituisce il VBox contenente la schermata di inserimento
     }
 }

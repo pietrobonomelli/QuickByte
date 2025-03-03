@@ -4,5 +4,6 @@ public enum StatoOrdine {
 	PENDENTE,
     ACCETTATO,
     IN_CONSEGNA,
-    CONSEGNATO
+    CONSEGNATO,
+    RIFIUTATO
 }
