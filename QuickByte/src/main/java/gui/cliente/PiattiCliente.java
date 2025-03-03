@@ -1,13 +1,11 @@
 package gui.cliente;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import sessione.SessioneCarrello;
-import sessione.SessioneMenu;
-import sessione.SessionePiatto;
-import sessione.SessioneRistorante;
-import sessione.SessioneUtente;
-import gui.main.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import sessione.*;
 import dao.PiattoDAO;
 import model.Piatto;
 import java.sql.*;
@@ -18,70 +16,106 @@ public class PiattiCliente extends VBox {
     private String emailCliente;
     private String nomeMenu;
     private int idRistorante;
+    private TableView<Piatto> tableView;
 
     public PiattiCliente() throws SQLException {
         super(10);
 
         this.idRistorante = SessioneRistorante.getId();
-        this.nomeMenu = SessioneMenu.getNome();  // Recupera il nome del menu selezionato dalla sessione
+        this.nomeMenu = SessioneMenu.getNome();
         this.emailCliente = SessioneUtente.getEmail();
 
         this.setStyle("-fx-padding: 10;");
+        setupTableView();
         loadPiatti();
+        
+        
+        Button btnIndietro = new Button("Indietro");
+        btnIndietro.setOnAction(event -> tornaIndietro());
+
+        this.getChildren().add(btnIndietro);
+    }
+
+    private void setupTableView() {
+        tableView = new TableView<>();
+
+        TableColumn<Piatto, String> nomeCol = new TableColumn<>("Piatto");
+        nomeCol.setCellValueFactory(new PropertyValueFactory<>("nome"));
+
+        TableColumn<Piatto, Void> descrizioneCol = new TableColumn<>("Descrizione");
+        descrizioneCol.setCellFactory(data -> new TableCell<Piatto, Void>() {
+            private final Button btnDesc = new Button("Vedi descrizione");
+
+            {
+                btnDesc.setOnAction(event -> {
+                    Piatto piatto = getTableRow().getItem(); // Recupera il piatto della riga corrente
+                    if (piatto != null) {
+                        SessionePiatto.setId(piatto.getIdPiatto());  // Salva l'ID del piatto nella sessione
+                        try {
+                            switchToPiattoCliente();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getTableRow().getItem() == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btnDesc);
+                }
+            }
+        });
+
+
+        TableColumn<Piatto, Void> aggiungiCol = new TableColumn<>("");
+        aggiungiCol.setCellFactory(data -> new TableCell<Piatto, Void>() {
+            private final Button btnCart = new Button("Aggiungi al carrello");
+            {
+                btnCart.setOnAction(event -> {
+                    Piatto piatto = getTableView().getItems().get(getIndex());
+                    try {
+                        aggiungiAlCarrello(piatto.getIdPiatto());
+                        showAlert("Successo", piatto.getNome() + " aggiunto al carrello!");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        showAlert("Errore", "Errore nell'aggiunta al carrello.");
+                    }
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btnCart);
+                }
+            }
+        });
+
+        tableView.getColumns().addAll(nomeCol, descrizioneCol, aggiungiCol);
+        this.getChildren().add(tableView);
     }
 
     private void loadPiatti() {
         try {
-            // Ottieni i piatti dal DAO
             List<Piatto> piatti = PiattoDAO.getInstance().getPiattiByMenuAndIdRistorante(nomeMenu, idRistorante);
-
-            for (Piatto piatto : piatti) {
-                // Crea un box per ogni piatto
-                HBox piattoBox = new HBox(10);
-                piattoBox.setStyle("-fx-padding: 10;");
-
-                // Crea l'etichetta con il nome del piatto
-                Label nomeLabel = new Label(piatto.getNome());
-
-                // Crea il pulsante per aggiungere al carrello
-                Button aggiungiCarrelloButton = new Button("Aggiungi al carrello");
-
-                // Quando clicchi sul nome del piatto, salva l'idPiatto nella sessione e vai alla pagina PiattoCliente
-                nomeLabel.setOnMouseClicked(event -> {
-                    SessionePiatto.setId(piatto.getIdPiatto());  // Salviamo l'ID del piatto nella sessione
-                    try {
-						switchToPiattoCliente();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}          // Vai alla pagina PiattoCliente
-                });
-
-                // Quando clicchi sul pulsante "Aggiungi al carrello", passiamo l'idPiatto al metodo
-                aggiungiCarrelloButton.setOnAction(event -> {
-					try {
-						aggiungiAlCarrello(piatto.getIdPiatto());
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				});
-
-                // Aggiungi gli elementi al box
-                piattoBox.getChildren().addAll(nomeLabel, aggiungiCarrelloButton);
-                this.getChildren().add(piattoBox);
-            }
+            ObservableList<Piatto> piattiList = FXCollections.observableArrayList(piatti);
+            tableView.setItems(piattiList);
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Errore", "Errore nel caricamento dei piatti.");
         }
-
-        // Aggiungi il pulsante "Torna alla lista dei menu"
-        Button tornaAllaListaMenuButton = new Button("Torna alla lista dei menu");
-        tornaAllaListaMenuButton.setOnAction(event -> tornaAllaListaMenu());
-
-        // Aggiungi il pulsante alla schermata
-        this.getChildren().add(tornaAllaListaMenuButton);
+    }
+    
+    private void switchToPiattoCliente() throws SQLException {
+        PiattoCliente piattoClienteScreen = new PiattoCliente();
+        this.getScene().setRoot(piattoClienteScreen);
     }
 
     private void aggiungiAlCarrello(int idPiatto) throws SQLException {
@@ -89,18 +123,13 @@ public class PiattiCliente extends VBox {
         int idRistoranteCarrello = SessioneCarrello.getIdRistorante();
 
         if (!pieno) {
-            // Se il carrello è vuoto, imposto l'idRistorante in sessione e aggiungo il piatto
             SessioneCarrello.setIdRistorante(idRistorante);
             SessioneCarrello.setPieno(true);
             PiattoDAO.getInstance().aggiungiPiattoAlCarrello(idPiatto, emailCliente);
+        } else if (idRistoranteCarrello == idRistorante) {
+            PiattoDAO.getInstance().aggiungiPiattoAlCarrello(idPiatto, emailCliente);
         } else {
-            if (idRistoranteCarrello == idRistorante) {
-                // Se il ristorante è lo stesso, aggiungo il piatto
-                PiattoDAO.getInstance().aggiungiPiattoAlCarrello(idPiatto, emailCliente);
-            } else {
-                // Se il ristorante è diverso, mostro il popup di conferma con Alert
-                mostraPopupConferma(idPiatto);
-            }
+            mostraPopupConferma(idPiatto);
         }
     }
 
@@ -120,11 +149,10 @@ public class PiattiCliente extends VBox {
                 svuotaCarrello(emailCliente);
                 SessioneCarrello.setIdRistorante(idRistorante);
                 try {
-					PiattoDAO.getInstance().aggiungiPiattoAlCarrello(idPiatto, emailCliente);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                    PiattoDAO.getInstance().aggiungiPiattoAlCarrello(idPiatto, emailCliente);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -133,21 +161,14 @@ public class PiattiCliente extends VBox {
         try {
             PiattoDAO.getInstance().svuotaCarrello(emailUtente);
             SessioneCarrello.setPieno(false);
-            System.out.println("Carrello svuotato.");
         } catch (SQLException e) {
-            System.err.println("Errore SQL nello svuotamento del carrello: " + e.getMessage());
+            e.printStackTrace();
         }
     }
-
-    private void switchToPiattoCliente() throws SQLException {
-        PiattoCliente piattoClienteScreen = new PiattoCliente(); // La schermata PiattoCliente prenderà l'idPiatto dalla sessione
-        this.getScene().setRoot(piattoClienteScreen);
-    }
-
-    private void tornaAllaListaMenu() {
-        // Supponiamo che tu voglia caricare una schermata di lista menu
-        MenuCliente listaMenuScreen = new MenuCliente();  // ListaMenu è la schermata con i menu
-        this.getScene().setRoot(listaMenuScreen);    // Cambia la scena per mostrare la lista dei menu
+    
+    private void tornaIndietro() {
+        MenuCliente menuClienteScreen = new MenuCliente();
+        this.getScene().setRoot(menuClienteScreen);
     }
 
     private void showAlert(String title, String message) {

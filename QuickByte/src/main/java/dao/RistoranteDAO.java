@@ -64,22 +64,16 @@ public class RistoranteDAO {
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
                         
             ResultSet rs = stmt.executeQuery();
-
-        	String nomeRistorante = rs.getString("nome"); // Assicurati che "nome" sia una colonna esistente
-            System.out.println("Nome ristorante: " + nomeRistorante);
             
             List<Ristorante> ristoranti = new ArrayList<>();
             while (rs.next()) {
                 Ristorante ristorante = new Ristorante();
                 ristorante.setIdRistorante(rs.getInt("idRistorante"));
                 ristorante.setNome(rs.getString("nome"));
+                ristorante.setIndirizzo(rs.getString("indirizzo"));
+                ristorante.setTelefono(rs.getString("telefono"));
+                ristorante.setEmailTitolare(rs.getString("emailTitolare"));
                 ristoranti.add(ristorante);
-            }
-            
-            // Debug: Stampa i dati ottenuti
-            System.out.println("Numero di ristoranti trovati: " + ristoranti.size());
-            for (Ristorante ristorante : ristoranti) {
-                System.out.println("Ristorante: " + ristorante.getNome());
             }
             
             return ristoranti;

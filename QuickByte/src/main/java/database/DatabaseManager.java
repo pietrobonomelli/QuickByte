@@ -26,8 +26,7 @@ public class DatabaseManager {
                 "idOrdine INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "stato TEXT NOT NULL, " +
                 "costo REAL NOT NULL, " +
-                "dataOraOrdine TEXT NOT NULL, " +
-                "pagato INTEGER NOT NULL, " +
+                "dataOraOrdine TEXT NOT NULL, "+
                 "indirizzo TEXT NOT NULL, " +
                 "emailCliente TEXT, " +
                 "emailCorriere TEXT, " +

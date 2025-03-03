@@ -1,93 +1,93 @@
 package gui.cliente;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-
 import javafx.scene.layout.*;
 import sessione.SessioneMenu;
 import sessione.SessioneRistorante;
-import javafx.scene.input.MouseButton;
 import database.DatabaseConnection;
 import dao.MenuDAO;
 import model.Menu;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import java.sql.*;
 import java.util.List;
 
 public class MenuCliente extends VBox {
 
-    private int idRistorante;
-    private VBox container;
+    private TableView<Menu> table;
 
     public MenuCliente() {
         super(10);
-        this.idRistorante = SessioneRistorante.getId();
         this.setStyle("-fx-padding: 10;");
-        container = new VBox(10);
+
+        Label titleLabel = new Label("Menù disponibili");
+        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+
+        table = new TableView<>();
+        table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+
+        TableColumn<Menu, String> colNome = new TableColumn<>("Menù");
+        colNome.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
+
+        TableColumn<Menu, Void> colAzione = new TableColumn<>("Piatti");
+        colAzione.setCellFactory(param -> new TableCell<Menu, Void>() {
+            private final Button vediPiattiButton = new Button("Vedi Piatti");
+            {
+                vediPiattiButton.setOnAction(event -> {
+                    Menu menu = getTableView().getItems().get(getIndex());
+                    SessioneMenu.setNome(menu.getNome());
+                    try {
+						switchToPiattiCliente();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(vediPiattiButton);
+                }
+            }
+        });
+
+        table.getColumns().addAll(colNome, colAzione);
         loadMenu();
-        this.getChildren().add(container);
+
+        Button carrelloButton = new Button("Vai al Carrello");
+        carrelloButton.setOnAction(event -> switchToCarrello());
+
+        Button tornaAllaListaRistorantiButton = new Button("Torna alla lista dei ristoranti");
+        tornaAllaListaRistorantiButton.setOnAction(event -> tornaAllaListaRistoranti());
+
+        this.getChildren().addAll(titleLabel, table, carrelloButton, tornaAllaListaRistorantiButton);
     }
 
     private void loadMenu() {
         try (Connection conn = DatabaseConnection.connect()) {
-            List<Menu> menuList = MenuDAO.getInstance().getMenuByRistorante(idRistorante);
-            
-            if (menuList.isEmpty()) {
-                showAlert("Info", "Nessun menu disponibile.");
-            }
-
-            ObservableList<String> menuNames = FXCollections.observableArrayList();
-            for (Menu menu : menuList) {
-                menuNames.add(menu.getNome());
-            }
-
-            // Crea una lista di Label per ogni menu
-            for (String nomeMenu : menuNames) {
-                Label menuLabel = new Label(nomeMenu);
-                menuLabel.setStyle("-fx-padding: 10; -fx-font-size: 14px;");
-
-                // Gestisci il click sulla label
-                menuLabel.setOnMouseClicked(event -> {
-                    if (event.getButton() == MouseButton.PRIMARY) {
-                        // Salva il nome del menu selezionato in SessioneMenu
-                        SessioneMenu.setNome(nomeMenu);
-                        // Passa alla schermata PiattiCliente
-                        try {
-							switchToPiattiCliente();
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-                    }
-                });
-                
-                container.getChildren().add(menuLabel);
-            }
-
+            List<Menu> menuList = MenuDAO.getInstance().getMenuByRistorante(SessioneRistorante.getId());
+            ObservableList<Menu> menuData = FXCollections.observableArrayList(menuList);
+            table.setItems(menuData);
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Errore", "Errore nel caricamento dei menu.");
         }
-
-        Button carrelloButton = new Button("Vai al Carrello");
-        carrelloButton.setOnAction(event -> switchToCarrello());
-        this.getChildren().add(carrelloButton);
-
-        // Aggiungi il pulsante "Torna alla lista dei ristoranti"
-        Button tornaAllaListaRistorantiButton = new Button("Torna alla lista dei ristoranti");
-        tornaAllaListaRistorantiButton.setOnAction(event -> tornaAllaListaRistoranti());
-        container.getChildren().add(tornaAllaListaRistorantiButton);
     }
 
     private void switchToPiattiCliente() throws SQLException {
-        PiattiCliente piattiClienteScreen = new PiattiCliente(); // La schermata PiattiCliente prenderà il nome del menu dalla sessione
+        PiattiCliente piattiClienteScreen = new PiattiCliente();
         this.getScene().setRoot(piattiClienteScreen);
     }
 
     private void tornaAllaListaRistoranti() {
-        MainScreenCliente mainScreenCliente = new MainScreenCliente();  // MainScreenCliente è la schermata con i ristoranti
-        this.getScene().setRoot(mainScreenCliente);    // Cambia la scena per mostrare la lista dei ristoranti
+        MainScreenCliente mainScreenCliente = new MainScreenCliente();
+        this.getScene().setRoot(mainScreenCliente);
     }
 
     private void showAlert(String title, String message) {
@@ -97,7 +97,7 @@ public class MenuCliente extends VBox {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    
+
     private void switchToCarrello() {
         CarrelloView carrelloScreen = new CarrelloView();
         this.getScene().setRoot(carrelloScreen);

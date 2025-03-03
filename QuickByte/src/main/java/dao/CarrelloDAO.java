@@ -49,9 +49,8 @@ public class CarrelloDAO {
 				int idCarrello = resultSet.getInt("idCarrello");
 				int quantitaPiatti = resultSet.getInt("quantitaPiatti");
 				int idPiatto = resultSet.getInt("idPiatto");
-				int ordine = resultSet.getInt("ordine");
 				String emailUtente1 = resultSet.getString("emailUtente");
-				carrelli.add(new Carrello(idCarrello, quantitaPiatti, idPiatto, ordine, emailUtente1));
+				carrelli.add(new Carrello(idCarrello, quantitaPiatti, idPiatto, emailUtente1));
 			}
 		}
 		return carrelli;

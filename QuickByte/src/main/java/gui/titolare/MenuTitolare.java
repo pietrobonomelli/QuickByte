@@ -248,7 +248,7 @@ public class MenuTitolare extends VBox {
 
 	private String getNomeRistoranteById(int idRistorante) {
 		try (Connection connection = DatabaseConnection.connect()) {
-			String query = "SELECT nome FROM ristorante WHERE id = ?";
+			String query = "SELECT nome FROM ristorante WHERE idRistorante = ?";
 			try (PreparedStatement stmt = connection.prepareStatement(query)) {
 				stmt.setInt(1, idRistorante);
 				ResultSet rs = stmt.executeQuery();

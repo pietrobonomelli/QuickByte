@@ -75,4 +75,12 @@ public class Indirizzo {
     public void setEmailUtente(String emailUtente) {
         this.emailUtente = emailUtente;
     }
+    
+    public String toString() {	
+        return "Indirizzo: " + indirizzo + ", " +
+               "Città: " + citta + ", " +
+               "CAP: " + cap + ", " +
+               "Provincia: " + provincia;
+    }
+
 }
