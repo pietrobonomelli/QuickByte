@@ -14,12 +14,10 @@ import model.MetodoDiPagamento;
 public class MetodoDiPagamentoForm extends VBox {
 
     private String emailUtente;
-    private MetodoDiPagamentoDAO metodoDiPagamentoDAO;
 
     public MetodoDiPagamentoForm() throws SQLException {
         super(10);
         this.emailUtente = SessioneUtente.getEmail();
-        this.metodoDiPagamentoDAO = new MetodoDiPagamentoDAO();
         setAlignment(Pos.CENTER);
 
         Label titolo = new Label("Aggiungi un metodo di pagamento");
@@ -61,7 +59,7 @@ public class MetodoDiPagamentoForm extends VBox {
 
     private void salvaMetodoDiPagamento(MetodoDiPagamento metodo) {
         try {
-            metodoDiPagamentoDAO.aggiungiMetodo(metodo);
+            MetodoDiPagamentoDAO.getInstance().aggiungiMetodo(metodo);
             showAlert("Successo", "Metodo di pagamento salvato correttamente!");
             tornaIndietro(); // Torna alla schermata precedente
         } catch (SQLException e) {

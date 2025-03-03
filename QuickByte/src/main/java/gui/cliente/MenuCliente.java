@@ -31,8 +31,7 @@ public class MenuCliente extends VBox {
 
     private void loadMenu() {
         try (Connection conn = DatabaseConnection.connect()) {
-            MenuDAO menuDAO = new MenuDAO();
-            List<Menu> menuList = menuDAO.getMenuByRistorante(idRistorante);
+            List<Menu> menuList = MenuDAO.getInstance().getMenuByRistorante(idRistorante);
             
             if (menuList.isEmpty()) {
                 showAlert("Info", "Nessun menu disponibile.");

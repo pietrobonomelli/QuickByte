@@ -16,7 +16,6 @@ import sessione.SessioneUtente;
 public class TitolareDAOTest {
 
     private Connection conn;
-    private TitolareDAO titolareDAO;
 
     @Before
     public void setupDatabase() throws Exception {
@@ -31,8 +30,6 @@ public class TitolareDAOTest {
         stmt.execute("INSERT INTO Ristorante (idRistorante, emailTitolare) VALUES (1, 'test@example.com')");
         stmt.execute("INSERT INTO Ristorante (idRistorante, emailTitolare) VALUES (2, 'test@example.com')");
         stmt.execute("INSERT INTO Ristorante (idRistorante, emailTitolare) VALUES (3, 'altro@example.com')");
-
-        titolareDAO = new TitolareDAO();
     }
 
     @Test
@@ -41,7 +38,7 @@ public class TitolareDAOTest {
             // Simuliamo che l'utente loggato sia "test@example.com"
             mockedSession.when(SessioneUtente::getEmail).thenReturn("test@example.com");
 
-            List<Integer> ristoranti = titolareDAO.getRistorantiByEmail();
+            List<Integer> ristoranti = TitolareDAO.getInstance().getRistorantiByEmail();
 
             // Verifica che il metodo restituisca esattamente i due ristoranti dell'utente test@example.com
             assertEquals(2, ristoranti.size());

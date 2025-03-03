@@ -15,13 +15,10 @@ public class MainScreenCorriere extends VBox {
 
     private String email;
     private VBox container;
-    private OrdineDAO ordineDAO;
 
     public MainScreenCorriere() {
         super(10);
         this.email = SessioneUtente.getEmail();
-
-        ordineDAO = new OrdineDAO();
 
         this.setStyle("-fx-padding: 10;");
         container = new VBox(10);
@@ -36,7 +33,7 @@ public class MainScreenCorriere extends VBox {
 
     private void loadOrdini() {
         ObservableList<Ordine> ordini = FXCollections.observableArrayList(
-		        ordineDAO.getOrdiniByStato(StatoOrdine.ACCETTATO.name())
+		        OrdineDAO.getInstance().getOrdiniByStato(StatoOrdine.ACCETTATO.name())
 		);
 		
 		for (Ordine ordine : ordini) {
@@ -53,7 +50,7 @@ public class MainScreenCorriere extends VBox {
     }
 
     private void accettaOrdine(Ordine ordine) {
-        ordineDAO.aggiornaStatoOrdine(ordine.getIdOrdine(), StatoOrdine.IN_CONSEGNA.name());
+        OrdineDAO.getInstance().aggiornaStatoOrdine(ordine.getIdOrdine(), StatoOrdine.IN_CONSEGNA.name());
 		showAlert("Successo", "Hai accettato l'ordine " + ordine.getIdOrdine());
 		container.getChildren().clear();
 		loadOrdini(); // Ricarica gli ordini disponibili

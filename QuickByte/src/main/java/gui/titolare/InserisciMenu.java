@@ -41,8 +41,7 @@ public class InserisciMenu extends VBox {
     private String getNomeRistorante(int idRistorante) {
         String nomeRistorante = "";
         try {
-            MenuDAO menuDAO = new MenuDAO();
-            nomeRistorante = menuDAO.getNomeRistorante(idRistorante);
+            nomeRistorante = MenuDAO.getInstance().getNomeRistorante(idRistorante);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -59,8 +58,7 @@ public class InserisciMenu extends VBox {
         Menu menu = new Menu(nomeMenu, idRistorante);
 
         try {
-            MenuDAO menuDAO = new MenuDAO();
-            menuDAO.aggiungiMenu(menu);
+            MenuDAO.getInstance().aggiungiMenu(menu);
             showAlert("Successo", "Menu inserito correttamente.");
             nomeMenuField.clear();
             switchToMenuTitolare();

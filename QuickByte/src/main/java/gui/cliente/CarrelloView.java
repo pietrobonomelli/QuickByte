@@ -14,30 +14,22 @@ import java.time.format.DateTimeFormatter;
 public class CarrelloView extends VBox {
     
     private String emailUtente;
-    private CarrelloDAO carrelloDAO;
 
     public CarrelloView() {
         super(10);
         this.setStyle("-fx-padding: 10;");
         
         this.emailUtente = SessioneUtente.getEmail();
-        
-        try {
-            carrelloDAO = new CarrelloDAO();
-            loadCarrello();      
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Errore", "Errore nella connessione al database.");
-        }
+        loadCarrello();      	
     }
        
     private void loadCarrello() {
         this.getChildren().clear();
         try {
-            List<Carrello> carrelli = carrelloDAO.getCarrelloByUtente(emailUtente);
+            List<Carrello> carrelli = CarrelloDAO.getInstance().getCarrelloByUtente(emailUtente);
 
             for (Carrello item : carrelli) {
-                String nomePiatto = carrelloDAO.getNomePiattoById(item.getIdPiatto());
+                String nomePiatto = CarrelloDAO.getInstance().getNomePiattoById(item.getIdPiatto());
 
                 HBox carrelloItem = new HBox(10);
                 carrelloItem.setStyle("-fx-padding: 10;");
@@ -74,7 +66,7 @@ public class CarrelloView extends VBox {
     
     private void rimuoviDalCarrello(int idCarrello) {
         try {
-            carrelloDAO.rimuoviDalCarrello(idCarrello);
+        	CarrelloDAO.getInstance().rimuoviDalCarrello(idCarrello);
             loadCarrello();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,8 +118,7 @@ public class CarrelloView extends VBox {
     }
 
     private void selezionaIndirizzo() {
-        IndirizzoDAO indirizzoDAO = new IndirizzoDAO();
-        List<String> indirizzi = indirizzoDAO.getIndirizzi(emailUtente);
+        List<String> indirizzi = IndirizzoDAO.getInstance().getIndirizzi(emailUtente);
 
         ChoiceDialog<String> sceltaIndirizzo = new ChoiceDialog<>("Aggiungi indirizzo", indirizzi);
         sceltaIndirizzo.setTitle("Indirizzo di Consegna");
@@ -144,8 +135,7 @@ public class CarrelloView extends VBox {
     }
 
     private void registraOrdine(String indirizzo) {
-        OrdineDAO ordineDAO = new OrdineDAO();
-        boolean success = ordineDAO.registraOrdine(emailUtente, indirizzo);
+        boolean success = OrdineDAO.getInstance().registraOrdine(emailUtente, indirizzo);
 
         if (success) {
             showAlert("Ordine Confermato", "Il tuo ordine è stato pagato con successo!");

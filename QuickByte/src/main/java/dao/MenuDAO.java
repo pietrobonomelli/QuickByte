@@ -8,12 +8,23 @@ import database.DatabaseConnection;
 
 public class MenuDAO {
 
+	private static MenuDAO instance;
     private Connection connection;
 
-    public MenuDAO() throws SQLException {
-        this.connection = DatabaseConnection.connect();
+    private MenuDAO() {
+    	try {
+			this.connection = DatabaseConnection.connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
-
+    
+	public static MenuDAO getInstance() {
+    	if(instance == null) {
+    		instance = new MenuDAO();
+    	}
+    	return instance;
+    }
     // Metodo per creare la tabella Menu
     public void createTable() throws SQLException {
         String createMenuTable = "CREATE TABLE IF NOT EXISTS Menu (" +

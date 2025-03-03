@@ -18,7 +18,6 @@ public class PiattiCliente extends VBox {
     private String emailCliente;
     private String nomeMenu;
     private int idRistorante;
-    private PiattoDAO piattoDAO;
 
     public PiattiCliente() throws SQLException {
         super(10);
@@ -28,14 +27,13 @@ public class PiattiCliente extends VBox {
         this.emailCliente = SessioneUtente.getEmail();
 
         this.setStyle("-fx-padding: 10;");
-        this.piattoDAO = new PiattoDAO();
         loadPiatti();
     }
 
     private void loadPiatti() {
         try {
             // Ottieni i piatti dal DAO
-            List<Piatto> piatti = piattoDAO.getPiattiByMenuAndIdRistorante(nomeMenu, idRistorante);
+            List<Piatto> piatti = PiattoDAO.getInstance().getPiattiByMenuAndIdRistorante(nomeMenu, idRistorante);
 
             for (Piatto piatto : piatti) {
                 // Crea un box per ogni piatto
@@ -94,11 +92,11 @@ public class PiattiCliente extends VBox {
             // Se il carrello è vuoto, imposto l'idRistorante in sessione e aggiungo il piatto
             SessioneCarrello.setIdRistorante(idRistorante);
             SessioneCarrello.setPieno(true);
-            piattoDAO.aggiungiPiattoAlCarrello(idPiatto, emailCliente);
+            PiattoDAO.getInstance().aggiungiPiattoAlCarrello(idPiatto, emailCliente);
         } else {
             if (idRistoranteCarrello == idRistorante) {
                 // Se il ristorante è lo stesso, aggiungo il piatto
-                piattoDAO.aggiungiPiattoAlCarrello(idPiatto, emailCliente);
+                PiattoDAO.getInstance().aggiungiPiattoAlCarrello(idPiatto, emailCliente);
             } else {
                 // Se il ristorante è diverso, mostro il popup di conferma con Alert
                 mostraPopupConferma(idPiatto);
@@ -122,7 +120,7 @@ public class PiattiCliente extends VBox {
                 svuotaCarrello(emailCliente);
                 SessioneCarrello.setIdRistorante(idRistorante);
                 try {
-					piattoDAO.aggiungiPiattoAlCarrello(idPiatto, emailCliente);
+					PiattoDAO.getInstance().aggiungiPiattoAlCarrello(idPiatto, emailCliente);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -133,7 +131,7 @@ public class PiattiCliente extends VBox {
 
     private void svuotaCarrello(String emailUtente) {
         try {
-            piattoDAO.svuotaCarrello(emailUtente);
+            PiattoDAO.getInstance().svuotaCarrello(emailUtente);
             SessioneCarrello.setPieno(false);
             System.out.println("Carrello svuotato.");
         } catch (SQLException e) {

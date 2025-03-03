@@ -16,18 +16,10 @@ public class MainScreenTitolare extends VBox {
 
     private String email;
     private VBox container;
-    private RistoranteDAO ristoranteDAO;
 
     public MainScreenTitolare() {
         super(10);
         this.email = SessioneUtente.getEmail();
-
-        try {
-            ristoranteDAO = new RistoranteDAO();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Errore", "Errore durante la connessione al database.");
-        }
 
         this.setStyle("-fx-padding: 10;");
         container = new VBox(10);
@@ -51,7 +43,7 @@ public class MainScreenTitolare extends VBox {
 
     private void loadRistoranti() {
         try {
-            ObservableList<Ristorante> ristoranti = FXCollections.observableArrayList(ristoranteDAO.getRistorantiByEmail(this.email));
+            ObservableList<Ristorante> ristoranti = FXCollections.observableArrayList(RistoranteDAO.getInstance().getRistorantiByEmail(this.email));
             for (Ristorante ristorante : ristoranti) {
                 HBox ristoranteBox = new HBox(10);
                 ristoranteBox.setStyle("-fx-padding: 10;");
@@ -108,7 +100,7 @@ public class MainScreenTitolare extends VBox {
 
     private void eliminaRistorante(Ristorante ristorante) {
         try {
-            ristoranteDAO.rimuoviRistorante(ristorante.getIdRistorante());
+            RistoranteDAO.getInstance().rimuoviRistorante(ristorante.getIdRistorante());
             showAlert("Successo", "Ristorante eliminato con successo.");
             container.getChildren().clear();
             loadRistoranti();

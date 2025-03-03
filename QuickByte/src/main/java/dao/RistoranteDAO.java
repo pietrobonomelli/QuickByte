@@ -8,11 +8,24 @@ import java.util.ArrayList;
 
 public class RistoranteDAO {
 
-    private Connection connection;
+	private static RistoranteDAO instance;
+	private Connection connection;
 
-    public RistoranteDAO() throws SQLException {
-        this.connection = DatabaseConnection.connect();
-    }
+	private RistoranteDAO() {
+		try {
+			this.connection = DatabaseConnection.connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static RistoranteDAO getInstance() {
+		if(instance == null) {
+			instance = new RistoranteDAO();
+		}
+		return instance;
+	}	   
+
 
     // Metodo per ottenere ristoranti per email
     public List<Ristorante> getRistorantiByEmail(String email) throws SQLException {

@@ -4,13 +4,26 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import model.DettaglioOrdine;
+import database.DatabaseConnection;
 
 public class DettaglioOrdineDAO {
-
+    private static DettaglioOrdineDAO instance;
     private Connection connection;
 
-    public DettaglioOrdineDAO(Connection connection) {
-        this.connection = connection;
+    private DettaglioOrdineDAO() {
+        try {
+            this.connection = DatabaseConnection.connect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Metodo per ottenere l'istanza singola (Singleton)
+    public static DettaglioOrdineDAO getInstance() {
+        if (instance == null) {
+            instance = new DettaglioOrdineDAO();
+        }
+        return instance;
     }
 
     // Metodo per creare la tabella DettaglioOrdine

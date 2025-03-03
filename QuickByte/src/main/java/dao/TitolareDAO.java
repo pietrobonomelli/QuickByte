@@ -8,14 +8,31 @@ import sessione.*;
 
 public class TitolareDAO {
 
+	private static TitolareDAO instance;
+	private Connection connection;
+	
+	private TitolareDAO() {
+		try {
+			this.connection = DatabaseConnection.connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static TitolareDAO getInstance() {
+		if(instance == null) {
+			instance = new TitolareDAO();
+		}
+		return instance;
+	}	   
+	
 	public List<Integer> getRistorantiByEmail() {
 	     List<Integer> ristoranti = new ArrayList<>();
 	     String titolare = SessioneUtente.getEmail(); // Prendi l'id del titolare dalla sessione
 
 	     String sql = "SELECT idRistorante FROM Ristorante WHERE emailTitolare = ?"; // Esegui la query per trovare tutti i ristoranti
 
-	     try (Connection conn = DatabaseConnection.connect(); // Usa la connessione del tuo DatabaseConnection
-	          PreparedStatement stmt = conn.prepareStatement(sql)) {
+	     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 
 	         stmt.setString(1, titolare); // Imposta l'id del titolare nella query
 
@@ -26,7 +43,7 @@ public class TitolareDAO {
 	             }
 	         }
 	     } catch (SQLException e) {
-	         e.printStackTrace(); // Gestisci l'eccezione in modo appropriato
+	         e.printStackTrace();
 	     }
 
 	     return ristoranti;

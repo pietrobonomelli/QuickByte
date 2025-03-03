@@ -1,22 +1,29 @@
 package dao;
 
 import java.sql.*;
-import database.*;
+import database.DatabaseConnection;
 import java.util.ArrayList;
 import java.util.List;
 import model.Indirizzo;
 
 public class IndirizzoDAO {
-
+    
+    private static IndirizzoDAO instance;
     private Connection connection;
 
-    public IndirizzoDAO() {
-    	try {
-			this.connection = DatabaseConnection.connect();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    private IndirizzoDAO() {
+        try {
+            this.connection = DatabaseConnection.connect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static IndirizzoDAO getInstance() {
+        if (instance == null) {
+            instance = new IndirizzoDAO();
+        }
+        return instance;
     }
 
     // Metodo per creare la tabella Indirizzo
@@ -89,23 +96,31 @@ public class IndirizzoDAO {
             ps.executeUpdate();
         }
     }
-    
+
+    // Metodo per ottenere gli indirizzi di un utente
     public List<String> getIndirizzi(String emailUtente) {
         List<String> indirizzi = new ArrayList<>();
         String sql = "SELECT indirizzo FROM Indirizzo WHERE emailUtente = ?";
-
-        try (Connection conn = DatabaseConnection.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, emailUtente);
             ResultSet rs = pstmt.executeQuery();
-
             while (rs.next()) {
                 indirizzi.add(rs.getString("indirizzo"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return indirizzi;
+    }
+
+    // Metodo per chiudere la connessione, che può essere chiamato quando l'oggetto IndirizzoDAO non è più necessario
+    public void closeConnection() {
+        if (this.connection != null) {
+            try {
+                this.connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

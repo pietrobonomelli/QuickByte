@@ -25,20 +25,12 @@ public class ModificaPiatto extends VBox {
     
     private int idPiatto;
     private String nomeMenu;
-    private PiattoDAO piattoDAO;
 
     public ModificaPiatto() throws SQLException {
         super(10);
         this.setStyle("-fx-padding: 10;");
         this.idPiatto = SessionePiatto.getId();
         this.nomeMenu = SessioneMenu.getNome();
-
-        try (Connection conn = DatabaseConnection.connect()) {
-            piattoDAO = new PiattoDAO();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Errore", "Impossibile connettersi al database.");
-        }
 
         Label titoloLabel = new Label("Modifica Piatto: " + idPiatto); 
 
@@ -74,8 +66,7 @@ public class ModificaPiatto extends VBox {
     }
 
     private void loadPiattoData() throws SQLException {
-            piattoDAO = new PiattoDAO();
-            Piatto piatto = piattoDAO.getPiattoById(idPiatto);
+            Piatto piatto = PiattoDAO.getInstance().getPiattoById(idPiatto);
             if (piatto != null) {
                 prezzoField.setText(piatto.getPrezzo());
                 allergeniField.setText(piatto.getAllergeni());
@@ -86,11 +77,10 @@ public class ModificaPiatto extends VBox {
 
     private void salvaModifiche() {
         try (Connection conn = DatabaseConnection.connect()) {
-            piattoDAO = new PiattoDAO();
             Piatto piatto = new Piatto(idPiatto, "", disponibilitaCheckBox.isSelected(), 
                                        prezzoField.getText(), allergeniField.getText(), 
                                        fotoFile != null ? fotoFile.getAbsolutePath() : null, nomeMenu, 0);
-            piattoDAO.aggiornaPiatto(piatto);
+            PiattoDAO.getInstance().aggiornaPiatto(piatto);
             
             showAlert("Successo", "Modifiche salvate correttamente.");
             tornaAiPiatti(); 

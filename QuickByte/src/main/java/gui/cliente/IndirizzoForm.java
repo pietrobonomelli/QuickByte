@@ -59,8 +59,7 @@ public class IndirizzoForm extends VBox {
 
     private void salvaIndirizzo(Indirizzo indirizzo) {
         try (Connection conn = DatabaseConnection.connect()) {
-            IndirizzoDAO indirizzoDAO = new IndirizzoDAO();
-            indirizzoDAO.aggiungiIndirizzo(indirizzo); // Usa il DAO per salvare l'indirizzo
+            IndirizzoDAO.getInstance().aggiungiIndirizzo(indirizzo); // Usa il DAO per salvare l'indirizzo
             showAlert("Successo", "Indirizzo salvato correttamente!");
             tornaIndietro(); // Torna alla schermata principale del cliente
         } catch (SQLException e) {

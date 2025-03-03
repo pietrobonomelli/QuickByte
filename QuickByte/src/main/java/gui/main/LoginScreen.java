@@ -22,11 +22,8 @@ import sessione.SessioneUtente;
 import java.io.InputStream;
 
 public class LoginScreen extends VBox {
-    private final LoginDAO loginDAO;
 
     public LoginScreen() {
-        this.loginDAO = new LoginDAO();
-
         this.getStyleClass().add("login-container");
         this.setAlignment(Pos.CENTER);
         this.setSpacing(20);
@@ -53,7 +50,7 @@ public class LoginScreen extends VBox {
             String email = emailField.getText();
             String password = passwordField.getText();
 
-            if (loginDAO.verifyUser(email, password)) {
+            if (LoginDAO.getInstance().verifyUser(email, password)) {
                 SessioneUtente.setEmail(email);
                 showAlert(AlertType.INFORMATION, "Login riuscito", "Benvenuto, " + email);
                 switchToMainScreen(email);
@@ -74,7 +71,7 @@ public class LoginScreen extends VBox {
     }
 
     private void switchToMainScreen(String email) {
-        String tipoUtente = loginDAO.getUserType(email);
+        String tipoUtente = LoginDAO.getInstance().getUserType(email);
 
         if (tipoUtente == null) {
             showAlert(AlertType.ERROR, "Errore", "Impossibile determinare il tipo di utente.");

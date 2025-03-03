@@ -73,9 +73,8 @@ public class RegisterScreen extends VBox {
         }
 
         // Controlla se l'email è già in uso
-        UtenteDAO utenteDAO = new UtenteDAO();
-        System.out.println("return del get utente by email: " + utenteDAO.getUtenteByEmail(email));
-        if (utenteDAO.getUtenteByEmail(email) != null) {
+        System.out.println("return del get utente by email: " + UtenteDAO.getInstance().getUtenteByEmail(email));
+        if (UtenteDAO.getInstance().getUtenteByEmail(email) != null) {
             showError("Email già in uso.");
         } else {
             // Crea l'oggetto utente e lo inserisce nel database
@@ -94,7 +93,7 @@ public class RegisterScreen extends VBox {
 
             // Inserisce l'utente nel database tramite il DAO
             if (utente != null) {
-                boolean success = utenteDAO.insertUtente(utente, userType);
+                boolean success = UtenteDAO.getInstance().insertUtente(utente, userType);
                 if (success) {
                     showSuccess("Registrazione avvenuta con successo!");
                     switchToLoginScreen();

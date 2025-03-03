@@ -72,8 +72,7 @@ public class InserisciRistorante extends VBox {
         }
 
         // Utilizza il DAO per inserire il ristorante nel database
-        RistoranteDAO ristoranteDAO = new RistoranteDAO();
-        ristoranteDAO.inserisciRistorante(nome, telefono, indirizzo, emailTitolare);
+        RistoranteDAO.getInstance().inserisciRistorante(nome, telefono, indirizzo, emailTitolare);
 
         // Successo, mostra un messaggio di conferma
         showAlert("Successo", "Ristorante inserito con successo!");

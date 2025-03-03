@@ -13,7 +13,6 @@ import database.DatabaseManager;
 import model.*;
 
 public class UtenteDAOTest {
-    private UtenteDAO utenteDAO;
     private static final String TEST_DB_URL = "jdbc:sqlite::memory:";
     private final Cliente testCliente = new Cliente("test@cliente.com", "pass", "Mario Rossi", "1234567890");
     private final Titolare testTitolare = new Titolare("test@titolare.com", "pass", "Luigi Bianchi", "0987654321");
@@ -36,7 +35,6 @@ public class UtenteDAOTest {
 
     @Before
     public void setUp() {
-        utenteDAO = new UtenteDAO();
         insertTestData();
     }
 
@@ -46,52 +44,52 @@ public class UtenteDAOTest {
     }
 
     private void insertTestData() {
-        utenteDAO.insertUtente(testCliente, "Cliente");
-        utenteDAO.insertUtente(testTitolare, "Titolare");
-        utenteDAO.insertUtente(testCorriere, "Corriere");
+        UtenteDAO.getInstance().insertUtente(testCliente, "Cliente");
+        UtenteDAO.getInstance().insertUtente(testTitolare, "Titolare");
+        UtenteDAO.getInstance().insertUtente(testCorriere, "Corriere");
     }
 
     private void clearTestData() {
-        utenteDAO.deleteUtente(testCliente.getEmail());
-        utenteDAO.deleteUtente(testTitolare.getEmail());
-        utenteDAO.deleteUtente(testCorriere.getEmail());
+        UtenteDAO.getInstance().deleteUtente(testCliente.getEmail());
+        UtenteDAO.getInstance().deleteUtente(testTitolare.getEmail());
+        UtenteDAO.getInstance().deleteUtente(testCorriere.getEmail());
     }
 
     @Test
     public void testGetUtenteByEmail_ExistingUser() {
-        Utente result = utenteDAO.getUtenteByEmail(testCliente.getEmail());
+        Utente result = UtenteDAO.getInstance().getUtenteByEmail(testCliente.getEmail());
         assertNotNull("Dovrebbe trovare l'utente", result);
         assertEquals("Email dovrebbe corrispondere", testCliente.getEmail(), result.getEmail());
     }
 
     @Test
     public void testGetUtenteByEmail_NonExistingUser() {
-        Utente result = utenteDAO.getUtenteByEmail("nonexistent@test.com");
+        Utente result = UtenteDAO.getInstance().getUtenteByEmail("nonexistent@test.com");
         assertNull("Non dovrebbe trovare utenti", result);
     }
 
     @Test
     public void testGetAllUtenti() {
-        List<Utente> utenti = utenteDAO.getAllUtenti();
+        List<Utente> utenti = UtenteDAO.getInstance().getAllUtenti();
         assertTrue("Dovrebbero esserci almeno 3 utenti", utenti.size() >= 3);
     }
 
     @Test
     public void testInsertUtente_Success() {
         Cliente newCliente = new Cliente("new@test.com", "pass", "New User", "0011223344");
-        boolean result = utenteDAO.insertUtente(newCliente, "Cliente");
+        boolean result = UtenteDAO.getInstance().insertUtente(newCliente, "Cliente");
         assertTrue("Inserimento dovrebbe riuscire", result);
         
-        Utente retrieved = utenteDAO.getUtenteByEmail(newCliente.getEmail());
+        Utente retrieved = UtenteDAO.getInstance().getUtenteByEmail(newCliente.getEmail());
         assertNotNull("Utente dovrebbe esistere nel DB", retrieved);
     }
 
     @Test
     public void testDeleteUtente_Success() {
-        boolean result = utenteDAO.deleteUtente(testCorriere.getEmail());
+        boolean result = UtenteDAO.getInstance().deleteUtente(testCorriere.getEmail());
         assertTrue("Cancellazione dovrebbe riuscire", result);
         
-        Utente deleted = utenteDAO.getUtenteByEmail(testCorriere.getEmail());
+        Utente deleted = UtenteDAO.getInstance().getUtenteByEmail(testCorriere.getEmail());
         assertNull("Utente dovrebbe essere cancellato", deleted);
     }
 
@@ -100,10 +98,10 @@ public class UtenteDAOTest {
         String newPassword = "newpass123";
         testCliente.setPassword(newPassword);
         
-        boolean result = utenteDAO.updateUtente(testCliente);
+        boolean result = UtenteDAO.getInstance().updateUtente(testCliente);
         assertTrue("Aggiornamento dovrebbe riuscire", result);
         
-        Utente updated = utenteDAO.getUtenteByEmail(testCliente.getEmail());
+        Utente updated = UtenteDAO.getInstance().getUtenteByEmail(testCliente.getEmail());
         assertEquals("Password dovrebbe essere aggiornata", newPassword, updated.getPassword());
     }
 
@@ -114,7 +112,7 @@ public class UtenteDAOTest {
              ResultSet rs = stmt.executeQuery("SELECT * FROM Utente WHERE email = '" + testCliente.getEmail() + "'")) {
             
             rs.next();
-            Utente result = utenteDAO.creaUtenteDaResultSet(rs);
+            Utente result = UtenteDAO.getInstance().creaUtenteDaResultSet(rs);
             
             assertTrue("Dovrebbe essere un Cliente", result instanceof Cliente);
             assertEquals("Nome dovrebbe corrispondere", testCliente.getNome(), result.getNome());
@@ -133,7 +131,7 @@ public class UtenteDAOTest {
             stmt.setString(5, "TipoSconosciuto");
             stmt.executeUpdate();
             
-            Utente result = utenteDAO.getUtenteByEmail("invalid@test.com");
+            Utente result = UtenteDAO.getInstance().getUtenteByEmail("invalid@test.com");
             assertNull("Dovrebbe restituire null", result);
         }
     }

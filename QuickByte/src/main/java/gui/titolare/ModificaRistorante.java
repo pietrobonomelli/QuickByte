@@ -11,20 +11,12 @@ public class ModificaRistorante extends VBox {
     private TextField nomeField, telefonoField, indirizzoField;
     private String emailTitolare = SessioneUtente.getEmail();
     private String nomeRistorante;
-    private RistoranteDAO ristoranteDAO;
 
     public ModificaRistorante(String nomeRistorante) {
         super(10);
         this.nomeRistorante = nomeRistorante;
         this.setStyle("-fx-padding: 10;");
-
-        try {
-            this.ristoranteDAO = new RistoranteDAO();
-        } catch (SQLException e) {
-            showAlert("Errore", "Errore di connessione al database.");
-            return;
-        }
-
+        
         // Titolo
         Label titolo = new Label("Modifica Ristorante: " + nomeRistorante);
 
@@ -50,7 +42,7 @@ public class ModificaRistorante extends VBox {
 
     private void caricaDatiRistorante() {
         try {
-            Ristorante ristorante = ristoranteDAO.getRistoranteByNome(nomeRistorante, emailTitolare);
+            Ristorante ristorante = RistoranteDAO.getInstance().getRistoranteByNome(nomeRistorante, emailTitolare);
             if (ristorante != null) {
                 nomeField.setText(ristorante.getNome());
                 telefonoField.setText(ristorante.getTelefono());
@@ -76,7 +68,7 @@ public class ModificaRistorante extends VBox {
 
         try {
             Ristorante ristorante = new Ristorante(nuovoNome, nuovoTelefono, nuovoIndirizzo, emailTitolare);
-            boolean success = ristoranteDAO.aggiornaRistorante(ristorante ,nomeRistorante);
+            boolean success = RistoranteDAO.getInstance().aggiornaRistorante(ristorante ,nomeRistorante);
             
             if (success) {
                 showAlert("Successo", "Ristorante modificato con successo!");

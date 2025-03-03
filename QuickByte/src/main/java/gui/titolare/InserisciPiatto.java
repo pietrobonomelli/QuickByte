@@ -70,9 +70,8 @@ public class InserisciPiatto extends VBox {
         }
         
         try (Connection conn = DatabaseConnection.connect()) {
-            PiattoDAO piattoDAO = new PiattoDAO();
             Piatto piatto = new Piatto(0, nome, disponibilita, prezzo, allergeni, foto, nomeMenu, idRistorante);
-            piattoDAO.aggiungiPiatto(piatto);
+            PiattoDAO.getInstance().aggiungiPiatto(piatto);
             tornaAiPiatti();
         } catch (SQLException e) {
             e.printStackTrace();

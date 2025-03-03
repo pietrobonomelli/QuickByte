@@ -11,11 +11,8 @@ import java.sql.SQLException;
 
 public class PiattoCliente extends VBox {
 	
-	private PiattoDAO piattoDao;
-
     public PiattoCliente() throws SQLException {
         super(10);
-        this.piattoDao = new PiattoDAO();
         int idPiatto = SessionePiatto.getId();  // Recupera l'idPiatto dalla sessione
         this.setStyle("-fx-padding: 10;");
         loadPiatto(idPiatto);
@@ -24,7 +21,7 @@ public class PiattoCliente extends VBox {
     private void loadPiatto(int idPiatto) {
         try {
             // Recupera il piatto tramite il PiattoDAO
-            Piatto piatto = this.piattoDao.getPiattoById(idPiatto);  // Ottieni direttamente il piatto dal DAO
+            Piatto piatto = PiattoDAO.getInstance().getPiattoById(idPiatto);  // Ottieni direttamente il piatto dal DAO
 
             if (piatto != null) {
                 // Aggiungi un titolo per il piatto

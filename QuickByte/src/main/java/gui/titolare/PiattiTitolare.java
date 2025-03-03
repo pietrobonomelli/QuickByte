@@ -17,13 +17,11 @@ public class PiattiTitolare extends VBox {
     private VBox container;
     private String nomeMenu;
     private int idPiatto;
-    private PiattoDAO piattoDAO;
 
     public PiattiTitolare() throws SQLException {
         super(10);
         this.nomeMenu = SessioneMenu.getNome();
         this.idPiatto = SessionePiatto.getId();
-        this.piattoDAO = new PiattoDAO();
         this.setStyle("-fx-padding: 10;");
         container = new VBox(10);
         loadPiatti();
@@ -45,7 +43,7 @@ public class PiattiTitolare extends VBox {
     private void loadPiatti() {
         try {
             // Modifica: ottenere piatti dal database tramite DAO
-            List<Piatto> piatti = piattoDAO.getPiattiByMenuAndIdRistorante(nomeMenu, SessioneRistorante.getId());
+            List<Piatto> piatti = PiattoDAO.getInstance().getPiattiByMenuAndIdRistorante(nomeMenu, SessioneRistorante.getId());
             
             for (Piatto piatto : piatti) {
                 HBox piattoBox = new HBox(10);
@@ -61,7 +59,6 @@ public class PiattiTitolare extends VBox {
 					try {
 						switchToModificaPiatto();
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				});
@@ -78,7 +75,7 @@ public class PiattiTitolare extends VBox {
 
     private void eliminaPiatto(int idPiatto) {
         try {
-            piattoDAO.rimuoviPiatto(idPiatto);
+            PiattoDAO.getInstance().rimuoviPiatto(idPiatto);
             container.getChildren().clear();
             loadPiatti();
         } catch (SQLException e) {

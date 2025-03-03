@@ -17,8 +17,6 @@ public class MenuTitolare extends VBox {
     private VBox container;
     private int ristorante;
 
-    private OrdineDAO ordineDAO = new OrdineDAO();
-
     public MenuTitolare() {
         super(10);
         this.ristorante = SessioneRistorante.getId();
@@ -47,8 +45,7 @@ public class MenuTitolare extends VBox {
 
     private void loadMenu() {
         try (Connection conn = DatabaseConnection.connect()) {
-            MenuDAO menuDAO = new MenuDAO();
-            List<Menu> menuList = menuDAO.getMenuByRistorante(ristorante);
+            List<Menu> menuList = MenuDAO.getInstance().getMenuByRistorante(ristorante);
             
             for (Menu menu : menuList) {
                 String nomeMenu = menu.getNome();
@@ -96,7 +93,7 @@ public class MenuTitolare extends VBox {
             Label ordiniLabel = new Label("Ordini:");
             ordiniContainer.getChildren().add(ordiniLabel);
 
-            List<Ordine> ordiniList = ordineDAO.getOrdiniByIdRistorante(ristorante);
+            List<Ordine> ordiniList = OrdineDAO.getInstance().getOrdiniByIdRistorante(ristorante);
 
             for (Ordine ordine : ordiniList) {
                 HBox ordineBox = new HBox(10);
@@ -119,7 +116,7 @@ public class MenuTitolare extends VBox {
 
     
     private void accettaOrdine(Ordine ordine) {
-        ordineDAO.aggiornaStatoOrdine(ordine.getIdOrdine(), StatoOrdine.ACCETTATO.name());
+        OrdineDAO.getInstance().aggiornaStatoOrdine(ordine.getIdOrdine(), StatoOrdine.ACCETTATO.name());
         showAlert("Successo", "Hai accettato l'ordine " + ordine.getIdOrdine());
         loadOrdini();  // Ricarica solo gli ordini
    }
@@ -141,8 +138,7 @@ public class MenuTitolare extends VBox {
 
     private void eliminaMenu(String nomeMenu) {
         try (Connection conn = DatabaseConnection.connect()) {
-            MenuDAO menuDAO = new MenuDAO();
-            menuDAO.rimuoviMenu(nomeMenu, ristorante);
+            MenuDAO.getInstance().rimuoviMenu(nomeMenu, ristorante);
             showAlert("Successo", "Menu eliminato con successo.");
             container.getChildren().clear();
             loadMenu();
