@@ -1,6 +1,7 @@
 package gui.main;
 
 import dao.UtenteDAO;
+import database.PopolaDatabase;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -47,8 +48,12 @@ public class RegisterScreen extends VBox {
         Button tornaButton = new Button("Torna al Login");
         tornaButton.setOnAction(e -> switchToLoginScreen());
 
-        getChildren().addAll(titleLabel, emailField, nameField, phoneField, passwordField, userTypeComboBox, registerButton, tornaButton);
+        Button popolaDB = new Button("Popola il database");
+        popolaDB.setOnAction(e -> PopolaDatabase.popolaDatabase());
+
+        getChildren().addAll(titleLabel, emailField, nameField, phoneField, passwordField, userTypeComboBox, registerButton, tornaButton, popolaDB);
     }
+    
 
     private void handleRegistration() {
         String email = emailField.getText().trim();

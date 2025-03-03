@@ -1,5 +1,8 @@
 package gui.titolare;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import dao.*;
@@ -87,39 +90,62 @@ public class MenuTitolare extends VBox {
     
     
     private void loadOrdini() {
-        try (Connection conn = DatabaseConnection.connect()) {
-            VBox ordiniContainer = new VBox(10);  // Creazione del container per gli ordini
-            ordiniContainer.setStyle("-fx-padding: 10;");
-            Label ordiniLabel = new Label("Ordini:");
-            ordiniContainer.getChildren().add(ordiniLabel);
+        TableView<Ordine> table = new TableView<>();
+        table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-            List<Ordine> ordiniList = OrdineDAO.getInstance().getOrdiniByIdRistorante(ristorante);
 
-            for (Ordine ordine : ordiniList) {
-                HBox ordineBox = new HBox(10);
-                ordineBox.setStyle("-fx-padding: 10;");
-                Label ordineInfo = new Label("Ordine ID: " + ordine.getIdOrdine() + " - Costo: " + ordine.getCosto() + "€");
-                Button accettaButton = new Button("Accetta");
+        // Creazione delle colonne
+        TableColumn<Ordine, String> colOrdine = new TableColumn<>("Ordine");
+        colOrdine.setCellValueFactory(data -> new SimpleStringProperty("Ordine " + data.getValue().getIdOrdine()));
 
-                accettaButton.setOnAction(e -> accettaOrdine(ordine));
+        TableColumn<Ordine, Integer> colId = new TableColumn<>("ID Ordine");
+        colId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdOrdine()).asObject());
 
-                ordineBox.getChildren().addAll(ordineInfo, accettaButton);
-                ordiniContainer.getChildren().add(ordineBox);  // Aggiungi l'ordine al container
+        TableColumn<Ordine, Double> colCosto = new TableColumn<>("Costo");
+        colCosto.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCosto()).asObject());
+
+        TableColumn<Ordine, String> colStato = new TableColumn<>("Stato");
+        colStato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato()));
+
+        TableColumn<Ordine, Void> colAzione = new TableColumn<>("");
+        colAzione.setCellFactory(param -> new TableCell<Ordine, Void>() {
+            private final Button accettaButton = new Button("Accetta");
+
+            {
+                accettaButton.setOnAction(event -> {
+                    Ordine ordine = getTableView().getItems().get(getIndex());
+                    accettaOrdine(ordine);
+                });
             }
-            this.getChildren().add(ordiniContainer);  // Aggiungi ordiniContainer solo una volta alla scena
-            System.out.println("OrdiniContainer aggiunto alla GUI");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Errore", "Errore di connessione al database.");
-        }
-    }
 
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || !getTableView().getItems().get(getIndex()).getStato().equals(StatoOrdine.PENDENTE.name())) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(accettaButton);
+                }
+            }
+        });
+
+
+        table.getColumns().addAll(colOrdine, colId, colCosto, colStato, colAzione);
+
+        // Caricamento dei dati
+        List<Ordine> ordiniList = OrdineDAO.getInstance().getOrdiniByIdRistorante(ristorante);
+        table.getItems().setAll(ordiniList);
+
+        // Sostituisci il VBox con la TableView
+        this.getChildren().clear();
+        this.getChildren().add(table);
+    }
     
-    private void accettaOrdine(Ordine ordine) {
+    public void accettaOrdine(Ordine ordine) {
         OrdineDAO.getInstance().aggiornaStatoOrdine(ordine.getIdOrdine(), StatoOrdine.ACCETTATO.name());
         showAlert("Successo", "Hai accettato l'ordine " + ordine.getIdOrdine());
         loadOrdini();  // Ricarica solo gli ordini
-   }
+    }
 
     
 
