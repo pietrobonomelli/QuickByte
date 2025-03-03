@@ -7,7 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import dao.*;
 import model.*;
-import sessione.*;
+import sessione.SessioneUtente;
+import sessione.SessioneRistorante;
 import java.sql.SQLException;
 import gui.main.*;
 
