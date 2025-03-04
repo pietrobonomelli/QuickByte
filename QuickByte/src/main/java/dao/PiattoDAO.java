@@ -51,19 +51,49 @@ public class PiattoDAO {
 
 	// Metodo per aggiungere un piatto
 	public void aggiungiPiatto(Piatto piatto) throws SQLException {
-		String insertQuery = "INSERT INTO Piatto (nome, disponibile, prezzo, allergeni, foto, nomeMenu, idRistorante) " +
-				"VALUES (?, ?, ?, ?, ?, ?, ?)";
-		try (PreparedStatement ps = connection.prepareStatement(insertQuery)) {
-			ps.setString(1, piatto.getNome());
-			ps.setInt(2, piatto.isDisponibile() ? 1 : 0);
-			ps.setString(3, piatto.getPrezzo());
-			ps.setString(4, piatto.getAllergeni());
-			ps.setString(5, piatto.getFoto());
-			ps.setString(6, piatto.getNomeMenu());
-			ps.setInt(7, piatto.getIdRistorante());
-			ps.executeUpdate();
-		}
+	    // Inizia una transazione
+	    connection.setAutoCommit(false);
+	    
+	    try {
+	        // Verifica che l'idRistorante esista
+	        String checkRistoranteQuery = "SELECT 1 FROM Ristorante WHERE idRistorante = ?";
+	        try (PreparedStatement checkPs = connection.prepareStatement(checkRistoranteQuery)) {
+	            checkPs.setInt(1, piatto.getIdRistorante());
+	            try (ResultSet rs = checkPs.executeQuery()) {
+	                if (!rs.next()) {
+	                    throw new SQLException("Ristorante con ID " + piatto.getIdRistorante() + " non esistente.");
+	                }
+	            }
+	        }
+
+	        // Inserisci il piatto se l'idRistorante è valido
+	        String insertQuery = "INSERT INTO Piatto (nome, disponibile, prezzo, allergeni, foto, nomeMenu, idRistorante) " +
+	                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+	        try (PreparedStatement ps = connection.prepareStatement(insertQuery)) {
+	            ps.setString(1, piatto.getNome());
+	            ps.setInt(2, piatto.isDisponibile() ? 1 : 0);
+	            ps.setString(3, piatto.getPrezzo());
+	            ps.setString(4, piatto.getAllergeni());
+	            ps.setString(5, piatto.getFoto());
+	            ps.setString(6, piatto.getNomeMenu());
+	            ps.setInt(7, piatto.getIdRistorante());
+	            ps.executeUpdate();
+	        }
+
+	        // Commetti la transazione
+	        connection.commit();
+	    } catch (SQLException e) {
+	        // In caso di errore, annulla la transazione
+	        connection.rollback();
+	        throw new SQLException("Errore durante l'aggiunta del piatto: " + e.getMessage(), e);
+	    } finally {
+	        // Riattiva la modalità di auto-commit
+	        connection.setAutoCommit(true);
+	    }
 	}
+
+
+
 
 	// Metodo per ottenere tutti i piatti di un menu per un determinato ristorante
 	public List<Piatto> getPiattiByMenuAndIdRistorante(String nomeMenu, int idRistorante) throws SQLException {
@@ -116,33 +146,62 @@ public class PiattoDAO {
 
 	// Metodo per aggiungere un piatto al carrello
 	public void aggiungiPiattoAlCarrello(int idPiatto, String emailCliente) throws SQLException {
-		String checkCarrelloQuery = "SELECT quantitaPiatti FROM Carrello WHERE idPiatto = ? AND emailUtente = ?";
-		String updateCarrelloQuery = "UPDATE Carrello SET quantitaPiatti = quantitaPiatti + 1 WHERE idPiatto = ? AND emailUtente = ?";
-		String insertCarrelloQuery = "INSERT INTO Carrello (idPiatto, emailUtente, quantitaPiatti) VALUES (?, ?, ?)";
+	    // Inizia una transazione
+	    connection.setAutoCommit(false);
+	    
+	    try {
+	        // Verifica che l'email del cliente esista
+	        String checkClienteQuery = "SELECT 1 FROM Utente WHERE email = ?";
+	        try (PreparedStatement checkPs = connection.prepareStatement(checkClienteQuery)) {
+	            checkPs.setString(1, emailCliente);
+	            try (ResultSet rs = checkPs.executeQuery()) {
+	                if (!rs.next()) {
+	                    throw new SQLException("Cliente con email " + emailCliente + " non esistente.");
+	                }
+	            }
+	        }
 
-		try (PreparedStatement checkPs = connection.prepareStatement(checkCarrelloQuery)) {
-			checkPs.setInt(1, idPiatto);
-			checkPs.setString(2, emailCliente);
-			ResultSet rs = checkPs.executeQuery();
-
-			if (rs.next()) {
-				// Il piatto è già presente, quindi aggiorniamo la quantità
-				try (PreparedStatement updatePs = connection.prepareStatement(updateCarrelloQuery)) {
-					updatePs.setInt(1, idPiatto);
-					updatePs.setString(2, emailCliente);
-					updatePs.executeUpdate();
-				}
-			} else {
-				// Il piatto non è presente, quindi lo inseriamo nel carrello
-				try (PreparedStatement insertPs = connection.prepareStatement(insertCarrelloQuery)) {
-					insertPs.setInt(1, idPiatto);
-					insertPs.setString(2, emailCliente);
-					insertPs.setInt(3, 1); // Quantità iniziale di 1
-					insertPs.executeUpdate();
-				}
-			}
-		}
+	        // Verifica se il piatto è già presente nel carrello
+	        String checkCarrelloQuery = "SELECT quantitaPiatti FROM Carrello WHERE idPiatto = ? AND emailUtente = ?";
+	        String updateCarrelloQuery = "UPDATE Carrello SET quantitaPiatti = quantitaPiatti + 1 WHERE idPiatto = ? AND emailUtente = ?";
+	        String insertCarrelloQuery = "INSERT INTO Carrello (idPiatto, emailUtente, quantitaPiatti) VALUES (?, ?, ?)";
+	        
+	        try (PreparedStatement checkPs = connection.prepareStatement(checkCarrelloQuery)) {
+	            checkPs.setInt(1, idPiatto);
+	            checkPs.setString(2, emailCliente);
+	            try (ResultSet rs = checkPs.executeQuery()) {
+	                if (rs.next()) {
+	                    // Il piatto è già presente nel carrello, aggiorniamo la quantità
+	                    try (PreparedStatement updatePs = connection.prepareStatement(updateCarrelloQuery)) {
+	                        updatePs.setInt(1, idPiatto);
+	                        updatePs.setString(2, emailCliente);
+	                        updatePs.executeUpdate();
+	                    }
+	                } else {
+	                    // Il piatto non è presente nel carrello, lo inseriamo
+	                    try (PreparedStatement insertPs = connection.prepareStatement(insertCarrelloQuery)) {
+	                        insertPs.setInt(1, idPiatto);
+	                        insertPs.setString(2, emailCliente);
+	                        insertPs.setInt(3, 1); // Quantità iniziale di 1
+	                        insertPs.executeUpdate();
+	                    }
+	                }
+	            }
+	        }
+	        
+	        // Commetti la transazione
+	        connection.commit();
+	    } catch (SQLException e) {
+	        // In caso di errore, annulla la transazione
+	        connection.rollback();
+	        throw e;
+	    } finally {
+	        // Riattiva la modalità di auto-commit
+	        connection.setAutoCommit(true);
+	    }
 	}
+
+
 
 
 

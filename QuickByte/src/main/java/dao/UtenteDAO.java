@@ -61,22 +61,32 @@ public class UtenteDAO {
 		return utenti;
 	}
 
-	public boolean insertUtente(Utente utente, String tipoUtente) {
-		String query = "INSERT INTO Utente (email, password, nome, telefono, tipoUtente) VALUES (?, ?, ?, ?, ?)";
+	public boolean insertUtente(Utente utente, String tipoUtente) throws SQLException {
+	    if (!isValidUserType(tipoUtente)) {
+	        throw new SQLException("Tipo utente non valido: " + tipoUtente);
+	    }
+	    if (getUtenteByEmail(utente.getEmail()) != null) {
+	        System.out.println("L'utente con questa email esiste già");
+	        return false;
+	    }
 
-		try (PreparedStatement stmt = connection.prepareStatement(query)) {
+	    String query = "INSERT INTO Utente (email, password, nome, telefono, tipoUtente) VALUES (?, ?, ?, ?, ?)";
+	    try (PreparedStatement stmt = connection.prepareStatement(query)) {
 
-			stmt.setString(1, utente.getEmail());
-			stmt.setString(2, utente.getPassword());
-			stmt.setString(3, utente.getNome());
-			stmt.setString(4, utente.getTelefono());
-			stmt.setString(5, tipoUtente);
+	        stmt.setString(1, utente.getEmail());
+	        stmt.setString(2, utente.getPassword());
+	        stmt.setString(3, utente.getNome());
+	        stmt.setString(4, utente.getTelefono());
+	        stmt.setString(5, tipoUtente);
 
-			return stmt.executeUpdate() > 0;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
+	        return stmt.executeUpdate() > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw e; 
+	    }
+	}
+	private boolean isValidUserType(String tipoUtente) {
+	    return "Cliente".equals(tipoUtente) || "Titolare".equals(tipoUtente) || "Corriere".equals(tipoUtente);
 	}
 
 	public boolean deleteUtente(String email) {

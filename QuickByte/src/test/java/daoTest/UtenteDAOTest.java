@@ -13,29 +13,25 @@ import database.DatabaseManager;
 import model.*;
 
 public class UtenteDAOTest {
-    private static final String TEST_DB_URL = "jdbc:sqlite::memory:";
+    private static final String TEST_DB_URL = "jdbc:sqlite:src/main/resources/database_embedded.db"; // Imposta il percorso del tuo database reale
+
     private final Cliente testCliente = new Cliente("test@cliente.com", "pass", "Mario Rossi", "1234567890");
     private final Titolare testTitolare = new Titolare("test@titolare.com", "pass", "Luigi Bianchi", "0987654321");
     private final Corriere testCorriere = new Corriere("test@corriere.com", "pass", "Anna Verdi", "1122334455");
-    
-    @Before
-    public void setupDatabase() {
-        DatabaseManager.createTables();  // Assicura che le tabelle esistano prima del test
-        DatabaseManager.printExistingTables();  // Controlla se la tabella Utente è presente
-    }
 
     @BeforeClass
     public static void initDatabase() throws Exception {
-        // Configura il database in memoria per i test
+
         DatabaseConnection.setDatabaseUrl(TEST_DB_URL);
-        
         new DatabaseManager();
         DatabaseManager.createTables();
     }
 
     @Before
-    public void setUp() {
-        insertTestData();
+    public void setupDatabase() throws SQLException {
+
+        DatabaseManager.printExistingTables();
+        insertTestData(); 
     }
 
     @After
@@ -43,7 +39,7 @@ public class UtenteDAOTest {
         clearTestData();
     }
 
-    private void insertTestData() {
+    private void insertTestData() throws SQLException {
         UtenteDAO.getInstance().insertUtente(testCliente, "Cliente");
         UtenteDAO.getInstance().insertUtente(testTitolare, "Titolare");
         UtenteDAO.getInstance().insertUtente(testCorriere, "Corriere");
@@ -75,14 +71,29 @@ public class UtenteDAOTest {
     }
 
     @Test
-    public void testInsertUtente_Success() {
-        Cliente newCliente = new Cliente("new@test.com", "pass", "New User", "0011223344");
-        boolean result = UtenteDAO.getInstance().insertUtente(newCliente, "Cliente");
-        assertTrue("Inserimento dovrebbe riuscire", result);
+    public void testInsertUtente_Success() throws SQLException {
+       
+        String emailCliente = "cliente" + System.currentTimeMillis() + "@example.com";
+        String emailTitolare = "titolare" + System.currentTimeMillis() + "@example.com";
+        String emailCorriere = "corriere" + System.currentTimeMillis() + "@example.com";
         
-        Utente retrieved = UtenteDAO.getInstance().getUtenteByEmail(newCliente.getEmail());
-        assertNotNull("Utente dovrebbe esistere nel DB", retrieved);
+        Utente cliente = new Cliente(emailCliente, "password", "Nome Cliente", "1234567890");
+        Utente titolare = new Titolare(emailTitolare, "password", "Nome Titolare", "1234567891");
+        Utente corriere = new Corriere(emailCorriere, "password", "Nome Corriere", "1234567892");
+
+        boolean resultCliente = UtenteDAO.getInstance().insertUtente(cliente, "Cliente");
+        boolean resultTitolare = UtenteDAO.getInstance().insertUtente(titolare, "Titolare");
+        boolean resultCorriere = UtenteDAO.getInstance().insertUtente(corriere, "Corriere");
+      
+        System.out.println("Result Cliente: " + resultCliente);
+        System.out.println("Result Titolare: " + resultTitolare);
+        System.out.println("Result Corriere: " + resultCorriere);
+
+        assertTrue("Inserimento Cliente fallito", resultCliente);
+        assertTrue("Inserimento Titolare fallito", resultTitolare);
+        assertTrue("Inserimento Corriere fallito", resultCorriere);
     }
+
 
     @Test
     public void testDeleteUtente_Success() {

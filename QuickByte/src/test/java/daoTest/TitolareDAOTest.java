@@ -2,13 +2,11 @@ package daoTest;
 
 import static org.junit.Assert.*;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 import org.junit.*;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-
 import dao.TitolareDAO;
 import database.DatabaseConnection;
 import sessione.SessioneUtente;
@@ -19,38 +17,53 @@ public class TitolareDAOTest {
 
     @Before
     public void setupDatabase() throws Exception {
-        // Simuliamo una connessione a un database in-memory H2
+    
         conn = DatabaseConnection.connect();
         Statement stmt = conn.createStatement();
 
-        // Creazione della tabella di test
+      
+        stmt.execute("DROP TABLE IF EXISTS Ristorante");
+
+        
         stmt.execute("CREATE TABLE Ristorante (idRistorante INT PRIMARY KEY, emailTitolare VARCHAR(255))");
 
-        // Inseriamo alcuni dati di test
+     
         stmt.execute("INSERT INTO Ristorante (idRistorante, emailTitolare) VALUES (1, 'test@example.com')");
         stmt.execute("INSERT INTO Ristorante (idRistorante, emailTitolare) VALUES (2, 'test@example.com')");
         stmt.execute("INSERT INTO Ristorante (idRistorante, emailTitolare) VALUES (3, 'altro@example.com')");
     }
 
+
     @Test
-    public void testGetRistorantiByEmail() {
-        try (MockedStatic<SessioneUtente> mockedSession = Mockito.mockStatic(SessioneUtente.class)) {
-            // Simuliamo che l'utente loggato sia "test@example.com"
-            mockedSession.when(SessioneUtente::getEmail).thenReturn("test@example.com");
+    public void testGetRistorantiByEmail() throws SQLException {
+  
+        SessioneUtente.setEmail("test@example.com");
 
-            List<Integer> ristoranti = TitolareDAO.getInstance().getRistorantiByEmail();
+        List<Integer> ristoranti = TitolareDAO.getInstance().getRistorantiByEmail();
 
-            // Verifica che il metodo restituisca esattamente i due ristoranti dell'utente test@example.com
-            assertEquals(2, ristoranti.size());
-            assertTrue(ristoranti.contains(1));
-            assertTrue(ristoranti.contains(2));
-        }
+        assertEquals("Il numero di ristoranti restituiti non è corretto.", 2, ristoranti.size());
+        assertTrue("Il ristorante con ID 1 non è stato trovato.", ristoranti.contains(1));
+        assertTrue("Il ristorante con ID 2 non è stato trovato.", ristoranti.contains(2));
+        assertFalse("Il ristorante con ID 3 non dovrebbe essere incluso.", ristoranti.contains(3));
+    }
+
+    @Test
+    public void testNoRistorantiForOtherUser() throws SQLException {
+    
+        SessioneUtente.setEmail("altro@example.com");
+
+       
+        List<Integer> ristoranti = TitolareDAO.getInstance().getRistorantiByEmail();
+
+       
+        assertEquals("Il numero di ristoranti restituiti per altro@example.com non è corretto.", 1, ristoranti.size());
+        assertTrue("Il ristorante con ID 3 non è stato trovato.", ristoranti.contains(3));
     }
 
     @After
     public void tearDownDatabase() throws Exception {
         Statement stmt = conn.createStatement();
-        stmt.execute("DROP TABLE Ristorante"); // Pulisce il database di test
+        stmt.execute("DROP TABLE Ristorante");
         conn.close();
     }
 }
