@@ -1,5 +1,7 @@
 package gui.main;
 
+import java.sql.SQLException;
+
 import dao.UtenteDAO;
 import database.PopolaDatabase;
 import javafx.geometry.Pos;
@@ -43,7 +45,14 @@ public class RegisterScreen extends VBox {
         
         registerButton = new Button("Registrati");
         registerButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
-        registerButton.setOnAction(e -> handleRegistration());
+        registerButton.setOnAction(e -> {
+			try {
+				handleRegistration();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
         
         Button tornaButton = new Button("Torna al Login");
         tornaButton.setOnAction(e -> switchToLoginScreen());
@@ -55,7 +64,7 @@ public class RegisterScreen extends VBox {
     }
     
 
-    private void handleRegistration() {
+    private void handleRegistration() throws SQLException {
         String email = emailField.getText().trim();
         String name = nameField.getText().trim();
         String phone = phoneField.getText().trim();
