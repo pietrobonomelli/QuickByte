@@ -97,13 +97,12 @@ public class OrdineDAO {
 		String stato = rs.getString("stato");
 		double costo = rs.getDouble("costo");
 		String dataOraOrdine = rs.getString("dataOraOrdine");
-		int pagato = rs.getInt("pagato");
 		String indirizzo = rs.getString("indirizzo");
 		String emailCliente = rs.getString("emailCliente");
 		String emailCorriere = rs.getString("emailCorriere");
 		int idRistorante = rs.getInt("idRistorante");
 
-		return new Ordine(idOrdine, stato, costo, dataOraOrdine, pagato, indirizzo, emailCliente, emailCorriere, idRistorante);
+		return new Ordine(idOrdine, stato, costo, dataOraOrdine, indirizzo, emailCliente, emailCorriere, idRistorante);
 	}
 
 
@@ -167,7 +166,7 @@ public class OrdineDAO {
 
 
 	public boolean registraOrdine(String emailUtente, String indirizzo) {
-		String insertOrdineSQL = "INSERT INTO Ordine (emailCliente, dataOraOrdine, stato, pagato, indirizzo, costo, idRistorante) VALUES (?, ?, ?, 1, ?, ?, ?)";
+		String insertOrdineSQL = "INSERT INTO Ordine (emailCliente, dataOraOrdine, stato, indirizzo, costo, idRistorante) VALUES (?, ?, ?, ?, ?, ?)";
 		String insertDettagliSQL = "INSERT INTO DettaglioOrdine (idOrdine, idPiatto, quantita) SELECT ?, idPiatto, quantitaPiatti FROM Carrello WHERE emailUtente = ?";
 		String deleteCarrelloSQL = "DELETE FROM Carrello WHERE emailUtente = ?";
 
