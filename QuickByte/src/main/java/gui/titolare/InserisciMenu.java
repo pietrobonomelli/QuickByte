@@ -24,16 +24,22 @@ public class InserisciMenu extends VBox {
         // Usa il DAO per ottenere il nome del ristorante
         String nomeRistorante = getNomeRistorante(idRistorante);
         
+        Label titoloLabel = new Label("INSERISCI NUOVO MENU");
+        titoloLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        
         nomeRistoranteLabel = new Label("Ristorante: " + nomeRistorante);
         Label nomeMenuLabel = new Label("Nome Menu:");
         nomeMenuField = new TextField();
+        
         Button inserisciButton = new Button("Inserisci Menu");
         inserisciButton.setOnAction(e -> inserisciMenu());
 
         Button tornaButton = new Button("Torna ai menu");
         tornaButton.setOnAction(e -> switchToMenuTitolare());
-
-        VBox formContainer = new VBox(10, nomeRistoranteLabel, nomeMenuLabel, nomeMenuField, inserisciButton, tornaButton);
+        
+        HBox buttonContainer = new HBox(10, inserisciButton, tornaButton);
+        
+        VBox formContainer = new VBox(10, titoloLabel, nomeRistoranteLabel, nomeMenuLabel, nomeMenuField, buttonContainer);
         this.getChildren().add(formContainer);
     }
 

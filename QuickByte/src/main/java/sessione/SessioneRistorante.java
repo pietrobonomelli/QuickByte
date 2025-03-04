@@ -11,3 +11,4 @@ public class SessioneRistorante {
         SessioneRistorante.id = id;
     }
 }
+

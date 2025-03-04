@@ -1,9 +1,13 @@
 package dao;
 
 import database.DatabaseConnection;
-import sessione.*;
+
 import model.Ordine;
 import model.StatoOrdine;
+import sessione.SessioneRistorante;
+import sessione.SessioneCarrello;
+
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -153,7 +157,6 @@ public class OrdineDAO {
 		String query = "UPDATE Ordine SET stato = ? WHERE idOrdine = ?";
 
 		try (PreparedStatement stmt = connection.prepareStatement(query)) {
-
 			stmt.setString(1, nuovoStato);
 			stmt.setInt(2, idOrdine);
 

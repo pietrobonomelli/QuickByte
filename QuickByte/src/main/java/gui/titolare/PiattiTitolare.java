@@ -50,7 +50,7 @@ public class PiattiTitolare extends VBox {
 
     private void loadPiatti() {
         try {
-            // Modifica: ottenere piatti dal database tramite DAO
+            // Ottenere piatti dal database tramite DAO
             List<Piatto> piatti = PiattoDAO.getInstance().getPiattiByMenuAndIdRistorante(nomeMenu, SessioneRistorante.getId());
             
             // Creazione della TableView per i piatti
@@ -60,6 +60,15 @@ public class PiattiTitolare extends VBox {
             // Creazione delle colonne
             TableColumn<Piatto, String> colNomePiatto = new TableColumn<>("Nome Piatto");
             colNomePiatto.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
+
+            TableColumn<Piatto, String> colPrezzoPiatto = new TableColumn<>("Prezzo");
+            colPrezzoPiatto.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPrezzo()));
+
+            TableColumn<Piatto, String> colAllergeni = new TableColumn<>("Allergeni");
+            colAllergeni.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAllergeni()));
+
+            TableColumn<Piatto, String> colDisponibile = new TableColumn<>("Disponibilità");
+            colDisponibile.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isDisponibile() ? "✅" : "❌"));
 
             TableColumn<Piatto, Void> colModifica = new TableColumn<>("Modifica");
             colModifica.setCellFactory(param -> new TableCell<Piatto, Void>() {
@@ -111,7 +120,7 @@ public class PiattiTitolare extends VBox {
             });
 
             // Aggiungere le colonne alla TableView
-            tablePiatti.getColumns().addAll(colNomePiatto, colModifica, colElimina);
+            tablePiatti.getColumns().addAll(colNomePiatto, colPrezzoPiatto, colAllergeni, colDisponibile, colModifica, colElimina);
 
             // Popolare la tabella con i piatti
             ObservableList<Piatto> piattiList = FXCollections.observableArrayList(piatti);
@@ -147,7 +156,7 @@ public class PiattiTitolare extends VBox {
     }
 
     private void switchToMenuTitolare() {
-        MenuTitolare MenuScreen = new MenuTitolare(); // Da sostituire con la gestione corretta
+        MenuTitolare MenuScreen = new MenuTitolare();
         this.getScene().setRoot(MenuScreen);
     }
 

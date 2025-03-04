@@ -14,7 +14,6 @@ import java.sql.SQLException;
 public class InserisciPiatto extends VBox {
     private TextField nomeField, prezzoField, allergeniField, fotoField;
     private CheckBox disponibilitaCheckBox;
-    private Label nomeMenuLabel;
     private String nomeMenu;
     private int idRistorante;
 
@@ -24,13 +23,18 @@ public class InserisciPiatto extends VBox {
         this.idRistorante = SessioneRistorante.getId();
         this.setStyle("-fx-padding: 10;");
         
-        Label titolo = new Label("Inserisci nuovo piatto");
+        Label titolo = new Label("Inserisci un nuovo piatto nel menu: " + nomeMenu);
+        titolo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+        
+        Label nomeLabel = new Label("Nome del piatto:");
         nomeField = new TextField();
         nomeField.setPromptText("Nome del piatto");
         
+        Label prezzoLabel = new Label("Prezzo:");
         prezzoField = new TextField();
         prezzoField.setPromptText("Prezzo");
         
+        Label allergeniLabel = new Label("Allergeni:");
         allergeniField = new TextField();
         allergeniField.setPromptText("Allergeni");
         
@@ -39,21 +43,21 @@ public class InserisciPiatto extends VBox {
         fotoField = new TextField();
         fotoField.setPromptText("Foto");
         
-        nomeMenuLabel = new Label("Menu: " + nomeMenu);
-        
         Button inserisciButton = new Button("Inserisci Piatto");
         inserisciButton.setOnAction(e -> inserisciPiatto());
         
         Button tornaIndietroButton = new Button("Torna ai Piatti");
         tornaIndietroButton.setOnAction(e -> {
-			try {
-				tornaAiPiatti();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		});
+            try {
+                tornaAiPiatti();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        });
         
-        this.getChildren().addAll(titolo, nomeField, prezzoField, allergeniField, disponibilitaCheckBox, fotoField, nomeMenuLabel, inserisciButton, tornaIndietroButton);
+        HBox buttonContainer = new HBox(10, inserisciButton, tornaIndietroButton);
+        
+        this.getChildren().addAll(titolo, nomeLabel, nomeField, prezzoLabel, prezzoField, allergeniLabel, allergeniField, disponibilitaCheckBox, fotoField, buttonContainer);
     }
     
     private void inserisciPiatto() {
