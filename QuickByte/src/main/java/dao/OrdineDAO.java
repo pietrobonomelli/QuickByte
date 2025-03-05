@@ -10,6 +10,7 @@ import sessione.SessioneCarrello;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class OrdineDAO {	
@@ -128,6 +129,41 @@ public class OrdineDAO {
 		return ordini;
 	}
 
+	public List<Ordine> getOrdiniByStati(List<String> stati) {
+	    List<Ordine> ordini = new ArrayList<>();
+
+	    if (stati == null || stati.isEmpty()) {
+	        return ordini;
+	    }
+
+	    String placeholders = String.join(",", Collections.nCopies(stati.size(), "?"));
+	    String query = "SELECT * FROM Ordine WHERE stato IN (" + placeholders + ")";
+
+	    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+	        for (int i = 0; i < stati.size(); i++) {
+	            stmt.setString(i + 1, stati.get(i));
+	        }
+
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            ordini.add(new Ordine(
+	                rs.getInt("idOrdine"),
+	                rs.getString("stato"),
+	                rs.getDouble("costo"),
+	                rs.getString("emailCliente"),
+	                rs.getString("indirizzo"),
+	                rs.getString("dataOraOrdine"),
+	                rs.getString("emailCorriere"),
+	                rs.getInt("idRistorante")
+	            ));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return ordini;
+	}
+	
 	public List<Ordine> getOrdiniByIdRistorante(int idRistorante) {
 		List<Ordine> ordini = new ArrayList<>();
 		System.out.println("ID RISTORANTE IN GET ORDINI BY ID: " + idRistorante);
