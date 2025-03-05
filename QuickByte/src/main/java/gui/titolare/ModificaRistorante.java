@@ -4,6 +4,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import sessione.SessioneUtente;
 import dao.RistoranteDAO;
+import gui.main.Utilities;
 import model.Ristorante;
 import java.sql.SQLException;
 
@@ -66,11 +67,11 @@ public class ModificaRistorante extends VBox {
                 telefonoField.setText(ristorante.getTelefono());
                 indirizzoField.setText(ristorante.getIndirizzo());
             } else {
-                showAlert("Errore", "Ristorante non trovato.");
+            	Utilities.showAlert("Errore", "Ristorante non trovato.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore nel caricamento dei dati del ristorante.");
+            Utilities.showAlert("Errore", "Errore nel caricamento dei dati del ristorante.");
         }
     }
 
@@ -80,7 +81,7 @@ public class ModificaRistorante extends VBox {
         String nuovoIndirizzo = indirizzoField.getText();
 
         if (nuovoNome.isEmpty() || nuovoTelefono.isEmpty() || nuovoIndirizzo.isEmpty()) {
-            showAlert("Errore", "Tutti i campi devono essere compilati.");
+        	Utilities.showAlert("Errore", "Tutti i campi devono essere compilati.");
             return;
         }
 
@@ -89,22 +90,15 @@ public class ModificaRistorante extends VBox {
             boolean success = RistoranteDAO.getInstance().aggiornaRistorante(ristorante ,nomeRistorante);
             
             if (success) {
-                showAlert("Successo", "Ristorante modificato con successo!");
+            	Utilities.showAlert("Successo", "Ristorante modificato con successo!");
                 getScene().setRoot(new MainScreenTitolare());
             } else {
-                showAlert("Errore", "Modifica non riuscita.");
+            	Utilities.showAlert("Errore", "Modifica non riuscita.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore durante la modifica del ristorante.");
+            Utilities.showAlert("Errore", "Errore durante la modifica del ristorante.");
         }
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }

@@ -1,14 +1,11 @@
 package gui.main;
 
-import database.DatabaseConnection;
 import dao.LoginDAO;
 import gui.cliente.MainScreenCliente;
 import gui.corriere.MainScreenCorriere;
 import gui.titolare.MainScreenTitolare;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -52,10 +49,10 @@ public class LoginScreen extends VBox {
 
             if (LoginDAO.getInstance().verifyUser(email, password)) {
                 SessioneUtente.setEmail(email);
-                showAlert(AlertType.INFORMATION, "Login riuscito", "Benvenuto, " + email);
+                Utilities.showAlert("Login riuscito", "Benvenuto, " + email);
                 switchToMainScreen(email);
             } else {
-                showAlert(AlertType.ERROR, "Login fallito", "Email o password errati.");
+            	Utilities.showAlert("Login fallito", "Email o password errati.");
             }
         });
 
@@ -74,7 +71,7 @@ public class LoginScreen extends VBox {
         String tipoUtente = LoginDAO.getInstance().getUserType(email);
 
         if (tipoUtente == null) {
-            showAlert(AlertType.ERROR, "Errore", "Impossibile determinare il tipo di utente.");
+        	Utilities.showAlert("Errore", "Impossibile determinare il tipo di utente.");
             return;
         }
 
@@ -92,7 +89,7 @@ public class LoginScreen extends VBox {
                 newScene = new Scene(new MainScreenTitolare(), primaryStage.getWidth(), primaryStage.getHeight());
                 break;
             default:
-                showAlert(AlertType.ERROR, "Errore", "Tipo utente non riconosciuto.");
+            	Utilities.showAlert("Errore", "Tipo utente non riconosciuto.");
                 return;
         }
 
@@ -113,13 +110,5 @@ public class LoginScreen extends VBox {
         logoView.setFitWidth(150);
         logoView.setPreserveRatio(true);
         return logoView;
-    }
-
-    private void showAlert(AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

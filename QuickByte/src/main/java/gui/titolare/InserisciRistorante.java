@@ -4,6 +4,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import sessione.SessioneUtente;
 import dao.RistoranteDAO;
+import gui.main.Utilities;
+
 import java.sql.*;
 
 public class InserisciRistorante extends VBox {
@@ -75,7 +77,7 @@ public class InserisciRistorante extends VBox {
 
         if (nome.isEmpty() || telefono.isEmpty() || indirizzo.isEmpty()) {
             // Mostra un messaggio di errore se qualche campo è vuoto
-            showAlert("Errore", "Tutti i campi devono essere compilati.");
+        	Utilities.showAlert("Errore", "Tutti i campi devono essere compilati.");
             return;
         }
 
@@ -83,7 +85,7 @@ public class InserisciRistorante extends VBox {
         RistoranteDAO.getInstance().inserisciRistorante(nome, telefono, indirizzo, emailTitolare);
 
         // Successo, mostra un messaggio di conferma
-        showAlert("Successo", "Ristorante inserito con successo!");
+        Utilities.showAlert("Successo", "Ristorante inserito con successo!");
 
         // Torna alla schermata di gestione ristoranti
         getScene().setRoot(new MainScreenTitolare());
@@ -92,13 +94,5 @@ public class InserisciRistorante extends VBox {
     private void tornaAllaGestioneRistoranti() {
         // Torna alla schermata di gestione ristoranti
         getScene().setRoot(new MainScreenTitolare());
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

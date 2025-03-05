@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import java.sql.SQLException;
 
 import dao.MetodoDiPagamentoDAO;
+import gui.main.Utilities;
 import model.MetodoDiPagamento;
 
 public class MetodoDiPagamentoForm extends VBox {
@@ -38,12 +39,12 @@ public class MetodoDiPagamentoForm extends VBox {
             String scadenza = scadenzaField.getText();
 
             if (nominativo.isEmpty() || numeroCarta.isEmpty() || scadenza.isEmpty()) {
-                showAlert("Errore", "Tutti i campi sono obbligatori.");
+            	Utilities.showAlert("Errore", "Tutti i campi sono obbligatori.");
                 return;
             }
 
             if (numeroCarta.length() != 16 || !numeroCarta.matches("\\d+")) {
-                showAlert("Errore", "Il numero della carta deve avere 16 cifre.");
+            	Utilities.showAlert("Errore", "Il numero della carta deve avere 16 cifre.");
                 return;
             }
 
@@ -60,10 +61,10 @@ public class MetodoDiPagamentoForm extends VBox {
     private void salvaMetodoDiPagamento(MetodoDiPagamento metodo) {
         try {
             MetodoDiPagamentoDAO.getInstance().aggiungiMetodo(metodo);
-            showAlert("Successo", "Metodo di pagamento salvato correttamente!");
+            Utilities.showAlert("Successo", "Metodo di pagamento salvato correttamente!");
             tornaIndietro(); // Torna alla schermata precedente
         } catch (SQLException e) {
-            showAlert("Errore", "Errore nel salvataggio del metodo di pagamento.");
+        	Utilities.showAlert("Errore", "Errore nel salvataggio del metodo di pagamento.");
             e.printStackTrace();
         }
     }
@@ -74,11 +75,4 @@ public class MetodoDiPagamentoForm extends VBox {
         currentScene.setRoot(mainClienteScreen);
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-}
+ }

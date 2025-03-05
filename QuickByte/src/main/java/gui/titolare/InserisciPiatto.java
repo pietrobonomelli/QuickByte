@@ -5,6 +5,7 @@ import javafx.scene.layout.*;
 import sessione.SessioneRistorante;
 import sessione.SessioneMenu;
 import database.DatabaseConnection;
+import gui.main.Utilities;
 import dao.PiattoDAO;
 import model.Piatto;
 
@@ -68,7 +69,7 @@ public class InserisciPiatto extends VBox {
         String foto = fotoField.getText();
         
         if (nome.isEmpty() || prezzo.isEmpty()) {
-            showAlert("Errore", "Nome e prezzo sono obbligatori");
+        	Utilities.showAlert("Errore", "Nome e prezzo sono obbligatori");
             return;
         }
         
@@ -78,7 +79,7 @@ public class InserisciPiatto extends VBox {
             tornaAiPiatti();
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore durante l'inserimento del piatto");
+            Utilities.showAlert("Errore", "Errore durante l'inserimento del piatto");
         }
     }
     
@@ -87,11 +88,4 @@ public class InserisciPiatto extends VBox {
         this.getScene().setRoot(piattiScreen);
     }
     
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }

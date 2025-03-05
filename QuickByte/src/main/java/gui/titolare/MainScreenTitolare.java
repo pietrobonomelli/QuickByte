@@ -130,7 +130,7 @@ public class MainScreenTitolare extends VBox {
             tableView.setItems(ristoranti);
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore durante il caricamento dei ristoranti.");
+            Utilities.showAlert("Errore", "Errore durante il caricamento dei ristoranti.");
         }
     }
 
@@ -167,19 +167,11 @@ public class MainScreenTitolare extends VBox {
     private void eliminaRistorante(Ristorante ristorante) {
         try {
             RistoranteDAO.getInstance().rimuoviRistorante(ristorante.getIdRistorante());
-            showAlert("Successo", "Ristorante eliminato con successo.");
+            Utilities.showAlert("Successo", "Ristorante eliminato con successo.");
             loadRistoranti(); // Ricarica la lista dei ristoranti dopo la cancellazione
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore durante l'eliminazione del ristorante.");
+            Utilities.showAlert("Errore", "Errore durante l'eliminazione del ristorante.");
         }
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

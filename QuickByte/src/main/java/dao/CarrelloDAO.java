@@ -56,11 +56,19 @@ public class CarrelloDAO {
 		return carrelli;
 	}
 
-	// Rimuovere dal carrello (esempio)
+	
 	public void rimuoviDalCarrello(int idCarrello) throws SQLException {
 		String query = "DELETE FROM Carrello WHERE idCarrello = ?";
 		try (PreparedStatement statement = connection.prepareStatement(query)) {
 			statement.setInt(1, idCarrello);
+			statement.executeUpdate();
+		}
+	}
+	
+	public void svuotaCarrello(String emailUtente) throws SQLException {
+		String query = "DELETE FROM Carrello WHERE emailUtente = ?";
+		try (PreparedStatement statement = connection.prepareStatement(query)) {
+			statement.setString(1, emailUtente);
 			statement.executeUpdate();
 		}
 	}

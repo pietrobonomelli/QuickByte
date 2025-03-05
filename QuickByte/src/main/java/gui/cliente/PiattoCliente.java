@@ -1,6 +1,7 @@
 package gui.cliente;
 
 import javafx.scene.control.*;
+import gui.main.*;
 import javafx.scene.layout.*;
 import sessione.SessionePiatto;
 import javafx.scene.Scene;
@@ -51,10 +52,7 @@ public class PiattoCliente extends VBox {
                     this.getChildren().add(immagineView);
                 }
 
-                // Aggiungi un pulsante per aggiungere al carrello
-                Button aggiungiCarrelloButton = new Button("Aggiungi al carrello");
-                aggiungiCarrelloButton.setOnAction(event -> aggiungiAlCarrello(piatto.getIdPiatto()));
-                this.getChildren().add(aggiungiCarrelloButton);
+                
 
                 // Aggiungi un pulsante per tornare alla lista di piatti
                 Button tornaAllaListaButton = new Button("Torna alla lista di piatti");
@@ -67,30 +65,17 @@ public class PiattoCliente extends VBox {
                 });
                 this.getChildren().add(tornaAllaListaButton);
             } else {
-                showAlert("Errore", "Piatto non trovato.");
+            	Utilities.showAlert("Errore", "Piatto non trovato.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore nel caricamento delle informazioni del piatto.");
+            Utilities.showAlert("Errore", "Errore nel caricamento delle informazioni del piatto.");
         }
-    }
-
-    private void aggiungiAlCarrello(int idPiatto) {
-        // Logica per aggiungere il piatto al carrello
-        System.out.println("Piatto " + idPiatto + " aggiunto al carrello.");
     }
 
     private void tornaAllaListaPiatti() throws SQLException {
         PiattiCliente piattiClienteScreen = new PiattiCliente();  // Torna alla schermata dei piatti
         Scene currentScene = this.getScene();
         currentScene.setRoot(piattiClienteScreen);
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

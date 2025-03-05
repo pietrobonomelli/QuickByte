@@ -2,6 +2,7 @@ package gui.cliente;
 
 import dao.IndirizzoDAO;
 import database.DatabaseConnection;
+import gui.main.Utilities;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -42,7 +43,7 @@ public class IndirizzoForm extends VBox {
             String provincia = provinciaField.getText();
 
             if (indirizzo.isEmpty() || citta.isEmpty() || cap.isEmpty() || provincia.isEmpty()) {
-                showAlert("Errore", "Tutti i campi sono obbligatori.");
+            	Utilities.showAlert("Errore", "Tutti i campi sono obbligatori.");
                 return;
             }
 
@@ -60,10 +61,10 @@ public class IndirizzoForm extends VBox {
     private void salvaIndirizzo(Indirizzo indirizzo) {
         try (Connection conn = DatabaseConnection.connect()) {
             IndirizzoDAO.getInstance().aggiungiIndirizzo(indirizzo); // Usa il DAO per salvare l'indirizzo
-            showAlert("Successo", "Indirizzo salvato correttamente!");
+            Utilities.showAlert("Successo", "Indirizzo salvato correttamente!");
             tornaIndietro(); // Torna alla schermata principale del cliente
         } catch (SQLException e) {
-            showAlert("Errore", "Errore nel salvataggio dell'indirizzo.");
+        	Utilities.showAlert("Errore", "Errore nel salvataggio dell'indirizzo.");
             e.printStackTrace();
         }
     }
@@ -74,11 +75,4 @@ public class IndirizzoForm extends VBox {
         currentScene.setRoot(mainClienteScreen);
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }

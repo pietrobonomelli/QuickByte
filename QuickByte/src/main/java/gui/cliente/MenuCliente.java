@@ -8,6 +8,7 @@ import javafx.scene.layout.*;
 import sessione.SessioneMenu;
 import sessione.SessioneRistorante;
 import database.DatabaseConnection;
+import gui.main.Utilities;
 import dao.MenuDAO;
 import model.Menu;
 import java.sql.*;
@@ -76,7 +77,7 @@ public class MenuCliente extends VBox {
             table.setItems(menuData);
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore nel caricamento dei menu.");
+            Utilities.showAlert("Errore", "Errore nel caricamento dei menu.");
         }
     }
 
@@ -88,14 +89,6 @@ public class MenuCliente extends VBox {
     private void tornaAllaListaRistoranti() {
         MainScreenCliente mainScreenCliente = new MainScreenCliente();
         this.getScene().setRoot(mainScreenCliente);
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private void switchToCarrello() {

@@ -6,8 +6,10 @@ import javafx.scene.control.*;
 import gui.main.*;
 import javafx.scene.layout.*;
 import sessione.SessioneRistorante;
+import sessione.SessioneUtente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import dao.CarrelloDAO;
 import dao.RistoranteDAO;
 import model.Ristorante;
 import java.sql.SQLException;
@@ -19,6 +21,15 @@ public class MainScreenCliente extends VBox {
 
     public MainScreenCliente() {
         super(10);
+        
+        //svuoto il carrello al login per comodità
+        try {
+			CarrelloDAO.getInstance().svuotaCarrello(SessioneUtente.getEmail());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         this.setStyle("-fx-padding: 10;");
         
         Label titleLabel = new Label("Ristoranti Disponibili");
@@ -82,7 +93,7 @@ public class MainScreenCliente extends VBox {
             table.setItems(ristoranti);
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore di connessione al database.");
+            Utilities.showAlert("Errore", "Errore di connessione al database.");
         }
     }
 
@@ -96,11 +107,4 @@ public class MainScreenCliente extends VBox {
         this.getScene().setRoot(loginScreen);
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }

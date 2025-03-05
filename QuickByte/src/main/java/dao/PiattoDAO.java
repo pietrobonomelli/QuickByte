@@ -4,7 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import database.DatabaseConnection;
+import javafx.scene.control.Alert;
 import model.Piatto;
+import sessione.SessioneCarrello;
 
 public class PiattoDAO {
 
@@ -150,7 +152,6 @@ public class PiattoDAO {
 	    connection.setAutoCommit(false);
 	    
 	    try {
-	        // Verifica che l'email del cliente esista
 	        String checkClienteQuery = "SELECT 1 FROM Utente WHERE email = ?";
 	        try (PreparedStatement checkPs = connection.prepareStatement(checkClienteQuery)) {
 	            checkPs.setString(1, emailCliente);
@@ -161,7 +162,6 @@ public class PiattoDAO {
 	            }
 	        }
 
-	        // Verifica se il piatto è già presente nel carrello
 	        String checkCarrelloQuery = "SELECT quantitaPiatti FROM Carrello WHERE idPiatto = ? AND emailUtente = ?";
 	        String updateCarrelloQuery = "UPDATE Carrello SET quantitaPiatti = quantitaPiatti + 1 WHERE idPiatto = ? AND emailUtente = ?";
 	        String insertCarrelloQuery = "INSERT INTO Carrello (idPiatto, emailUtente, quantitaPiatti) VALUES (?, ?, ?)";
@@ -191,6 +191,7 @@ public class PiattoDAO {
 	        
 	        // Commetti la transazione
 	        connection.commit();
+            showAlert("Successo", "Piatto aggiunto al carrello!");
 	    } catch (SQLException e) {
 	        // In caso di errore, annulla la transazione
 	        connection.rollback();
@@ -202,15 +203,22 @@ public class PiattoDAO {
 	}
 
 
-
-
+	private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
 	// Metodo per svuotare il carrello
-	public void svuotaCarrello(String emailCliente) throws SQLException {
-		String deleteCarrelloQuery = "DELETE FROM Carrello WHERE emailCliente = ?";
+	public void svuotaCarrello(String emailUtente) throws SQLException {
+		String deleteCarrelloQuery = "DELETE FROM Carrello WHERE emailUtente = ?";
 		try (PreparedStatement ps = connection.prepareStatement(deleteCarrelloQuery)) {
-			ps.setString(1, emailCliente);
+			ps.setString(1, emailUtente);
 			ps.executeUpdate();
+			SessioneCarrello.setPieno(false);
+			SessioneCarrello.setIdRistorante(0);
 		}
 	}
 }

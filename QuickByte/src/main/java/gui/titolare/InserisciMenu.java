@@ -2,13 +2,11 @@ package gui.titolare;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-
 import java.sql.SQLException;
-
 import dao.MenuDAO;
 import model.Menu;
 import sessione.SessioneRistorante;
-import database.DatabaseConnection;
+import gui.main.Utilities;
 
 public class InserisciMenu extends VBox {
     private TextField nomeMenuField;
@@ -56,7 +54,7 @@ public class InserisciMenu extends VBox {
     private void inserisciMenu() {
         String nomeMenu = nomeMenuField.getText().trim();
         if (nomeMenu.isEmpty()) {
-            showAlert("Errore", "Il nome del menu non può essere vuoto.");
+        	Utilities.showAlert("Errore", "Il nome del menu non può essere vuoto.");
             return;
         }
 
@@ -64,12 +62,12 @@ public class InserisciMenu extends VBox {
 
         try {
             MenuDAO.getInstance().aggiungiMenu(menu);
-            showAlert("Successo", "Menu inserito correttamente.");
+            Utilities.showAlert("Successo", "Menu inserito correttamente.");
             nomeMenuField.clear();
             switchToMenuTitolare();
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore durante l'inserimento del menu.");
+            Utilities.showAlert("Errore", "Errore durante l'inserimento del menu.");
         }
     }
 
@@ -78,11 +76,4 @@ public class InserisciMenu extends VBox {
         this.getScene().setRoot(menuTitolareScreen);
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }

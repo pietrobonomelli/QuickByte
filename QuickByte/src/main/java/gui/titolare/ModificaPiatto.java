@@ -86,11 +86,11 @@ public class ModificaPiatto extends VBox {
                                        fotoFile != null ? fotoFile.getAbsolutePath() : null, nomeMenu, 0);
             PiattoDAO.getInstance().aggiornaPiatto(piatto);
             
-            showAlert("Successo", "Modifiche salvate correttamente.");
+            Utilities.showAlert("Successo", "Modifiche salvate correttamente.");
             tornaAiPiatti(); 
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore nel salvataggio delle modifiche.");
+            Utilities.showAlert("Errore", "Errore nel salvataggio delle modifiche.");
         }
     }
     
@@ -99,20 +99,12 @@ public class ModificaPiatto extends VBox {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Immagini", "*.png", "*.jpg", "*.jpeg"));
         fotoFile = fileChooser.showOpenDialog(null);
         if (fotoFile != null) {
-            showAlert("Foto Selezionata", "Foto selezionata: " + fotoFile.getName());
+        	Utilities.showAlert("Foto Selezionata", "Foto selezionata: " + fotoFile.getName());
         }
     }
     
     private void tornaAiPiatti() throws SQLException {
         PiattiTitolare piattiScreen = new PiattiTitolare();
         this.getScene().setRoot(piattiScreen);
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

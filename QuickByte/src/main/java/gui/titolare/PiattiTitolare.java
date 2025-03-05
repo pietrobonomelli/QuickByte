@@ -3,6 +3,7 @@ package gui.titolare;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import dao.PiattoDAO;
+import gui.main.Utilities;
 import model.Piatto;
 import sessione.SessioneMenu;
 import sessione.SessionePiatto;
@@ -17,12 +18,10 @@ public class PiattiTitolare extends VBox {
 
     private VBox container;
     private String nomeMenu;
-    private int idPiatto;
 
     public PiattiTitolare() throws SQLException {
         super(10);
         this.nomeMenu = SessioneMenu.getNome();
-        this.idPiatto = SessionePiatto.getId();
         this.setStyle("-fx-padding: 10;");
         container = new VBox(10);
         
@@ -131,7 +130,7 @@ public class PiattiTitolare extends VBox {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore di connessione al database.");
+            Utilities.showAlert("Errore", "Errore di connessione al database.");
         }
     }
 
@@ -141,7 +140,7 @@ public class PiattiTitolare extends VBox {
             loadPiatti(); // Ricarica i piatti dopo l'eliminazione
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore durante l'eliminazione del piatto.");
+            Utilities.showAlert("Errore", "Errore durante l'eliminazione del piatto.");
         }
     }
 
@@ -158,13 +157,5 @@ public class PiattiTitolare extends VBox {
     private void switchToMenuTitolare() {
         MenuTitolare MenuScreen = new MenuTitolare();
         this.getScene().setRoot(MenuScreen);
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import sessione.*;
 import dao.PiattoDAO;
+import gui.main.Utilities;
 import model.Piatto;
 import java.sql.*;
 import java.util.List;
@@ -41,6 +42,9 @@ public class PiattiCliente extends VBox {
 
         TableColumn<Piatto, String> nomeCol = new TableColumn<>("Piatto");
         nomeCol.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        
+        TableColumn<Piatto, Double> costoCol = new TableColumn<>("Costo (€)");
+        costoCol.setCellValueFactory(new PropertyValueFactory<>("prezzo"));
 
         TableColumn<Piatto, Void> descrizioneCol = new TableColumn<>("Descrizione");
         descrizioneCol.setCellFactory(data -> new TableCell<Piatto, Void>() {
@@ -80,10 +84,9 @@ public class PiattiCliente extends VBox {
                     Piatto piatto = getTableView().getItems().get(getIndex());
                     try {
                         aggiungiAlCarrello(piatto.getIdPiatto());
-                        showAlert("Successo", piatto.getNome() + " aggiunto al carrello!");
                     } catch (SQLException e) {
                         e.printStackTrace();
-                        showAlert("Errore", "Errore nell'aggiunta al carrello.");
+                        Utilities.showAlert("Errore", "Errore nell'aggiunta al carrello.");
                     }
                 });
             }
@@ -98,7 +101,7 @@ public class PiattiCliente extends VBox {
             }
         });
 
-        tableView.getColumns().addAll(nomeCol, descrizioneCol, aggiungiCol);
+        tableView.getColumns().addAll(nomeCol, costoCol, descrizioneCol, aggiungiCol);
         this.getChildren().add(tableView);
     }
 
@@ -109,7 +112,7 @@ public class PiattiCliente extends VBox {
             tableView.setItems(piattiList);
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore nel caricamento dei piatti.");
+            Utilities.showAlert("Errore", "Errore nel caricamento dei piatti.");
         }
     }
     
@@ -125,10 +128,12 @@ public class PiattiCliente extends VBox {
         if (!pieno) {
             SessioneCarrello.setIdRistorante(idRistorante);
             SessioneCarrello.setPieno(true);
+            System.out.println("SETTO PIENO TRUE");
             PiattoDAO.getInstance().aggiungiPiattoAlCarrello(idPiatto, emailCliente);
         } else if (idRistoranteCarrello == idRistorante) {
             PiattoDAO.getInstance().aggiungiPiattoAlCarrello(idPiatto, emailCliente);
         } else {
+            System.out.println("TERZO ELSE");
             mostraPopupConferma(idPiatto);
         }
     }
@@ -146,36 +151,29 @@ public class PiattiCliente extends VBox {
 
         alert.showAndWait().ifPresent(response -> {
             if (response == btnProcedi) {
-                svuotaCarrello(emailCliente);
+            	try {
+					PiattoDAO.getInstance().svuotaCarrello(emailCliente);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                System.out.println("SVUOTO IL CARRELLO DI " + emailCliente);
+                SessioneCarrello.setPieno(true);
                 SessioneCarrello.setIdRistorante(idRistorante);
+                
                 try {
                     PiattoDAO.getInstance().aggiungiPiattoAlCarrello(idPiatto, emailCliente);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
+            
+            
         });
-    }
-
-    private void svuotaCarrello(String emailUtente) {
-        try {
-            PiattoDAO.getInstance().svuotaCarrello(emailUtente);
-            SessioneCarrello.setPieno(false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
     
     private void tornaIndietro() {
         MenuCliente menuClienteScreen = new MenuCliente();
         this.getScene().setRoot(menuClienteScreen);
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

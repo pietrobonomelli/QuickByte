@@ -1,12 +1,12 @@
 package gui.titolare;
 
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import dao.*;
 import database.DatabaseConnection;
+import gui.main.Utilities;
 import sessione.SessioneRistorante;
 import sessione.SessioneMenu;
 import model.*;
@@ -111,7 +111,7 @@ public class MenuTitolare extends VBox {
             tableMenu.getItems().setAll(menuList);
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore di connessione al database.");
+            Utilities.showAlert("Errore", "Errore di connessione al database.");
         }
 
         // Aggiungere la TableView alla schermata
@@ -191,7 +191,7 @@ public class MenuTitolare extends VBox {
         List<Ordine> ordiniList = OrdineDAO.getInstance().getOrdiniByIdRistorante(ristorante);
         tableOrdini.getItems().setAll(ordiniList);
 
-        showAlert("Successo", "Hai accettato l'ordine " + ordine.getIdOrdine());
+        Utilities.showAlert("Successo", "Hai accettato l'ordine " + ordine.getIdOrdine());
     }
 
     public void rifiutaOrdine(Ordine ordine) {
@@ -200,7 +200,7 @@ public class MenuTitolare extends VBox {
         List<Ordine> ordiniList = OrdineDAO.getInstance().getOrdiniByIdRistorante(ristorante);
         tableOrdini.getItems().setAll(ordiniList);
 
-        showAlert("Successo", "Hai rifiutato l'ordine " + ordine.getIdOrdine());
+        Utilities.showAlert("Successo", "Hai rifiutato l'ordine " + ordine.getIdOrdine());
     }
 
     private void confermaEliminazione(String nomeMenu) {
@@ -219,12 +219,12 @@ public class MenuTitolare extends VBox {
     private void eliminaMenu(String nomeMenu) {
         try (Connection conn = DatabaseConnection.connect()) {
             MenuDAO.getInstance().rimuoviMenu(nomeMenu, ristorante);
-            showAlert("Successo", "Menu eliminato con successo.");
+            Utilities.showAlert("Successo", "Menu eliminato con successo.");
             container.getChildren().clear();
             loadMenu();
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Errore", "Errore durante l'eliminazione del menu.");
+            Utilities.showAlert("Errore", "Errore durante l'eliminazione del menu.");
         }
     }
 
@@ -266,13 +266,5 @@ public class MenuTitolare extends VBox {
             e.printStackTrace();
             return "Errore";
         }
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

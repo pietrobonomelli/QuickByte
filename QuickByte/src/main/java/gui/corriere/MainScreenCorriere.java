@@ -11,18 +11,15 @@ import dao.OrdineDAO;
 import model.Ordine;
 import model.StatoOrdine;
 import gui.main.LoginScreen;
-import sessione.SessioneUtente;
-import java.sql.SQLException;
+import gui.main.Utilities;
 import java.util.List;
 
 public class MainScreenCorriere extends VBox {
 
-    private String email;
     private TableView<Ordine> table;
 
     public MainScreenCorriere() {
         super(10);
-        this.email = SessioneUtente.getEmail();
         this.setStyle("-fx-padding: 10;");
 
         Label titleLabel = new Label("Ordini Disponibili");
@@ -48,12 +45,11 @@ public class MainScreenCorriere extends VBox {
         
         TableColumn<Ordine, String> colIndirizzo = new TableColumn<>("Indirizzo");
         colIndirizzo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));
+       
 
         TableColumn<Ordine, Void> colAzione = new TableColumn<>("Azione");
         colAzione.setCellFactory(param -> new TableCell<Ordine, Void>() {
             private final Button accettaButton = new Button("Accetta");
-            private final Button rifiutaButton = new Button("Rifiuta");
-            private final HBox buttonContainer = new HBox(5, accettaButton, rifiutaButton); // Spazio tra i pulsanti
             
             {
                 accettaButton.setOnAction(event -> {
@@ -61,10 +57,7 @@ public class MainScreenCorriere extends VBox {
                     accettaOrdine(ordine);
                 });
 
-                rifiutaButton.setOnAction(event -> {
-                    Ordine ordine = getTableView().getItems().get(getIndex());
-                    rifiutaOrdine(ordine);
-                });
+               
             }
 
             @Override
@@ -73,7 +66,7 @@ public class MainScreenCorriere extends VBox {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    setGraphic(buttonContainer);
+                    setGraphic(accettaButton);
                 }
             }
         });
@@ -97,26 +90,13 @@ public class MainScreenCorriere extends VBox {
 
     private void accettaOrdine(Ordine ordine) {
         OrdineDAO.getInstance().aggiornaStatoOrdine(ordine.getIdOrdine(), StatoOrdine.IN_CONSEGNA.name());
-        showAlert("Successo", "Hai accettato l'ordine " + ordine.getIdOrdine());
+        //TODO metti nell'ordine l'emailCorriere in sessione, inoltre quando viene accettato dal corriere, viene mostrato in una seconda tabella personale del corriere
+        Utilities.showAlert("Successo", "Hai accettato l'ordine " + ordine.getIdOrdine());
         loadOrdini(); // Ricarica gli ordini
     }
-    
-    private void rifiutaOrdine(Ordine ordine) {
-        OrdineDAO.getInstance().aggiornaStatoOrdine(ordine.getIdOrdine(), StatoOrdine.IN_CONSEGNA.name());	//TODO crea stato RIFIUTATO 
-        showAlert("Successo", "Hai accettato l'ordine " + ordine.getIdOrdine());
-        loadOrdini(); // Ricarica gli ordini
-    }
-    
+        
     private void switchToLoginScreen() {
         LoginScreen loginScreen = new LoginScreen();
         this.getScene().setRoot(loginScreen);
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }
