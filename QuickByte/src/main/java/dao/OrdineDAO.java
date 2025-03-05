@@ -167,6 +167,21 @@ public class OrdineDAO {
 		return false;
 	}
 
+	// Aggiornare l'email del corriere di un ordine  
+	public boolean aggiornaEmailCorriereOrdine(int idOrdine, String email) {
+	    String query = "UPDATE Ordine SET emailCorriere = ? WHERE idOrdine = ?";
+
+	    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+	        stmt.setString(1, email);
+	        stmt.setInt(2, idOrdine);
+
+	        return stmt.executeUpdate() > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+
 
 	public boolean registraOrdine(String emailUtente, String indirizzo) {
 		String insertOrdineSQL = "INSERT INTO Ordine (emailCliente, dataOraOrdine, stato, indirizzo, costo, idRistorante) VALUES (?, ?, ?, ?, ?, ?)";

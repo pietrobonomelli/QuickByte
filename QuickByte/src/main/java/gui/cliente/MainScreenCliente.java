@@ -89,7 +89,6 @@ public class MainScreenCliente extends VBox {
         try {
             List<Ristorante> ristorantiList = RistoranteDAO.getInstance().getRistoranti();
             ObservableList<Ristorante> ristoranti = FXCollections.observableArrayList(ristorantiList);
-            System.out.println("INDIRIZZOOOO" + ristoranti.getFirst().getIndirizzo());
             table.setItems(ristoranti);
         } catch (SQLException e) {
             e.printStackTrace();

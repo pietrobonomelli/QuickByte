@@ -29,6 +29,7 @@ public class Ordine {
     public String getIndirizzo() { return indirizzo; }
     public String getEmailCliente() { return emailCliente; }
     public String getEmailCorriere() { return emailCorriere; }
+    public void setEmailCorriere(String e) { this.emailCorriere = e ; }
     public int getIdRistorante() { return idRistorante; }
 
     @Override
