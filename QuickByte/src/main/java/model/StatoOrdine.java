@@ -5,5 +5,6 @@ public enum StatoOrdine {
     ACCETTATO,
     IN_CONSEGNA,
     CONSEGNATO,
-    RIFIUTATO
+    RIFIUTATO,
+    ELIMINATO
 }

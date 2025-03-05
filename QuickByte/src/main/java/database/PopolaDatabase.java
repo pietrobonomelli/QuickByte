@@ -48,6 +48,25 @@ public class PopolaDatabase {
 	            "('Mario Rossi', '1234567812345678', '12/26', 'cliente@gmail.com'), " +
 	            "('Giovanni Neri', '8765432187654321', '06/25', 'titolare2@gmail.com'), " +
 	            "('Anna Verdi', '1122334455667788', '03/27', 'corriere@gmail.com');";
+	    
+	    String insertOrdini = "INSERT INTO Ordine (stato, costo, emailCliente, indirizzo, dataOraOrdine, emailCorriere, idRistorante) VALUES " +
+	    	    "('PENDENTE', 15.00, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 12:30:00', NULL, 1), " +
+	    	    "('PENDENTE', 20.50, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 13:00:00', NULL, 1), " +
+	    	    "('PENDENTE', 12.00, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 13:30:00', NULL, 1), " +
+	    	    "('PENDENTE', 18.00, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 14:00:00', NULL, 1), " +
+	    	    "('PENDENTE', 22.00, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 14:30:00', NULL, 1), " +
+
+	    	    "('PENDENTE', 30.00, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 15:00:00', NULL, 2), " +
+	    	    "('PENDENTE', 25.50, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 15:30:00', NULL, 2), " +
+	    	    "('PENDENTE', 19.00, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 16:00:00', NULL, 2), " +
+	    	    "('PENDENTE', 27.00, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 16:30:00', NULL, 2), " +
+	    	    "('PENDENTE', 33.00, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 17:00:00', NULL, 2), " +
+
+	    	    "('PENDENTE', 40.00, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 17:30:00', NULL, 3), " +
+	    	    "('PENDENTE', 35.50, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 18:00:00', NULL, 3), " +
+	    	    "('PENDENTE', 28.00, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 18:30:00', NULL, 3), " +
+	    	    "('PENDENTE', 32.00, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 19:00:00', NULL, 3), " +
+	    	    "('PENDENTE', 45.00, 'cliente@gmail.com', 'Via Milano 5, Milano', '2025-03-05 19:30:00', NULL, 3);";
 
 	    try (Connection conn = DatabaseConnection.connect();
 	         Statement stmt = conn.createStatement()) {
@@ -58,6 +77,7 @@ public class PopolaDatabase {
 	        stmt.execute(insertPiatti);
 	        stmt.execute(insertIndirizzi);
 	        stmt.execute(insertMetodiPagamento);
+	        stmt.execute(insertOrdini);
 	        System.out.println("Dati inseriti con successo!");
 	    } catch (SQLException e) {
 	        System.err.println("Errore durante l'inserimento dei dati: " + e.getMessage());

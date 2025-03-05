@@ -128,8 +128,26 @@ public class OrdineDAO {
 		}
 		return ordini;
 	}
+	
+	public List<Ordine> getOrdiniByEmailCliente(String emailCliente) {
+		List<Ordine> ordini = new ArrayList<>();
+		String query = "SELECT * FROM Ordine WHERE emailCliente = ?";
 
-	public List<Ordine> getOrdiniByStati(List<String> stati) {
+		try (PreparedStatement stmt = connection.prepareStatement(query)) {
+
+			stmt.setString(1, emailCliente);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				ordini.add(creaOrdineDaResultSet(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ordini;
+	}
+
+	public List<Ordine> getOrdiniPresiInCarico(String emailUtente, List<String> stati) {
 	    List<Ordine> ordini = new ArrayList<>();
 
 	    if (stati == null || stati.isEmpty()) {
@@ -137,12 +155,17 @@ public class OrdineDAO {
 	    }
 
 	    String placeholders = String.join(",", Collections.nCopies(stati.size(), "?"));
-	    String query = "SELECT * FROM Ordine WHERE stato IN (" + placeholders + ")";
+	    String query = "SELECT * FROM Ordine WHERE stato IN (" + placeholders + ") AND emailCorriere = ?";
 
+	    int numStati = 0;
+	    
 	    try (PreparedStatement stmt = connection.prepareStatement(query)) {
 	        for (int i = 0; i < stati.size(); i++) {
 	            stmt.setString(i + 1, stati.get(i));
+	            numStati++;
 	        }
+	        
+	        stmt.setString(numStati + 1, emailUtente);
 
 	        ResultSet rs = stmt.executeQuery();
 	        while (rs.next()) {
@@ -262,6 +285,25 @@ public class OrdineDAO {
 
 		return false;
 	}
+	
+	public String getNomeRistorante(Ordine ordine) {
+	    String nomeRistorante = null;
+	    String query = "SELECT nome FROM Ristorante WHERE idRistorante = ?";
+
+	    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+	        stmt.setInt(1, ordine.getIdRistorante());
+
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            nomeRistorante = rs.getString("nome");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return nomeRistorante;
+	}
+
 
 
 }

@@ -36,6 +36,13 @@ public class MainScreenCorriere extends VBox {
 
         TableColumn<Ordine, Integer> colId = new TableColumn<>("ID Ordine");
         colId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdOrdine()).asObject());
+        
+        TableColumn<Ordine, String> colRistorante = new TableColumn<>("Ristorante");
+        colRistorante.setCellValueFactory(data -> {
+            Ordine ordine = data.getValue();
+            String nomeRistorante = OrdineDAO.getInstance().getNomeRistorante(ordine);
+            return new SimpleStringProperty(nomeRistorante);
+        });
 
         TableColumn<Ordine, Double> colCosto = new TableColumn<>("Costo (€)");
         colCosto.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCosto()).asObject());
@@ -73,15 +80,22 @@ public class MainScreenCorriere extends VBox {
             }
         });
 
-        table.getColumns().addAll(colId, colCosto, colStato, colEmail, colIndirizzo, colData, colAzione);
+        table.getColumns().addAll(colId, colRistorante, colCosto, colStato, colEmail, colIndirizzo, colData, colAzione);
         loadOrdini();
 
-        // Tabella ordini passati
+        // Tabella ordini presi in carico
         tablePassati = new TableView<>();
         tablePassati.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         TableColumn<Ordine, Integer> colIdPassato = new TableColumn<>("ID Ordine");
         colIdPassato.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdOrdine()).asObject());
+        
+        TableColumn<Ordine, String> colRistorantePassato = new TableColumn<>("Ristorante");
+        colRistorantePassato.setCellValueFactory(data -> {
+            Ordine ordine = data.getValue();
+            String nomeRistorante = OrdineDAO.getInstance().getNomeRistorante(ordine);
+            return new SimpleStringProperty(nomeRistorante);
+        });
 
         TableColumn<Ordine, Double> colCostoPassato = new TableColumn<>("Costo (€)");
         colCostoPassato.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCosto()).asObject());
@@ -97,12 +111,33 @@ public class MainScreenCorriere extends VBox {
 
         TableColumn<Ordine, String> colIndirizzoPassato = new TableColumn<>("Indirizzo");
         colIndirizzoPassato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));
+        
+        TableColumn<Ordine, Void> colAzionePassato = new TableColumn<>("  Azione  ");
+        colAzionePassato.setCellFactory(param -> new TableCell<Ordine, Void>() {
+            private final Button consegnatoButton = new Button("Consegnato");
+            {
+            	consegnatoButton.setOnAction(event -> {
+                    Ordine ordine = getTableView().getItems().get(getIndex());
+                    consegnatoOrdine(ordine);
+                });
+            }
 
-        tablePassati.getColumns().addAll(colIdPassato, colCostoPassato, colStatoPassato, colEmailPassato, colIndirizzoPassato, colDataPassato);
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || !getTableView().getItems().get(getIndex()).getStato().equals(StatoOrdine.IN_CONSEGNA.name())) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(consegnatoButton);
+                }
+            }
+        });
+
+        tablePassati.getColumns().addAll(colIdPassato, colRistorantePassato, colCostoPassato, colStatoPassato, colEmailPassato, colIndirizzoPassato, colDataPassato, colAzionePassato);
         loadOrdiniPassati();
 
-        // Titolo per la tabella ordini passati
-        Label titleOrdiniPassati = new Label("Ordini Passati");
+        // Titolo per la tabella ordini presi in carico
+        Label titleOrdiniPassati = new Label("Ordini Presi in Carico");
         titleOrdiniPassati.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
         Button logoutButton = new Button("Logout");
@@ -120,8 +155,8 @@ public class MainScreenCorriere extends VBox {
     }
 
     private void loadOrdiniPassati() {
-        List<Ordine> ordiniListPassati = OrdineDAO.getInstance().getOrdiniByStati(
-            Arrays.asList(StatoOrdine.IN_CONSEGNA.name(), StatoOrdine.CONSEGNATO.name())
+        List<Ordine> ordiniListPassati = OrdineDAO.getInstance().getOrdiniPresiInCarico(SessioneUtente.getEmail(),
+            Arrays.asList(StatoOrdine.IN_CONSEGNA.name(), StatoOrdine.CONSEGNATO.name(), StatoOrdine.ELIMINATO.name())
         );
 
         ObservableList<Ordine> ordini = FXCollections.observableArrayList(ordiniListPassati);
@@ -142,11 +177,30 @@ public class MainScreenCorriere extends VBox {
         if (statoAggiornato && emailAggiornata) {
             Utilities.showAlert("Successo", "Hai accettato l'ordine " + ordine.getIdOrdine());
             
-            // Svuota la tabella degli ordini passati e ricaricala
-            tablePassati.getItems().clear();  // Cancella gli ordini passati nella tabella
-            loadOrdiniPassati();  // Ricarica gli ordini passati
+            // Svuota la tabella degli ordini presi in carico e ricaricala
+            tablePassati.getItems().clear();  // Cancella gli ordini presi in carico nella tabella
+            loadOrdiniPassati();  // Ricarica gli ordini presi in carico
 
             loadOrdini(); // Aggiorna la tabella degli ordini
+        } else {
+            Utilities.showAlert("Errore", "Non è stato possibile accettare l'ordine. Riprova.");
+        }
+    }
+    
+    private void consegnatoOrdine(Ordine ordine) {
+        String emailCorriere = SessioneUtente.getEmail(); // Recupera l'email del corriere dalla sessione
+
+        if (emailCorriere == null || emailCorriere.isEmpty()) {
+            Utilities.showAlert("Errore", "Errore nel recupero dell'email del corriere.");
+            return;
+        }
+
+        boolean statoAggiornato = OrdineDAO.getInstance().aggiornaStatoOrdine(ordine.getIdOrdine(), StatoOrdine.CONSEGNATO.name());
+
+        if (statoAggiornato) {
+            Utilities.showAlert("Successo", "Hai consegnato l'ordine " + ordine.getIdOrdine());
+            
+            loadOrdiniPassati();  // Ricarica gli ordini presi in carico
         } else {
             Utilities.showAlert("Errore", "Non è stato possibile accettare l'ordine. Riprova.");
         }

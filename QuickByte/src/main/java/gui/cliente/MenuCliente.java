@@ -63,11 +63,14 @@ public class MenuCliente extends VBox {
 
         Button carrelloButton = new Button("Vai al Carrello");
         carrelloButton.setOnAction(event -> switchToCarrello());
+        
+        Button ordiniButton = new Button("Vai ai tuoi Ordini");
+        ordiniButton.setOnAction(event -> switchToOrdiniCliente());
 
         Button tornaAllaListaRistorantiButton = new Button("Torna alla lista dei ristoranti");
         tornaAllaListaRistorantiButton.setOnAction(event -> tornaAllaListaRistoranti());
 
-        this.getChildren().addAll(titleLabel, table, carrelloButton, tornaAllaListaRistorantiButton);
+        this.getChildren().addAll(titleLabel, table, carrelloButton, ordiniButton, tornaAllaListaRistorantiButton);
     }
 
     private void loadMenu() {
@@ -94,5 +97,10 @@ public class MenuCliente extends VBox {
     private void switchToCarrello() {
         CarrelloView carrelloScreen = new CarrelloView();
         this.getScene().setRoot(carrelloScreen);
+    }
+    
+    private void switchToOrdiniCliente() {
+        OrdiniView ordiniScreen = new OrdiniView();
+        this.getScene().setRoot(ordiniScreen);
     }
 }
