@@ -12,7 +12,10 @@ public class PiattoDAO {
 
 	private static PiattoDAO instance;
 	private Connection connection;
+	private static boolean alertEnabled = true;
 
+	
+	
 	private PiattoDAO() {
 		try {
 			this.connection = DatabaseConnection.connect();
@@ -203,13 +206,18 @@ public class PiattoDAO {
 	}
 
 
+	public static void setAlertEnabled(boolean enabled) {
+	    alertEnabled = enabled;
+	}
+
 	private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+	    if (!alertEnabled) return;
+	    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	    alert.setTitle(title);
+	    alert.setHeaderText(null);
+	    alert.setContentText(message);
+	    alert.showAndWait();
+	}
 
 	// Metodo per svuotare il carrello
 	public void svuotaCarrello(String emailUtente) throws SQLException {

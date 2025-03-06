@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.*;
 import dao.RistoranteDAO;
 import database.DatabaseConnection;
+import database.DatabaseManager;
 import model.Ristorante;
 import java.sql.*;
 import java.util.List;
@@ -18,6 +19,7 @@ public class RistoranteDAOTest {
         try (Connection conn = DatabaseConnection.connect()) {
             assertNotNull("Connessione fallita!", conn);
             System.out.println("Connessione stabilita con successo.");
+            DatabaseManager.createTables();
         }
     }
 
