@@ -10,5 +10,6 @@ public class SessioneRistorante {
     public static void setId(int id) {
         SessioneRistorante.id = id;
     }
+    
 }
 

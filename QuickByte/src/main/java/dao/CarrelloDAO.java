@@ -56,7 +56,6 @@ public class CarrelloDAO {
 		return carrelli;
 	}
 
-	
 	public void rimuoviDalCarrello(int idCarrello) throws SQLException {
 		String query = "DELETE FROM Carrello WHERE idCarrello = ?";
 		try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -64,7 +63,7 @@ public class CarrelloDAO {
 			statement.executeUpdate();
 		}
 	}
-	
+
 	public void svuotaCarrello(String emailUtente) throws SQLException {
 		String query = "DELETE FROM Carrello WHERE emailUtente = ?";
 		try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -87,7 +86,6 @@ public class CarrelloDAO {
 		return 0;  // Restituisce 0 se il piatto non è trovato
 	}
 
-
 	public double calcolaCostoTotale(String emailUtente) {
 		double costoTotale = 0.0;
 		String sql = "SELECT p.prezzo, c.quantitaPiatti FROM Carrello c JOIN Piatto p ON c.idPiatto = p.idPiatto WHERE c.emailUtente = ?";
@@ -108,4 +106,13 @@ public class CarrelloDAO {
 		return costoTotale;
 	}
 
+	// Metodo per aggiornare la quantità di un piatto nel carrello
+	public void aggiornaQuantita(int idCarrello, int nuovaQuantita) throws SQLException {
+		String query = "UPDATE Carrello SET quantitaPiatti = ? WHERE idCarrello = ?";
+		try (PreparedStatement statement = connection.prepareStatement(query)) {
+			statement.setInt(1, nuovaQuantita);
+			statement.setInt(2, idCarrello);
+			statement.executeUpdate();
+		}
+	}
 }

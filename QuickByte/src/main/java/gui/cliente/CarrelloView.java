@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javafx.beans.property.SimpleStringProperty;
 
 public class CarrelloView extends VBox {
 
@@ -26,28 +27,54 @@ public class CarrelloView extends VBox {
 
 	private void loadCarrello() {
 		this.getChildren().clear();
-		try {
-			List<Carrello> carrelli = CarrelloDAO.getInstance().getCarrelloByUtente(emailUtente);
 
-			for (Carrello item : carrelli) {
-				String nomePiatto = CarrelloDAO.getInstance().getNomePiattoById(item.getIdPiatto());
+		TableView<Carrello> table = new TableView<>();
+		TableColumn<Carrello, String> colPiatto = new TableColumn<>("Piatto");
+		TableColumn<Carrello, Void> colAzioni = new TableColumn<>("Azioni");
 
-				HBox carrelloItem = new HBox(10);
-				carrelloItem.setStyle("-fx-padding: 10;");
+		colPiatto.setCellValueFactory(data -> {
+			String nomePiatto = "";
+			try {
+				nomePiatto = CarrelloDAO.getInstance().getNomePiattoById(data.getValue().getIdPiatto());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return new SimpleStringProperty(nomePiatto + " (x" + data.getValue().getQuantitaPiatti() + ")");
+		});
 
-				Label nomeLabel = new Label(nomePiatto + " (x" + item.getQuantitaPiatti() + ")");
-				Button rimuoviButton = new Button("Rimuovi");
+		colAzioni.setCellFactory(param -> new TableCell<Carrello, Void>() {
+			private final Button addButton = new Button("+");
+			private final Button minusButton = new Button("-");
+			private final HBox buttonBox = new HBox(5, minusButton, addButton);
 
-				rimuoviButton.setOnAction(event -> rimuoviDalCarrello(item.getIdCarrello()));
-
-				carrelloItem.getChildren().addAll(nomeLabel, rimuoviButton);
-				this.getChildren().add(carrelloItem);
+			{
+				addButton.setOnAction(event -> modificaQuantita(getTableRow().getItem(), 1));
+				minusButton.setOnAction(event -> modificaQuantita(getTableRow().getItem(), -1));
 			}
 
+			@Override
+			protected void updateItem(Void item, boolean empty) {
+				super.updateItem(item, empty);
+				if (empty || getTableRow().getItem() == null) {
+					setGraphic(null);
+				} else {
+					setGraphic(buttonBox);
+				}
+			}
+		});
+
+		table.getColumns().addAll(colPiatto, colAzioni);
+
+		try {
+			List<Carrello> carrelli = CarrelloDAO.getInstance().getCarrelloByUtente(emailUtente);
+			table.getItems().addAll(carrelli);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Utilities.showAlert("Errore", "Errore nel caricamento del carrello.");
 		}
+
+		Button tornaAllaListaButton = new Button("Torna indietro");
+		tornaAllaListaButton.setOnAction(event -> tornaAllaLista());
 
 		Button confermaOrdineButton = new Button("Conferma Ordine");
 		confermaOrdineButton.setOnAction(event -> {
@@ -57,13 +84,25 @@ public class CarrelloView extends VBox {
 				e.printStackTrace();
 			}
 		});
-		this.getChildren().add(confermaOrdineButton);
 
-		Button tornaAllaListaButton = new Button("Torna indetro");
-		tornaAllaListaButton.setOnAction(event -> tornaAllaLista());
-		this.getChildren().add(tornaAllaListaButton);
+		HBox buttonBox = new HBox(10, tornaAllaListaButton, confermaOrdineButton);
+		this.getChildren().addAll(table, buttonBox);
 	}
 
+	private void modificaQuantita(Carrello item, int delta) {
+		try {
+			int nuovaQuantita = item.getQuantitaPiatti() + delta;
+			if (nuovaQuantita > 0) {
+				CarrelloDAO.getInstance().aggiornaQuantita(item.getIdCarrello(), nuovaQuantita);
+			} else {
+				rimuoviDalCarrello(item.getIdCarrello());
+			}
+			loadCarrello();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Utilities.showAlert("Errore", "Errore durante la modifica della quantità.");
+		}
+	}
 	private void rimuoviDalCarrello(int idCarrello) {
 		try {
 			CarrelloDAO.getInstance().rimuoviDalCarrello(idCarrello);
@@ -142,9 +181,9 @@ public class CarrelloView extends VBox {
 			Utilities.showAlert("Errore", "Errore durante la conferma dell'ordine.");
 		}
 	}
-	
-	
-	
+
+
+
 
 
 

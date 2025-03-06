@@ -2,13 +2,20 @@ package gui.cliente;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import sessione.*;
+import dao.MenuDAO;
 import dao.PiattoDAO;
 import gui.main.Utilities;
 import model.Piatto;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import java.sql.*;
 import java.util.List;
 
@@ -27,39 +34,49 @@ public class PiattiCliente extends VBox {
         this.emailCliente = SessioneUtente.getEmail();
 
         this.setStyle("-fx-padding: 10;");
+        
+        // Crea un titolo da visualizzare sopra la tabella
+        Label titleLabel = new Label("Piatti del menu: " + nomeMenu);
+        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+
+        // Aggiungi il titolo alla scena sopra la tabella
         setupTableView();
         loadPiatti();
         
-        
-        Button btnIndietro = new Button("Indietro");
+        // Bottone per tornare indietro
+        Button btnIndietro = new Button("⬅ INDIETRO");
         btnIndietro.setOnAction(event -> tornaIndietro());
 
-        this.getChildren().add(btnIndietro);
+        // Aggiungi il titolo, la tabella e il bottone alla scena
+        this.getChildren().addAll(titleLabel, tableView, btnIndietro);  // titleLabel prima della tabella
     }
 
     private void setupTableView() {
         tableView = new TableView<>();
 
+        // Colonna Nome
         TableColumn<Piatto, String> nomeCol = new TableColumn<>("Piatto");
         nomeCol.setCellValueFactory(new PropertyValueFactory<>("nome"));
         
+        // Colonna Costo
         TableColumn<Piatto, Double> costoCol = new TableColumn<>("Costo (€)");
         costoCol.setCellValueFactory(new PropertyValueFactory<>("prezzo"));
 
-        TableColumn<Piatto, Void> descrizioneCol = new TableColumn<>("Descrizione");
-        descrizioneCol.setCellFactory(data -> new TableCell<Piatto, Void>() {
-            private final Button btnDesc = new Button("Vedi descrizione");
+        // Colonna Allergeni
+        TableColumn<Piatto, String> allergeniCol = new TableColumn<>("Allergeni");
+        allergeniCol.setCellValueFactory(new PropertyValueFactory<>("allergeni"));
+
+        // Colonna Vedi Foto
+        TableColumn<Piatto, Void> vediFotoCol = new TableColumn<>("Vedi Foto");
+        vediFotoCol.setCellFactory(data -> new TableCell<Piatto, Void>() {
+            private final Button btnFoto = new Button("VEDI FOTO");
 
             {
-                btnDesc.setOnAction(event -> {
+                btnFoto.setOnAction(event -> {
                     Piatto piatto = getTableRow().getItem(); // Recupera il piatto della riga corrente
                     if (piatto != null) {
-                        SessionePiatto.setId(piatto.getIdPiatto());  // Salva l'ID del piatto nella sessione
-                        try {
-                            switchToPiattoCliente();
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
+                        // Visualizza la foto in una finestra di dialogo
+                        showPhotoDialog(piatto.getFoto());
                     }
                 });
             }
@@ -70,15 +87,16 @@ public class PiattiCliente extends VBox {
                 if (empty || getTableRow().getItem() == null) {
                     setGraphic(null);
                 } else {
-                    setGraphic(btnDesc);
+                    setGraphic(btnFoto);
                 }
             }
         });
 
-
+        // Colonna Aggiungi al carrello
         TableColumn<Piatto, Void> aggiungiCol = new TableColumn<>("");
         aggiungiCol.setCellFactory(data -> new TableCell<Piatto, Void>() {
-            private final Button btnCart = new Button("Aggiungi al carrello");
+            private final Button btnCart = new Button("AGGIUNGI AL CARRELLO 🛒");
+
             {
                 btnCart.setOnAction(event -> {
                     Piatto piatto = getTableView().getItems().get(getIndex());
@@ -90,6 +108,7 @@ public class PiattiCliente extends VBox {
                     }
                 });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -101,8 +120,8 @@ public class PiattiCliente extends VBox {
             }
         });
 
-        tableView.getColumns().addAll(nomeCol, costoCol, descrizioneCol, aggiungiCol);
-        this.getChildren().add(tableView);
+        // Aggiungi tutte le colonne alla TableView
+        tableView.getColumns().addAll(nomeCol, costoCol, allergeniCol, vediFotoCol, aggiungiCol);
     }
 
     private void loadPiatti() {
@@ -167,11 +186,27 @@ public class PiattiCliente extends VBox {
                     e.printStackTrace();
                 }
             }
-            
-            
         });
     }
-    
+
+    private void showPhotoDialog(String fotoUrl) {
+        // Finestra di dialogo per visualizzare la foto
+        if (fotoUrl != null && !fotoUrl.isEmpty()) {
+            ImageView imageView = new ImageView(new Image(fotoUrl));
+            imageView.setFitWidth(300);
+            imageView.setFitHeight(200);
+            StackPane stackPane = new StackPane(imageView);
+            Scene photoScene = new Scene(stackPane, 400, 300);
+
+            Stage photoStage = new Stage();
+            photoStage.setTitle("Foto del piatto");
+            photoStage.setScene(photoScene);
+            photoStage.show();
+        } else {
+            Utilities.showAlert("Errore", "Foto non disponibile per questo piatto.");
+        }
+    }
+
     private void tornaIndietro() {
         MenuCliente menuClienteScreen = new MenuCliente();
         this.getScene().setRoot(menuClienteScreen);

@@ -5,7 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import sessione.SessioneMenu;
+import sessione.*;
 import sessione.SessioneRistorante;
 import database.DatabaseConnection;
 import gui.main.Utilities;
@@ -17,14 +17,25 @@ import java.util.List;
 public class MenuCliente extends VBox {
 
     private TableView<Menu> table;
+    private String nomeRistorante;
 
     public MenuCliente() {
         super(10);
         this.setStyle("-fx-padding: 10;");
 
-        Label titleLabel = new Label("Menù disponibili");
+        try (Connection conn = DatabaseConnection.connect()) {
+        	nomeRistorante = MenuDAO.getInstance().getNomeRistorante(SessioneRistorante.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Utilities.showAlert("Errore", "Errore nel caricamento del nome del ristorante.");
+        }
+
+        
+        // Etichetta del titolo
+        Label titleLabel = new Label("Menù disponibili del ristorante: " + nomeRistorante);
         titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
+        // Tabella per i menu
         table = new TableView<>();
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
@@ -33,17 +44,16 @@ public class MenuCliente extends VBox {
 
         TableColumn<Menu, Void> colAzione = new TableColumn<>("Piatti");
         colAzione.setCellFactory(param -> new TableCell<Menu, Void>() {
-            private final Button vediPiattiButton = new Button("Vedi Piatti");
+            private final Button vediPiattiButton = new Button("VEDI PIATTI");
             {
                 vediPiattiButton.setOnAction(event -> {
                     Menu menu = getTableView().getItems().get(getIndex());
                     SessioneMenu.setNome(menu.getNome());
                     try {
-						switchToPiattiCliente();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+                        switchToPiattiCliente();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 });
             }
 
@@ -61,17 +71,24 @@ public class MenuCliente extends VBox {
         table.getColumns().addAll(colNome, colAzione);
         loadMenu();
 
-        Button carrelloButton = new Button("Vai al Carrello");
+        // Bottone per il carrello
+        Button carrelloButton = new Button("🛒 CARRELLO");
         carrelloButton.setOnAction(event -> switchToCarrello());
         
-        Button ordiniButton = new Button("Vai ai tuoi Ordini");
+        // Bottone per gli ordini
+        Button ordiniButton = new Button("I TUOI ORDINI");
         ordiniButton.setOnAction(event -> switchToOrdiniCliente());
 
-        Button tornaAllaListaRistorantiButton = new Button("Torna alla lista dei ristoranti");
+        // Bottone per tornare alla lista ristoranti
+        Button tornaAllaListaRistorantiButton = new Button("⬅ INDIETRO");
         tornaAllaListaRistorantiButton.setOnAction(event -> tornaAllaListaRistoranti());
 
-        this.getChildren().addAll(titleLabel, table, carrelloButton, ordiniButton, tornaAllaListaRistorantiButton);
+        HBox buttonBox = new HBox(10, tornaAllaListaRistorantiButton, ordiniButton, carrelloButton);
+        buttonBox.setSpacing(10);  
+
+        this.getChildren().addAll(titleLabel, table, buttonBox);
     }
+
 
     private void loadMenu() {
         try (Connection conn = DatabaseConnection.connect()) {

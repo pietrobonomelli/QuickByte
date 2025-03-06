@@ -2,10 +2,8 @@ package dao;
 
 import database.DatabaseConnection;
 
-import model.Ordine;
-import model.StatoOrdine;
-import sessione.SessioneRistorante;
-import sessione.SessioneCarrello;
+import model.*;
+import sessione.*;
 
 
 import java.sql.*;

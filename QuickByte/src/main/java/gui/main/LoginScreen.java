@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import sessione.SessioneUtente;
+import sessione.*;
 
 import java.io.InputStream;
 
