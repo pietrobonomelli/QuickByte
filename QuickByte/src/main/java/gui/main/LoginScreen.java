@@ -26,22 +26,49 @@ public class LoginScreen extends VBox {
         this.setSpacing(20);
 
         ImageView logoView = createLogo();
-        Text title = new Text("Benvenuto su QuickByte");
+        Text title = new Text("Bentornato su QuickByte - Il gusto a portata di click!");
         title.getStyleClass().add("title");
 
-        TextField emailField = new TextField();
-        emailField.setPromptText("Inserisci l'email");
-        emailField.getStyleClass().add("text-field");
+        Text titleLogin = new Text("Effettua il login");
+        titleLogin.getStyleClass().add("title");
+        
+        VBox emailBox = new VBox();
+	        Text emailLabel = new Text("E-MAIL");
+	        emailLabel.getStyleClass().add("label");
+	        TextField emailField = new TextField();
+	        emailField.setPromptText("Inserisci l'e-mail");
+	        emailField.getStyleClass().add("text-field");
+	        emailField.setMaxWidth(280);
+	    emailBox.getChildren().addAll(emailLabel, emailField);
+        emailBox.getStyleClass().add("field-box");
 
-        PasswordField passwordField = new PasswordField();
-        passwordField.setPromptText("Inserisci la password");
-        passwordField.getStyleClass().add("password-field");
+        VBox passwordBox = new VBox();
+	        Text passwordLabel = new Text("PASSWORD");
+	        passwordLabel.getStyleClass().add("label");
+	        PasswordField passwordField = new PasswordField();
+	        passwordField.setPromptText("Inserisci la password");
+	        passwordField.getStyleClass().add("password-field");
+	        passwordField.setMaxWidth(280);
+	    passwordBox.getChildren().addAll(passwordLabel, passwordField);
+	    passwordBox.getStyleClass().add("field-box");
 
         Button loginButton = new Button("Login");
         loginButton.getStyleClass().add("button");
 
+        VBox registerButtonBox = new VBox();
+        Text registrazioneLabel = new Text("Se non hai già un account: ");
+        registrazioneLabel.getStyleClass().add("label");
+        // Usa VBox per allineare il testo e il bottone a sinistra
+        registerButtonBox.setAlignment(Pos.CENTER);
+        registerButtonBox.setSpacing(5);
+        registerButtonBox.setMaxWidth(280);
         Button registerButton = new Button("Registrati");
         registerButton.getStyleClass().add("button-secondary");
+        registerButton.setAlignment(Pos.CENTER); // Allinea il bottone a sinistra
+
+        registerButtonBox.getChildren().addAll(registrazioneLabel, registerButton);
+
+
 
         loginButton.setOnAction(e -> {
             String email = emailField.getText();
@@ -60,11 +87,14 @@ public class LoginScreen extends VBox {
             RegisterScreen registrationScreen = new RegisterScreen();
             Stage primaryStage = (Stage) registerButton.getScene().getWindow();
             Scene registrationScene = new Scene(registrationScreen, primaryStage.getWidth(), primaryStage.getHeight());
-            registrationScene.getStylesheets().add("style.css");
+            registrationScene.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
+            System.out.println(getClass().getResource("/style/style.css"));
+
             primaryStage.setScene(registrationScene);
         });
 
-        this.getChildren().addAll(logoView, title, emailField, passwordField, loginButton, registerButton);
+        this.getChildren().addAll(logoView, title, titleLogin, emailBox, passwordBox, loginButton, registerButtonBox);
+
     }
 
     private void switchToMainScreen(String email) {

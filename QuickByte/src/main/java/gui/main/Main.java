@@ -16,7 +16,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         System.out.println("Avvio interfaccia grafica...");
-        
+
         // Crea le tabelle del database (se non esistono già)
         DatabaseManager.createTables();
 
@@ -26,23 +26,26 @@ public class Main extends Application {
         // Crea la schermata di login (LoginScreen)
         LoginScreen loginScreen = new LoginScreen();
 
-        // Imposta la scena con la LoginScreen
-        Scene scene = new Scene(loginScreen, 800, 600);  // 400x300 è la dimensione della finestra
+        // Crea la scena per il login (dimens. della finestra 800x600)
+        Scene scene = new Scene(loginScreen, 800, 600); 
         
-        // Carica il CSS
-        URL cssUrl = getClass().getResource("/gui/styles/style.css");
+        caricaCSS(scene);
+        
+        // Imposta la scena principale
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        System.out.println("Interfaccia grafica avviata correttamente!");
+    }
+
+    // Metodo per caricare il file CSS
+    private void caricaCSS(Scene scene) {
+        URL cssUrl = getClass().getResource("/style/style.css");
         if (cssUrl == null) {
             System.out.println("Errore: file CSS non trovato.");
         } else {
             scene.getStylesheets().add(cssUrl.toExternalForm());
+            System.out.println("CSS caricato correttamente!");
         }
-
-        
-        primaryStage.setScene(scene);
-
-        // Mostra la finestra
-        primaryStage.show();
-
-        System.out.println("Interfaccia grafica avviata correttamente!");
     }
 }

@@ -1,0 +1,28 @@
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+	background-text: red;
+}
+
+.field-box {
+    -fx-alignment: center-left;
+    -fx-spacing: 5;
+    -fx-max-width: 280px;
+}
+
+.button-secondary {
+
+}
+
+.password-field {
+
+}
+
+label {
+
+}
+
+button {
+
+}
