@@ -36,7 +36,7 @@ public class PiattiCliente extends VBox {
         this.setStyle("-fx-padding: 10;");
         
         // Crea un titolo da visualizzare sopra la tabella
-        Label titleLabel = new Label("Piatti del menu: " + nomeMenu);
+        Label titleLabel = new Label("Piatti del menù: " + nomeMenu);
         titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
         // Aggiungi il titolo alla scena sopra la tabella

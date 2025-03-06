@@ -71,24 +71,17 @@ public class MenuCliente extends VBox {
         table.getColumns().addAll(colNome, colAzione);
         loadMenu();
 
-        // Bottone per il carrello
         Button carrelloButton = new Button("🛒 CARRELLO");
         carrelloButton.setOnAction(event -> switchToCarrello());
         
-        // Bottone per gli ordini
-        Button ordiniButton = new Button("I TUOI ORDINI");
-        ordiniButton.setOnAction(event -> switchToOrdiniCliente());
-
-        // Bottone per tornare alla lista ristoranti
         Button tornaAllaListaRistorantiButton = new Button("⬅ INDIETRO");
         tornaAllaListaRistorantiButton.setOnAction(event -> tornaAllaListaRistoranti());
 
-        HBox buttonBox = new HBox(10, tornaAllaListaRistorantiButton, ordiniButton, carrelloButton);
+        HBox buttonBox = new HBox(10, tornaAllaListaRistorantiButton, carrelloButton);
         buttonBox.setSpacing(10);  
 
         this.getChildren().addAll(titleLabel, table, buttonBox);
     }
-
 
     private void loadMenu() {
         try (Connection conn = DatabaseConnection.connect()) {

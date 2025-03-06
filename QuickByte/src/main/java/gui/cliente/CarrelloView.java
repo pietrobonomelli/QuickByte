@@ -82,8 +82,8 @@ public class CarrelloView extends VBox {
 			Utilities.showAlert("Errore", "Errore nel caricamento del carrello.");
 		}
 
-		Button tornaAllaListaButton = new Button("⬅ INDIETRO");
-		tornaAllaListaButton.setOnAction(event -> tornaAllaLista());
+		Button tornaAllaListaButton = new Button("⬅ HOME");
+		tornaAllaListaButton.setOnAction(event -> tornaAllaHome());
 
 		Button confermaOrdineButton = new Button("CONFERMA ORDINE");
 		confermaOrdineButton.setOnAction(event -> {
@@ -99,6 +99,7 @@ public class CarrelloView extends VBox {
 		// Aggiungi la tabella e i pulsanti alla VBox senza rimuovere il titolo
 		this.getChildren().addAll(table, buttonBox);
 	}
+	
 	private void modificaQuantita(Carrello item, int delta) {
 		try {
 			int nuovaQuantita = item.getQuantitaPiatti() + delta;
@@ -124,12 +125,11 @@ public class CarrelloView extends VBox {
 		}
 	}
 
-	private void tornaAllaLista() {
-		MenuCliente mainClienteScreen = new MenuCliente();
-		Scene currentScene = this.getScene();
-		currentScene.setRoot(mainClienteScreen);
-	}
-
+	private void tornaAllaHome() {
+        MainScreenCliente mainScreenCliente = new MainScreenCliente();
+        this.getScene().setRoot(mainScreenCliente);
+    }
+	
 	public String getDataOraCorrente() {
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

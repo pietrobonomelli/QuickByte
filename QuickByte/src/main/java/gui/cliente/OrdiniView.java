@@ -73,7 +73,7 @@ public class OrdiniView extends VBox {
         table.getColumns().addAll(colId, colCosto, colStato, colEmail, colIndirizzo, colData, colAzione);
         loadOrdini();
 
-        Button tornaAllaListaButton = new Button("Torna indetro");
+        Button tornaAllaListaButton = new Button("⬅ INDIETRO");
 		tornaAllaListaButton.setOnAction(event -> tornaAllaLista());
        
         // Aggiungi tutte le componenti nella scena
@@ -106,7 +106,7 @@ public class OrdiniView extends VBox {
     }
 
     private void tornaAllaLista() {
-    	MenuCliente mainClienteScreen = new MenuCliente();
+    	MainScreenCliente mainClienteScreen = new MainScreenCliente();
 		Scene currentScene = this.getScene();
 		currentScene.setRoot(mainClienteScreen);
     }
