@@ -12,8 +12,8 @@ import dao.OrdineDAO;
 import model.Ordine;
 import model.StatoOrdine;
 import sessione.SessioneUtente;
+import utilities.Utilities;
 import gui.main.LoginScreen;
-import gui.main.Utilities;
 
 import java.util.Arrays;
 import java.util.List;

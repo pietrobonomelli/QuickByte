@@ -12,7 +12,8 @@ import dao.OrdineDAO;
 import model.Ordine;
 import model.StatoOrdine;
 import sessione.SessioneUtente;
-import gui.main.Utilities;
+import utilities.Utilities;
+
 import java.util.List;
 
 public class OrdiniView extends VBox {

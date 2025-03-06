@@ -4,6 +4,7 @@ import javafx.scene.control.*;
 import gui.main.*;
 import javafx.scene.layout.*;
 import sessione.*;
+import utilities.Utilities;
 import javafx.scene.Scene;
 import dao.*;
 import model.*;

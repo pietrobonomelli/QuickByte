@@ -9,14 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sessione.*;
-
-import java.io.InputStream;
+import utilities.LogoUtilities;
+import utilities.Utilities;
 
 public class LoginScreen extends VBox {
 
@@ -25,7 +24,7 @@ public class LoginScreen extends VBox {
         this.setAlignment(Pos.CENTER);
         this.setSpacing(20);
 
-        ImageView logoView = createLogo();
+        ImageView logoView = LogoUtilities.createLogo();
         Text title = new Text("Bentornato su QuickByte - Il gusto a portata di click!");
         title.getStyleClass().add("title");
 
@@ -56,7 +55,7 @@ public class LoginScreen extends VBox {
         loginButton.getStyleClass().add("button");
 
         VBox registerButtonBox = new VBox();
-        Text registrazioneLabel = new Text("Se non hai già un account: ");
+        Text registrazioneLabel = new Text("Se non hai un account: ");
         registrazioneLabel.getStyleClass().add("label");
         // Usa VBox per allineare il testo e il bottone a sinistra
         registerButtonBox.setAlignment(Pos.CENTER);
@@ -67,8 +66,6 @@ public class LoginScreen extends VBox {
         registerButton.setAlignment(Pos.CENTER); // Allinea il bottone a sinistra
 
         registerButtonBox.getChildren().addAll(registrazioneLabel, registerButton);
-
-
 
         loginButton.setOnAction(e -> {
             String email = emailField.getText();
@@ -127,18 +124,4 @@ public class LoginScreen extends VBox {
         primaryStage.setScene(newScene);
     }
 
-    private ImageView createLogo() {
-        InputStream logoStream = getClass().getResourceAsStream("/images/LogoQuickByte.png");
-        if (logoStream == null) {
-            System.out.println("Errore: immagine del logo non trovata.");
-        } else {
-            System.out.println("Logo caricato con successo!");
-        }
-
-        Image logoImage = new Image(logoStream);
-        ImageView logoView = new ImageView(logoImage);
-        logoView.setFitWidth(150);
-        logoView.setPreserveRatio(true);
-        return logoView;
-    }
 }

@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import gui.main.*;
 import javafx.scene.layout.*;
 import sessione.*;
+import utilities.Utilities;
 import dao.CarrelloDAO;
 import dao.RistoranteDAO;
 import model.Ristorante;

@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import dao.*;
 import model.*;
 import sessione.SessioneUtente;
+import utilities.Utilities;
 import sessione.SessioneRistorante;
 import java.sql.SQLException;
 import gui.main.*;

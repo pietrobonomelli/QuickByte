@@ -3,9 +3,9 @@ package gui.titolare;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import sessione.SessioneRistorante;
+import utilities.Utilities;
 import sessione.SessioneMenu;
 import database.DatabaseConnection;
-import gui.main.Utilities;
 import dao.PiattoDAO;
 import model.Piatto;
 

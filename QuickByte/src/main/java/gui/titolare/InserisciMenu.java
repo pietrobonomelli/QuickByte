@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import dao.MenuDAO;
 import model.Menu;
 import sessione.SessioneRistorante;
-import gui.main.Utilities;
+import utilities.Utilities;
 
 public class InserisciMenu extends VBox {
     private TextField nomeMenuField;

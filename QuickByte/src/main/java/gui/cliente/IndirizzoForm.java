@@ -2,7 +2,6 @@ package gui.cliente;
 
 import dao.IndirizzoDAO;
 import database.DatabaseConnection;
-import gui.main.Utilities;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -11,6 +10,7 @@ import model.Indirizzo;
 import java.sql.Connection;
 import java.sql.SQLException;
 import sessione.*;
+import utilities.Utilities;
 
 public class IndirizzoForm extends VBox {
 

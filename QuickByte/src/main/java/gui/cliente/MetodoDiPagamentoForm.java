@@ -4,12 +4,12 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import sessione.SessioneUtente;
+import utilities.Utilities;
 import javafx.scene.Scene;
 
 import java.sql.SQLException;
 
 import dao.MetodoDiPagamentoDAO;
-import gui.main.Utilities;
 import model.MetodoDiPagamento;
 
 public class MetodoDiPagamentoForm extends VBox {

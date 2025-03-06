@@ -3,8 +3,8 @@ package gui.titolare;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import sessione.SessioneUtente;
+import utilities.Utilities;
 import dao.RistoranteDAO;
-import gui.main.Utilities;
 import model.Ristorante;
 import java.sql.SQLException;
 

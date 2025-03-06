@@ -11,6 +11,12 @@
     -fx-max-width: 280px;
 }
 
+.password-box {
+    -fx-alignment: center-left;
+    -fx-spacing: 5;
+    -fx-max-width: 280px;
+}
+
 .button-secondary {
 
 }
