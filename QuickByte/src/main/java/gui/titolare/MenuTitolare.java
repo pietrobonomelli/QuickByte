@@ -23,7 +23,7 @@ public class MenuTitolare extends VBox {
     public MenuTitolare() {
         super(10);
         this.ristorante = SessioneRistorante.getId();
-        System.out.println("Ristorante passato a GestisciMenu: " + ristorante);  // Debug
+        System.out.println("Ristorante passato a GestisciMenu: " + ristorante);
         this.setStyle("-fx-padding: 10;");
         container = new VBox(10);
         loadMenu();

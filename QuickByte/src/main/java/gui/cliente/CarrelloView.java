@@ -15,6 +15,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class CarrelloView extends VBox {
 
+	private VBox container;
 	private String emailUtente;
 
 	public CarrelloView() {
@@ -22,11 +23,19 @@ public class CarrelloView extends VBox {
 		this.setStyle("-fx-padding: 10;");
 
 		this.emailUtente = SessioneUtente.getEmail();
-		loadCarrello();      	
+
+		// Aggiungi un titolo alla vista (solo una volta)
+		Label titolo = new Label("Carrello del Cliente");
+		titolo.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+		this.getChildren().add(titolo); // Titolo aggiunto come primo elemento
+
+		// Carica il contenuto del carrello (senza rimuovere il titolo)
+		loadCarrello();       
 	}
 
 	private void loadCarrello() {
-		this.getChildren().clear();
+		// Rimuoviamo solo la tabella e i pulsanti precedenti, non il titolo
+		this.getChildren().removeIf(node -> node instanceof TableView || node instanceof HBox);
 
 		TableView<Carrello> table = new TableView<>();
 		TableColumn<Carrello, String> colPiatto = new TableColumn<>("Piatto");
@@ -73,10 +82,10 @@ public class CarrelloView extends VBox {
 			Utilities.showAlert("Errore", "Errore nel caricamento del carrello.");
 		}
 
-		Button tornaAllaListaButton = new Button("Torna indietro");
+		Button tornaAllaListaButton = new Button("⬅ INDIETRO");
 		tornaAllaListaButton.setOnAction(event -> tornaAllaLista());
 
-		Button confermaOrdineButton = new Button("Conferma Ordine");
+		Button confermaOrdineButton = new Button("CONFERMA ORDINE");
 		confermaOrdineButton.setOnAction(event -> {
 			try {
 				confermaOrdine();
@@ -86,9 +95,10 @@ public class CarrelloView extends VBox {
 		});
 
 		HBox buttonBox = new HBox(10, tornaAllaListaButton, confermaOrdineButton);
+
+		// Aggiungi la tabella e i pulsanti alla VBox senza rimuovere il titolo
 		this.getChildren().addAll(table, buttonBox);
 	}
-
 	private void modificaQuantita(Carrello item, int delta) {
 		try {
 			int nuovaQuantita = item.getQuantitaPiatti() + delta;
@@ -103,6 +113,7 @@ public class CarrelloView extends VBox {
 			Utilities.showAlert("Errore", "Errore durante la modifica della quantità.");
 		}
 	}
+
 	private void rimuoviDalCarrello(int idCarrello) {
 		try {
 			CarrelloDAO.getInstance().rimuoviDalCarrello(idCarrello);
@@ -119,16 +130,14 @@ public class CarrelloView extends VBox {
 		currentScene.setRoot(mainClienteScreen);
 	}
 
-
 	public String getDataOraCorrente() {
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		return now.format(formatter);
-	}  
+	}
 
 	private void confermaOrdine() throws SQLException {
-
-		if(SessioneCarrello.getPieno()) {
+		if (SessioneCarrello.getPieno()) {
 			MetodoDiPagamentoDAO pagamentoDAO = new MetodoDiPagamentoDAO();
 			List<String> metodiPagamento = pagamentoDAO.getMetodiPagamento(emailUtente);
 
@@ -148,10 +157,9 @@ public class CarrelloView extends VBox {
 					selezionaIndirizzo();
 				}
 			});
-		}else {
+		} else {
 			Utilities.showAlert("Errore", "Carrello vuoto: impossibile effettuare l'ordine");
 		}
-
 	}
 
 	private void selezionaIndirizzo() {
@@ -181,19 +189,4 @@ public class CarrelloView extends VBox {
 			Utilities.showAlert("Errore", "Errore durante la conferma dell'ordine.");
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
