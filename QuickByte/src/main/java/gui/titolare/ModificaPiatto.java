@@ -98,11 +98,22 @@ public class ModificaPiatto extends VBox {
     private void scegliFoto() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Immagini", "*.png", "*.jpg", "*.jpeg"));
-        fotoFile = fileChooser.showOpenDialog(null);
+        File fotoFile = fileChooser.showOpenDialog(null);
         if (fotoFile != null) {
-        	Utilities.showAlert("Foto Selezionata", "Foto selezionata: " + fotoFile.getName());
+            Utilities.showAlert("Foto Selezionata", "Foto selezionata: " + fotoFile.getName());
+
+            // Aggiorna la foto nel database
+            try {
+                PiattoDAO piattoDAO = PiattoDAO.getInstance();
+                piattoDAO.aggiornaFotoPiatto(idPiatto, fotoFile.getName());
+                Utilities.showAlert("Successo", "Foto aggiornata nel database!");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Utilities.showAlert("Errore", "Errore durante l'aggiornamento della foto nel database: " + e.getMessage());
+            }
         }
     }
+
     
     private void tornaAiPiatti() throws SQLException {
         PiattiTitolare piattiScreen = new PiattiTitolare();

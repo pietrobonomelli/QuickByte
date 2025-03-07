@@ -78,7 +78,6 @@ public class RegisterScreen extends VBox {
 		userTypeComboBox.setPromptText("Seleziona tipo utente");
 
 		registerButton = new Button("Registrati");
-		registerButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
 		registerButton.setOnAction(e -> {
 			try {
 				handleRegistration();
@@ -94,9 +93,8 @@ public class RegisterScreen extends VBox {
         loginButtonBox.setSpacing(5);
         loginButtonBox.setMaxWidth(280);
         Button loginButton = new Button("Login");
+        loginButton.getStyleClass().add("button-secondary");
         loginButton.setOnAction(e -> switchToLoginScreen());
-        registerButton.getStyleClass().add("button-secondary");
-        registerButton.setAlignment(Pos.CENTER);
         loginButtonBox.getChildren().addAll(loginLabel, loginButton);
 
 		Button popolaDB = new Button("Popola il database");

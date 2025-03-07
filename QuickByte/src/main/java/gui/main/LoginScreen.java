@@ -52,20 +52,6 @@ public class LoginScreen extends VBox {
 	    passwordBox.getStyleClass().add("field-box");
 
         Button loginButton = new Button("Login");
-        loginButton.getStyleClass().add("button");
-
-        VBox registerButtonBox = new VBox();
-        Text registrazioneLabel = new Text("Se non hai un account: ");
-        registrazioneLabel.getStyleClass().add("label");
-        // Usa VBox per allineare il testo e il bottone a sinistra
-        registerButtonBox.setAlignment(Pos.CENTER);
-        registerButtonBox.setSpacing(5);
-        registerButtonBox.setMaxWidth(280);
-        Button registerButton = new Button("Registrati");
-        registerButton.getStyleClass().add("button-secondary");
-        registerButton.setAlignment(Pos.CENTER); // Allinea il bottone a sinistra
-
-        registerButtonBox.getChildren().addAll(registrazioneLabel, registerButton);
 
         loginButton.setOnAction(e -> {
             String email = emailField.getText();
@@ -79,6 +65,18 @@ public class LoginScreen extends VBox {
             	Utilities.showAlert("Login fallito", "Email o password errati.");
             }
         });
+        
+        VBox registerButtonBox = new VBox();
+        Text registrazioneLabel = new Text("Se non hai un account: ");
+        registrazioneLabel.getStyleClass().add("label");
+        registerButtonBox.setAlignment(Pos.CENTER);
+        registerButtonBox.setSpacing(5);
+        registerButtonBox.setMaxWidth(280);
+        Button registerButton = new Button("Registrati");
+        registerButton.getStyleClass().add("button-secondary");
+        registerButton.setAlignment(Pos.CENTER);
+
+        registerButtonBox.getChildren().addAll(registrazioneLabel, registerButton);
 
         registerButton.setOnAction(e -> {
             RegisterScreen registrationScreen = new RegisterScreen();

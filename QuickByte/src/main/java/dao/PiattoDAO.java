@@ -229,4 +229,30 @@ public class PiattoDAO {
 			SessioneCarrello.setIdRistorante(0);
 		}
 	}
+	
+	// Metodo per aggiornare la foto di un piatto
+	public void aggiornaFotoPiatto(int idPiatto, String nomeFoto) throws SQLException {
+	    String updateQuery = "UPDATE Piatto SET foto = ? WHERE idPiatto = ?";
+	    try (PreparedStatement ps = connection.prepareStatement(updateQuery)) {
+	        ps.setString(1, nomeFoto);
+	        ps.setInt(2, idPiatto);
+	        ps.executeUpdate();
+	    }
+	}
+	
+	// Metodo per ottenere il nome della foto di un piatto
+	public String mostraFoto(int idPiatto) throws SQLException {
+	    String query = "SELECT foto FROM Piatto WHERE idPiatto = ?";
+	    try (PreparedStatement ps = connection.prepareStatement(query)) {
+	        ps.setInt(1, idPiatto);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) {
+	                return rs.getString("foto");
+	            }
+	        }
+	    }
+	    return null;
+	}
+
+
 }

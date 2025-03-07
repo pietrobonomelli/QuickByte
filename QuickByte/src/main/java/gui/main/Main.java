@@ -27,7 +27,7 @@ public class Main extends Application {
         LoginScreen loginScreen = new LoginScreen();
 
         // Crea la scena per il login (dimens. della finestra 800x600)
-        Scene scene = new Scene(loginScreen, 800, 600); 
+        Scene scene = new Scene(loginScreen, 800, 800); 
         
         caricaCSS(scene);
         
