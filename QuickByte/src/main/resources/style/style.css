@@ -1,34 +1,92 @@
+/* style.css */
+
+.login-container {
+    -fx-background-color: #f9f9f9;
+    -fx-padding: 20;
+    -fx-spacing: 20;
+    -fx-alignment: center;
+    -fx-font-family: Arial, sans-serif;
+}
+
 .title {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
-	background-text: red;
 }
 
-.field-box {
-    -fx-alignment: center-left;
-    -fx-spacing: 5;
-    -fx-max-width: 280px;
+.label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #555555;
 }
 
-.password-box {
-    -fx-alignment: center-left;
-    -fx-spacing: 5;
-    -fx-max-width: 280px;
+.text-field, .password-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 8 10 8 10;
+    -fx-font-size: 14px;
+}
+
+.button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 20 10 20;
+    -fx-border-radius: 8;
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
 }
 
 .button-secondary {
-
+    -fx-background-color: transparent;
+    -fx-text-fill: #4CAF50;
+    -fx-font-size: 14px;
+    -fx-padding: 5 0 5 0;
+    -fx-border-radius: 4;
 }
 
-.password-field {
-
+.button-secondary:hover {
+	-fx-background-color: transparent;
+    -fx-underline: true;
 }
 
-label {
-
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 8 10 8 10;
+    -fx-font-size: 14px;
 }
 
-button {
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 5 0 0;
+}
 
+.combo-box .list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}
+
+.combo-box .list-cell {
+    -fx-padding: 8 10 8 10;
+    -fx-font-size: 14px;
+}
+
+.combo-box .list-cell:hover {
+	-fx-text-fill: black;
+    -fx-background-color: #f0f0f0;
+}
+
+.field-box, .password-box{
+    -fx-alignment: center-left;
+    -fx-spacing: 5;
+    -fx-max-width: 280px;
 }
