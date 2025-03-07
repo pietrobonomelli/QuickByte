@@ -29,64 +29,30 @@
     -fx-font-size: 14px;
 }
 
-.button {
-    -fx-background-color: #4CAF50;
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-padding: 10 20 10 20;
-    -fx-border-radius: 8;
-}
-
-.button:hover {
-    -fx-background-color: #45a049;
-}
-
-.button-secondary {
-    -fx-background-color: transparent;
-    -fx-text-fill: #4CAF50;
-    -fx-font-size: 14px;
-    -fx-padding: 5 0 5 0;
-    -fx-border-radius: 4;
-}
-
-.button-secondary:hover {
-	-fx-background-color: transparent;
-    -fx-underline: true;
-}
-
-.combo-box {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
-    -fx-padding: 8 10 8 10;
-    -fx-font-size: 14px;
-}
-
-.combo-box .arrow-button {
-    -fx-background-color: transparent;
-    -fx-padding: 0 5 0 0;
-}
-
-.combo-box .list-view {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
-}
-
-.combo-box .list-cell {
-    -fx-padding: 8 10 8 10;
-    -fx-font-size: 14px;
-}
-
-.combo-box .list-cell:hover {
-	-fx-text-fill: black;
-    -fx-background-color: #f0f0f0;
-}
-
-.field-box, .password-box{
+.field-box {
     -fx-alignment: center-left;
     -fx-spacing: 5;
     -fx-max-width: 280px;
+}
+
+.password-box {
+    -fx-alignment: center-left;
+    -fx-spacing: 5;
+    -fx-max-width: 280px;
+}
+
+.button-secondary {
+
+}
+
+.password-field {
+
+}
+
+label {
+
+}
+
+button {
+
 }

@@ -21,6 +21,7 @@ public class MainScreenCliente extends VBox {
 
     public MainScreenCliente() {
         super(10);
+        this.setStyle("-fx-padding: 10;");
 
         //svuoto il carrello al login per comodità
         try {
@@ -29,15 +30,14 @@ public class MainScreenCliente extends VBox {
             e.printStackTrace();
         }
 
-        this.setStyle("-fx-padding: 10;");
-
         // Etichetta del titolo
         Label titleLabel = new Label("Ristoranti Disponibili");
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        titleLabel.getStyleClass().add("title");
 
         // Creazione della tabella dei ristoranti
         table = new TableView<>();
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        table.getStyleClass().add("table-view");
 
         TableColumn<Ristorante, Integer> colId = new TableColumn<>("ID Ristorante");
         colId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdRistorante()).asObject());
@@ -48,7 +48,7 @@ public class MainScreenCliente extends VBox {
         TableColumn<Ristorante, String> colIndirizzo = new TableColumn<>("Indirizzo");
         colIndirizzo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));
 
-        TableColumn<Ristorante, String> colTelefono = new TableColumn<>("Numero di telefono");
+        TableColumn<Ristorante, String> colTelefono = new TableColumn<>("Telefono");
         colTelefono.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTelefono()));
 
         TableColumn<Ristorante, String> colEmail = new TableColumn<>("Email titolare");
@@ -56,8 +56,9 @@ public class MainScreenCliente extends VBox {
 
         TableColumn<Ristorante, Void> colMenu = new TableColumn<>("Menù");
         colMenu.setCellFactory(param -> new TableCell<Ristorante, Void>() {
-            private final Button selezionaButton = new Button("Vedi Menù");
+            private Button selezionaButton = new Button("Vedi Menù");
             {
+            	selezionaButton.getStyleClass().add("table-button");
                 selezionaButton.setOnAction(event -> {
                     Ristorante ristorante = getTableView().getItems().get(getIndex());
                     SessioneRistorante.setId(ristorante.getIdRistorante());
@@ -81,7 +82,7 @@ public class MainScreenCliente extends VBox {
 
         Button logoutButton = new Button("Logout");
         logoutButton.setOnAction(e -> switchToLoginScreen());
-        logoutButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+        logoutButton.getStyleClass().add("redButton");
 
         Button carrelloButton = new Button("🛒 CARRELLO");
         carrelloButton.setOnAction(event -> switchToCarrello());
@@ -108,21 +109,25 @@ public class MainScreenCliente extends VBox {
 
     private void switchToMenuCliente() {
         MenuCliente menuClienteScreen = new MenuCliente();
+        menuClienteScreen.getStylesheets().add("style/style.css");
         this.getScene().setRoot(menuClienteScreen);
     }
 
     private void switchToLoginScreen() {
         LoginScreen loginScreen = new LoginScreen();
+        loginScreen.getStylesheets().add("style/style.css");
         this.getScene().setRoot(loginScreen);
     }
 
     private void switchToCarrello() {
         CarrelloView carrelloScreen = new CarrelloView();
+        carrelloScreen.getStylesheets().add("style/style.css");
         this.getScene().setRoot(carrelloScreen);
     }
 
     private void switchToOrdiniCliente() {
         OrdiniView ordiniScreen = new OrdiniView();
+        ordiniScreen.getStylesheets().add("style/style.css");
         this.getScene().setRoot(ordiniScreen);
     }
 }
