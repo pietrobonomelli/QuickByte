@@ -76,6 +76,7 @@ public class PiattiCliente extends VBox {
                     Piatto piatto = getTableRow().getItem(); // Recupera il piatto della riga corrente
                     if (piatto != null) {
                         // Visualizza la foto in una finestra di dialogo
+                    	System.out.println("FOTO IN PIATTO " + piatto.getFoto());
                         showPhotoDialog(piatto.getFoto());
                     }
                 });
@@ -192,7 +193,8 @@ public class PiattiCliente extends VBox {
     private void showPhotoDialog(String fotoUrl) {
         // Finestra di dialogo per visualizzare la foto
         if (fotoUrl != null && !fotoUrl.isEmpty()) {
-            ImageView imageView = new ImageView(new Image(fotoUrl));
+            String imagePath = "/images/" + fotoUrl;
+            ImageView imageView = new ImageView(new Image(getClass().getResource(imagePath).toExternalForm()));
             imageView.setFitWidth(300);
             imageView.setFitHeight(200);
             StackPane stackPane = new StackPane(imageView);
@@ -206,6 +208,7 @@ public class PiattiCliente extends VBox {
             Utilities.showAlert("Errore", "Foto non disponibile per questo piatto.");
         }
     }
+
 
     private void tornaIndietro() {
         MenuCliente menuClienteScreen = new MenuCliente();

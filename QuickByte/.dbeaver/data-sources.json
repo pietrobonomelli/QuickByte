@@ -7,8 +7,8 @@
 			"name": "database_embedded.db 2",
 			"save-password": true,
 			"configuration": {
-				"database": "C:\\Users\\Leo\\Projects\\QuickByte\\QuickByte\\src\\main\\resources\\database_embedded.db",
-				"url": "jdbc:sqlite:C:\\Users\\Leo\\Projects\\QuickByte\\QuickByte\\src\\main\\resources\\database_embedded.db",
+				"database": "C:\\QuickByte\\QuickByte\\QuickByte\\src\\main\\resources\\database_embedded.db",
+				"url": "jdbc:sqlite:C:\\QuickByte\\QuickByte\\QuickByte\\src\\main\\resources\\database_embedded.db",
 				"configurationType": "MANUAL",
 				"type": "dev",
 				"closeIdleConnection": true,
