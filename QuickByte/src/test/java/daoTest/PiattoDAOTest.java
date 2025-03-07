@@ -13,136 +13,155 @@ public class PiattoDAOTest {
     private PiattoDAO piattoDAO;
     private static int TEST_ID_RISTORANTE;
     private static final String TEST_EMAIL = "cliente@test.com";
-    private static int TEST_ID_PIATTO;  // Variabile per l'ID del piatto
+    private static int TEST_ID_PIATTO;
 
     @BeforeClass
     public static void initDatabase() throws Exception {
-        System.out.println("Verifica connessione al database...");
         try (Connection conn = DatabaseConnection.connect()) {
-            assertNotNull("Connessione fallita!", conn);
-            System.out.println("Connessione stabilita con successo.");
+            conn.createStatement().execute("PRAGMA foreign_keys = ON;");
         }
     }
 
     @Before
     public void setUp() throws SQLException {
-        piattoDAO = PiattoDAO.getInstance();  // Inizializzazione della variabile
-        System.out.println("Inserimento dati di test...");
+        piattoDAO = PiattoDAO.getInstance();
         PiattoDAO.setAlertEnabled(false);
-
+ 
         try (Connection conn = DatabaseConnection.connect()) {
-            conn.createStatement().execute("PRAGMA foreign_keys = ON;");
-
-            // Avvia una transazione esplicita
             conn.setAutoCommit(false);
+            System.out.println("1111133330");
+            
+            System.out.println("111113333t");
+            
+            // Inserisci Utente
+            try (PreparedStatement checkUser = conn.prepareStatement(
+            	    "SELECT COUNT(*) FROM Utente WHERE email = ?")) {
+            	    checkUser.setString(1, TEST_EMAIL);
+            	    try (ResultSet rs = checkUser.executeQuery()) {
+            	        if (rs.next() && rs.getInt(1) > 0) {
+            	            System.out.println("Utente già esistente, skip inserimento.");
+            	        } else {
+            	            try (PreparedStatement ps = conn.prepareStatement(
+            	                "INSERT INTO Utente (email, password, nome, telefono, tipoUtente) VALUES (?, ?, ?, ?, ?)")) {
+            	                ps.setString(1, TEST_EMAIL);
+            	                ps.setString(2, "password123");
+            	                ps.setString(3, "Cliente Test");
+            	                ps.setString(4, "123456789");
+            	                ps.setString(5, "Cliente");
+            	                ps.executeUpdate();
+            	            }
+            	        }
+            	    }
+            	}
 
-            try {
-                String checkEmailQuery = "SELECT COUNT(*) FROM Utente WHERE email = ?";
-
-                // Poi la utilizzi nel PreparedStatement
-                try (PreparedStatement ps = conn.prepareStatement(checkEmailQuery)) {
-                    ps.setString(1, TEST_EMAIL);
-                    try (ResultSet rs = ps.executeQuery()) {
-                        if (rs.next() && rs.getInt(1) > 0) {
-                            System.out.println("L'email è già presente nel database.");
-                        } else {
-                            // Procedi con l'inserimento
-                            String insertClienteQuery = "INSERT INTO Utente (email, password, nome, telefono, tipoUtente) VALUES (?, ?, ?, ?, ?)";
-                            try (PreparedStatement psInsert = conn.prepareStatement(insertClienteQuery)) {
-                                psInsert.setString(1, TEST_EMAIL);
-                                psInsert.setString(2, "password123");
-                                psInsert.setString(3, "Cliente Test");
-                                psInsert.setString(4, "1234567890");
-                                psInsert.setString(5, "Cliente");
-                                psInsert.executeUpdate();
-                            }
-                        }
-                    }
+    
+            // Inserisci Ristorante
+            try (PreparedStatement ps = conn.prepareStatement(
+                "INSERT INTO Ristorante (nome, telefono, indirizzo, emailTitolare) VALUES (?, ?, ?, ?)",
+                Statement.RETURN_GENERATED_KEYS)) {
+                ps.setString(1, "Ristorante Test");
+                ps.setString(2, "1234567890");
+                ps.setString(3, "Via Roma 123");
+                ps.setString(4, TEST_EMAIL);
+                ps.executeUpdate();
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) TEST_ID_RISTORANTE = rs.getInt(1);
                 }
-
-                // Inserisci un ristorante di test
-                String insertRistoranteQuery = "INSERT INTO Ristorante (nome, telefono, indirizzo, emailTitolare) VALUES (?, ?, ?, ?)";
-                try (PreparedStatement ps = conn.prepareStatement(insertRistoranteQuery)) {
-                    ps.setString(1, "Ristorante Test");  // Nome del ristorante
-                    ps.setString(2, "1234567890");       // Numero di telefono
-                    ps.setString(3, "Via Roma 123");     // Indirizzo
-                    ps.setString(4, TEST_EMAIL);         // Email del titolare
-                    ps.executeUpdate();
-                }
-
-                // Recupera l'ID del ristorante appena inserito
-                String getRistoranteIdQuery = "SELECT last_insert_rowid()";
-                int ristoranteId;
-                try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(getRistoranteIdQuery)) {
-                    if (rs.next()) {
-                        ristoranteId = rs.getInt(1);
-                        System.out.println("ID del ristorante inserito: " + ristoranteId);
-                    } else {
-                        throw new SQLException("Impossibile ottenere l'ID del ristorante.");
-                    }
-                }
-                TEST_ID_RISTORANTE = ristoranteId;
-
-                // Inserisci un menu di test
-                String insertMenuQuery = "INSERT INTO Menu (nome, idRistorante) VALUES (?, ?)";
-                try (PreparedStatement ps = conn.prepareStatement(insertMenuQuery)) {
-                    ps.setString(1, "Menu1");
-                    ps.setInt(2, ristoranteId);
-                    ps.executeUpdate();
-                }
-
-                // Inserisci un piatto di test
-                String insertPiattoQuery = "INSERT INTO Piatto (nome, disponibile, prezzo, allergeni, foto, nomeMenu, idRistorante) " +
-                        "VALUES ('PiattoTest', 1, '10.99', 'Latte', 'foto.jpg', 'Menu1', ?)";
-                try (PreparedStatement ps = conn.prepareStatement(insertPiattoQuery)) {
-                    ps.setInt(1, ristoranteId);  // Usa l'ID del ristorante appena recuperato
-                    ps.executeUpdate();
-                }
-
-                // Recupera l'ID del piatto appena inserito
-                String getPiattoIdQuery = "SELECT last_insert_rowid()";
-                try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(getPiattoIdQuery)) {
-                    if (rs.next()) {
-                        TEST_ID_PIATTO = rs.getInt(1);
-                        System.out.println("ID del piatto inserito: " + TEST_ID_PIATTO);
-                    } else {
-                        throw new SQLException("Impossibile ottenere l'ID del piatto.");
-                    }
-                }
-
-                // Commit dei cambiamenti
-                conn.commit();
-            } catch (SQLException e) {
-                conn.rollback();  // Annulla la transazione in caso di errore
-                throw e;
-            } finally {
-                conn.setAutoCommit(true); // Ripristina la modalità di autocommit
             }
+            System.out.println("11111");
+            // Inserisci Menu
+            try (PreparedStatement checkMenu = conn.prepareStatement(
+            	    "SELECT COUNT(*) FROM Menu WHERE nome = ? AND idRistorante = ?")) {
+            	    checkMenu.setString(1, "Menu Speciale");
+            	    checkMenu.setInt(2, TEST_ID_RISTORANTE);
+            	    try (ResultSet rs = checkMenu.executeQuery()) {
+            	        if (rs.next() && rs.getInt(1) > 0) {
+            	            System.out.println("Menu già esistente, skip inserimento.");
+            	        } else {
+            	            try (PreparedStatement ps = conn.prepareStatement(
+            	                "INSERT INTO Menu (nome, idRistorante) VALUES (?, ?)")) {
+            	                ps.setString(1, "Menu Speciale");
+            	                ps.setInt(2, TEST_ID_RISTORANTE);
+            	                ps.executeUpdate();
+            	            }
+            	        }
+            	    }
+            	}
+
+
+            // Inserisci Piatto
+            try (PreparedStatement ps = conn.prepareStatement(
+                "INSERT INTO Piatto (nome, disponibile, prezzo, allergeni, foto, nomeMenu, idRistorante) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                Statement.RETURN_GENERATED_KEYS)) {
+                ps.setString(1, "PiattoTest");
+                ps.setInt(2, 1);
+                ps.setString(3, "10.99");
+                ps.setString(4, "Latte");
+                ps.setString(5, "foto.jpg");
+                ps.setString(6, "Menu1");
+                ps.setInt(7, TEST_ID_RISTORANTE);
+                ps.executeUpdate();
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) TEST_ID_PIATTO = rs.getInt(1);
+                }
+            }
+      
+
+            conn.commit();
         } catch (SQLException e) {
-            e.printStackTrace();  // Gestisci le eccezioni con stack trace se necessario
             throw e;
         }
     }
 
     @After
     public void tearDown() throws SQLException {
-        Connection conn = DatabaseConnection.connect();
-        
-        // Rimuovi prima eventuali riferimenti in Carrello
-        String deleteCarrelloQuery = "DELETE FROM Carrello WHERE idPiatto = ?";
-        try (PreparedStatement ps = conn.prepareStatement(deleteCarrelloQuery)) {
-            ps.setInt(1, TEST_ID_PIATTO); // idPiattoTest è il piatto di test usato nei metodi
-            ps.executeUpdate();
-        }
-        
-        // Ora puoi rimuovere il piatto senza violare vincoli di chiave esterna
-        String deletePiattoQuery = "DELETE FROM Piatto WHERE idPiatto = ?";
-        try (PreparedStatement ps = conn.prepareStatement(deletePiattoQuery)) {
-            ps.setInt(1, TEST_ID_PIATTO);
-            ps.executeUpdate();
-        }
+    	try (Connection conn = DatabaseConnection.connect()) {
+    	    conn.createStatement().execute("PRAGMA foreign_keys = OFF;");
+    	    conn.setAutoCommit(false);
+    	    cleanTestData(conn);
+    	    conn.commit();
+    	    conn.createStatement().execute("PRAGMA foreign_keys = ON;");
+    	}
+    }
 
-        conn.close();
+    private void cleanTestData(Connection conn) throws SQLException {
+        try {
+            // Disabilita temporaneamente i vincoli di chiave esterna
+            conn.createStatement().execute("PRAGMA foreign_keys = OFF;");
+
+            // Ordine di eliminazione corretto per dipendenze
+            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM Carrello WHERE emailUtente = ?")) {
+                ps.setString(1, TEST_EMAIL);
+                ps.executeUpdate();
+            }
+
+            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM Piatto WHERE idRistorante = ?")) {
+                ps.setInt(1, TEST_ID_RISTORANTE);
+                ps.executeUpdate();
+            }
+
+            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM Menu WHERE idRistorante = ?")) {
+                ps.setInt(1, TEST_ID_RISTORANTE);
+                ps.executeUpdate();
+            }
+
+            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM Ristorante WHERE idRistorante = ?")) {
+                ps.setInt(1, TEST_ID_RISTORANTE);
+                ps.executeUpdate();
+            }
+
+            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM Utente WHERE email = ?")) {
+                ps.setString(1, TEST_EMAIL);
+                ps.executeUpdate();
+            }
+
+            // Riabilita i vincoli
+            conn.createStatement().execute("PRAGMA foreign_keys = ON;");
+
+        } catch (SQLException e) {
+            conn.rollback();
+            throw e;
+        }
     }
 
 

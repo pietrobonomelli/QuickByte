@@ -16,13 +16,16 @@ public class OrdineDAO {
 	private Connection connection;
 
 	private OrdineDAO() {
-		try {
-			this.connection = DatabaseConnection.connect();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
+        try {
+            this.connection = DatabaseConnection.connect();
+            // Enable foreign key constraints for this connection
+            try (Statement stmt = this.connection.createStatement()) {
+                stmt.execute("PRAGMA foreign_keys = ON;");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 	public static OrdineDAO getInstance() {
 		if(instance == null) {
@@ -227,11 +230,10 @@ public class OrdineDAO {
 	// Aggiornare l'email del corriere di un ordine  
 	public boolean aggiornaEmailCorriereOrdine(int idOrdine, String email) {
 	    String query = "UPDATE Ordine SET emailCorriere = ? WHERE idOrdine = ?";
-
-	    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+	    try (Connection conn = DatabaseConnection.connect();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
 	        stmt.setString(1, email);
 	        stmt.setInt(2, idOrdine);
-
 	        return stmt.executeUpdate() > 0;
 	    } catch (SQLException e) {
 	        e.printStackTrace();
