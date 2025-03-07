@@ -30,6 +30,7 @@ public class OrdiniView extends VBox {
 
         // Tabella ordini
         table = new TableView<>();
+        table.getStyleClass().add("table-view");
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         TableColumn<Ordine, Integer> colId = new TableColumn<>("ID Ordine");
@@ -54,6 +55,7 @@ public class OrdiniView extends VBox {
         colAzione.setCellFactory(param -> new TableCell<Ordine, Void>() {
             private final Button eliminaButton = new Button("Elimina");
             {
+            	eliminaButton.getStyleClass().add("table-button");
                 eliminaButton.setOnAction(event -> {
                     Ordine ordine = getTableView().getItems().get(getIndex());
                     eliminaOrdine(ordine);

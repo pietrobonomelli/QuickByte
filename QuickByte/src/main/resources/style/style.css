@@ -5,12 +5,100 @@
 	background-text: red;
 }
 
+<<<<<<< Updated upstream
 .field-box {
+=======
+.label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #555555;
+}
+
+.text-field, .password-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 8 10 8 10;
+    -fx-font-size: 14px;
+}
+
+.button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 20 10 20;
+    -fx-border-radius: 8;
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+.redButton {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 20 10 20;
+    -fx-border-radius: 8;
+}
+
+.redButton:hover {
+    -fx-background-color: #8B0000;
+}
+
+.button-secondary {
+    -fx-background-color: transparent;
+    -fx-text-fill: #4CAF50;
+    -fx-font-size: 14px;
+    -fx-padding: 5 0 5 0;
+    -fx-border-radius: 4;
+}
+
+.button-secondary:hover {
+	-fx-background-color: transparent;
+    -fx-underline: true;
+}
+
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 8 10 8 10;
+    -fx-font-size: 14px;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 5 0 0;
+}
+
+.combo-box .list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}
+
+.combo-box .list-cell {
+    -fx-padding: 8 10 8 10;
+    -fx-font-size: 14px;
+}
+
+.combo-box .list-cell:hover {
+	-fx-text-fill: black;
+    -fx-background-color: #f0f0f0;
+}
+
+.field-box, .password-box{
+>>>>>>> Stashed changes
     -fx-alignment: center-left;
     -fx-spacing: 5;
     -fx-max-width: 280px;
 }
 
+<<<<<<< Updated upstream
 .password-box {
     -fx-alignment: center-left;
     -fx-spacing: 5;
@@ -32,3 +120,51 @@ label {
 button {
 
 }
+=======
+/* Stile per la tabella */
+/* Stile per la tabella */
+.table-view {
+    -fx-background-color: #f9f9f9;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 10;
+}
+
+/* Stile per l'intestazione della colonna */
+.table-view .column-header {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white !important;
+    -fx-font-size: 14px;
+	/* style.css */
+}
+
+.table-view .column-header:hover {
+    -fx-background-color: #45a049;
+}
+
+.table-view .table-cell {
+    -fx-padding: 8 10 8 10;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+/* Stile per i pulsanti all'interno della tabella */
+.table-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-padding: 5 10 5 10;
+    -fx-border-radius: 4;
+}
+
+.table-button:hover {
+    -fx-background-color: #45a049;
+}
+
+/* Stile per la riga selezionata nella tabella */
+.table-view .table-row-cell:selected {
+    -fx-background-color: #90EE90; /* Verde chiaro */
+    -fx-text-fill: #333333; /* Colore del testo */
+}
+>>>>>>> Stashed changes

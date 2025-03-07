@@ -120,7 +120,7 @@ public class LoginScreen extends VBox {
                 return;
         }
 
-        newScene.getStylesheets().add("style.css");
+        newScene.getStylesheets().add("style/style.css");
         primaryStage.setScene(newScene);
     }
 

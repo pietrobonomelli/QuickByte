@@ -53,7 +53,7 @@ public class PiattiCliente extends VBox {
 
     private void setupTableView() {
         tableView = new TableView<>();
-
+        tableView.getStyleClass().add("table-view");
         // Colonna Nome
         TableColumn<Piatto, String> nomeCol = new TableColumn<>("Piatto");
         nomeCol.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -70,8 +70,8 @@ public class PiattiCliente extends VBox {
         TableColumn<Piatto, Void> vediFotoCol = new TableColumn<>("Vedi Foto");
         vediFotoCol.setCellFactory(data -> new TableCell<Piatto, Void>() {
             private final Button btnFoto = new Button("VEDI FOTO");
-
             {
+            	btnFoto.getStyleClass().add("table-button");
                 btnFoto.setOnAction(event -> {
                     Piatto piatto = getTableRow().getItem(); // Recupera il piatto della riga corrente
                     if (piatto != null) {
@@ -96,8 +96,8 @@ public class PiattiCliente extends VBox {
         TableColumn<Piatto, Void> aggiungiCol = new TableColumn<>("");
         aggiungiCol.setCellFactory(data -> new TableCell<Piatto, Void>() {
             private final Button btnCart = new Button("AGGIUNGI AL CARRELLO 🛒");
-
             {
+            	btnCart.getStyleClass().add("table-button");
                 btnCart.setOnAction(event -> {
                     Piatto piatto = getTableView().getItems().get(getIndex());
                     try {

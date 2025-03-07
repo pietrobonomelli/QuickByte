@@ -27,10 +27,9 @@ public class CarrelloView extends VBox {
 
 		// Aggiungi un titolo alla vista (solo una volta)
 		Label titolo = new Label("Carrello del Cliente");
-		titolo.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
-		this.getChildren().add(titolo); // Titolo aggiunto come primo elemento
+		titolo.getStyleClass().add("title");
+		this.getChildren().add(titolo);
 
-		// Carica il contenuto del carrello (senza rimuovere il titolo)
 		loadCarrello();       
 	}
 
@@ -41,7 +40,7 @@ public class CarrelloView extends VBox {
 		TableView<Carrello> table = new TableView<>();
 		TableColumn<Carrello, String> colPiatto = new TableColumn<>("Piatto");
 		TableColumn<Carrello, Void> colAzioni = new TableColumn<>("Azioni");
-
+        table.getStyleClass().add("table-view");
 		colPiatto.setCellValueFactory(data -> {
 			String nomePiatto = "";
 			try {
@@ -58,6 +57,8 @@ public class CarrelloView extends VBox {
 			private final HBox buttonBox = new HBox(5, minusButton, addButton);
 
 			{
+				addButton.getStyleClass().add("table-button");
+				minusButton.getStyleClass().add("table-button");
 				addButton.setOnAction(event -> modificaQuantita(getTableRow().getItem(), 1));
 				minusButton.setOnAction(event -> modificaQuantita(getTableRow().getItem(), -1));
 			}

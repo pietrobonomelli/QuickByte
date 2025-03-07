@@ -27,10 +27,16 @@ public class Main extends Application {
         LoginScreen loginScreen = new LoginScreen();
 
         // Crea la scena per il login (dimens. della finestra 800x600)
+<<<<<<< Updated upstream
         Scene scene = new Scene(loginScreen, 800, 600); 
         
+=======
+        Scene scene = new Scene(loginScreen, 800, 800);
+
+        // Carica il CSS per la scena
+>>>>>>> Stashed changes
         caricaCSS(scene);
-        
+
         // Imposta la scena principale
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -42,7 +48,7 @@ public class Main extends Application {
     private void caricaCSS(Scene scene) {
         URL cssUrl = getClass().getResource("/style/style.css");
         if (cssUrl == null) {
-            System.out.println("Errore: file CSS non trovato.");
+            System.err.println("Errore: file CSS non trovato. Verifica il percorso del file.");
         } else {
             scene.getStylesheets().add(cssUrl.toExternalForm());
             System.out.println("CSS caricato correttamente!");

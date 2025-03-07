@@ -38,7 +38,7 @@ public class MenuCliente extends VBox {
         // Tabella per i menu
         table = new TableView<>();
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-
+        table.getStyleClass().add("table-view");
         TableColumn<Menu, String> colNome = new TableColumn<>("Menù");
         colNome.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
 
@@ -46,6 +46,7 @@ public class MenuCliente extends VBox {
         colAzione.setCellFactory(param -> new TableCell<Menu, Void>() {
             private final Button vediPiattiButton = new Button("VEDI PIATTI");
             {
+            	vediPiattiButton.getStyleClass().add("table-button");
                 vediPiattiButton.setOnAction(event -> {
                     Menu menu = getTableView().getItems().get(getIndex());
                     SessioneMenu.setNome(menu.getNome());
