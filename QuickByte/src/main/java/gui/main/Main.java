@@ -29,11 +29,7 @@ public class Main extends Application {
         // Crea la scena per il login (dimens. della finestra 800x600)
         Scene scene = new Scene(loginScreen, 800, 800); 
         
-=======
-        Scene scene = new Scene(loginScreen, 800, 800);
-
         // Carica il CSS per la scena
->>>>>>> Stashed changes
         caricaCSS(scene);
 
         // Imposta la scena principale

@@ -38,7 +38,7 @@ public class MainScreenCliente extends VBox {
         table = new TableView<>();
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         table.getStyleClass().add("table-view");
-
+        
         TableColumn<Ristorante, Integer> colId = new TableColumn<>("ID Ristorante");
         colId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdRistorante()).asObject());
 
