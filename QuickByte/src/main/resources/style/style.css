@@ -138,3 +138,17 @@
     -fx-text-fill: #333333;
 }
 
+
+/* Table button for emojis */
+.table-button-emoji {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-padding: 5 10 5 10;
+    -fx-border-radius: 4;
+}
+
+.table-button-emoji:hover {
+    -fx-background-color: transparent;
+	-fx-text-fill: #45a049; /* Adjust hover text color as needed */
+}

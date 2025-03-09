@@ -14,8 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sessione.*;
-import utilities.LogoUtilities;
-import utilities.Utilities;
+import utilities.*;
 
 public class LoginScreen extends VBox {
 

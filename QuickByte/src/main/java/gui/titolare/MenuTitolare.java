@@ -6,9 +6,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import dao.*;
 import database.DatabaseConnection;
-import sessione.SessioneRistorante;
+import sessione.*;
 import utilities.Utilities;
-import sessione.SessioneMenu;
 import model.*;
 import model.Menu;
 import java.sql.*;
@@ -32,7 +31,7 @@ public class MenuTitolare extends VBox {
         HBox buttonContainer = new HBox(10);
         buttonContainer.setStyle("-fx-padding: 10;");
 
-        Button tornaButton = new Button("Torna a gestione ristoranti");
+        Button tornaButton = new Button("⬅ INDIETRO");
         tornaButton.setOnAction(e -> swirchToMainScreenTitolare());
         buttonContainer.getChildren().add(tornaButton);
 
@@ -43,12 +42,12 @@ public class MenuTitolare extends VBox {
 
     private void loadMenu() {
         Label titleLabel = new Label("Menu");
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
         container.getChildren().add(titleLabel);
 
         // Creazione della TableView per il menu
         TableView<Menu> tableMenu = new TableView<>();
         tableMenu.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        tableMenu.getStyleClass().add("table-view");
 
         // Creazione delle colonne per la TableView
         TableColumn<Menu, String> colNomeMenu = new TableColumn<>("Nome Menu");
@@ -57,8 +56,8 @@ public class MenuTitolare extends VBox {
         TableColumn<Menu, Void> colModifica = new TableColumn<>("Modifica");
         colModifica.setCellFactory(param -> new TableCell<Menu, Void>() {
             private final Button modificaButton = new Button("Modifica");
-
             {
+            	modificaButton.getStyleClass().add("table-button");
                 modificaButton.setOnAction(event -> {
                     Menu menu = getTableView().getItems().get(getIndex());
                     try {
@@ -83,8 +82,8 @@ public class MenuTitolare extends VBox {
         TableColumn<Menu, Void> colElimina = new TableColumn<>("Elimina");
         colElimina.setCellFactory(param -> new TableCell<Menu, Void>() {
             private final Button eliminaButton = new Button("Elimina");
-
             {
+            	eliminaButton.getStyleClass().add("table-button");
                 eliminaButton.setOnAction(event -> {
                     Menu menu = getTableView().getItems().get(getIndex());
                     confermaEliminazione(menu.getNome());
@@ -114,11 +113,10 @@ public class MenuTitolare extends VBox {
             Utilities.showAlert("Errore", "Errore di connessione al database.");
         }
 
-        // Aggiungere la TableView alla schermata
         container.getChildren().add(tableMenu);
 
-        // Bottone per inserire un nuovo menu
         Button inserisciMenuButton = new Button("Inserisci Menu");
+        inserisciMenuButton.getStyleClass().add("table-button");
         inserisciMenuButton.setOnAction(e -> switchToInserisciMenu());
         container.getChildren().add(inserisciMenuButton);
     }
@@ -152,6 +150,7 @@ public class MenuTitolare extends VBox {
             private final Button accettaButton = new Button("Accetta");
             private final Button rifiutaButton = new Button("Rifiuta");
             {
+            	accettaButton.getStyleClass().add("table-button");
                 accettaButton.setOnAction(event -> {
                     Ordine ordine = getTableView().getItems().get(getIndex());
                     accettaOrdine(ordine);  

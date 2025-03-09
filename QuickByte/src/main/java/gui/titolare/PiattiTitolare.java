@@ -55,7 +55,7 @@ public class PiattiTitolare extends VBox {
             // Creazione della TableView per i piatti
             TableView<Piatto> tablePiatti = new TableView<>();
             tablePiatti.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-
+            tablePiatti.getStyleClass().add("table-view");
             // Creazione delle colonne
             TableColumn<Piatto, String> colNomePiatto = new TableColumn<>("Nome Piatto");
             colNomePiatto.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
@@ -72,8 +72,8 @@ public class PiattiTitolare extends VBox {
             TableColumn<Piatto, Void> colModifica = new TableColumn<>("Modifica");
             colModifica.setCellFactory(param -> new TableCell<Piatto, Void>() {
                 private final Button modificaButton = new Button("Modifica");
-
                 {
+                	modificaButton.getStyleClass().add("table-button");
                     modificaButton.setOnAction(event -> {
                         Piatto piatto = getTableView().getItems().get(getIndex());
                         try {
@@ -99,8 +99,8 @@ public class PiattiTitolare extends VBox {
             TableColumn<Piatto, Void> colElimina = new TableColumn<>("Elimina");
             colElimina.setCellFactory(param -> new TableCell<Piatto, Void>() {
                 private final Button eliminaButton = new Button("Elimina");
-
                 {
+                	eliminaButton.getStyleClass().add("table-button");
                     eliminaButton.setOnAction(event -> {
                         Piatto piatto = getTableView().getItems().get(getIndex());
                         eliminaPiatto(piatto.getIdPiatto());
