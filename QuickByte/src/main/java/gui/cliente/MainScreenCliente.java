@@ -88,7 +88,7 @@ public class MainScreenCliente extends VBox {
         Button logoutButton = new Button("Logout");
         logoutButton.setOnAction(e -> switchToLoginScreen());
         logoutButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
-
+        
         Button ordiniButton = new Button("I TUOI ORDINI");
         ordiniButton.setOnAction(event -> switchToOrdiniCliente());
 
@@ -120,7 +120,7 @@ public class MainScreenCliente extends VBox {
         loginScreen.getStylesheets().add("style/style.css");
         this.getScene().setRoot(loginScreen);
     }
-
+ 
     private void switchToOrdiniCliente() {
         OrdiniView ordiniScreen = new OrdiniView();
         ordiniScreen.getStylesheets().add("style/style.css");
