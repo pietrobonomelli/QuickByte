@@ -15,12 +15,12 @@ import utilities.LogoUtilities;
 
 public class RegisterScreen extends VBox {
 
-	private TextField emailField;
-	private TextField nameField;
-	private TextField phoneField;
-	private PasswordField passwordField;
-	private ComboBox<String> userTypeComboBox;
-	private Button registerButton;
+    private TextField emailField;
+    private TextField nameField;
+    private TextField phoneField;
+    private PasswordField passwordField;
+    private ComboBox<String> userTypeComboBox;
+    private Button registerButton;
 
 	public RegisterScreen() {
         this.getStyleClass().add("login-container");
@@ -110,86 +110,86 @@ public class RegisterScreen extends VBox {
         loginButton.setOnAction(e -> switchToLoginScreen());
         loginButtonBox.getChildren().addAll(loginLabel, loginButton);
 
-		Button popolaDB = new Button("Popola il database");
-		popolaDB.setOnAction(e -> PopolaDatabase.popolaDatabase());
+        Button popolaDB = new Button("Popola il database");
+        popolaDB.setOnAction(e -> PopolaDatabase.popolaDatabase());
 
 		getChildren().addAll(logoView, title, presentazione, registrazioneForm, loginButtonBox, popolaDB);
 	}
 
 
-	private void handleRegistration() throws SQLException {
-		String email = emailField.getText().trim();
-		String name = nameField.getText().trim();
-		String phone = phoneField.getText().trim();
-		String password = passwordField.getText().trim();
-		String userType = userTypeComboBox.getValue();
+    private void handleRegistration() throws SQLException {
+        String email = emailField.getText().trim();
+        String name = nameField.getText().trim();
+        String phone = phoneField.getText().trim();
+        String password = passwordField.getText().trim();
+        String userType = userTypeComboBox.getValue();
 
-		if (email.isEmpty() || name.isEmpty() || phone.isEmpty() || password.isEmpty() || userType == null) {
-			showError("Tutti i campi sono obbligatori.");
-			return;
-		}
+        if (email.isEmpty() || name.isEmpty() || phone.isEmpty() || password.isEmpty() || userType == null) {
+            showError("Tutti i campi sono obbligatori.");
+            return;
+        }
 
-		if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-			showError("Formato email non valido.");
-			return;
-		}
+        if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            showError("Formato email non valido.");
+            return;
+        }
 
-		if (!phone.matches("\\d{10,15}")) {
-			showError("Numero di telefono non valido.");
-			return;
-		}
+        if (!phone.matches("\\d{10,15}")) {
+            showError("Numero di telefono non valido.");
+            return;
+        }
 
-		// Controlla se l'email è già in uso
-		System.out.println("return del get utente by email: " + UtenteDAO.getInstance().getUtenteByEmail(email));
-		if (UtenteDAO.getInstance().getUtenteByEmail(email) != null) {
-			showError("Email già in uso.");
-		} else {
-			// Crea l'oggetto utente e lo inserisce nel database
-			Utente utente = null;
-			switch (userType) {
-			case "Cliente":
-				utente = new Cliente(email, password, name, phone);
-				break;
-			case "Titolare":
-				utente = new Titolare(email, password, name, phone);
-				break;
-			case "Corriere":
-				utente = new Corriere(email, password, name, phone);
-				break;
-			}
+        // Controlla se l'email è già in uso
+        System.out.println("return del get utente by email: " + UtenteDAO.getInstance().getUtenteByEmail(email));
+        if (UtenteDAO.getInstance().getUtenteByEmail(email) != null) {
+            showError("Email già in uso.");
+        } else {
+            // Crea l'oggetto utente e lo inserisce nel database
+            Utente utente = null;
+            switch (userType) {
+                case "Cliente":
+                    utente = new Cliente(email, password, name, phone);
+                    break;
+                case "Titolare":
+                    utente = new Titolare(email, password, name, phone);
+                    break;
+                case "Corriere":
+                    utente = new Corriere(email, password, name, phone);
+                    break;
+            }
 
-			// Inserisce l'utente nel database tramite il DAO
-			if (utente != null) {
-				boolean success = UtenteDAO.getInstance().insertUtente(utente, userType);
-				if (success) {
-					showSuccess("Registrazione avvenuta con successo!");
-					switchToLoginScreen();
-				} else {
-					showError("Errore durante la registrazione. Riprova.");
-				}
-			}
-		}
-	}
+            // Inserisce l'utente nel database tramite il DAO
+            if (utente != null) {
+                boolean success = UtenteDAO.getInstance().insertUtente(utente, userType);
+                if (success) {
+                    showSuccess("Registrazione avvenuta con successo!");
+                    switchToLoginScreen();
+                } else {
+                    showError("Errore durante la registrazione. Riprova.");
+                }
+            }
+        }
+    }
 
-	private void switchToLoginScreen() {
-		Scene currentScene = getScene();
-		LoginScreen loginScreen = new LoginScreen(); 
-		currentScene.setRoot(loginScreen);
-	}
+    private void switchToLoginScreen() {
+        Scene currentScene = getScene();
+        LoginScreen loginScreen = new LoginScreen();
+        currentScene.setRoot(loginScreen);
+    }
 
-	private void showError(String message) {
-		Alert alert = new Alert(Alert.AlertType.ERROR);
-		alert.setTitle("Errore");
-		alert.setHeaderText(null);
-		alert.setContentText(message);
-		alert.showAndWait();
-	}
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Errore");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
-	private void showSuccess(String message) {
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Successo");
-		alert.setHeaderText(null);
-		alert.setContentText(message);
-		alert.showAndWait();
-	}
+    private void showSuccess(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Successo");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }

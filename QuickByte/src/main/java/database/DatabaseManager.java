@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseManager {
-    private static final String DB_URL = "jdbc:sqlite:src/main/resources/database_embedded.db";
+    public static String DB_URL = "jdbc:sqlite:src/main/resources/database_embedded.db";
 
     public static Connection connect() throws SQLException {
         return DriverManager.getConnection(DB_URL);
@@ -31,9 +31,9 @@ public class DatabaseManager {
                 "emailCliente TEXT, " +
                 "emailCorriere TEXT, " +
                 "idRistorante INTEGER, " +
-                "FOREIGN KEY(emailCliente) REFERENCES Utente(email), " +
+                "FOREIGN KEY(emailCliente) REFERENCES Utente(email) ON DELETE CASCADE," +
                 "FOREIGN KEY(emailCorriere) REFERENCES Utente(email), " +
-                "FOREIGN KEY(idRistorante) REFERENCES Ristorante(idRistorante)" +
+                "FOREIGN KEY(idRistorante) REFERENCES Ristorante(idRistorante) ON DELETE CASCADE" +
                 ");";
 
         String createCarrelloTable = "CREATE TABLE IF NOT EXISTS Carrello (" + 
