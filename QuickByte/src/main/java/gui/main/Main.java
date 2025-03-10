@@ -8,6 +8,9 @@ import java.net.URL;
 
 public class Main extends Application {
 
+	private final int MIN_WIDTH = 850;
+	private final int MAX_WIDTH = 1000;
+	
     public static void main(String[] args) {
         System.out.println("Avvio applicazione...");
         launch(args);
@@ -26,11 +29,12 @@ public class Main extends Application {
         // Crea la schermata di login (LoginScreen)
         LoginScreen loginScreen = new LoginScreen();
 
-        // Crea la scena per il login (dimens. della finestra 800x600)
-        Scene scene = new Scene(loginScreen, 800, 800); 
+        // Crea la scena per il login
+        Scene scene = new Scene(loginScreen, MIN_WIDTH, MAX_WIDTH); 
         
+        // Carica il CSS per la scena
         caricaCSS(scene);
-        
+
         // Imposta la scena principale
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -42,7 +46,7 @@ public class Main extends Application {
     private void caricaCSS(Scene scene) {
         URL cssUrl = getClass().getResource("/style/style.css");
         if (cssUrl == null) {
-            System.out.println("Errore: file CSS non trovato.");
+            System.err.println("Errore: file CSS non trovato. Verifica il percorso del file.");
         } else {
             scene.getStylesheets().add(cssUrl.toExternalForm());
             System.out.println("CSS caricato correttamente!");

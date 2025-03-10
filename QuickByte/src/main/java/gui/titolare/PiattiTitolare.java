@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.*;
 import java.util.List;
+import com.pavlobu.emojitextflow.EmojiTextFlow;
 
 public class PiattiTitolare extends VBox {
 
@@ -55,7 +56,7 @@ public class PiattiTitolare extends VBox {
             // Creazione della TableView per i piatti
             TableView<Piatto> tablePiatti = new TableView<>();
             tablePiatti.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-
+            tablePiatti.getStyleClass().add("table-view");
             // Creazione delle colonne
             TableColumn<Piatto, String> colNomePiatto = new TableColumn<>("Nome Piatto");
             colNomePiatto.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
@@ -66,18 +67,44 @@ public class PiattiTitolare extends VBox {
             TableColumn<Piatto, String> colAllergeni = new TableColumn<>("Allergeni");
             colAllergeni.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAllergeni()));
 
-            TableColumn<Piatto, String> colDisponibile = new TableColumn<>("Disponibilità");
-            colDisponibile.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isDisponibile() ? "✅" : "❌"));
-
-            TableColumn<Piatto, Void> colModifica = new TableColumn<>("Modifica");
-            colModifica.setCellFactory(param -> new TableCell<Piatto, Void>() {
-                private final Button modificaButton = new Button("Modifica");
+         // Colonna Disponibilità con EmojiTextFlow
+            TableColumn<Piatto, Void> colDisponibile = new TableColumn<>("Disponibilità");
+            colDisponibile.setCellFactory(param -> new TableCell<Piatto, Void>() {
+                private final EmojiTextFlow emojiDisponibile = new EmojiTextFlow();
+                private final EmojiTextFlow emojiNonDisponibile = new EmojiTextFlow();
 
                 {
+                    emojiDisponibile.parseAndAppend(":white_check_mark:"); // ✅
+                    emojiNonDisponibile.parseAndAppend(":x:"); // ❌
+                }
+
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || getTableView().getItems().get(getIndex()) == null) {
+                        setGraphic(null);
+                    } else {
+                        Piatto piatto = getTableView().getItems().get(getIndex());
+                        setGraphic(piatto.isDisponibile() ? emojiDisponibile : emojiNonDisponibile);
+                    }
+                }
+            });
+
+            // Colonna Modifica con icona matita
+            TableColumn<Piatto, Void> colModifica = new TableColumn<>("Modifica");
+            colModifica.setCellFactory(param -> new TableCell<Piatto, Void>() {
+                private final Button modificaButton = new Button();
+                private final EmojiTextFlow emojiMatita = new EmojiTextFlow();
+
+                {
+                    emojiMatita.parseAndAppend(":pencil:"); // ✏️
+                    modificaButton.setGraphic(emojiMatita);
+                    modificaButton.getStyleClass().add("table-button-emoji");
+
                     modificaButton.setOnAction(event -> {
                         Piatto piatto = getTableView().getItems().get(getIndex());
                         try {
-                            SessionePiatto.setId(piatto.getIdPiatto()); // Salviamo l'ID del piatto selezionato
+                            SessionePiatto.setId(piatto.getIdPiatto()); // Salva l'ID del piatto selezionato
                             switchToModificaPiatto();
                         } catch (SQLException e1) {
                             e1.printStackTrace();
@@ -88,19 +115,20 @@ public class PiattiTitolare extends VBox {
                 @Override
                 protected void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);
-                    if (empty) {
-                        setGraphic(null);
-                    } else {
-                        setGraphic(modificaButton);
-                    }
+                    setGraphic(empty ? null : modificaButton);
                 }
             });
 
+
             TableColumn<Piatto, Void> colElimina = new TableColumn<>("Elimina");
             colElimina.setCellFactory(param -> new TableCell<Piatto, Void>() {
-                private final Button eliminaButton = new Button("Elimina");
+                private final Button eliminaButton = new Button();
+                private final EmojiTextFlow emojiTextFlow2 = new EmojiTextFlow();
+                {            	
+                	emojiTextFlow2.parseAndAppend(":wastebasket:");
+                	eliminaButton.setGraphic(emojiTextFlow2);
 
-                {
+                	eliminaButton.getStyleClass().add("table-button-emoji");
                     eliminaButton.setOnAction(event -> {
                         Piatto piatto = getTableView().getItems().get(getIndex());
                         eliminaPiatto(piatto.getIdPiatto());

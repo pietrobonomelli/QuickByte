@@ -13,6 +13,7 @@ import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javafx.beans.property.SimpleStringProperty;
+import com.pavlobu.emojitextflow.EmojiTextFlow;
 
 public class CarrelloView extends VBox {
 
@@ -27,10 +28,9 @@ public class CarrelloView extends VBox {
 
 		// Aggiungi un titolo alla vista (solo una volta)
 		Label titolo = new Label("Carrello del Cliente");
-		titolo.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
-		this.getChildren().add(titolo); // Titolo aggiunto come primo elemento
+		titolo.getStyleClass().add("title");
+		this.getChildren().add(titolo);
 
-		// Carica il contenuto del carrello (senza rimuovere il titolo)
 		loadCarrello();       
 	}
 
@@ -41,7 +41,7 @@ public class CarrelloView extends VBox {
 		TableView<Carrello> table = new TableView<>();
 		TableColumn<Carrello, String> colPiatto = new TableColumn<>("Piatto");
 		TableColumn<Carrello, Void> colAzioni = new TableColumn<>("Azioni");
-
+        table.getStyleClass().add("table-view");
 		colPiatto.setCellValueFactory(data -> {
 			String nomePiatto = "";
 			try {
@@ -53,11 +53,22 @@ public class CarrelloView extends VBox {
 		});
 
 		colAzioni.setCellFactory(param -> new TableCell<Carrello, Void>() {
-			private final Button addButton = new Button("+");
-			private final Button minusButton = new Button("-");
+			private final Button addButton = new Button("");
+			private final Button minusButton = new Button("");
+			
 			private final HBox buttonBox = new HBox(5, minusButton, addButton);
+			
+			private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
+			private final EmojiTextFlow emojiTextFlow2 = new EmojiTextFlow();
+			{            					
+				emojiTextFlow1.parseAndAppend(":heavy_minus_sign:");
+				minusButton.setGraphic(emojiTextFlow1);
+				minusButton.getStyleClass().add("table-button-emoji");
 
-			{
+				emojiTextFlow2.parseAndAppend(":heavy_plus_sign:");
+				addButton.setGraphic(emojiTextFlow2);
+				addButton.getStyleClass().add("table-button-emoji");
+
 				addButton.setOnAction(event -> modificaQuantita(getTableRow().getItem(), 1));
 				minusButton.setOnAction(event -> modificaQuantita(getTableRow().getItem(), -1));
 			}

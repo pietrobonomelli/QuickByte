@@ -7,6 +7,7 @@ import gui.titolare.MainScreenTitolare;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -14,21 +15,20 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sessione.*;
-import utilities.LogoUtilities;
-import utilities.Utilities;
+import utilities.*;
 
 public class LoginScreen extends VBox {
 
     public LoginScreen() {
         this.getStyleClass().add("login-container");
         this.setAlignment(Pos.CENTER);
-        this.setSpacing(20);
+        this.setSpacing(10);
 
         ImageView logoView = LogoUtilities.createLogo();
         Text title = new Text("Bentornato su QuickByte - Il gusto a portata di click!");
         title.getStyleClass().add("title");
 
-        Text titleLogin = new Text("Effettua il login");
+        Label titleLogin = new Label("LOGIN");
         titleLogin.getStyleClass().add("title");
         
         VBox emailBox = new VBox();
@@ -118,7 +118,7 @@ public class LoginScreen extends VBox {
                 return;
         }
 
-        newScene.getStylesheets().add("style.css");
+        newScene.getStylesheets().add("style/style.css");
         primaryStage.setScene(newScene);
     }
 

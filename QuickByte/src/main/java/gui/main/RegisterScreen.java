@@ -22,70 +22,83 @@ public class RegisterScreen extends VBox {
     private ComboBox<String> userTypeComboBox;
     private Button registerButton;
 
-    public RegisterScreen() {
-        setAlignment(Pos.CENTER);
-        setSpacing(10);
+	public RegisterScreen() {
+        this.getStyleClass().add("login-container");
+		setAlignment(Pos.CENTER);
+		setSpacing(10);
 
         ImageView logoView = LogoUtilities.createLogo();
         Text title = new Text("Benvenuto su QuickByte - Il gusto a portata di click!");
         title.getStyleClass().add("title");
+		
+        String presentazioneRuoli = 
+                "- Cliente: Esplora i ristoranti, sfoglia i menu, effettua ordini e segui il loro stato.\n" +
+                "    - Titolare: Gestisci il tuo menu e organizza gli ordini dei clienti.\n" +
+                "    - Corriere: Visualizza le consegne disponibili e aggiorna il loro stato.";
 
-        Label titleRegistrazione = new Label("Registrazione");
-        titleRegistrazione.getStyleClass().add("title");
+        Text presentazione = new Text(presentazioneRuoli);
+        presentazione.getStyleClass().add("role-list");
+        
+		VBox registrazioneForm = new VBox();
+		
+		Label titleRegistrazione = new Label("REGISTRAZIONE");
+		titleRegistrazione.getStyleClass().add("title");
+		VBox emailBox = new VBox();
+		Text emailLabel = new Text("E-MAIL");
+		emailLabel.getStyleClass().add("label");
+		this.emailField = new TextField();
+		emailField.setPromptText("Inserisci l'e-mail");
+		emailField.getStyleClass().add("text-field");
+		emailField.setMaxWidth(280);
+		emailBox.getChildren().addAll(emailLabel, emailField);
+		emailBox.getStyleClass().add("field-box");
+		
+		VBox nomeBox = new VBox();
+		Text nomeLabel = new Text("NOME");
+		nomeLabel.getStyleClass().add("label");
+		this.nameField = new TextField();
+		nameField.setPromptText("Inserisci il nominativo");
+		nameField.getStyleClass().add("text-field");
+		nameField.setMaxWidth(280);
+		nomeBox.getChildren().addAll(nomeLabel, nameField);
+		nomeBox.getStyleClass().add("field-box");
 
-        VBox emailBox = new VBox();
-        Text emailLabel = new Text("E-MAIL");
-        emailLabel.getStyleClass().add("label");
-        emailField = new TextField(); // Inizializza la variabile di istanza
-        emailField.setPromptText("Inserisci l'e-mail");
-        emailField.getStyleClass().add("text-field");
-        emailField.setMaxWidth(280);
-        emailBox.getChildren().addAll(emailLabel, emailField);
-        emailBox.getStyleClass().add("field-box");
+		VBox telefonoBox = new VBox();
+		Text telefonoLabel = new Text("NUMERO DI TELEFONO");
+		telefonoLabel.getStyleClass().add("label");
+		this.phoneField = new TextField();
+		phoneField.setPromptText("Inserisci il numero di telefono");
+		phoneField.getStyleClass().add("text-field");
+		phoneField.setMaxWidth(280);
+		telefonoBox.getChildren().addAll(telefonoLabel, phoneField);
+		telefonoBox.getStyleClass().add("field-box");
+		
+		VBox passwordBox = new VBox();
+		Text passwordLabel = new Text("PASSWORD");
+		passwordLabel.getStyleClass().add("label");
+		this.passwordField = new PasswordField();
+		passwordField.setPromptText("Inserisci la password");
+		passwordField.getStyleClass().add("text-field");
+		passwordField.setMaxWidth(280);
+		passwordBox.getChildren().addAll(passwordLabel, passwordField);
+		passwordBox.getStyleClass().add("password-box");
 
-        VBox nomeBox = new VBox();
-        Text nomeLabel = new Text("NOME");
-        nomeLabel.getStyleClass().add("label");
-        nameField = new TextField(); // Inizializza la variabile di istanza
-        nameField.setPromptText("Inserisci il nominativo");
-        nameField.getStyleClass().add("text-field");
-        nameField.setMaxWidth(280);
-        nomeBox.getChildren().addAll(nomeLabel, nameField);
-        nomeBox.getStyleClass().add("field-box");
+		this.userTypeComboBox = new ComboBox<>();
+		userTypeComboBox.getItems().addAll("Cliente", "Titolare", "Corriere");
+		userTypeComboBox.setPromptText("Seleziona il tipo di utente");
 
-        VBox telefonoBox = new VBox();
-        Text telefonoLabel = new Text("NUMERO DI TELEFONO");
-        telefonoLabel.getStyleClass().add("label");
-        phoneField = new TextField(); // Inizializza la variabile di istanza
-        phoneField.setPromptText("Inserisci il numero di telefono");
-        phoneField.getStyleClass().add("text-field");
-        phoneField.setMaxWidth(280);
-        telefonoBox.getChildren().addAll(telefonoLabel, phoneField);
-        telefonoBox.getStyleClass().add("field-box");
-
-        VBox passwordBox = new VBox();
-        Text passwordLabel = new Text("PASSWORD");
-        passwordLabel.getStyleClass().add("label");
-        passwordField = new PasswordField(); // Inizializza la variabile di istanza
-        passwordField.setPromptText("Inserisci la password");
-        passwordField.getStyleClass().add("text-field");
-        passwordField.setMaxWidth(280);
-        passwordBox.getChildren().addAll(passwordLabel, passwordField);
-        passwordBox.getStyleClass().add("password-box");
-
-        userTypeComboBox = new ComboBox<>();
-        userTypeComboBox.getItems().addAll("Cliente", "Titolare", "Corriere");
-        userTypeComboBox.setPromptText("Seleziona tipo utente");
-
-        registerButton = new Button("Registrati");
-        registerButton.setOnAction(e -> {
-            try {
-                handleRegistration();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-        });
-
+		this.registerButton = new Button("Registrati");
+		registerButton.setOnAction(e -> {
+			try {
+				handleRegistration();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		});
+		registrazioneForm.setAlignment(Pos.CENTER);
+		registrazioneForm.setSpacing(5);
+		registrazioneForm.getChildren().addAll(titleRegistrazione, emailBox, nomeBox, telefonoBox, passwordBox, userTypeComboBox, registerButton);
+		
         VBox loginButtonBox = new VBox();
         Text loginLabel = new Text("Se hai già un account: ");
         loginLabel.getStyleClass().add("label");
@@ -100,8 +113,9 @@ public class RegisterScreen extends VBox {
         Button popolaDB = new Button("Popola il database");
         popolaDB.setOnAction(e -> PopolaDatabase.popolaDatabase());
 
-        getChildren().addAll(logoView, titleRegistrazione, emailBox, nomeBox, telefonoBox, passwordBox, userTypeComboBox, registerButton, loginButtonBox, popolaDB);
-    }
+		getChildren().addAll(logoView, title, presentazione, registrazioneForm, loginButtonBox, popolaDB);
+	}
+
 
     private void handleRegistration() throws SQLException {
         String email = emailField.getText().trim();

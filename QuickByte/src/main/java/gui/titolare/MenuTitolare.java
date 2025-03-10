@@ -6,13 +6,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import dao.*;
 import database.DatabaseConnection;
-import sessione.SessioneRistorante;
+import sessione.*;
 import utilities.Utilities;
-import sessione.SessioneMenu;
 import model.*;
 import model.Menu;
 import java.sql.*;
 import java.util.List;
+import com.pavlobu.emojitextflow.EmojiTextFlow;
 
 public class MenuTitolare extends VBox {
 
@@ -32,7 +32,7 @@ public class MenuTitolare extends VBox {
         HBox buttonContainer = new HBox(10);
         buttonContainer.setStyle("-fx-padding: 10;");
 
-        Button tornaButton = new Button("Torna a gestione ristoranti");
+        Button tornaButton = new Button("⬅ INDIETRO");
         tornaButton.setOnAction(e -> swirchToMainScreenTitolare());
         buttonContainer.getChildren().add(tornaButton);
 
@@ -43,12 +43,12 @@ public class MenuTitolare extends VBox {
 
     private void loadMenu() {
         Label titleLabel = new Label("Menu");
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
         container.getChildren().add(titleLabel);
 
         // Creazione della TableView per il menu
         TableView<Menu> tableMenu = new TableView<>();
         tableMenu.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        tableMenu.getStyleClass().add("table-view");
 
         // Creazione delle colonne per la TableView
         TableColumn<Menu, String> colNomeMenu = new TableColumn<>("Nome Menu");
@@ -56,9 +56,13 @@ public class MenuTitolare extends VBox {
 
         TableColumn<Menu, Void> colModifica = new TableColumn<>("Modifica");
         colModifica.setCellFactory(param -> new TableCell<Menu, Void>() {
-            private final Button modificaButton = new Button("Modifica");
+        	private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
+            private final Button modificaButton = new Button();
+            {            	
+            	emojiTextFlow1.parseAndAppend(":pencil:");
+            	modificaButton.setGraphic(emojiTextFlow1);
 
-            {
+            	modificaButton.getStyleClass().add("table-button-emoji");
                 modificaButton.setOnAction(event -> {
                     Menu menu = getTableView().getItems().get(getIndex());
                     try {
@@ -82,9 +86,13 @@ public class MenuTitolare extends VBox {
 
         TableColumn<Menu, Void> colElimina = new TableColumn<>("Elimina");
         colElimina.setCellFactory(param -> new TableCell<Menu, Void>() {
-            private final Button eliminaButton = new Button("Elimina");
+            private final Button eliminaButton = new Button();
+            private final EmojiTextFlow emojiTextFlow2 = new EmojiTextFlow();
+            {            	
+            	emojiTextFlow2.parseAndAppend(":wastebasket:");
+            	eliminaButton.setGraphic(emojiTextFlow2);
 
-            {
+            	eliminaButton.getStyleClass().add("table-button-emoji");
                 eliminaButton.setOnAction(event -> {
                     Menu menu = getTableView().getItems().get(getIndex());
                     confermaEliminazione(menu.getNome());
@@ -114,11 +122,10 @@ public class MenuTitolare extends VBox {
             Utilities.showAlert("Errore", "Errore di connessione al database.");
         }
 
-        // Aggiungere la TableView alla schermata
         container.getChildren().add(tableMenu);
 
-        // Bottone per inserire un nuovo menu
         Button inserisciMenuButton = new Button("Inserisci Menu");
+        inserisciMenuButton.getStyleClass().add("table-button");
         inserisciMenuButton.setOnAction(e -> switchToInserisciMenu());
         container.getChildren().add(inserisciMenuButton);
     }
@@ -159,9 +166,22 @@ public class MenuTitolare extends VBox {
 
         TableColumn<Ordine, Void> colAzione = new TableColumn<>("Azione");
         colAzione.setCellFactory(param -> new TableCell<Ordine, Void>() {
-            private final Button accettaButton = new Button("Accetta");
-            private final Button rifiutaButton = new Button("Rifiuta");
-            {
+        	
+        	private final Button accettaButton = new Button();
+            private final Button rifiutaButton = new Button();
+
+            private final EmojiTextFlow emojiTextFlowAcc = new EmojiTextFlow();
+            private final EmojiTextFlow emojiTextFlowDel = new EmojiTextFlow();
+            {            	
+            	emojiTextFlowAcc.parseAndAppend(":white_check_mark:");
+            	accettaButton.setGraphic(emojiTextFlowAcc);
+            	
+            	emojiTextFlowDel.parseAndAppend(":x:");
+            	rifiutaButton.setGraphic(emojiTextFlowDel);
+
+            	accettaButton.getStyleClass().add("table-button-emoji");
+            	rifiutaButton.getStyleClass().add("table-button-emoji");
+            	
                 accettaButton.setOnAction(event -> {
                     Ordine ordine = getTableView().getItems().get(getIndex());
                     accettaOrdine(ordine);  
@@ -179,9 +199,10 @@ public class MenuTitolare extends VBox {
                 if (empty || !getTableView().getItems().get(getIndex()).getStato().equals(StatoOrdine.PENDENTE.name())) {
                     setGraphic(null);
                 } else {
-                    VBox buttonBox = new VBox(5);
+                    HBox buttonBox = new HBox(10);
                     buttonBox.getChildren().addAll(accettaButton, rifiutaButton);
                     setGraphic(buttonBox);
+
                 }
             }
         });

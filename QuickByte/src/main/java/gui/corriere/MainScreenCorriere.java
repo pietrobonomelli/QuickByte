@@ -65,7 +65,7 @@ public class MainScreenCorriere extends VBox {
 
         TableColumn<Ordine, Void> colAzione = new TableColumn<>("Azione");
         colAzione.setCellFactory(param -> new TableCell<Ordine, Void>() {
-            private final Button accettaButton = new Button("Accetta");
+            private final Button accettaButton = new Button("ACCETTA");
             {
                 accettaButton.setOnAction(event -> {
                     Ordine ordine = getTableView().getItems().get(getIndex());
@@ -120,9 +120,9 @@ public class MainScreenCorriere extends VBox {
         TableColumn<Ordine, String> colIndirizzoPassato = new TableColumn<>("Indirizzo");
         colIndirizzoPassato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));
         
-        TableColumn<Ordine, Void> colAzionePassato = new TableColumn<>("  Azione  ");
+        TableColumn<Ordine, Void> colAzionePassato = new TableColumn<>("    Azione     ");
         colAzionePassato.setCellFactory(param -> new TableCell<Ordine, Void>() {
-            private final Button consegnatoButton = new Button("Consegnato");
+            private final Button consegnatoButton = new Button("SEGNA COME CONSEGNATO");
             {
             	consegnatoButton.setOnAction(event -> {
                     Ordine ordine = getTableView().getItems().get(getIndex());

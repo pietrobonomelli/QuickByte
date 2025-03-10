@@ -7,27 +7,29 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import dao.*;
 import model.*;
+import sessione.SessioneRistorante;
 import sessione.SessioneUtente;
 import utilities.Utilities;
-import sessione.SessioneRistorante;
 import java.sql.SQLException;
 import gui.main.*;
+import com.pavlobu.emojitextflow.EmojiTextFlow;
 
 public class MainScreenTitolare extends VBox {
 
     private String email;
     private TableView<Ristorante> tableView;
-
+    
     public MainScreenTitolare() {
         super(10);
         this.email = SessioneUtente.getEmail();
         this.setStyle("-fx-padding: 10;");
 
         Label titolo = new Label("Gestione Ristoranti");
-        titolo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-
+        titolo.getStyleClass().add("title");
+        
         tableView = new TableView<>();
-        setupTable(); // Mantieni la configurazione della tabella
+        tableView.getStyleClass().add("table-view");
+        setupTable();
 
         HBox buttonContainer = new HBox(10);
         buttonContainer.setStyle("-fx-padding: 10;");
@@ -39,7 +41,7 @@ public class MainScreenTitolare extends VBox {
         logoutButton.setOnAction(e -> switchToLoginScreen());
         logoutButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
 
-        buttonContainer.getChildren().addAll(inserisciRistoranteButton, logoutButton);
+        buttonContainer.getChildren().addAll(logoutButton, inserisciRistoranteButton);
 
         // Aggiungi gli elementi nell'ordine corretto: Titolo -> Tabella -> Pulsanti
         this.getChildren().addAll(titolo, tableView, buttonContainer);
@@ -49,15 +51,19 @@ public class MainScreenTitolare extends VBox {
 
     private void setupTable() {
         // Crea la colonna per il nome del ristorante
-        TableColumn<Ristorante, String> colNome = new TableColumn<>("Nome Ristorante");
+        TableColumn<Ristorante, String> colNome = new TableColumn<>("Gestisci menu ed ordinazioni");
         colNome.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
 
         // Crea la colonna per il pulsante "Visualizza Menu"
-        TableColumn<Ristorante, Void> colVisualizzaMenu = new TableColumn<>("Visualizza Menu");
+        TableColumn<Ristorante, Void> colVisualizzaMenu = new TableColumn<>("Gestisci menu ed ordinazioni");
         colVisualizzaMenu.setCellFactory(param -> new TableCell<Ristorante, Void>() {
-            private final Button visualizzaMenuButton = new Button("Visualizza Menu");
-
+        	private final EmojiTextFlow emojiTextFlow0 = new EmojiTextFlow();
+            private final Button visualizzaMenuButton = new Button("");
             {
+            	emojiTextFlow0.parseAndAppend(":clipboard:");
+            	visualizzaMenuButton.setGraphic(emojiTextFlow0);
+
+            	visualizzaMenuButton.getStyleClass().add("table-button-emoji");
                 visualizzaMenuButton.setOnAction(event -> {
                     Ristorante ristorante = getTableView().getItems().get(getIndex());
                     switchToMenuTitolare(ristorante.getIdRistorante());  
@@ -75,12 +81,17 @@ public class MainScreenTitolare extends VBox {
             }
         });
 
-        // Crea la colonna per il pulsante "Modifica"
+                
+        // Crea la colonna per il pulsante per gestire il ristorante
         TableColumn<Ristorante, Void> colModifica = new TableColumn<>("Modifica");
         colModifica.setCellFactory(param -> new TableCell<Ristorante, Void>() {
-            private final Button modificaButton = new Button("Modifica");
+        	private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
+            private final Button modificaButton = new Button();
+            {            	
+            	emojiTextFlow1.parseAndAppend(":pencil:");
+                modificaButton.setGraphic(emojiTextFlow1);
 
-            {
+            	modificaButton.getStyleClass().add("table-button-emoji");
                 modificaButton.setOnAction(event -> {
                     Ristorante ristorante = getTableView().getItems().get(getIndex());
                     switchToModificaRistorante(ristorante.getNome());  
@@ -101,9 +112,12 @@ public class MainScreenTitolare extends VBox {
         // Crea la colonna per il pulsante "Elimina"
         TableColumn<Ristorante, Void> colElimina = new TableColumn<>("Elimina");
         colElimina.setCellFactory(param -> new TableCell<Ristorante, Void>() {
-            private final Button eliminaButton = new Button("Elimina");
-
+        	private final EmojiTextFlow emojiTextFlow2 = new EmojiTextFlow();
+            private final Button eliminaButton = new Button();
             {
+            	emojiTextFlow2.parseAndAppend(":wastebasket:");
+            	eliminaButton.setGraphic(emojiTextFlow2);
+            	eliminaButton.getStyleClass().add("table-button-emoji");
                 eliminaButton.setOnAction(event -> {
                     Ristorante ristorante = getTableView().getItems().get(getIndex());
                     confermaEliminazione(ristorante);
