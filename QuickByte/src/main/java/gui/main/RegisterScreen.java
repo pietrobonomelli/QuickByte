@@ -46,7 +46,7 @@ public class RegisterScreen extends VBox {
 		VBox emailBox = new VBox();
 		Text emailLabel = new Text("E-MAIL");
 		emailLabel.getStyleClass().add("label");
-		TextField emailField = new TextField();
+		this.emailField = new TextField();
 		emailField.setPromptText("Inserisci l'e-mail");
 		emailField.getStyleClass().add("text-field");
 		emailField.setMaxWidth(280);
@@ -56,38 +56,38 @@ public class RegisterScreen extends VBox {
 		VBox nomeBox = new VBox();
 		Text nomeLabel = new Text("NOME");
 		nomeLabel.getStyleClass().add("label");
-		TextField nomeField = new TextField();
-		nomeField.setPromptText("Inserisci il nominativo");
-		nomeField.getStyleClass().add("text-field");
-		nomeField.setMaxWidth(280);
-		nomeBox.getChildren().addAll(nomeLabel, nomeField);
+		this.nameField = new TextField();
+		nameField.setPromptText("Inserisci il nominativo");
+		nameField.getStyleClass().add("text-field");
+		nameField.setMaxWidth(280);
+		nomeBox.getChildren().addAll(nomeLabel, nameField);
 		nomeBox.getStyleClass().add("field-box");
 
 		VBox telefonoBox = new VBox();
 		Text telefonoLabel = new Text("NUMERO DI TELEFONO");
 		telefonoLabel.getStyleClass().add("label");
-		TextField telefonoField = new TextField();
-		telefonoField.setPromptText("Inserisci il numero di telefono");
-		telefonoField.getStyleClass().add("text-field");
-		telefonoField.setMaxWidth(280);
-		telefonoBox.getChildren().addAll(telefonoLabel, telefonoField);
+		this.phoneField = new TextField();
+		phoneField.setPromptText("Inserisci il numero di telefono");
+		phoneField.getStyleClass().add("text-field");
+		phoneField.setMaxWidth(280);
+		telefonoBox.getChildren().addAll(telefonoLabel, phoneField);
 		telefonoBox.getStyleClass().add("field-box");
 		
 		VBox passwordBox = new VBox();
 		Text passwordLabel = new Text("PASSWORD");
 		passwordLabel.getStyleClass().add("label");
-		TextField passwordField = new PasswordField();
+		this.passwordField = new PasswordField();
 		passwordField.setPromptText("Inserisci la password");
 		passwordField.getStyleClass().add("text-field");
 		passwordField.setMaxWidth(280);
 		passwordBox.getChildren().addAll(passwordLabel, passwordField);
 		passwordBox.getStyleClass().add("password-box");
 
-		userTypeComboBox = new ComboBox<>();
+		this.userTypeComboBox = new ComboBox<>();
 		userTypeComboBox.getItems().addAll("Cliente", "Titolare", "Corriere");
 		userTypeComboBox.setPromptText("Seleziona il tipo di utente");
 
-		registerButton = new Button("Registrati");
+		this.registerButton = new Button("Registrati");
 		registerButton.setOnAction(e -> {
 			try {
 				handleRegistration();
