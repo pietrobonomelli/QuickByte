@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import java.sql.*;
 import java.util.List;
+import com.pavlobu.emojitextflow.EmojiTextFlow;
 
 public class PiattiCliente extends VBox {
 
@@ -69,9 +70,13 @@ public class PiattiCliente extends VBox {
         // Colonna Vedi Foto
         TableColumn<Piatto, Void> vediFotoCol = new TableColumn<>("Vedi Foto");
         vediFotoCol.setCellFactory(data -> new TableCell<Piatto, Void>() {
-            private final Button btnFoto = new Button("VEDI FOTO");
-            {
-            	btnFoto.getStyleClass().add("table-button");
+            private final Button btnFoto = new Button();
+            private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
+            {            	
+            	emojiTextFlow1.parseAndAppend(":camera:");
+            	btnFoto.setGraphic(emojiTextFlow1);
+            	btnFoto.getStyleClass().add("table-button-emoji");
+
                 btnFoto.setOnAction(event -> {
                     Piatto piatto = getTableRow().getItem(); // Recupera il piatto della riga corrente
                     if (piatto != null) {
@@ -94,11 +99,15 @@ public class PiattiCliente extends VBox {
         });
 
         // Colonna Aggiungi al carrello
-        TableColumn<Piatto, Void> aggiungiCol = new TableColumn<>("");
+        TableColumn<Piatto, Void> aggiungiCol = new TableColumn<>("Aggiungi al carrello");
         aggiungiCol.setCellFactory(data -> new TableCell<Piatto, Void>() {
-            private final Button btnCart = new Button("AGGIUNGI AL CARRELLO 🛒");
-            {
-            	btnCart.getStyleClass().add("table-button");
+            private final Button btnCart = new Button("");
+            private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
+            {            	
+            	emojiTextFlow1.parseAndAppend(":shopping_cart:");
+            	btnCart.setGraphic(emojiTextFlow1);
+            	btnCart.getStyleClass().add("table-button-emoji");
+
                 btnCart.setOnAction(event -> {
                     Piatto piatto = getTableView().getItems().get(getIndex());
                     try {

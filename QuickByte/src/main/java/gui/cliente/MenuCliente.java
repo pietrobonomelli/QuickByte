@@ -13,6 +13,7 @@ import dao.MenuDAO;
 import model.Menu;
 import java.sql.*;
 import java.util.List;
+import com.pavlobu.emojitextflow.EmojiTextFlow;
 
 public class MenuCliente extends VBox {
 
@@ -44,9 +45,13 @@ public class MenuCliente extends VBox {
 
         TableColumn<Menu, Void> colAzione = new TableColumn<>("Piatti");
         colAzione.setCellFactory(param -> new TableCell<Menu, Void>() {
-            private final Button vediPiattiButton = new Button("VEDI PIATTI");
-            {
-            	vediPiattiButton.getStyleClass().add("table-button");
+            private final Button vediPiattiButton = new Button();
+            private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
+            {            	
+            	emojiTextFlow1.parseAndAppend(":pencil:");
+            	vediPiattiButton.setGraphic(emojiTextFlow1);
+
+            	vediPiattiButton.getStyleClass().add("table-button-emoji");
                 vediPiattiButton.setOnAction(event -> {
                     Menu menu = getTableView().getItems().get(getIndex());
                     SessioneMenu.setNome(menu.getNome());

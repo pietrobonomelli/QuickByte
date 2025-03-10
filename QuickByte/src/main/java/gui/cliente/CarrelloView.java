@@ -13,6 +13,7 @@ import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javafx.beans.property.SimpleStringProperty;
+import com.pavlobu.emojitextflow.EmojiTextFlow;
 
 public class CarrelloView extends VBox {
 
@@ -52,13 +53,22 @@ public class CarrelloView extends VBox {
 		});
 
 		colAzioni.setCellFactory(param -> new TableCell<Carrello, Void>() {
-			private final Button addButton = new Button("+");
-			private final Button minusButton = new Button("-");
+			private final Button addButton = new Button("");
+			private final Button minusButton = new Button("");
+			
 			private final HBox buttonBox = new HBox(5, minusButton, addButton);
+			
+			private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
+			private final EmojiTextFlow emojiTextFlow2 = new EmojiTextFlow();
+			{            					
+				emojiTextFlow1.parseAndAppend(":heavy_minus_sign:");
+				minusButton.setGraphic(emojiTextFlow1);
+				minusButton.getStyleClass().add("table-button-emoji");
 
-			{
-				addButton.getStyleClass().add("table-button");
-				minusButton.getStyleClass().add("table-button");
+				emojiTextFlow2.parseAndAppend(":heavy_plus_sign:");
+				addButton.setGraphic(emojiTextFlow2);
+				addButton.getStyleClass().add("table-button-emoji");
+
 				addButton.setOnAction(event -> modificaQuantita(getTableRow().getItem(), 1));
 				minusButton.setOnAction(event -> modificaQuantita(getTableRow().getItem(), -1));
 			}

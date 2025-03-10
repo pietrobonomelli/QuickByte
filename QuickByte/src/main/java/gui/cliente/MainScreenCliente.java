@@ -14,6 +14,7 @@ import dao.RistoranteDAO;
 import model.Ristorante;
 import java.sql.SQLException;
 import java.util.List;
+import com.pavlobu.emojitextflow.EmojiTextFlow;
 
 public class MainScreenCliente extends VBox {
 
@@ -56,9 +57,13 @@ public class MainScreenCliente extends VBox {
 
         TableColumn<Ristorante, Void> colMenu = new TableColumn<>("Menù");
         colMenu.setCellFactory(param -> new TableCell<Ristorante, Void>() {
-            private Button selezionaButton = new Button("Vedi Menù");
-            {
-            	selezionaButton.getStyleClass().add("table-button");
+            private Button selezionaButton = new Button();
+            private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
+            {            	
+            	emojiTextFlow1.parseAndAppend(":fork_knife_plate:");
+            	selezionaButton.setGraphic(emojiTextFlow1);
+            	selezionaButton.getStyleClass().add("table-button-emoji");
+            	
                 selezionaButton.setOnAction(event -> {
                     Ristorante ristorante = getTableView().getItems().get(getIndex());
                     SessioneRistorante.setId(ristorante.getIdRistorante());

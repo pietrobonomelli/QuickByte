@@ -61,7 +61,7 @@ public class MainScreenCorriere extends VBox {
 
         TableColumn<Ordine, Void> colAzione = new TableColumn<>("Azione");
         colAzione.setCellFactory(param -> new TableCell<Ordine, Void>() {
-            private final Button accettaButton = new Button("Accetta");
+            private final Button accettaButton = new Button("ACCETTA");
             {
                 accettaButton.setOnAction(event -> {
                     Ordine ordine = getTableView().getItems().get(getIndex());
