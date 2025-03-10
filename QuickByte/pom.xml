@@ -61,10 +61,10 @@
         <!-- EmojiTextFlow Dependency -->
         <dependency>
             <groupId>com.example</groupId>
-            <artifactId>JavaFXEmojiTextFlow_openmoji</artifactId>
+            <artifactId>JavaFXEmojiTextFlow_twemoji</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/JavaFXEmojiTextFlow_openmoji-1.0.jar</systemPath>
+            <systemPath>${project.basedir}/libs/JavaFXEmojiTextFlow_twemoji-1.0.jar</systemPath>
         </dependency>
 
         <!-- Other Necessary Dependencies -->

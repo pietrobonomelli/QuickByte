@@ -82,8 +82,8 @@ public class MainScreenCliente extends VBox {
 
         Button logoutButton = new Button("Logout");
         logoutButton.setOnAction(e -> switchToLoginScreen());
-        logoutButton.getStyleClass().add("redButton");
-
+        logoutButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+        
         Button carrelloButton = new Button("🛒 CARRELLO");
         carrelloButton.setOnAction(event -> switchToCarrello());
 
