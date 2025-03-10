@@ -23,6 +23,7 @@ public class RegisterScreen extends VBox {
 	private Button registerButton;
 
 	public RegisterScreen() {
+        this.getStyleClass().add("login-container");
 		setAlignment(Pos.CENTER);
 		setSpacing(10);
 
@@ -30,9 +31,18 @@ public class RegisterScreen extends VBox {
         Text title = new Text("Benvenuto su QuickByte - Il gusto a portata di click!");
         title.getStyleClass().add("title");
 		
-		Label titleRegistrazione = new Label("Registrazione");
-		titleRegistrazione.getStyleClass().add("title");
+        String presentazioneRuoli = 
+                "- Cliente: Esplora i ristoranti, sfoglia i menu, effettua ordini e segui il loro stato.\n" +
+                "    - Titolare: Gestisci il tuo menu e organizza gli ordini dei clienti.\n" +
+                "    - Corriere: Visualizza le consegne disponibili e aggiorna il loro stato.";
 
+        Text presentazione = new Text(presentazioneRuoli);
+        presentazione.getStyleClass().add("role-list");
+        
+		VBox registrazioneForm = new VBox();
+		
+		Label titleRegistrazione = new Label("REGISTRAZIONE");
+		titleRegistrazione.getStyleClass().add("title");
 		VBox emailBox = new VBox();
 		Text emailLabel = new Text("E-MAIL");
 		emailLabel.getStyleClass().add("label");
@@ -75,7 +85,7 @@ public class RegisterScreen extends VBox {
 
 		userTypeComboBox = new ComboBox<>();
 		userTypeComboBox.getItems().addAll("Cliente", "Titolare", "Corriere");
-		userTypeComboBox.setPromptText("Seleziona tipo utente");
+		userTypeComboBox.setPromptText("Seleziona il tipo di utente");
 
 		registerButton = new Button("Registrati");
 		registerButton.setOnAction(e -> {
@@ -85,7 +95,10 @@ public class RegisterScreen extends VBox {
 				e1.printStackTrace();
 			}
 		});
-
+		registrazioneForm.setAlignment(Pos.CENTER);
+		registrazioneForm.setSpacing(5);
+		registrazioneForm.getChildren().addAll(titleRegistrazione, emailBox, nomeBox, telefonoBox, passwordBox, userTypeComboBox, registerButton);
+		
         VBox loginButtonBox = new VBox();
         Text loginLabel = new Text("Se hai già un account: ");
         loginLabel.getStyleClass().add("label");
@@ -100,7 +113,7 @@ public class RegisterScreen extends VBox {
 		Button popolaDB = new Button("Popola il database");
 		popolaDB.setOnAction(e -> PopolaDatabase.popolaDatabase());
 
-		getChildren().addAll(logoView, titleRegistrazione, emailBox, nomeBox, telefonoBox, passwordBox, userTypeComboBox, registerButton, loginButtonBox, popolaDB);
+		getChildren().addAll(logoView, title, presentazione, registrazioneForm, loginButtonBox, popolaDB);
 	}
 
 

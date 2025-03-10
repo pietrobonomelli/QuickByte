@@ -2,22 +2,28 @@
 
 .login-container {
     -fx-background-color: #f9f9f9;
-    -fx-padding: 20;
-    -fx-spacing: 20;
+    -fx-padding: 30;  /* Aumentato il padding */
+    -fx-spacing: 15;  /* Più spazio tra gli elementi */
     -fx-alignment: center;
     -fx-font-family: Arial, sans-serif;
 }
 
 .title {
-    -fx-font-size: 24px;
+    -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-text-fill: #333333;
+    -fx-text-fill: black;
+}
+
+.role-list {
+    -fx-font-size: 16px;
+    -fx-text-fill: black;
 }
 
 .label {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-text-fill: #555555;
+    -fx-padding: 5 0 5 0; /* Aggiunto spazio sopra e sotto */
 }
 
 .text-field, .password-field {
@@ -25,16 +31,17 @@
     -fx-border-color: #cccccc;
     -fx-border-width: 1;
     -fx-border-radius: 5;
-    -fx-padding: 8 10 8 10;
+    -fx-padding: 10;  /* Margine interno più grande */
     -fx-font-size: 14px;
+    -fx-min-width: 300px; /* Impostata larghezza minima */
 }
 
 .button {
     -fx-background-color: #4CAF50;
     -fx-text-fill: white;
     -fx-font-size: 16px;
-    -fx-padding: 10 20 10 20;
-    -fx-border-radius: 8;
+    -fx-padding: 12 24;
+    -fx-border-radius: 20;
 }
 
 .button:hover {
@@ -61,6 +68,8 @@
     -fx-border-radius: 5;
     -fx-padding: 8 10 8 10;
     -fx-font-size: 14px;
+	-fx-margin: 30px;
+	-fx-min-width: 300px; /* Stessa larghezza degli input */
 }
 
 .combo-box .arrow-button {
@@ -76,7 +85,7 @@
 }
 
 .combo-box .list-cell {
-    -fx-padding: 8 10 8 10;
+    -fx-padding: 8 10;
     -fx-font-size: 14px;
 }
 
@@ -85,10 +94,11 @@
     -fx-background-color: #f0f0f0;
 }
 
-.field-box, .password-box{
+.field-box, .password-box {
     -fx-alignment: center-left;
-    -fx-spacing: 5;
-    -fx-max-width: 280px;
+    -fx-spacing: 8;  /* Aggiunto più spazio tra label e input */
+    -fx-max-width: 300px; /* Leggermente più largo */
+    -fx-padding: 5; /* Aggiunto padding */
 }
 
 /* Stile per la tabella */

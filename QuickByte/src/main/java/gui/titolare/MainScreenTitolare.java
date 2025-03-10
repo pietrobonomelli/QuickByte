@@ -41,7 +41,7 @@ public class MainScreenTitolare extends VBox {
         logoutButton.setOnAction(e -> switchToLoginScreen());
         logoutButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
 
-        buttonContainer.getChildren().addAll(inserisciRistoranteButton, logoutButton);
+        buttonContainer.getChildren().addAll(logoutButton, inserisciRistoranteButton);
 
         // Aggiungi gli elementi nell'ordine corretto: Titolo -> Tabella -> Pulsanti
         this.getChildren().addAll(titolo, tableView, buttonContainer);
