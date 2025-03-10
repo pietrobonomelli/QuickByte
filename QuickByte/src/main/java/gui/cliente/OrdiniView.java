@@ -13,8 +13,8 @@ import model.Ordine;
 import model.StatoOrdine;
 import sessione.SessioneUtente;
 import utilities.Utilities;
-
 import java.util.List;
+import com.pavlobu.emojitextflow.EmojiTextFlow;
 
 public class OrdiniView extends VBox {
 
@@ -53,9 +53,13 @@ public class OrdiniView extends VBox {
 
         TableColumn<Ordine, Void> colAzione = new TableColumn<>("Azione");
         colAzione.setCellFactory(param -> new TableCell<Ordine, Void>() {
-            private final Button eliminaButton = new Button("Elimina");
-            {
-            	eliminaButton.getStyleClass().add("table-button");
+            private final Button eliminaButton = new Button();
+            private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
+            {            	
+            	emojiTextFlow1.parseAndAppend(":wastebasket:");
+            	eliminaButton.setGraphic(emojiTextFlow1);
+
+            	eliminaButton.getStyleClass().add("table-button-emoji");
                 eliminaButton.setOnAction(event -> {
                     Ordine ordine = getTableView().getItems().get(getIndex());
                     eliminaOrdine(ordine);
@@ -73,7 +77,7 @@ public class OrdiniView extends VBox {
             }
         });
 
-        table.getColumns().addAll(colId, colCosto, colStato, colEmail, colIndirizzo, colData, colAzione);
+        table.getColumns().addAll(colId, colCosto, colData, colEmail, colIndirizzo, colStato, colAzione);
         loadOrdini();
 
         Button tornaAllaListaButton = new Button("⬅ INDIETRO");
