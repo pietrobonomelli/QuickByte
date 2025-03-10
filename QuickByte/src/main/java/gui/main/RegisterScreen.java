@@ -1,7 +1,6 @@
 package gui.main;
 
 import java.sql.SQLException;
-
 import dao.UtenteDAO;
 import database.PopolaDatabase;
 import javafx.geometry.Pos;
@@ -11,9 +10,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.*;
-import utilities.LogoUtilities;
+import utilities.*;
+import javafx.scene.layout.StackPane;
+import javafx.scene.control.ScrollPane;
 
-public class RegisterScreen extends VBox {
+public class RegisterScreen extends StackPane {
 
     private TextField emailField;
     private TextField nameField;
@@ -22,83 +23,71 @@ public class RegisterScreen extends VBox {
     private ComboBox<String> userTypeComboBox;
     private Button registerButton;
 
-	public RegisterScreen() {
+    public RegisterScreen() {
         this.getStyleClass().add("login-container");
-		setAlignment(Pos.CENTER);
-		setSpacing(10);
+        setAlignment(Pos.CENTER);
 
         ImageView logoView = LogoUtilities.createLogo();
         Text title = new Text("Benvenuto su QuickByte - Il gusto a portata di click!");
         title.getStyleClass().add("title");
-		
-        String presentazioneRuoli = 
+
+        String presentazioneRuoli =
                 "- Cliente: Esplora i ristoranti, sfoglia i menu, effettua ordini e segui il loro stato.\n" +
-                "    - Titolare: Gestisci il tuo menu e organizza gli ordini dei clienti.\n" +
-                "    - Corriere: Visualizza le consegne disponibili e aggiorna il loro stato.";
+                "- Titolare: Gestisci il tuo menu e organizza gli ordini dei clienti.\n" +
+                "- Corriere: Visualizza le consegne disponibili e aggiorna il loro stato.";
 
         Text presentazione = new Text(presentazioneRuoli);
         presentazione.getStyleClass().add("role-list");
-        
-		VBox registrazioneForm = new VBox();
-		
-		Label titleRegistrazione = new Label("REGISTRAZIONE");
-		titleRegistrazione.getStyleClass().add("title");
-		VBox emailBox = new VBox();
-		Text emailLabel = new Text("E-MAIL");
-		emailLabel.getStyleClass().add("label");
-		this.emailField = new TextField();
-		emailField.setPromptText("Inserisci l'e-mail");
-		emailField.getStyleClass().add("text-field");
-		emailField.setMaxWidth(280);
-		emailBox.getChildren().addAll(emailLabel, emailField);
-		emailBox.getStyleClass().add("field-box");
-		
-		VBox nomeBox = new VBox();
-		Text nomeLabel = new Text("NOME");
-		nomeLabel.getStyleClass().add("label");
-		this.nameField = new TextField();
-		nameField.setPromptText("Inserisci il nominativo");
-		nameField.getStyleClass().add("text-field");
-		nameField.setMaxWidth(280);
-		nomeBox.getChildren().addAll(nomeLabel, nameField);
-		nomeBox.getStyleClass().add("field-box");
 
-		VBox telefonoBox = new VBox();
-		Text telefonoLabel = new Text("NUMERO DI TELEFONO");
-		telefonoLabel.getStyleClass().add("label");
-		this.phoneField = new TextField();
-		phoneField.setPromptText("Inserisci il numero di telefono");
-		phoneField.getStyleClass().add("text-field");
-		phoneField.setMaxWidth(280);
-		telefonoBox.getChildren().addAll(telefonoLabel, phoneField);
-		telefonoBox.getStyleClass().add("field-box");
-		
-		VBox passwordBox = new VBox();
-		Text passwordLabel = new Text("PASSWORD");
-		passwordLabel.getStyleClass().add("label");
-		this.passwordField = new PasswordField();
-		passwordField.setPromptText("Inserisci la password");
-		passwordField.getStyleClass().add("text-field");
-		passwordField.setMaxWidth(280);
-		passwordBox.getChildren().addAll(passwordLabel, passwordField);
-		passwordBox.getStyleClass().add("password-box");
+        VBox registrazioneForm = createRegistrationForm();
 
-		this.userTypeComboBox = new ComboBox<>();
-		userTypeComboBox.getItems().addAll("Cliente", "Titolare", "Corriere");
-		userTypeComboBox.setPromptText("Seleziona il tipo di utente");
+        VBox loginButtonBox = createLoginButtonBox();
 
-		this.registerButton = new Button("Registrati");
-		registerButton.setOnAction(e -> {
-			try {
-				handleRegistration();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		});
-		registrazioneForm.setAlignment(Pos.CENTER);
-		registrazioneForm.setSpacing(5);
-		registrazioneForm.getChildren().addAll(titleRegistrazione, emailBox, nomeBox, telefonoBox, passwordBox, userTypeComboBox, registerButton);
-		
+        Button popolaDB = new Button("Popola il database");
+        popolaDB.setOnAction(e -> PopolaDatabase.popolaDatabase());
+
+        VBox content = new VBox(logoView, title, presentazione, registrazioneForm, loginButtonBox, popolaDB);
+        content.setAlignment(Pos.CENTER);
+        content.setSpacing(10);
+
+        ScrollPane scrollPane = new ScrollPane(content);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
+        getChildren().add(scrollPane);
+    }
+
+    private VBox createRegistrationForm() {
+        VBox registrazioneForm = new VBox();
+        registrazioneForm.setAlignment(Pos.CENTER);
+        registrazioneForm.setSpacing(5);
+
+        Label titleRegistrazione = new Label("REGISTRAZIONE");
+        titleRegistrazione.getStyleClass().add("title");
+
+        VBox emailBox = Utilities.createFieldBox("E-MAIL", "Inserisci l'e-mail", new TextField());
+        VBox nomeBox = Utilities.createFieldBox("NOME", "Inserisci il nominativo", new TextField());
+        VBox telefonoBox = Utilities.createFieldBox("NUMERO DI TELEFONO", "Inserisci il numero di telefono", new TextField());
+        VBox passwordBox = Utilities.createFieldBox("PASSWORD", "Inserisci la password", new PasswordField());
+
+        this.userTypeComboBox = new ComboBox<>();
+        userTypeComboBox.getItems().addAll("Cliente", "Titolare", "Corriere");
+        userTypeComboBox.setPromptText("Seleziona il tipo di utente");
+
+        this.registerButton = new Button("Registrati");
+        registerButton.setOnAction(e -> {
+            try {
+                handleRegistration();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        registrazioneForm.getChildren().addAll(titleRegistrazione, emailBox, nomeBox, telefonoBox, passwordBox, userTypeComboBox, registerButton);
+        return registrazioneForm;
+    }
+
+    private VBox createLoginButtonBox() {
         VBox loginButtonBox = new VBox();
         Text loginLabel = new Text("Se hai già un account: ");
         loginLabel.getStyleClass().add("label");
@@ -109,13 +98,8 @@ public class RegisterScreen extends VBox {
         loginButton.getStyleClass().add("button-secondary");
         loginButton.setOnAction(e -> switchToLoginScreen());
         loginButtonBox.getChildren().addAll(loginLabel, loginButton);
-
-        Button popolaDB = new Button("Popola il database");
-        popolaDB.setOnAction(e -> PopolaDatabase.popolaDatabase());
-
-		getChildren().addAll(logoView, title, presentazione, registrazioneForm, loginButtonBox, popolaDB);
-	}
-
+        return loginButtonBox;
+    }
 
     private void handleRegistration() throws SQLException {
         String email = emailField.getText().trim();
