@@ -27,16 +27,16 @@ public class PopolaDatabase {
 	            "('Nigiri Special', 3);";
 
 	    String insertPiatti = "INSERT INTO Piatto (nome, disponibile, prezzo, allergeni, foto, nomeMenu, idRistorante) VALUES " +
-	            "('Margherita', 1, '6.50', 'Glutine, Lattosio', '', 'Pizza Special', 1), " +
-	            "('Diavola', 1, '7.50', 'Glutine, Lattosio', '', 'Pizza Special', 1), " +
-	            "('Bruschette Miste', 1, '5.00', 'Glutine', '', 'Antipasti', 1), " +
-	            "('Risotto ai Funghi', 1, '10.00', 'Lattosio', '', 'Pasta & Risotti', 2), " +
-	            "('Carbonara', 1, '9.00', 'Glutine, Lattosio', '', 'Pasta & Risotti', 2), " +
-	            "('Philadelphia Roll', 1, '12.00', 'Pesce, Glutine', '', 'Sushi Rolls', 3), " +
-	            "('California Roll', 1, '11.00', 'Pesce, Glutine', '', 'Sushi Rolls', 3), " +
-	            "('Nigiri Salmone', 1, '8.00', 'Pesce', '', 'Nigiri Special', 3), " +
-	            "('Nigiri Tonno', 1, '8.50', 'Pesce', '', 'Nigiri Special', 3), " +
-	            "('Nigiri Gambero', 1, '9.00', 'Pesce, Crostacei', '', 'Nigiri Special', 3);";
+	            "('Margherita', 1, '6.50', 'Glutine, Lattosio', 'pizza.jpg', 'Pizza Special', 1), " +
+	            "('Diavola', 1, '7.50', 'Glutine, Lattosio', 'pizza.jpg', 'Pizza Special', 1), " +
+	            "('Bruschette Miste', 1, '5.00', 'Glutine', 'bruschette.jpg', 'Antipasti', 1), " +
+	            "('Risotto ai Funghi', 1, '10.00', 'Lattosio', 'risotto.jpg', 'Pasta & Risotti', 2), " +
+	            "('Carbonara', 1, '9.00', 'Glutine, Lattosio', 'patate.jpg', 'Pasta & Risotti', 2), " +
+	            "('Philadelphia Roll', 1, '12.00', 'Pesce, Glutine', 'sushi.jpg', 'Sushi Rolls', 3), " +
+	            "('California Roll', 1, '11.00', 'Pesce, Glutine', 'sushi.jpg', 'Sushi Rolls', 3), " +
+	            "('Nigiri Salmone', 1, '8.00', 'Pesce', 'sushi.jpg', 'Nigiri Special', 3), " +
+	            "('Nigiri Tonno', 1, '8.50', 'Pesce', 'sushi.jpg', 'Nigiri Special', 3), " +
+	            "('Nigiri Gambero', 1, '9.00', 'Pesce, Crostacei', 'sushi.jpg', 'Nigiri Special', 3);";
 
 	    String insertIndirizzi = "INSERT INTO Indirizzo (indirizzo, citta, cap, provincia, emailUtente) VALUES " +
 	            "('Via Milano 5', 'Milano', '20121', 'MI', 'cliente@gmail.com'), " +
