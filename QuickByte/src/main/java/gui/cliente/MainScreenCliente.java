@@ -88,14 +88,11 @@ public class MainScreenCliente extends VBox {
         Button logoutButton = new Button("Logout");
         logoutButton.setOnAction(e -> switchToLoginScreen());
         logoutButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
-        
-        Button carrelloButton = new Button("🛒 CARRELLO");
-        carrelloButton.setOnAction(event -> switchToCarrello());
 
         Button ordiniButton = new Button("I TUOI ORDINI");
         ordiniButton.setOnAction(event -> switchToOrdiniCliente());
 
-        HBox buttonBox = new HBox(10, logoutButton, ordiniButton, carrelloButton);
+        HBox buttonBox = new HBox(10, logoutButton, ordiniButton);
         buttonBox.setSpacing(10);
 
         this.getChildren().addAll(titleLabel, table, buttonBox);
@@ -122,12 +119,6 @@ public class MainScreenCliente extends VBox {
         LoginScreen loginScreen = new LoginScreen();
         loginScreen.getStylesheets().add("style/style.css");
         this.getScene().setRoot(loginScreen);
-    }
-
-    private void switchToCarrello() {
-        CarrelloView carrelloScreen = new CarrelloView();
-        carrelloScreen.getStylesheets().add("style/style.css");
-        this.getScene().setRoot(carrelloScreen);
     }
 
     private void switchToOrdiniCliente() {
