@@ -146,6 +146,16 @@ public class MenuTitolare extends VBox {
         // Aggiungi la colonna Ristorante
         TableColumn<Ordine, String> colRistorante = new TableColumn<>("Ristorante");
         colRistorante.setCellValueFactory(data -> new SimpleStringProperty(getNomeRistoranteById(data.getValue().getIdRistorante())));
+        
+        TableColumn<Ordine, String> colEmail = new TableColumn<>("Email cliente");
+        colEmail.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailCliente()));
+        
+        TableColumn<Ordine, String> colData = new TableColumn<>("Data");
+        colData.setCellValueFactory(data -> {
+            // Usa il metodo getFormattedDataOraOrdine per ottenere la data formattata
+            String formattedDate = data.getValue().getFormattedDataOraOrdine();
+            return new SimpleStringProperty(formattedDate);
+        });
 
         TableColumn<Ordine, Void> colAzione = new TableColumn<>("Azione");
         colAzione.setCellFactory(param -> new TableCell<Ordine, Void>() {
@@ -176,7 +186,7 @@ public class MenuTitolare extends VBox {
             }
         });
 
-        tableOrdini.getColumns().addAll(colOrdine, colPrezzo, colStato, colRistorante, colAzione);
+        tableOrdini.getColumns().addAll(colOrdine, colPrezzo, colStato, colRistorante, colEmail, colData, colAzione);
 
         // Caricamento dei dati
         List<Ordine> ordiniList = OrdineDAO.getInstance().getOrdiniByIdRistorante(ristorante);

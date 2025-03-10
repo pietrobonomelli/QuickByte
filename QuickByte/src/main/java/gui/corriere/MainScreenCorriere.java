@@ -54,7 +54,11 @@ public class MainScreenCorriere extends VBox {
         colEmail.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailCliente()));
 
         TableColumn<Ordine, String> colData = new TableColumn<>("Data");
-        colData.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDataOraOrdine()));
+        colData.setCellValueFactory(data -> {
+            // Usa il metodo getFormattedDataOraOrdine per ottenere la data formattata
+            String formattedDate = data.getValue().getFormattedDataOraOrdine();
+            return new SimpleStringProperty(formattedDate);
+        });
 
         TableColumn<Ordine, String> colIndirizzo = new TableColumn<>("Indirizzo");
         colIndirizzo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));
@@ -107,7 +111,11 @@ public class MainScreenCorriere extends VBox {
         colEmailPassato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailCliente()));
 
         TableColumn<Ordine, String> colDataPassato = new TableColumn<>("Data");
-        colDataPassato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDataOraOrdine()));
+        colDataPassato.setCellValueFactory(data -> {
+            // Usa il metodo getFormattedDataOraOrdine per ottenere la data formattata
+            String formattedDate = data.getValue().getFormattedDataOraOrdine();
+            return new SimpleStringProperty(formattedDate);
+        });
 
         TableColumn<Ordine, String> colIndirizzoPassato = new TableColumn<>("Indirizzo");
         colIndirizzoPassato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));

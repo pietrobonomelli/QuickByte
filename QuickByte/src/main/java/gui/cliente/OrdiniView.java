@@ -9,8 +9,7 @@ import javafx.scene.layout.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import dao.OrdineDAO;
-import model.Ordine;
-import model.StatoOrdine;
+import model.*;
 import sessione.SessioneUtente;
 import utilities.Utilities;
 
@@ -19,7 +18,6 @@ import java.util.List;
 public class OrdiniView extends VBox {
 
     private TableView<Ordine> table;
-    private TableView<Ordine> tablePassati;
 
     public OrdiniView() {
         super(10);
@@ -45,7 +43,11 @@ public class OrdiniView extends VBox {
         colEmail.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailCorriere()));
 
         TableColumn<Ordine, String> colData = new TableColumn<>("Data");
-        colData.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDataOraOrdine()));
+        colData.setCellValueFactory(data -> {
+            // Usa il metodo getFormattedDataOraOrdine per ottenere la data formattata
+            String formattedDate = data.getValue().getFormattedDataOraOrdine();
+            return new SimpleStringProperty(formattedDate);
+        });
 
         TableColumn<Ordine, String> colIndirizzo = new TableColumn<>("Indirizzo");
         colIndirizzo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));
@@ -75,14 +77,15 @@ public class OrdiniView extends VBox {
         loadOrdini();
 
         Button tornaAllaListaButton = new Button("⬅ INDIETRO");
-		tornaAllaListaButton.setOnAction(event -> tornaAllaLista());
-       
+        tornaAllaListaButton.setOnAction(event -> tornaAllaLista());
+
         // Aggiungi tutte le componenti nella scena
         this.getChildren().addAll(titleLabel, table, tornaAllaListaButton);
     }
 
     private void loadOrdini() {
         List<Ordine> ordiniList = OrdineDAO.getInstance().getOrdiniByEmailCliente(SessioneUtente.getEmail());
+        System.out.println("Numero di ordini caricati: " + ordiniList.size()); // Debug
         ObservableList<Ordine> ordini = FXCollections.observableArrayList(ordiniList);
         table.setItems(ordini);
     }
@@ -99,7 +102,7 @@ public class OrdiniView extends VBox {
 
         if (statoAggiornato) {
             Utilities.showAlert("Successo", "Hai eliminato l'ordine " + ordine.getIdOrdine());
-          
+
             loadOrdini(); // Aggiorna la tabella degli ordini
         } else {
             Utilities.showAlert("Errore", "Non è stato possibile eliminare l'ordine. Riprova.");
@@ -107,8 +110,8 @@ public class OrdiniView extends VBox {
     }
 
     private void tornaAllaLista() {
-    	MainScreenCliente mainClienteScreen = new MainScreenCliente();
-		Scene currentScene = this.getScene();
-		currentScene.setRoot(mainClienteScreen);
+        MainScreenCliente mainClienteScreen = new MainScreenCliente();
+        Scene currentScene = this.getScene();
+        currentScene.setRoot(mainClienteScreen);
     }
 }

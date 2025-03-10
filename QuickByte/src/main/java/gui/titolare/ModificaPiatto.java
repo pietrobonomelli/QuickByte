@@ -98,6 +98,18 @@ public class ModificaPiatto extends VBox {
     private void scegliFoto() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Immagini", "*.png", "*.jpg", "*.jpeg"));
+
+        // Imposta la directory iniziale del FileChooser alla directory delle immagini
+        String currentDirectory = System.getProperty("user.dir");
+        File initialDirectory = new File(currentDirectory, "src/main/resources/images");
+
+        // Controlla se la directory esiste, altrimenti utilizza la directory corrente
+        if (initialDirectory.exists() && initialDirectory.isDirectory()) {
+            fileChooser.setInitialDirectory(initialDirectory);
+        } else {
+            fileChooser.setInitialDirectory(new File(currentDirectory));
+        }
+
         File fotoFile = fileChooser.showOpenDialog(null);
         if (fotoFile != null) {
             Utilities.showAlert("Foto Selezionata", "Foto selezionata: " + fotoFile.getName());
@@ -113,6 +125,8 @@ public class ModificaPiatto extends VBox {
             }
         }
     }
+
+
 
     
     private void tornaAiPiatti() throws SQLException {
