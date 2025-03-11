@@ -101,7 +101,7 @@ public class PiattoDAO {
 
 
 	// Metodo per ottenere tutti i piatti di un menu per un determinato ristorante
-	public List<Piatto> getPiattiByMenuAndIdRistorante(String nomeMenu, int idRistorante) throws SQLException {
+	public List<Piatto> getQualsiasiPiattiByMenuAndIdRistorante(String nomeMenu, int idRistorante) throws SQLException {
 		String selectQuery = "SELECT * FROM Piatto WHERE nomeMenu = ? AND idRistorante = ?";
 		List<Piatto> piatti = new ArrayList<>();
 		try (PreparedStatement ps = connection.prepareStatement(selectQuery)) {
@@ -122,10 +122,34 @@ public class PiattoDAO {
 		}
 		return piatti;
 	}
+	
+	// Metodo per ottenere tutti i piatti di un menu per un determinato ristorante
+	public List<Piatto> getPiattiByMenuAndIdRistoranteDisponibili(String nomeMenu, int idRistorante) throws SQLException {
+		String selectQuery = "SELECT * FROM Piatto WHERE nomeMenu = ? AND idRistorante = ? AND disponibile = 1";
+		List<Piatto> piatti = new ArrayList<>();
+		try (PreparedStatement ps = connection.prepareStatement(selectQuery)) {
+			ps.setString(1, nomeMenu);
+			ps.setInt(2, idRistorante);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					int idPiatto = rs.getInt("idPiatto");
+					String nome = rs.getString("nome");
+					int disponibile = rs.getInt("disponibile");
+					boolean isDisponibile = disponibile == 1;
+					String prezzo = rs.getString("prezzo");
+					String allergeni = rs.getString("allergeni");
+					String foto = rs.getString("foto");
+					piatti.add(new Piatto(idPiatto, nome, isDisponibile, prezzo, allergeni, foto, nomeMenu, idRistorante));
+				}
+			}
+		}
+		return piatti;
+	}
+
 
 	// Metodo per aggiornare un piatto
 	public void aggiornaPiatto(Piatto piatto) throws SQLException {
-		String updateQuery = "UPDATE Piatto SET disponibile = ?, prezzo = ?, allergeni = ?, foto = ? " +
+		String updateQuery = "UPDATE Piatto SET disponibile = ?, prezzo = ?, allergeni = ? " +
 				"WHERE idPiatto = ?";
 		try (PreparedStatement ps = connection.prepareStatement(updateQuery)) {
 			ps.setInt(1, piatto.isDisponibile() ? 1 : 0);

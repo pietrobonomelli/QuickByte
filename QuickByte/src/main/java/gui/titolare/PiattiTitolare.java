@@ -51,7 +51,7 @@ public class PiattiTitolare extends VBox {
     private void loadPiatti() {
         try {
             // Ottenere piatti dal database tramite DAO
-            List<Piatto> piatti = PiattoDAO.getInstance().getPiattiByMenuAndIdRistorante(nomeMenu, SessioneRistorante.getId());
+            List<Piatto> piatti = PiattoDAO.getInstance().getQualsiasiPiattiByMenuAndIdRistorante(nomeMenu, SessioneRistorante.getId());
             
             // Creazione della TableView per i piatti
             TableView<Piatto> tablePiatti = new TableView<>();
@@ -72,7 +72,6 @@ public class PiattiTitolare extends VBox {
             colDisponibile.setCellFactory(param -> new TableCell<Piatto, Void>() {
                 private final EmojiTextFlow emojiDisponibile = new EmojiTextFlow();
                 private final EmojiTextFlow emojiNonDisponibile = new EmojiTextFlow();
-
                 {
                     emojiDisponibile.parseAndAppend(":white_check_mark:"); // ✅
                     emojiNonDisponibile.parseAndAppend(":x:"); // ❌

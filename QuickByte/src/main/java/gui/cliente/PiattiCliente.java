@@ -136,7 +136,7 @@ public class PiattiCliente extends VBox {
 
     private void loadPiatti() {
         try {
-            List<Piatto> piatti = PiattoDAO.getInstance().getPiattiByMenuAndIdRistorante(nomeMenu, idRistorante);
+            List<Piatto> piatti = PiattoDAO.getInstance().getPiattiByMenuAndIdRistoranteDisponibili(nomeMenu, idRistorante);
             ObservableList<Piatto> piattiList = FXCollections.observableArrayList(piatti);
             tableView.setItems(piattiList);
         } catch (SQLException e) {
