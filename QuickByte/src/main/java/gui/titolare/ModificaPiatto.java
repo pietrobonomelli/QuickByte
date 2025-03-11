@@ -45,14 +45,8 @@ public class ModificaPiatto extends VBox {
         
         Label disponibilitaLabel = new Label("Disponibile:");
         disponibilitaCheckBox = new CheckBox();
-        
-        scegliFotoButton = new Button("Scegli Foto");
-        scegliFotoButton.setOnAction(e -> scegliFoto());
-        
-        salvaButton = new Button("Salva Modifiche");
-        salvaButton.setOnAction(e -> salvaModifiche());
-        
-        tornaIndietroButton = new Button("Torna ai Piatti");
+                
+        tornaIndietroButton = new Button("⬅ INDIETRO");
         tornaIndietroButton.setOnAction(e -> {
 			try {
 				tornaAiPiatti();
@@ -61,10 +55,16 @@ public class ModificaPiatto extends VBox {
 			}
 		});
         
+        scegliFotoButton = new Button("Scegli Foto");
+        scegliFotoButton.setOnAction(e -> scegliFoto());
+
+        salvaButton = new Button("Salva Modifiche");
+        salvaButton.setOnAction(e -> salvaModifiche());
+        
         loadPiattoData();
         
         // HBox for buttons to align them on the same row
-        HBox buttonsBox = new HBox(10, scegliFotoButton, salvaButton, tornaIndietroButton);
+        HBox buttonsBox = new HBox(10, tornaIndietroButton, scegliFotoButton, salvaButton);
         buttonsBox.setStyle("-fx-alignment: center;");
 
         this.getChildren().addAll(titoloLabel, prezzoLabel, prezzoField, allergeniLabel, allergeniField,

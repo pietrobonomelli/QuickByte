@@ -28,7 +28,7 @@ public class PiattiTitolare extends VBox {
         
         // Titolo in grande
         Label titleLabel = new Label("Piatti");
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        titleLabel.getStyleClass().add("title");
         container.getChildren().add(titleLabel);
         
         // Carica i piatti
@@ -38,7 +38,7 @@ public class PiattiTitolare extends VBox {
         HBox buttonContainer = new HBox(10);
         buttonContainer.setStyle("-fx-padding: 10;");
 
-        Button tornaButton = new Button("Torna ai menu");
+        Button tornaButton = new Button("⬅ Torna ai menu");
         tornaButton.setOnAction(e -> switchToMenuTitolare());
         
         Button inserisciPiattoButton = new Button("Inserisci Piatto");
@@ -164,9 +164,8 @@ public class PiattiTitolare extends VBox {
     private void eliminaPiatto(int idPiatto) {
         try {
             PiattoDAO.getInstance().rimuoviPiatto(idPiatto);
-            container.getChildren().clear();
-            loadPiatti(); // Ricarica i piatti dopo l'eliminazione
-            // qui cancella la vecchia tabella
+            container.getChildren().removeIf(node -> node instanceof TableView);
+            loadPiatti(); 
             
         } catch (SQLException e) {
             e.printStackTrace();
