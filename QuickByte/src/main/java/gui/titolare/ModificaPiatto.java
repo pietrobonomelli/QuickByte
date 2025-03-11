@@ -113,7 +113,6 @@ public class ModificaPiatto extends VBox {
         File fotoFile = fileChooser.showOpenDialog(null);
         if (fotoFile != null) {
             Utilities.showAlert("Foto Selezionata", "Foto selezionata: " + fotoFile.getName());
-
             // Aggiorna la foto nel database
             try {
                 PiattoDAO piattoDAO = PiattoDAO.getInstance();
@@ -125,9 +124,6 @@ public class ModificaPiatto extends VBox {
             }
         }
     }
-
-
-
     
     private void tornaAiPiatti() throws SQLException {
         PiattiTitolare piattiScreen = new PiattiTitolare();

@@ -253,6 +253,7 @@ public class MenuTitolare extends VBox {
             Utilities.showAlert("Successo", "Menu eliminato con successo.");
             container.getChildren().clear();
             loadMenu();
+            loadOrdini();
         } catch (SQLException e) {
             e.printStackTrace();
             Utilities.showAlert("Errore", "Errore durante l'eliminazione del menu.");

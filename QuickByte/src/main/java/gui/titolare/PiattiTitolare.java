@@ -165,7 +165,10 @@ public class PiattiTitolare extends VBox {
     private void eliminaPiatto(int idPiatto) {
         try {
             PiattoDAO.getInstance().rimuoviPiatto(idPiatto);
+            container.getChildren().clear();
             loadPiatti(); // Ricarica i piatti dopo l'eliminazione
+            // qui cancella la vecchia tabella
+            
         } catch (SQLException e) {
             e.printStackTrace();
             Utilities.showAlert("Errore", "Errore durante l'eliminazione del piatto.");

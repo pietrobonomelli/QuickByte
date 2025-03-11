@@ -125,17 +125,13 @@ public class PiattoDAO {
 
 	// Metodo per aggiornare un piatto
 	public void aggiornaPiatto(Piatto piatto) throws SQLException {
-		String updateQuery = "UPDATE Piatto SET nome = ?, disponibile = ?, prezzo = ?, allergeni = ?, foto = ?, nomeMenu = ?, idRistorante = ? " +
+		String updateQuery = "UPDATE Piatto SET disponibile = ?, prezzo = ?, allergeni = ?, foto = ? " +
 				"WHERE idPiatto = ?";
 		try (PreparedStatement ps = connection.prepareStatement(updateQuery)) {
-			ps.setString(1, piatto.getNome());
-			ps.setInt(2, piatto.isDisponibile() ? 1 : 0);
-			ps.setString(3, piatto.getPrezzo());
-			ps.setString(4, piatto.getAllergeni());
-			ps.setString(5, piatto.getFoto());
-			ps.setString(6, piatto.getNomeMenu());
-			ps.setInt(7, piatto.getIdRistorante());
-			ps.setInt(8, piatto.getIdPiatto());
+			ps.setInt(1, piatto.isDisponibile() ? 1 : 0);
+			ps.setString(2, piatto.getPrezzo());
+			ps.setString(3, piatto.getAllergeni());
+			ps.setInt(4, piatto.getIdPiatto());
 			ps.executeUpdate();
 		}
 	}

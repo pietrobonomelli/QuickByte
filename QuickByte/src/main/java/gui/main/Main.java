@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class Main extends Application {
 
-	private final int MIN_WIDTH = 800;
+	private final int MIN_WIDTH = 900;
 	private final int MIN_HEIGHT = 800;
 	
     public static void main(String[] args) {
