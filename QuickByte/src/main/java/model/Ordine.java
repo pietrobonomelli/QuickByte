@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 
 public class Ordine {
     private int idOrdine;
-    private String stato;
+    private StatoOrdine stato;
     private double costo;
     private Timestamp dataOraOrdine; // Usa Timestamp per gestire data e ora
     private String indirizzo;
@@ -13,7 +13,7 @@ public class Ordine {
     private String emailCorriere;
     private int idRistorante;
 
-    public Ordine(int idOrdine, String stato, double costo, Timestamp dataOraOrdine, String indirizzo,
+    public Ordine(int idOrdine, StatoOrdine stato, double costo, Timestamp dataOraOrdine, String indirizzo,
                   String emailCliente, String emailCorriere, int idRistorante) {
         this.idOrdine = idOrdine;
         this.stato = stato;
@@ -26,7 +26,7 @@ public class Ordine {
     }
 
     public int getIdOrdine() { return idOrdine; }
-    public String getStato() { return stato; }
+    public StatoOrdine getStato() { return stato; }
     public double getCosto() { return costo; }
 
     public Timestamp getDataOraOrdine() { return dataOraOrdine; }

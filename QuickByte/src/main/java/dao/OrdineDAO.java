@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import model.StatoOrdine;
 
 public class OrdineDAO {
     private static OrdineDAO instance;
@@ -94,7 +95,8 @@ public class OrdineDAO {
 
     private Ordine creaOrdineDaResultSet(ResultSet rs) throws SQLException {
         int idOrdine = rs.getInt("idOrdine");
-        String stato = rs.getString("stato");
+        String statoString = rs.getString("stato");
+        StatoOrdine statoOrdine = StatoOrdine.valueOf(statoString);
         double costo = rs.getDouble("costo");
 
         // Controlla se il valore è un timestamp Unix
@@ -111,7 +113,7 @@ public class OrdineDAO {
         String formattedDate = sdf.format(dataOraOrdine);
         System.out.println("Data e ora formattate: " + formattedDate);
 
-        return new Ordine(idOrdine, stato, costo, dataOraOrdine, indirizzo, emailCliente, emailCorriere, idRistorante);
+        return new Ordine(idOrdine, statoOrdine, costo, dataOraOrdine, indirizzo, emailCliente, emailCorriere, idRistorante);
     }
 
 
@@ -175,11 +177,14 @@ public class OrdineDAO {
                 long timestamp = rs.getLong("dataOraOrdine");
                 Timestamp dataOraOrdine = new Timestamp(timestamp);
 
+                String statoString = rs.getString("stato");
+                StatoOrdine statoOrdine = StatoOrdine.valueOf(statoString);
+                
                 ordini.add(new Ordine(
                     rs.getInt("idOrdine"),
-                    rs.getString("stato"),
+                    statoOrdine,
                     rs.getDouble("costo"),
-                    dataOraOrdine, // Usa il Timestamp convertito
+                    dataOraOrdine,
                     rs.getString("indirizzo"),
                     rs.getString("emailCliente"),
                     rs.getString("emailCorriere"),

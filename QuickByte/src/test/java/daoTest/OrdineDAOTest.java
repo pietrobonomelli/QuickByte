@@ -15,8 +15,9 @@ import sessione.SessioneRistorante;
 
 public class OrdineDAOTest {
     private static final String TEST_DB_URL = "jdbc:sqlite:src/main/resources/database_embedded.db";
-    private final Ordine testOrdine = new Ordine(1, StatoOrdine.PENDENTE.name(), 25.50, 
-            "2023-01-01 10:00:00", "Via Test 123", "test@cliente.com", null, 1);
+    Timestamp dataOra = Timestamp.valueOf("2023-01-01 10:00:00");
+    private final Ordine testOrdine = new Ordine(1, StatoOrdine.PENDENTE, 25.50, 
+    		dataOra, "Via Test 123", "test@cliente.com", null, 1);
     private final Cliente testCliente = new Cliente("test@cliente.com", "pass", "Mario Rossi", "1234567890");
     private final Titolare testTitolare = new Titolare("test@titolare.com", "pass", "Luigi Bianchi", "0987654321");
     private final Corriere testCorriere = new Corriere("test@corriere.com", "pass", "Anna Verdi", "1122334455");

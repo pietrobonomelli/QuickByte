@@ -17,7 +17,6 @@ import com.pavlobu.emojitextflow.EmojiTextFlow;
 
 public class CarrelloView extends VBox {
 
-	private VBox container;
 	private String emailUtente;
 
 	public CarrelloView() {

@@ -145,11 +145,6 @@ public class PiattiCliente extends VBox {
         }
     }
     
-    private void switchToPiattoCliente() throws SQLException {
-        PiattoCliente piattoClienteScreen = new PiattoCliente();
-        this.getScene().setRoot(piattoClienteScreen);
-    }
-
     private void aggiungiAlCarrello(int idPiatto) throws SQLException {
         boolean pieno = SessioneCarrello.getPieno();
         int idRistoranteCarrello = SessioneCarrello.getIdRistorante();

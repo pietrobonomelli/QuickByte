@@ -48,7 +48,7 @@ public class MainScreenCorriere extends VBox {
         colCosto.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCosto()).asObject());
 
         TableColumn<Ordine, String> colStato = new TableColumn<>("Stato");
-        colStato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato()));
+        colStato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato().name()));
 
         TableColumn<Ordine, String> colEmail = new TableColumn<>("Email cliente");
         colEmail.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailCliente()));
@@ -105,7 +105,7 @@ public class MainScreenCorriere extends VBox {
         colCostoPassato.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCosto()).asObject());
 
         TableColumn<Ordine, String> colStatoPassato = new TableColumn<>("Stato");
-        colStatoPassato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato()));
+        colStatoPassato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato().name()));
 
         TableColumn<Ordine, String> colEmailPassato = new TableColumn<>("Email cliente");
         colEmailPassato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailCliente()));
@@ -124,7 +124,7 @@ public class MainScreenCorriere extends VBox {
         colAzionePassato.setCellFactory(param -> new TableCell<Ordine, Void>() {
             private final Button consegnatoButton = new Button("SEGNA COME CONSEGNATO");
             {
-            	consegnatoButton.setOnAction(event -> {
+                consegnatoButton.setOnAction(event -> {
                     Ordine ordine = getTableView().getItems().get(getIndex());
                     consegnatoOrdine(ordine);
                 });
@@ -133,13 +133,14 @@ public class MainScreenCorriere extends VBox {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || !getTableView().getItems().get(getIndex()).getStato().equals(StatoOrdine.IN_CONSEGNA.name())) {
+                if (empty || getTableView().getItems().get(getIndex()).getStato() != StatoOrdine.IN_CONSEGNA) {
                     setGraphic(null);
                 } else {
                     setGraphic(consegnatoButton);
                 }
             }
         });
+
 
         tablePassati.getColumns().addAll(colIdPassato, colRistorantePassato, colCostoPassato, colStatoPassato, colEmailPassato, colIndirizzoPassato, colDataPassato, colAzionePassato);
         loadOrdiniPassati();

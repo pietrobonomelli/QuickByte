@@ -114,9 +114,4 @@ public class MenuCliente extends VBox {
         CarrelloView carrelloScreen = new CarrelloView();
         this.getScene().setRoot(carrelloScreen);
     }
-    
-    private void switchToOrdiniCliente() {
-        OrdiniView ordiniScreen = new OrdiniView();
-        this.getScene().setRoot(ordiniScreen);
     }
-}

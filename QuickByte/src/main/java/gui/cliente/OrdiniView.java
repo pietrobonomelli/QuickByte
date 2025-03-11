@@ -38,7 +38,7 @@ public class OrdiniView extends VBox {
         colCosto.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCosto()).asObject());
 
         TableColumn<Ordine, String> colStato = new TableColumn<>("Stato");
-        colStato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato()));
+        colStato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato().name()));
 
         TableColumn<Ordine, String> colEmail = new TableColumn<>("Email corriere");
         colEmail.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailCorriere()));

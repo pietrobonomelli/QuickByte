@@ -148,7 +148,7 @@ public class MenuTitolare extends VBox {
         colPrezzo.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCosto()).asObject());
 
         TableColumn<Ordine, String> colStato = new TableColumn<>("Stato");
-        colStato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato()));
+        colStato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato().name()));
 
         // Aggiungi la colonna Ristorante
         TableColumn<Ordine, String> colRistorante = new TableColumn<>("Ristorante");
@@ -196,7 +196,7 @@ public class MenuTitolare extends VBox {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || !getTableView().getItems().get(getIndex()).getStato().equals(StatoOrdine.PENDENTE.name())) {
+                if (empty || !getTableView().getItems().get(getIndex()).getStato().equals(StatoOrdine.PENDENTE)) {
                     setGraphic(null);
                 } else {
                     HBox buttonBox = new HBox(10);
@@ -258,12 +258,6 @@ public class MenuTitolare extends VBox {
             e.printStackTrace();
             Utilities.showAlert("Errore", "Errore durante l'eliminazione del menu.");
         }
-    }
-
-    private void switchToPiattiTitolare(String nomeMenu) throws SQLException {
-        SessioneMenu.setNome(nomeMenu);
-        PiattiTitolare piattiTitolareScreen = new PiattiTitolare();
-        this.getScene().setRoot(piattiTitolareScreen);
     }
 
     private void switchToModificaMenu(String nomeMenu) throws SQLException {
