@@ -60,4 +60,16 @@ public class Utilities {
         button.getStyleClass().add("button-logout");
         return button;
     }
+    
+    /**
+     * Crea un campo di testo con un prompt specificato.
+     *
+     * @param prompt Il testo del prompt.
+     * @return Il campo di testo creato.
+     */
+    public static TextField creaCampoTesto(String prompt) {
+        TextField campoTesto = new TextField();
+        campoTesto.setPromptText(prompt);
+        return campoTesto;
+    }
 }

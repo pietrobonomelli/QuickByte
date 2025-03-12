@@ -13,40 +13,68 @@ import model.Menu;
 import java.sql.*;
 import java.util.List;
 
+/**
+ * Classe che rappresenta la vista del menù del cliente.
+ */
 public class MenuCliente extends VBox {
 
-    private TableView<Menu> table;
+    private TableView<Menu> tabellaMenu;
     private String nomeRistorante;
 
+    /**
+     * Costruttore della vista del menù del cliente.
+     */
     public MenuCliente() {
         super(10);
         this.setStyle("-fx-padding: 10;");
 
+        caricaNomeRistorante();
+
+        Label etichettaTitolo = Utilities.createLabel("Menù disponibili del ristorante: " + nomeRistorante, "title");
+        etichettaTitolo.getStyleClass().add("title");
+
+        inizializzaTabellaMenu();
+        caricaMenu();
+
+        Button pulsanteCarrello = Utilities.createButton("🛒 CARRELLO", this::passaACarrello);
+        Button pulsanteIndietro = Utilities.createButton("⬅ INDIETRO", this::tornaAllaListaRistoranti);
+
+        HBox boxPulsanti = new HBox(10, pulsanteIndietro, pulsanteCarrello);
+        boxPulsanti.setSpacing(10);
+
+        this.getChildren().addAll(etichettaTitolo, tabellaMenu, boxPulsanti);
+    }
+
+    /**
+     * Carica il nome del ristorante.
+     */
+    private void caricaNomeRistorante() {
         try (Connection conn = DatabaseConnection.connect()) {
-        	nomeRistorante = MenuDAO.getInstance().getNomeRistorante(SessioneRistorante.getId());
+            nomeRistorante = MenuDAO.getInstance().getNomeRistorante(SessioneRistorante.getId());
         } catch (SQLException e) {
             e.printStackTrace();
             Utilities.showAlert("Errore", "Errore nel caricamento del nome del ristorante.");
         }
+    }
 
-        // Etichetta del titolo
-        Label titleLabel = Utilities.createLabel("Menù disponibili del ristorante: " + nomeRistorante, "title");
-        titleLabel.getStyleClass().add("title");
+    /**
+     * Inizializza la tabella dei menù.
+     */
+    private void inizializzaTabellaMenu() {
+        tabellaMenu = new TableView<>();
+        tabellaMenu.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        tabellaMenu.getStyleClass().add("table-view");
 
-        // Tabella per i menu
-        table = new TableView<>();
-        table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        table.getStyleClass().add("table-view");
-        TableColumn<Menu, String> colNome = new TableColumn<>("Menù");
-        colNome.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
+        TableColumn<Menu, String> colonnaNome = new TableColumn<>("Menù");
+        colonnaNome.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
 
-        TableColumn<Menu, Void> colAzione = new TableColumn<>("Piatti");
-        colAzione.setCellFactory(param -> new TableCell<Menu, Void>() {
-            private final Button vediPiattiButton = Utilities.createButtonEmoji("", ":pencil:", () -> {
+        TableColumn<Menu, Void> colonnaAzioni = new TableColumn<>("Piatti");
+        colonnaAzioni.setCellFactory(param -> new TableCell<Menu, Void>() {
+            private final Button pulsanteVediPiatti = Utilities.createButtonEmoji("", ":pencil:", () -> {
                 Menu menu = getTableView().getItems().get(getIndex());
                 SessioneMenu.setNome(menu.getNome());
                 try {
-                    switchToPiattiCliente();
+                    passaAPiattiCliente();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -58,46 +86,51 @@ public class MenuCliente extends VBox {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    setGraphic(vediPiattiButton);
+                    setGraphic(pulsanteVediPiatti);
                 }
             }
         });
 
-        table.getColumns().addAll(colNome, colAzione);
-        loadMenu();
-
-        Button carrelloButton = Utilities.createButton("🛒 CARRELLO", this::switchToCarrello);
-        Button tornaAllaListaRistorantiButton = Utilities.createButton("⬅ INDIETRO", this::tornaAllaListaRistoranti);
-
-        HBox buttonBox = new HBox(10, tornaAllaListaRistorantiButton, carrelloButton);
-        buttonBox.setSpacing(10);
-
-        this.getChildren().addAll(titleLabel, table, buttonBox);
+        tabellaMenu.getColumns().addAll(colonnaNome, colonnaAzioni);
     }
 
-    private void loadMenu() {
+    /**
+     * Carica i menù nella tabella.
+     */
+    private void caricaMenu() {
         try (Connection conn = DatabaseConnection.connect()) {
-            List<Menu> menuList = MenuDAO.getInstance().getMenuByRistorante(SessioneRistorante.getId());
-            ObservableList<Menu> menuData = FXCollections.observableArrayList(menuList);
-            table.setItems(menuData);
+            List<Menu> listaMenu = MenuDAO.getInstance().getMenuByRistorante(SessioneRistorante.getId());
+            ObservableList<Menu> datiMenu = FXCollections.observableArrayList(listaMenu);
+            tabellaMenu.setItems(datiMenu);
         } catch (SQLException e) {
             e.printStackTrace();
             Utilities.showAlert("Errore", "Errore nel caricamento dei menu.");
         }
     }
 
-    private void switchToPiattiCliente() throws SQLException {
-        PiattiCliente piattiClienteScreen = new PiattiCliente();
-        this.getScene().setRoot(piattiClienteScreen);
+    /**
+     * Passa alla schermata dei piatti del cliente.
+     *
+     * @throws SQLException Se si verifica un errore SQL.
+     */
+    private void passaAPiattiCliente() throws SQLException {
+        PiattiCliente schermataPiattiCliente = new PiattiCliente();
+        this.getScene().setRoot(schermataPiattiCliente);
     }
 
+    /**
+     * Torna alla lista dei ristoranti.
+     */
     private void tornaAllaListaRistoranti() {
-        MainScreenCliente mainScreenCliente = new MainScreenCliente();
-        this.getScene().setRoot(mainScreenCliente);
+        MainScreenCliente schermataPrincipale = new MainScreenCliente();
+        this.getScene().setRoot(schermataPrincipale);
     }
 
-    private void switchToCarrello() {
-        CarrelloView carrelloScreen = new CarrelloView();
-        this.getScene().setRoot(carrelloScreen);
+    /**
+     * Passa alla schermata del carrello.
+     */
+    private void passaACarrello() {
+        CarrelloView schermataCarrello = new CarrelloView();
+        this.getScene().setRoot(schermataCarrello);
     }
 }

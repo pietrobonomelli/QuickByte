@@ -5,27 +5,26 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import sessione.*;
 import utilities.Utilities;
-import dao.MenuDAO;
 import dao.PiattoDAO;
 import model.Piatto;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import java.sql.*;
-import java.util.List;
 import com.pavlobu.emojitextflow.EmojiTextFlow;
+
+import java.sql.SQLException;
+import java.util.List;
 
 public class PiattiCliente extends VBox {
 
     private String emailCliente;
     private String nomeMenu;
     private int idRistorante;
-    private TableView<Piatto> tableView;
+    private TableView<Piatto> tabellaPiatti;
 
     public PiattiCliente() throws SQLException {
         super(10);
@@ -35,53 +34,80 @@ public class PiattiCliente extends VBox {
         this.emailCliente = SessioneUtente.getEmail();
 
         this.setStyle("-fx-padding: 10;");
-        
-        // Crea un titolo da visualizzare sopra la tabella
-        Label titleLabel = new Label("Piatti del menù: " + nomeMenu);
-        titleLabel.getStyleClass().add("title");
 
-        // Aggiungi il titolo alla scena sopra la tabella
-        setupTableView();
-        loadPiatti();
-        
-        Button btnIndietro = new Button("⬅ INDIETRO");
-        btnIndietro.setOnAction(event -> tornaIndietro());
-
-        // Aggiungi il titolo, la tabella e il bottone alla scena
-        this.getChildren().addAll(titleLabel, tableView, btnIndietro);  // titleLabel prima della tabella
+        // Crea e configura l'interfaccia utente
+        configuraInterfaccia();
     }
 
-    private void setupTableView() {
-        tableView = new TableView<>();
-        tableView.getStyleClass().add("table-view");
-        // Colonna Nome
-        TableColumn<Piatto, String> nomeCol = new TableColumn<>("Piatto");
-        nomeCol.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        
-        // Colonna Costo
-        TableColumn<Piatto, Double> costoCol = new TableColumn<>("Costo (€)");
-        costoCol.setCellValueFactory(new PropertyValueFactory<>("prezzo"));
+    /**
+     * Configura l'interfaccia utente con titolo, tabella e pulsante di ritorno.
+     */
+    private void configuraInterfaccia() {
+        Label titolo = new Label("Piatti del menù: " + nomeMenu);
+        titolo.getStyleClass().add("title");
 
-        // Colonna Allergeni
-        TableColumn<Piatto, String> allergeniCol = new TableColumn<>("Allergeni");
-        allergeniCol.setCellValueFactory(new PropertyValueFactory<>("allergeni"));
+        // Inizializza e carica la tabella dei piatti
+        inizializzaTabella();
+        caricaPiatti();
 
-        // Colonna Vedi Foto
-        TableColumn<Piatto, Void> vediFotoCol = new TableColumn<>("Vedi Foto");
-        vediFotoCol.setCellFactory(data -> new TableCell<Piatto, Void>() {
-            private final Button btnFoto = new Button();
-            private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
-            {            	
-            	emojiTextFlow1.parseAndAppend(":camera:");
-            	btnFoto.setGraphic(emojiTextFlow1);
-            	btnFoto.getStyleClass().add("table-button-emoji");
+        Button bottoneIndietro = new Button("⬅ INDIETRO");
+        bottoneIndietro.setOnAction(event -> tornaIndietro());
 
-                btnFoto.setOnAction(event -> {
-                    Piatto piatto = getTableRow().getItem(); // Recupera il piatto della riga corrente
+        // Aggiunge gli elementi alla scena
+        this.getChildren().addAll(titolo, tabellaPiatti, bottoneIndietro);
+    }
+
+    /**
+     * Inizializza la tabella dei piatti con le colonne necessarie.
+     */
+    private void inizializzaTabella() {
+        tabellaPiatti = new TableView<>();
+        tabellaPiatti.getStyleClass().add("table-view");
+
+        // Configura le colonne della tabella
+        configuraColonne();
+    }
+
+    /**
+     * Configura le colonne della tabella dei piatti.
+     */
+    private void configuraColonne() {
+        TableColumn<Piatto, String> colonnaNome = new TableColumn<>("Piatto");
+        colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+
+        TableColumn<Piatto, Double> colonnaCosto = new TableColumn<>("Costo (€)");
+        colonnaCosto.setCellValueFactory(new PropertyValueFactory<>("prezzo"));
+
+        TableColumn<Piatto, String> colonnaAllergeni = new TableColumn<>("Allergeni");
+        colonnaAllergeni.setCellValueFactory(new PropertyValueFactory<>("allergeni"));
+
+        TableColumn<Piatto, Void> colonnaVediFoto = creaColonnaVediFoto();
+        TableColumn<Piatto, Void> colonnaAggiungiAlCarrello = creaColonnaAggiungiAlCarrello();
+
+        // Aggiunge tutte le colonne alla tabella
+        tabellaPiatti.getColumns().addAll(colonnaNome, colonnaCosto, colonnaAllergeni, colonnaVediFoto, colonnaAggiungiAlCarrello);
+    }
+
+    /**
+     * Crea la colonna "Vedi Foto" con il pulsante per visualizzare la foto del piatto.
+     *
+     * @return La colonna configurata.
+     */
+    private TableColumn<Piatto, Void> creaColonnaVediFoto() {
+        TableColumn<Piatto, Void> colonna = new TableColumn<>("Vedi Foto");
+        colonna.setCellFactory(data -> new TableCell<Piatto, Void>() {
+            private final Button bottoneFoto = new Button();
+            private final EmojiTextFlow emojiTextFlow = new EmojiTextFlow();
+
+            {
+                emojiTextFlow.parseAndAppend(":camera:");
+                bottoneFoto.setGraphic(emojiTextFlow);
+                bottoneFoto.getStyleClass().add("table-button-emoji");
+
+                bottoneFoto.setOnAction(event -> {
+                    Piatto piatto = getTableRow().getItem();
                     if (piatto != null) {
-                        // Visualizza la foto in una finestra di dialogo
-                    	System.out.println("FOTO IN PIATTO " + piatto.getFoto());
-                        showPhotoDialog(piatto.getFoto());
+                        mostraDialogoFoto(piatto.getFoto());
                     }
                 });
             }
@@ -92,22 +118,30 @@ public class PiattiCliente extends VBox {
                 if (empty || getTableRow().getItem() == null) {
                     setGraphic(null);
                 } else {
-                    setGraphic(btnFoto);
+                    setGraphic(bottoneFoto);
                 }
             }
         });
+        return colonna;
+    }
 
-        // Colonna Aggiungi al carrello
-        TableColumn<Piatto, Void> aggiungiCol = new TableColumn<>("Aggiungi al carrello");
-        aggiungiCol.setCellFactory(data -> new TableCell<Piatto, Void>() {
-            private final Button btnCart = new Button("");
-            private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
-            {            	
-            	emojiTextFlow1.parseAndAppend(":shopping_cart:");
-            	btnCart.setGraphic(emojiTextFlow1);
-            	btnCart.getStyleClass().add("table-button-emoji");
+    /**
+     * Crea la colonna "Aggiungi al carrello" con il pulsante per aggiungere il piatto al carrello.
+     *
+     * @return La colonna configurata.
+     */
+    private TableColumn<Piatto, Void> creaColonnaAggiungiAlCarrello() {
+        TableColumn<Piatto, Void> colonna = new TableColumn<>("Aggiungi al carrello");
+        colonna.setCellFactory(data -> new TableCell<Piatto, Void>() {
+            private final Button bottoneCarrello = new Button("");
+            private final EmojiTextFlow emojiTextFlow = new EmojiTextFlow();
 
-                btnCart.setOnAction(event -> {
+            {
+                emojiTextFlow.parseAndAppend(":shopping_cart:");
+                bottoneCarrello.setGraphic(emojiTextFlow);
+                bottoneCarrello.getStyleClass().add("table-button-emoji");
+
+                bottoneCarrello.setOnAction(event -> {
                     Piatto piatto = getTableView().getItems().get(getIndex());
                     try {
                         aggiungiAlCarrello(piatto.getIdPiatto());
@@ -124,67 +158,70 @@ public class PiattiCliente extends VBox {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    setGraphic(btnCart);
+                    setGraphic(bottoneCarrello);
                 }
             }
         });
-
-        // Aggiungi tutte le colonne alla TableView
-        tableView.getColumns().addAll(nomeCol, costoCol, allergeniCol, vediFotoCol, aggiungiCol);
+        return colonna;
     }
 
-    private void loadPiatti() {
+    /**
+     * Carica i piatti dal database e li aggiunge alla tabella.
+     */
+    private void caricaPiatti() {
         try {
             List<Piatto> piatti = PiattoDAO.getInstance().getPiattiByMenuAndIdRistoranteDisponibili(nomeMenu, idRistorante);
-            ObservableList<Piatto> piattiList = FXCollections.observableArrayList(piatti);
-            tableView.setItems(piattiList);
+            ObservableList<Piatto> listaPiatti = FXCollections.observableArrayList(piatti);
+            tabellaPiatti.setItems(listaPiatti);
         } catch (SQLException e) {
             e.printStackTrace();
             Utilities.showAlert("Errore", "Errore nel caricamento dei piatti.");
         }
     }
-    
+
+    /**
+     * Aggiunge un piatto al carrello dell'utente.
+     *
+     * @param idPiatto L'ID del piatto da aggiungere.
+     * @throws SQLException Se si verifica un errore durante l'aggiunta al carrello.
+     */
     private void aggiungiAlCarrello(int idPiatto) throws SQLException {
-        boolean pieno = SessioneCarrello.getPieno();
+        boolean carrelloPieno = SessioneCarrello.getPieno();
         int idRistoranteCarrello = SessioneCarrello.getIdRistorante();
 
-        if (!pieno) {
+        if (!carrelloPieno) {
             SessioneCarrello.setIdRistorante(idRistorante);
             SessioneCarrello.setPieno(true);
-            System.out.println("SETTO PIENO TRUE");
             PiattoDAO.getInstance().aggiungiPiattoAlCarrello(idPiatto, emailCliente);
         } else if (idRistoranteCarrello == idRistorante) {
             PiattoDAO.getInstance().aggiungiPiattoAlCarrello(idPiatto, emailCliente);
         } else {
-            System.out.println("TERZO ELSE");
             mostraPopupConferma(idPiatto);
         }
     }
 
+    /**
+     * Mostra un popup di conferma per svuotare il carrello e aggiungere un nuovo piatto.
+     *
+     * @param idPiatto L'ID del piatto da aggiungere.
+     */
     private void mostraPopupConferma(int idPiatto) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Attenzione");
         alert.setHeaderText("Hai già piatti di un altro ristorante nel carrello.");
         alert.setContentText("Vuoi svuotare il carrello e procedere con il nuovo ristorante?");
 
-        ButtonType btnProcedi = new ButtonType("Procedi");
-        ButtonType btnAnnulla = new ButtonType("Annulla", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType bottoneProcedi = new ButtonType("Procedi");
+        ButtonType bottoneAnnulla = new ButtonType("Annulla", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-        alert.getButtonTypes().setAll(btnProcedi, btnAnnulla);
+        alert.getButtonTypes().setAll(bottoneProcedi, bottoneAnnulla);
 
         alert.showAndWait().ifPresent(response -> {
-            if (response == btnProcedi) {
-            	try {
-					PiattoDAO.getInstance().svuotaCarrello(emailCliente);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-                System.out.println("SVUOTO IL CARRELLO DI " + emailCliente);
-                SessioneCarrello.setPieno(true);
-                SessioneCarrello.setIdRistorante(idRistorante);
-                
+            if (response == bottoneProcedi) {
                 try {
+                    PiattoDAO.getInstance().svuotaCarrello(emailCliente);
+                    SessioneCarrello.setPieno(true);
+                    SessioneCarrello.setIdRistorante(idRistorante);
                     PiattoDAO.getInstance().aggiungiPiattoAlCarrello(idPiatto, emailCliente);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -193,28 +230,34 @@ public class PiattiCliente extends VBox {
         });
     }
 
-    private void showPhotoDialog(String fotoUrl) {
-        // Finestra di dialogo per visualizzare la foto
+    /**
+     * Mostra una finestra di dialogo con la foto del piatto.
+     *
+     * @param fotoUrl L'URL della foto del piatto.
+     */
+    private void mostraDialogoFoto(String fotoUrl) {
         if (fotoUrl != null && !fotoUrl.isEmpty()) {
-            String imagePath = "/images/" + fotoUrl;
-            ImageView imageView = new ImageView(new Image(getClass().getResource(imagePath).toExternalForm()));
+            String percorsoImmagine = "/images/" + fotoUrl;
+            ImageView imageView = new ImageView(new Image(getClass().getResource(percorsoImmagine).toExternalForm()));
             imageView.setFitWidth(300);
             imageView.setFitHeight(200);
             StackPane stackPane = new StackPane(imageView);
-            Scene photoScene = new Scene(stackPane, 400, 300);
+            Scene scenaFoto = new Scene(stackPane, 400, 300);
 
-            Stage photoStage = new Stage();
-            photoStage.setTitle("Foto del piatto");
-            photoStage.setScene(photoScene);
-            photoStage.show();
+            Stage finestraFoto = new Stage();
+            finestraFoto.setTitle("Foto del piatto");
+            finestraFoto.setScene(scenaFoto);
+            finestraFoto.show();
         } else {
             Utilities.showAlert("Errore", "Foto non disponibile per questo piatto.");
         }
     }
 
-
+    /**
+     * Torna alla schermata precedente.
+     */
     private void tornaIndietro() {
-        MenuCliente menuClienteScreen = new MenuCliente();
-        this.getScene().setRoot(menuClienteScreen);
+        MenuCliente schermataMenuCliente = new MenuCliente();
+        this.getScene().setRoot(schermataMenuCliente);
     }
 }

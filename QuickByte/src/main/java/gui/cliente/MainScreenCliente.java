@@ -14,100 +14,128 @@ import dao.RistoranteDAO;
 import model.Ristorante;
 import java.sql.SQLException;
 import java.util.List;
-import com.pavlobu.emojitextflow.EmojiTextFlow;
 
+/**
+ * Classe che rappresenta la schermata principale del cliente.
+ */
 public class MainScreenCliente extends VBox {
 
-    private TableView<Ristorante> table;
+    private TableView<Ristorante> tabellaRistoranti;
 
+    /**
+     * Costruttore della schermata principale del cliente.
+     */
     public MainScreenCliente() {
         super(10);
         this.setStyle("-fx-padding: 10;");
 
-        // Clear the cart on login for convenience
+        svuotaCarrello();
+
+        Label titolo = new Label("Ristoranti Disponibili");
+        titolo.getStyleClass().add("title");
+
+        inizializzaTabellaRistoranti();
+        caricaRistoranti();
+
+        Button pulsanteLogout = Utilities.createButtonLogout("Logout", this::passaASchermataLogin);
+        Button pulsanteOrdini = Utilities.createButton("I TUOI ORDINI", this::passaASchermataOrdini);
+
+        HBox boxPulsanti = new HBox(10, pulsanteLogout, pulsanteOrdini);
+        boxPulsanti.setSpacing(10);
+
+        this.getChildren().addAll(titolo, tabellaRistoranti, boxPulsanti);
+    }
+
+    /**
+     * Svuota il carrello dell'utente al login.
+     */
+    private void svuotaCarrello() {
         try {
             CarrelloDAO.getInstance().svuotaCarrello(SessioneUtente.getEmail());
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
-        // Title label
-        Label titleLabel = new Label("Ristoranti Disponibili");
-        titleLabel.getStyleClass().add("title");
+    /**
+     * Inizializza la tabella dei ristoranti.
+     */
+    private void inizializzaTabellaRistoranti() {
+        tabellaRistoranti = new TableView<>();
+        tabellaRistoranti.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        tabellaRistoranti.getStyleClass().add("table-view");
 
-        // Create the restaurant table
-        table = new TableView<>();
-        table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        table.getStyleClass().add("table-view");
+        TableColumn<Ristorante, Integer> colonnaId = new TableColumn<>("ID Ristorante");
+        colonnaId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdRistorante()).asObject());
 
-        TableColumn<Ristorante, Integer> colId = new TableColumn<>("ID Ristorante");
-        colId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdRistorante()).asObject());
+        TableColumn<Ristorante, String> colonnaNome = new TableColumn<>("Nome");
+        colonnaNome.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
 
-        TableColumn<Ristorante, String> colNome = new TableColumn<>("Nome");
-        colNome.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
+        TableColumn<Ristorante, String> colonnaIndirizzo = new TableColumn<>("Indirizzo");
+        colonnaIndirizzo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));
 
-        TableColumn<Ristorante, String> colIndirizzo = new TableColumn<>("Indirizzo");
-        colIndirizzo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));
+        TableColumn<Ristorante, String> colonnaTelefono = new TableColumn<>("Telefono");
+        colonnaTelefono.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTelefono()));
 
-        TableColumn<Ristorante, String> colTelefono = new TableColumn<>("Telefono");
-        colTelefono.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTelefono()));
+        TableColumn<Ristorante, String> colonnaEmail = new TableColumn<>("Email titolare");
+        colonnaEmail.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailTitolare()));
 
-        TableColumn<Ristorante, String> colEmail = new TableColumn<>("Email titolare");
-        colEmail.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailTitolare()));
-
-        TableColumn<Ristorante, Void> colMenu = new TableColumn<>("Menù");
-        colMenu.setCellFactory(param -> new TableCell<Ristorante, Void>() {
-            private final Button selezionaButton = Utilities.createButtonEmoji("", ":fork_knife_plate:", () -> {
+        TableColumn<Ristorante, Void> colonnaMenu = new TableColumn<>("Menù");
+        colonnaMenu.setCellFactory(param -> new TableCell<Ristorante, Void>() {
+            private final Button pulsanteSeleziona = Utilities.createButtonEmoji("", ":fork_knife_plate:", () -> {
                 Ristorante ristorante = getTableView().getItems().get(getIndex());
                 SessioneRistorante.setId(ristorante.getIdRistorante());
-                switchToMenuCliente();
+                passaASchermataMenuCliente();
             });
 
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty ? null : selezionaButton);
+                setGraphic(empty ? null : pulsanteSeleziona);
             }
         });
 
-        table.getColumns().addAll(colId, colNome, colIndirizzo, colTelefono, colEmail, colMenu);
-        loadRistoranti();
-
-        Button logoutButton = Utilities.createButtonLogout("Logout", this::switchToLoginScreen);
-        Button ordiniButton = Utilities.createButton("I TUOI ORDINI", this::switchToOrdiniCliente);
-
-        HBox buttonBox = new HBox(10, logoutButton, ordiniButton);
-        buttonBox.setSpacing(10);
-
-        this.getChildren().addAll(titleLabel, table, buttonBox);
+        tabellaRistoranti.getColumns().addAll(colonnaId, colonnaNome, colonnaIndirizzo, colonnaTelefono, colonnaEmail, colonnaMenu);
     }
 
-    private void loadRistoranti() {
+    /**
+     * Carica i ristoranti nella tabella.
+     */
+    private void caricaRistoranti() {
         try {
-            List<Ristorante> ristorantiList = RistoranteDAO.getInstance().getRistoranti();
-            ObservableList<Ristorante> ristoranti = FXCollections.observableArrayList(ristorantiList);
-            table.setItems(ristoranti);
+            List<Ristorante> listaRistoranti = RistoranteDAO.getInstance().getRistoranti();
+            ObservableList<Ristorante> ristoranti = FXCollections.observableArrayList(listaRistoranti);
+            tabellaRistoranti.setItems(ristoranti);
         } catch (SQLException e) {
             e.printStackTrace();
             Utilities.showAlert("Errore", "Errore di connessione al database.");
         }
     }
 
-    private void switchToMenuCliente() {
-        MenuCliente menuClienteScreen = new MenuCliente();
-        menuClienteScreen.getStylesheets().add("style/style.css");
-        this.getScene().setRoot(menuClienteScreen);
+    /**
+     * Passa alla schermata del menù del cliente.
+     */
+    private void passaASchermataMenuCliente() {
+        MenuCliente schermataMenuCliente = new MenuCliente();
+        schermataMenuCliente.getStylesheets().add("style/style.css");
+        this.getScene().setRoot(schermataMenuCliente);
     }
 
-    private void switchToLoginScreen() {
-        LoginScreen loginScreen = new LoginScreen();
-        loginScreen.getStylesheets().add("style/style.css");
-        this.getScene().setRoot(loginScreen);
+    /**
+     * Passa alla schermata di login.
+     */
+    private void passaASchermataLogin() {
+        LoginScreen schermataLogin = new LoginScreen();
+        schermataLogin.getStylesheets().add("style/style.css");
+        this.getScene().setRoot(schermataLogin);
     }
 
-    private void switchToOrdiniCliente() {
-        OrdiniView ordiniScreen = new OrdiniView();
-        ordiniScreen.getStylesheets().add("style/style.css");
-        this.getScene().setRoot(ordiniScreen);
+    /**
+     * Passa alla schermata degli ordini del cliente.
+     */
+    private void passaASchermataOrdini() {
+        OrdiniView schermataOrdini = new OrdiniView();
+        schermataOrdini.getStylesheets().add("style/style.css");
+        this.getScene().setRoot(schermataOrdini);
     }
 }
