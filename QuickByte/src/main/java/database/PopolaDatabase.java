@@ -7,6 +7,9 @@ import java.sql.Statement;
 public class PopolaDatabase {
 	private PopolaDatabase() {}
 	
+	/**
+     * Popola il Database. Richiamato in RegisterScreen.
+     */
 	public static void popolaDatabase() {
 	    String insertUtenti = "INSERT INTO Utente (email, password, nome, telefono, tipoUtente) VALUES " +
 	            "('cliente@gmail.com', 'cliente', 'Mario Rossi', '1234567890', 'Cliente'), " +

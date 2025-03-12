@@ -7,42 +7,62 @@ import java.sql.Statement;
 
 public class DatabaseConnection {
 
-	private static String DATABASE_URL = "jdbc:sqlite:src/main/resources/database_embedded.db"; // Percorso predefinito del DB
+    private static String URL_DATABASE = "jdbc:sqlite:src/main/resources/database_embedded.db"; // Percorso predefinito del database
 
-    // Permette di cambiare il database per i test
-    public static void setDatabaseUrl(String url) {
-        DATABASE_URL = url;
+    /**
+     * Imposta un nuovo URL per il database, utile per i test.
+     *
+     * @param url Il nuovo URL del database.
+     */
+    public static void impostaUrlDatabase(String url) {
+        URL_DATABASE = url;
     }
 
-    // Metodo per ottenere la connessione
+    /**
+     * Stabilisce una connessione al database.
+     *
+     * @return La connessione al database.
+     * @throws SQLException Se si verifica un errore durante la connessione.
+     */
     public static Connection connect() throws SQLException {
-        System.out.println("Tentando di connettersi al database...");
+        System.out.println("Tentativo di connessione al database...");
 
         // Tenta di stabilire una connessione al database
-        Connection connection = DriverManager.getConnection(DATABASE_URL);
+        Connection connessione = DriverManager.getConnection(URL_DATABASE);
 
-        if (connection != null) {
+        if (connessione != null) {
             System.out.println("Connessione al database riuscita!");
-
-            // Attiva il supporto per le foreign keys
-            try (Statement stmt = connection.createStatement()) {
-                stmt.execute("PRAGMA foreign_keys = ON;");
-                System.out.println("Le foreign keys sono ATTIVE");
-            } catch (SQLException e) {
-                System.err.println("Errore durante l'attivazione delle foreign keys: " + e.getMessage());
-            }
+            attivaForeignKeys(connessione);
         } else {
             System.out.println("Connessione al database fallita!");
         }
 
-        return connection;
+        return connessione;
     }
 
-    // Metodo per chiudere la connessione
-    public static void closeConnection(Connection connection) {
-        if (connection != null) {
+    /**
+     * Attiva il supporto per le foreign keys nel database.
+     *
+     * @param connessione La connessione al database.
+     */
+    private static void attivaForeignKeys(Connection connessione) {
+        try (Statement stmt = connessione.createStatement()) {
+            stmt.execute("PRAGMA foreign_keys = ON;");
+            System.out.println("Le foreign keys sono ATTIVE");
+        } catch (SQLException e) {
+            System.err.println("Errore durante l'attivazione delle foreign keys: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Chiude la connessione al database.
+     *
+     * @param connessione La connessione da chiudere.
+     */
+    public static void chiudiConnessione(Connection connessione) {
+        if (connessione != null) {
             try {
-                connection.close();
+                connessione.close();
                 System.out.println("Connessione chiusa con successo.");
             } catch (SQLException e) {
                 System.out.println("Errore durante la chiusura della connessione: " + e.getMessage());

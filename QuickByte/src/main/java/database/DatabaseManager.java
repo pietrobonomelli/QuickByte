@@ -7,12 +7,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseManager {
-    public static String DB_URL = "jdbc:sqlite:src/main/resources/database_embedded.db";
+    public static String URL_DATABASE  = "jdbc:sqlite:src/main/resources/database_embedded.db";
 
+    /**
+     * Stabilisce una connessione al database.
+     *
+     * @return La connessione al database.
+     * @throws SQLException Se si verifica un errore durante la connessione.
+     */
     public static Connection connect() throws SQLException {
-        return DriverManager.getConnection(DB_URL);
+        return DriverManager.getConnection(URL_DATABASE );
     }
 
+    /**
+     * Crea le tabelle nel database se non esistono già.
+     */
     public static void createTables() {
         String createUtenteTable = "CREATE TABLE IF NOT EXISTS Utente (" +
                 "email TEXT PRIMARY KEY, " +
@@ -47,8 +56,6 @@ public class DatabaseManager {
                 "FOREIGN KEY(emailUtente) REFERENCES Utente(email), " + // Associazione con l'utente
                 "UNIQUE(emailUtente, idPiatto)" + 
                 ");";
-
-
 
         String createMetodoDiPagamentoTable = "CREATE TABLE IF NOT EXISTS MetodoDiPagamento (" +
                 "nominativo TEXT NOT NULL, " +
@@ -106,10 +113,6 @@ public class DatabaseManager {
                 "FOREIGN KEY(emailUtente) REFERENCES Utente(email) ON DELETE CASCADE" +  // Collegamento all'utente
                 ");";
 
-
-
-
-
         try (Connection conn = connect();
         	    Statement stmt = conn.createStatement()) {
         	    // Abilita le foreign keys PRIMA di creare le tabelle
@@ -143,6 +146,10 @@ public class DatabaseManager {
         	}
         
     }
+    
+    /**
+     * Stampa le tabelle esistenti nel database.
+     */
     public static void printExistingTables() {
         try (Connection conn = connect();
              Statement stmt = conn.createStatement();
