@@ -42,7 +42,6 @@ mvn clean javafx:run
 **File → Import → Existing Maven Projects**
 #### 3. Selezionare la cartella QuickByte/QuickByte
 #### 4. Eseguire il progetto:
-Aprire il file ```pom.xml```\
-Click destro **→ Run As → Maven build...**\
-Inserire javafx:run nel campo Goals e confermare con Run
+Click destro sul progetto**→ Run As → Maven build**\
+Inserire **javafx:run** nel campo Goals e confermare con Run
 
