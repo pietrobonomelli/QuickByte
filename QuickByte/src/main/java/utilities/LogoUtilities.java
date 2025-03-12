@@ -9,6 +9,10 @@ public class LogoUtilities {
 
 	private static final int WIDTH_LOGO = 200;
 	
+    /**
+     * Genere l'immagine per il logo circolare.
+     * @return Il logo.
+     */
     public static ImageView createLogo() {  
         InputStream logoStream = LogoUtilities.class.getResourceAsStream("/images/LogoQuickByte.png");
 

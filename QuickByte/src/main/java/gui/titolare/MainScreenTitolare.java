@@ -12,135 +12,117 @@ import sessione.SessioneUtente;
 import utilities.Utilities;
 import java.sql.SQLException;
 import gui.main.*;
-import com.pavlobu.emojitextflow.EmojiTextFlow;
 
 public class MainScreenTitolare extends VBox {
 
     private String email;
-    private TableView<Ristorante> tableView;
+    private TableView<Ristorante> tabellaRistoranti;
 
     public MainScreenTitolare() {
         super(10);
         this.email = SessioneUtente.getEmail();
         this.setStyle("-fx-padding: 10;");
 
-        Label titolo = new Label("Gestione Ristoranti");
-        titolo.getStyleClass().add("title");
+        Label titolo = Utilities.createLabel("Gestione Ristoranti", "title");
 
-        tableView = new TableView<>();
-        tableView.getStyleClass().add("table-view");
-        setupTable();
+        tabellaRistoranti = new TableView<>();
+        tabellaRistoranti.getStyleClass().add("table-view");
+        configuraTabella();
 
-        HBox buttonContainer = new HBox(10);
-        buttonContainer.setStyle("-fx-padding: 10;");
+        HBox contenitoreBottoni = new HBox(10);
+        contenitoreBottoni.setStyle("-fx-padding: 10;");
+        Button bottoneInserisciRistorante = Utilities.createButton("Inserisci nuovo Ristorante", this::passaAInserisciRistorante);
+        Button bottoneLogout = Utilities.createButtonLogout("Logout", this::passaASchermataLogin);
 
-        Button inserisciRistoranteButton = Utilities.createButton("Inserisci nuovo Ristorante", this::switchToInserisciRistorante);
-        Button logoutButton = Utilities.createButtonLogout("Logout", this::switchToLoginScreen);
+        contenitoreBottoni.getChildren().addAll(bottoneLogout, bottoneInserisciRistorante);
 
-        buttonContainer.getChildren().addAll(logoutButton, inserisciRistoranteButton);
+        this.getChildren().addAll(titolo, tabellaRistoranti, contenitoreBottoni);
 
-        // Add elements in the correct order: Title -> Table -> Buttons
-        this.getChildren().addAll(titolo, tableView, buttonContainer);
-
-        loadRistoranti(); 
+        caricaRistoranti();
     }
 
-    private void setupTable() {
-        // Create column for restaurant name
-        TableColumn<Ristorante, String> colNome = new TableColumn<>("Gestisci menu ed ordinazioni");
-        colNome.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
+    /**
+     * Configura la tabella dei ristoranti con le colonne necessarie.
+     */
+    private void configuraTabella() {
+        TableColumn<Ristorante, String> colonnaNome = new TableColumn<>("Gestisci menu ed ordinazioni");
+        colonnaNome.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
+        TableColumn<Ristorante, Void> colonnaVisualizzaMenu = creaColonnaAzioni(":clipboard:", this::passaASchermataMenuTitolare);
+        TableColumn<Ristorante, Void> colonnaModifica = creaColonnaAzioni(":pencil:", this::passaASchermataModificaRistorante);
+        TableColumn<Ristorante, Void> colonnaElimina = creaColonnaAzioni(":wastebasket:", this::confermaEliminazione);
 
-        // Create column for "Visualizza Menu" button
-        TableColumn<Ristorante, Void> colVisualizzaMenu = new TableColumn<>("Gestisci menu ed ordinazioni");
-        colVisualizzaMenu.setCellFactory(param -> new TableCell<Ristorante, Void>() {
-            private final Button visualizzaMenuButton = Utilities.createButtonEmoji("", ":clipboard:",
-                    () -> {
-                        Ristorante ristorante = getTableView().getItems().get(getIndex());
-                        switchToMenuTitolare(ristorante.getIdRistorante());
-                    });
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(visualizzaMenuButton);
-                }
-            }
-        });
-
-        // Create column for "Modifica" button
-        TableColumn<Ristorante, Void> colModifica = new TableColumn<>("Modifica");
-        colModifica.setCellFactory(param -> new TableCell<Ristorante, Void>() {
-            private final Button modificaButton = Utilities.createButtonEmoji("", ":pencil:",
-                    () -> {
-                        Ristorante ristorante = getTableView().getItems().get(getIndex());
-                        switchToModificaRistorante(ristorante.getNome());
-                    });
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(modificaButton);
-                }
-            }
-        });
-
-        // Create column for "Elimina" button
-        TableColumn<Ristorante, Void> colElimina = new TableColumn<>("Elimina");
-        colElimina.setCellFactory(param -> new TableCell<Ristorante, Void>() {
-            private final Button eliminaButton = Utilities.createButtonEmoji("", ":wastebasket:",
-                    () -> {
-                        Ristorante ristorante = getTableView().getItems().get(getIndex());
-                        confermaEliminazione(ristorante);
-                    });
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(eliminaButton);
-                }
-            }
-        });
-
-        // Add columns to the TableView
-        tableView.getColumns().addAll(colNome, colVisualizzaMenu, colModifica, colElimina);
+        tabellaRistoranti.getColumns().addAll(colonnaNome, colonnaVisualizzaMenu, colonnaModifica, colonnaElimina);
     }
 
-    private void loadRistoranti() {
+    /**
+     * Crea una colonna di azioni con un pulsante emoji.
+     *
+     * @param emoji L'emoji da visualizzare sul pulsante.
+     * @param azione L'azione da eseguire al click del pulsante.
+     * @return La colonna configurata.
+     */
+    private TableColumn<Ristorante, Void> creaColonnaAzioni(String emoji, AzioneSuRistorante azione) {
+        return new TableColumn<Ristorante, Void>("") {{
+            setCellFactory(param -> new TableCell<Ristorante, Void>() {
+                private final Button bottone = Utilities.createButtonEmoji("", emoji, () -> {
+                    Ristorante ristorante = getTableView().getItems().get(getIndex());
+                    azione.esegui(ristorante);
+                });
+
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setGraphic(empty ? null : bottone);
+                }
+            });
+        }};
+    }
+
+    /**
+     * Carica i ristoranti nella tabella.
+     */
+    private void caricaRistoranti() {
         try {
             ObservableList<Ristorante> ristoranti = FXCollections.observableArrayList(RistoranteDAO.getInstance().getRistorantiByEmail(this.email));
-            tableView.setItems(ristoranti);
+            tabellaRistoranti.setItems(ristoranti);
         } catch (SQLException e) {
             e.printStackTrace();
             Utilities.showAlert("Errore", "Errore durante il caricamento dei ristoranti.");
         }
     }
 
-    private void switchToInserisciRistorante() {
+    /**
+     * Passa alla schermata di inserimento di un nuovo ristorante.
+     */
+    private void passaAInserisciRistorante() {
         this.getScene().setRoot(new InserisciRistorante());
     }
 
-    private void switchToModificaRistorante(String nomeRistorante) {
-        this.getScene().setRoot(new ModificaRistorante(nomeRistorante));
+    /**
+     * Passa alla schermata di modifica di un ristorante.
+     */
+    private void passaASchermataModificaRistorante(Ristorante ristorante) {
+        this.getScene().setRoot(new ModificaRistorante(ristorante.getNome()));
     }
 
-    private void switchToMenuTitolare(int idRistorante) {
-        SessioneRistorante.setId(idRistorante); // Set the restaurant id in the session
+    /**
+     * Passa alla schermata di gestione del menu di un ristorante.
+     */
+    private void passaASchermataMenuTitolare(Ristorante ristorante) {
+        SessioneRistorante.setId(ristorante.getIdRistorante()); // Imposta l'ID del ristorante nella sessione
         this.getScene().setRoot(new MenuTitolare());
     }
 
-    private void switchToLoginScreen() {
+    /**
+     * Passa alla schermata di login.
+     */
+    private void passaASchermataLogin() {
         this.getScene().setRoot(new LoginScreen());
     }
 
+    /**
+     * Mostra una finestra di conferma per l'eliminazione di un ristorante.
+     */
     private void confermaEliminazione(Ristorante ristorante) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Conferma eliminazione");
@@ -154,14 +136,25 @@ public class MainScreenTitolare extends VBox {
         });
     }
 
+    /**
+     * Elimina un ristorante dal database.
+     */
     private void eliminaRistorante(Ristorante ristorante) {
         try {
             RistoranteDAO.getInstance().rimuoviRistorante(ristorante.getIdRistorante());
             Utilities.showAlert("Successo", "Ristorante eliminato con successo.");
-            loadRistoranti(); // Reload the list of restaurants after deletion
+            caricaRistoranti(); // Ricarica l'elenco dei ristoranti dopo l'eliminazione
         } catch (SQLException e) {
             e.printStackTrace();
             Utilities.showAlert("Errore", "Errore durante l'eliminazione del ristorante.");
         }
+    }
+
+    /**
+     * Interfaccia funzionale per eseguire un'azione su un ristorante.
+     */
+    @FunctionalInterface
+    private interface AzioneSuRistorante {
+        void esegui(Ristorante ristorante);
     }
 }

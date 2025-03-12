@@ -19,7 +19,8 @@ public class MenuTitolare extends VBox {
 	private VBox container;
 	private int ristorante;
 	private TableView<Ordine> tableOrdini;
-
+	private Connection connection;
+	
 	public MenuTitolare() {
 		super(10);
 		this.ristorante = SessioneRistorante.getId();
@@ -40,6 +41,9 @@ public class MenuTitolare extends VBox {
 		loadOrdini();
 	}
 
+	/**
+     * Carica il menu del ristorante nella vista.
+     */
 	private void loadMenu() {
 		Label titleLabel = Utilities.createLabel("Menu", "title");
 		container.getChildren().add(titleLabel);
@@ -74,6 +78,14 @@ public class MenuTitolare extends VBox {
 		container.getChildren().add(inserisciMenuButton);
 	}
 
+    /**
+     * Crea una colonna di azioni con un pulsante emoji.
+     *
+     * @param emoji L'emoji da visualizzare sul pulsante.
+     * @param azione L'azione da eseguire al click del pulsante.
+     * @return La colonna configurata.
+     */
+
 	private TableColumn<Menu, Void> createButtonColumn(String emoji, ActionHandler<Menu> actionHandler) {
 		TableColumn<Menu, Void> col = new TableColumn<>("");
 		col.setCellFactory(param -> new TableCell<Menu, Void>() {
@@ -103,10 +115,11 @@ public class MenuTitolare extends VBox {
 		return col;
 	}
 
-
+	/**
+     * Carica gli ordini nella vista.
+     */
 	private void loadOrdini() {
-		Label ordiniLabel = Utilities.createLabel("Ordini", "ordini-label");
-		ordiniLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+		Label ordiniLabel = Utilities.createLabel("Ordini", "title");
 		container.getChildren().add(ordiniLabel);
 
 		// Creazione della TableView per gli ordini
@@ -143,6 +156,11 @@ public class MenuTitolare extends VBox {
 		container.getChildren().add(tableOrdini);
 	}
 
+	/**
+     * Crea una colonna di azioni per gli ordini.
+     *
+     * @return La colonna configurata.
+     */
 	private TableColumn<Ordine, Void> createOrderActionColumn() {
 		TableColumn<Ordine, Void> colAzione = new TableColumn<>("Azione");
 		colAzione.setCellFactory(param -> new TableCell<Ordine, Void>() {
@@ -182,6 +200,9 @@ public class MenuTitolare extends VBox {
 		Utilities.showAlert("Successo", "Hai rifiutato l'ordine " + ordine.getIdOrdine());
 	}
 
+	 /**
+     * Mostra una finestra di conferma per l'eliminazione di un menu.
+     */
 	private void confermaEliminazione(Menu menu) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Conferma eliminazione");
@@ -193,19 +214,6 @@ public class MenuTitolare extends VBox {
 				eliminaMenu(menu.getNome());
 			}
 		});
-	}
-
-	private void eliminaMenu(String nomeMenu) {
-		try (Connection conn = DatabaseConnection.connect()) {
-			MenuDAO.getInstance().rimuoviMenu(nomeMenu, ristorante);
-			Utilities.showAlert("Successo", "Menu eliminato con successo.");
-			container.getChildren().clear();
-			loadMenu();
-			loadOrdini();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			Utilities.showAlert("Errore", "Errore durante l'eliminazione del menu.");
-		}
 	}
 
 	private void switchToModificaMenu(Menu menu) throws SQLException {
@@ -225,7 +233,7 @@ public class MenuTitolare extends VBox {
 	}
 
 	private String getNomeRistoranteById(int idRistorante) {
-		try (Connection connection = DatabaseConnection.connect()) {
+		try {
 			String query = "SELECT nome FROM ristorante WHERE idRistorante = ?";
 			try (PreparedStatement stmt = connection.prepareStatement(query)) {
 				stmt.setInt(1, idRistorante);
@@ -242,6 +250,19 @@ public class MenuTitolare extends VBox {
 		}
 	}
 
+	private void eliminaMenu(String nomeMenu) {
+		try {
+			MenuDAO.getInstance().rimuoviMenu(nomeMenu, ristorante);
+			Utilities.showAlert("Successo", "Menu eliminato con successo.");
+			container.getChildren().clear();
+			loadMenu();
+			loadOrdini();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Utilities.showAlert("Errore", "Errore durante l'eliminazione del menu.");
+		}
+	}
+	
 	@FunctionalInterface
 	private interface ActionHandler<T> {
 		void handle(T item) throws SQLException;

@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import dao.LoginDAO;
 import dao.OrdineDAO;
 import model.Ordine;
 import model.StatoOrdine;
@@ -20,194 +19,213 @@ import java.util.List;
 
 public class MainScreenCorriere extends VBox {
 
-	private TableView<Ordine> table;
-	private TableView<Ordine> tablePassati;
+    private TableView<Ordine> tabellaOrdini;
+    private TableView<Ordine> tabellaOrdiniPassati;
 
-	public MainScreenCorriere() {
-		super(10);
-		this.setStyle("-fx-padding: 10;");
+    public MainScreenCorriere() {
+        super(10);
+        this.setStyle("-fx-padding: 10;");
 
-		Label titleLabel = Utilities.createLabel("Ordini Disponibili: ", "title");
+        Label titoloLabel = Utilities.createLabel("Ordini Disponibili: ", "title");
 
-		// Tabella ordini
-		table = new TableView<>();
-		table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        // Inizializza la tabella degli ordini
+        tabellaOrdini = creaTabellaOrdini();
+        caricaOrdini();
 
-		TableColumn<Ordine, Integer> colId = new TableColumn<>("ID Ordine");
-		colId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdOrdine()).asObject());
+        // Inizializza la tabella degli ordini presi in carico
+        tabellaOrdiniPassati = creaTabellaOrdiniPassati();
+        caricaOrdiniPassati();
 
-		TableColumn<Ordine, String> colRistorante = new TableColumn<>("Ristorante");
-		colRistorante.setCellValueFactory(data -> {
-			Ordine ordine = data.getValue();
-			String nomeRistorante = OrdineDAO.getInstance().getNomeRistorante(ordine);
-			return new SimpleStringProperty(nomeRistorante);
-		});
+        // Titolo per la tabella ordini presi in carico
+        Label titoloOrdiniPassati = Utilities.createLabel("Ordini Presi in Carico", "title");
+        Button bottoneLogout = Utilities.createButtonLogout("Logout", this::passaASchermataLogin);
 
-		TableColumn<Ordine, Double> colCosto = new TableColumn<>("Costo (€)");
-		colCosto.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCosto()).asObject());
+        // Aggiungi tutte le componenti nella scena
+        this.getChildren().addAll(titoloLabel, tabellaOrdini, titoloOrdiniPassati, tabellaOrdiniPassati, bottoneLogout);
+    }
 
-		TableColumn<Ordine, String> colStato = new TableColumn<>("Stato");
-		colStato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato().name()));
+    /**
+     * Crea e configura la tabella degli ordini disponibili.
+     */
+    private TableView<Ordine> creaTabellaOrdini() {
+        TableView<Ordine> tabella = new TableView<>();
+        tabella.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-		TableColumn<Ordine, String> colEmail = new TableColumn<>("Email cliente");
-		colEmail.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailCliente()));
+        TableColumn<Ordine, Integer> colonnaId = new TableColumn<>("ID Ordine");
+        colonnaId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdOrdine()).asObject());
 
-		TableColumn<Ordine, String> colData = new TableColumn<>("Data");
-		colData.setCellValueFactory(data -> {
-			// Usa il metodo getFormattedDataOraOrdine per ottenere la data formattata
-			String formattedDate = data.getValue().getFormattedDataOraOrdine();
-			return new SimpleStringProperty(formattedDate);
-		});
+        TableColumn<Ordine, String> colonnaRistorante = new TableColumn<>("Ristorante");
+        colonnaRistorante.setCellValueFactory(data -> {
+            Ordine ordine = data.getValue();
+            String nomeRistorante = OrdineDAO.getInstance().getNomeRistorante(ordine);
+            return new SimpleStringProperty(nomeRistorante);
+        });
 
-		TableColumn<Ordine, String> colIndirizzo = new TableColumn<>("Indirizzo");
-		colIndirizzo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));
+        TableColumn<Ordine, Double> colonnaCosto = new TableColumn<>("Costo (€)");
+        colonnaCosto.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCosto()).asObject());
 
-		TableColumn<Ordine, Void> colAzione = new TableColumn<>("Azione");
-		colAzione.setCellFactory(param -> new TableCell<Ordine, Void>() {
-			private final Button accettaButton = Utilities.createButton("ACCETTA", () ->
-			{
-				Ordine ordine = getTableView().getItems().get(getIndex());
-				accettaOrdine(ordine);
-			});
+        TableColumn<Ordine, String> colonnaStato = new TableColumn<>("Stato");
+        colonnaStato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato().name()));
 
-			@Override
-			protected void updateItem(Void item, boolean empty) {
-				super.updateItem(item, empty);
-				if (empty) {
-					setGraphic(null);
-				} else {
-					setGraphic(accettaButton);
-				}
-			}
-		});
+        TableColumn<Ordine, String> colonnaEmail = new TableColumn<>("Email cliente");
+        colonnaEmail.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailCliente()));
 
-		table.getColumns().addAll(colId, colRistorante, colCosto, colStato, colEmail, colIndirizzo, colData, colAzione);
-		loadOrdini();
+        TableColumn<Ordine, String> colonnaData = new TableColumn<>("Data");
+        colonnaData.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFormattedDataOraOrdine()));
 
-		// Tabella ordini presi in carico
-		tablePassati = new TableView<>();
-		tablePassati.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        TableColumn<Ordine, String> colonnaIndirizzo = new TableColumn<>("Indirizzo");
+        colonnaIndirizzo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));
 
-		TableColumn<Ordine, Integer> colIdPassato = new TableColumn<>("ID Ordine");
-		colIdPassato.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdOrdine()).asObject());
+        TableColumn<Ordine, Void> colonnaAzione = new TableColumn<>("Azione");
+        colonnaAzione.setCellFactory(param -> new TableCell<Ordine, Void>() {
+            private final Button bottoneAccetta = Utilities.createButton("ACCETTA", () -> {
+                Ordine ordine = getTableView().getItems().get(getIndex());
+                accettaOrdine(ordine);
+            });
 
-		TableColumn<Ordine, String> colRistorantePassato = new TableColumn<>("Ristorante");
-		colRistorantePassato.setCellValueFactory(data -> {
-			Ordine ordine = data.getValue();
-			String nomeRistorante = OrdineDAO.getInstance().getNomeRistorante(ordine);
-			return new SimpleStringProperty(nomeRistorante);
-		});
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(bottoneAccetta);
+                }
+            }
+        });
 
-		TableColumn<Ordine, Double> colCostoPassato = new TableColumn<>("Costo (€)");
-		colCostoPassato.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCosto()).asObject());
+        tabella.getColumns().addAll(colonnaId, colonnaRistorante, colonnaCosto, colonnaStato, colonnaEmail, colonnaIndirizzo, colonnaData, colonnaAzione);
+        return tabella;
+    }
 
-		TableColumn<Ordine, String> colStatoPassato = new TableColumn<>("Stato");
-		colStatoPassato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato().name()));
+    /**
+     * Crea e configura la tabella degli ordini presi in carico.
+     */
+    private TableView<Ordine> creaTabellaOrdiniPassati() {
+        TableView<Ordine> tabella = new TableView<>();
+        tabella.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-		TableColumn<Ordine, String> colEmailPassato = new TableColumn<>("Email cliente");
-		colEmailPassato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailCliente()));
+        TableColumn<Ordine, Integer> colonnaId = new TableColumn<>("ID Ordine");
+        colonnaId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdOrdine()).asObject());
 
-		TableColumn<Ordine, String> colDataPassato = new TableColumn<>("Data");
-		colDataPassato.setCellValueFactory(data -> {
-			// Usa il metodo getFormattedDataOraOrdine per ottenere la data formattata
-			String formattedDate = data.getValue().getFormattedDataOraOrdine();
-			return new SimpleStringProperty(formattedDate);
-		});
+        TableColumn<Ordine, String> colonnaRistorante = new TableColumn<>("Ristorante");
+        colonnaRistorante.setCellValueFactory(data -> {
+            Ordine ordine = data.getValue();
+            String nomeRistorante = OrdineDAO.getInstance().getNomeRistorante(ordine);
+            return new SimpleStringProperty(nomeRistorante);
+        });
 
-		TableColumn<Ordine, String> colIndirizzoPassato = new TableColumn<>("Indirizzo");
-		colIndirizzoPassato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));
+        TableColumn<Ordine, Double> colonnaCosto = new TableColumn<>("Costo (€)");
+        colonnaCosto.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCosto()).asObject());
 
-		TableColumn<Ordine, Void> colAzionePassato = new TableColumn<>("    Azione     ");
-		colAzionePassato.setCellFactory(param -> new TableCell<Ordine, Void>() {
-			private final Button consegnatoButton = Utilities.createButton("SEGNA COME CONSEGNATO",  () ->
-			{
-				Ordine ordine = getTableView().getItems().get(getIndex());
-				consegnatoOrdine(ordine);
-			});
+        TableColumn<Ordine, String> colonnaStato = new TableColumn<>("Stato");
+        colonnaStato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato().name()));
 
-			@Override
-			protected void updateItem(Void item, boolean empty) {
-				super.updateItem(item, empty);
-				if (empty || getTableView().getItems().get(getIndex()).getStato() != StatoOrdine.IN_CONSEGNA) {
-					setGraphic(null);
-				} else {
-					setGraphic(consegnatoButton);
-				}
-			}
-		});
+        TableColumn<Ordine, String> colonnaEmail = new TableColumn<>("Email cliente");
+        colonnaEmail.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailCliente()));
 
+        TableColumn<Ordine, String> colonnaData = new TableColumn<>("Data");
+        colonnaData.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFormattedDataOraOrdine()));
 
-		tablePassati.getColumns().addAll(colIdPassato, colRistorantePassato, colCostoPassato, colStatoPassato, colEmailPassato, colIndirizzoPassato, colDataPassato, colAzionePassato);
-		loadOrdiniPassati();
+        TableColumn<Ordine, String> colonnaIndirizzo = new TableColumn<>("Indirizzo");
+        colonnaIndirizzo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));
 
-		// Titolo per la tabella ordini presi in carico
-		Label titleOrdiniPassati = Utilities.createLabel("Ordini Presi in Carico", "title");
-		Button logoutButton = Utilities.createButtonLogout("Logout", this::switchToLoginScreen);
+        TableColumn<Ordine, Void> colonnaAzione = new TableColumn<>("Azione");
+        colonnaAzione.setCellFactory(param -> new TableCell<Ordine, Void>() {
+            private final Button bottoneConsegnato = Utilities.createButton("SEGNA COME CONSEGNATO", () -> {
+                Ordine ordine = getTableView().getItems().get(getIndex());
+                segnaOrdineComeConsegnato(ordine);
+            });
 
-		// Aggiungi tutte le componenti nella scena
-		this.getChildren().addAll(titleLabel, table, titleOrdiniPassati, tablePassati, logoutButton);
-	}
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getTableView().getItems().get(getIndex()).getStato() != StatoOrdine.IN_CONSEGNA) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(bottoneConsegnato);
+                }
+            }
+        });
 
-	private void loadOrdini() {
-		List<Ordine> ordiniList = OrdineDAO.getInstance().getOrdiniByStato(StatoOrdine.ACCETTATO.name());
-		ObservableList<Ordine> ordini = FXCollections.observableArrayList(ordiniList);
-		table.setItems(ordini);
-	}
+        tabella.getColumns().addAll(colonnaId, colonnaRistorante, colonnaCosto, colonnaStato, colonnaEmail, colonnaIndirizzo, colonnaData, colonnaAzione);
+        return tabella;
+    }
 
-	private void loadOrdiniPassati() {
-		List<Ordine> ordiniListPassati = OrdineDAO.getInstance().getOrdiniPresiInCarico(SessioneUtente.getEmail(),
-				Arrays.asList(StatoOrdine.IN_CONSEGNA.name(), StatoOrdine.CONSEGNATO.name(), StatoOrdine.ELIMINATO.name())
-				);
+    /**
+     * Carica gli ordini disponibili nella tabella.
+     */
+    private void caricaOrdini() {
+        List<Ordine> listaOrdini = OrdineDAO.getInstance().getOrdiniByStato(StatoOrdine.ACCETTATO.name());
+        ObservableList<Ordine> ordini = FXCollections.observableArrayList(listaOrdini);
+        tabellaOrdini.setItems(ordini);
+    }
 
-		ObservableList<Ordine> ordini = FXCollections.observableArrayList(ordiniListPassati);
-		tablePassati.setItems(ordini);
-	}
+    /**
+     * Carica gli ordini presi in carico nella tabella.
+     */
+    private void caricaOrdiniPassati() {
+        List<Ordine> listaOrdiniPassati = OrdineDAO.getInstance().getOrdiniPresiInCarico(
+                SessioneUtente.getEmail(),
+                Arrays.asList(StatoOrdine.IN_CONSEGNA.name(), StatoOrdine.CONSEGNATO.name(), StatoOrdine.ELIMINATO.name())
+        );
 
-	private void accettaOrdine(Ordine ordine) {
-		String emailCorriere = SessioneUtente.getEmail(); // Recupera l'email del corriere dalla sessione
+        ObservableList<Ordine> ordini = FXCollections.observableArrayList(listaOrdiniPassati);
+        tabellaOrdiniPassati.setItems(ordini);
+    }
 
-		if (emailCorriere == null || emailCorriere.isEmpty()) {
-			Utilities.showAlert("Errore", "Errore nel recupero dell'email del corriere.");
-			return;
-		}
+    /**
+     * Accetta un ordine e aggiorna il suo stato.
+     */
+    private void accettaOrdine(Ordine ordine) {
+        String emailCorriere = SessioneUtente.getEmail();
 
-		boolean statoAggiornato = OrdineDAO.getInstance().aggiornaStatoOrdine(ordine.getIdOrdine(), StatoOrdine.IN_CONSEGNA.name());
-		boolean emailAggiornata = OrdineDAO.getInstance().aggiornaEmailCorriereOrdine(ordine.getIdOrdine(), emailCorriere);
+        if (emailCorriere == null || emailCorriere.isEmpty()) {
+            Utilities.showAlert("Errore", "Errore nel recupero dell'email del corriere.");
+            return;
+        }
 
-		if (statoAggiornato && emailAggiornata) {
-			Utilities.showAlert("Successo", "Hai accettato l'ordine " + ordine.getIdOrdine());
+        boolean statoAggiornato = OrdineDAO.getInstance().aggiornaStatoOrdine(ordine.getIdOrdine(), StatoOrdine.IN_CONSEGNA.name());
+        boolean emailAggiornata = OrdineDAO.getInstance().aggiornaEmailCorriereOrdine(ordine.getIdOrdine(), emailCorriere);
 
-			// Svuota la tabella degli ordini presi in carico e ricaricala
-			tablePassati.getItems().clear();  // Cancella gli ordini presi in carico nella tabella
-			loadOrdiniPassati();  // Ricarica gli ordini presi in carico
+        if (statoAggiornato && emailAggiornata) {
+            Utilities.showAlert("Successo", "Hai accettato l'ordine " + ordine.getIdOrdine());
 
-			loadOrdini(); // Aggiorna la tabella degli ordini
-		} else {
-			Utilities.showAlert("Errore", "Non è stato possibile accettare l'ordine. Riprova.");
-		}
-	}
+            // Aggiorna le tabelle
+            tabellaOrdiniPassati.getItems().clear();
+            caricaOrdiniPassati();
+            caricaOrdini();
+        } else {
+            Utilities.showAlert("Errore", "Non è stato possibile accettare l'ordine. Riprova.");
+        }
+    }
 
-	private void consegnatoOrdine(Ordine ordine) {
-		String emailCorriere = SessioneUtente.getEmail(); // Recupera l'email del corriere dalla sessione
+    /**
+     * Segna un ordine come consegnato.
+     */
+    private void segnaOrdineComeConsegnato(Ordine ordine) {
+        String emailCorriere = SessioneUtente.getEmail();
 
-		if (emailCorriere == null || emailCorriere.isEmpty()) {
-			Utilities.showAlert("Errore", "Errore nel recupero dell'email del corriere.");
-			return;
-		}
+        if (emailCorriere == null || emailCorriere.isEmpty()) {
+            Utilities.showAlert("Errore", "Errore nel recupero dell'email del corriere.");
+            return;
+        }
 
-		boolean statoAggiornato = OrdineDAO.getInstance().aggiornaStatoOrdine(ordine.getIdOrdine(), StatoOrdine.CONSEGNATO.name());
+        boolean statoAggiornato = OrdineDAO.getInstance().aggiornaStatoOrdine(ordine.getIdOrdine(), StatoOrdine.CONSEGNATO.name());
 
-		if (statoAggiornato) {
-			Utilities.showAlert("Successo", "Hai consegnato l'ordine " + ordine.getIdOrdine());
+        if (statoAggiornato) {
+            Utilities.showAlert("Successo", "Hai consegnato l'ordine " + ordine.getIdOrdine());
+            caricaOrdiniPassati();
+        } else {
+            Utilities.showAlert("Errore", "Non è stato possibile segnare l'ordine come consegnato. Riprova.");
+        }
+    }
 
-			loadOrdiniPassati();  // Ricarica gli ordini presi in carico
-		} else {
-			Utilities.showAlert("Errore", "Non è stato possibile accettare l'ordine. Riprova.");
-		}
-	}
-
-	private void switchToLoginScreen() {
-		LoginScreen loginScreen = new LoginScreen();
-		this.getScene().setRoot(loginScreen);
-	}
+    /**
+     * Passa alla schermata di login.
+     */
+    private void passaASchermataLogin() {
+        LoginScreen loginScreen = new LoginScreen();
+        this.getScene().setRoot(loginScreen);
+    }
 }

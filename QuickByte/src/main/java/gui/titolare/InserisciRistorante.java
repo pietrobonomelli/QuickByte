@@ -6,62 +6,58 @@ import sessione.SessioneUtente;
 import utilities.Utilities;
 import dao.RistoranteDAO;
 
-import java.sql.*;
+import java.sql.SQLException;
 
 public class InserisciRistorante extends VBox {
 
-    private TextField nomeRistoranteField, telefonoField, indirizzoField;
-    private Label emailTitolareLabel;
+    private TextField campoNomeRistorante, campoTelefono, campoIndirizzo;
+    private Label etichettaEmailTitolare;
     private String emailTitolare = SessioneUtente.getEmail();
 
     public InserisciRistorante() {
         super(10); // Imposta il padding tra i componenti
         this.setStyle("-fx-padding: 10;");
 
-        // Titolo grande
-        Label titolo = Utilities.createLabel("Inserisci Ristorante", "title-label");
-        titolo.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        Label titolo = Utilities.createLabel("Inserisci Ristorante", "title");
 
-        // Crea i campi di inserimento con le Label sopra
-        nomeRistoranteField = new TextField();
-        VBox nomeBox = Utilities.createFieldBox("Nome Ristorante", "Nome del ristorante", nomeRistoranteField);
+        // Creazione dei campi di inserimento con le etichette sopra
+        campoNomeRistorante = new TextField();
+        VBox boxNome = Utilities.createFieldBox("Nome Ristorante", "Nome del ristorante", campoNomeRistorante);
 
-        telefonoField = new TextField();
-        VBox telefonoBox = Utilities.createFieldBox("Numero di Telefono", "Numero di telefono", telefonoField);
+        campoTelefono = new TextField();
+        VBox boxTelefono = Utilities.createFieldBox("Numero di Telefono", "Numero di telefono", campoTelefono);
 
-        indirizzoField = new TextField();
-        VBox indirizzoBox = Utilities.createFieldBox("Indirizzo", "Indirizzo", indirizzoField);
+        campoIndirizzo = new TextField();
+        VBox boxIndirizzo = Utilities.createFieldBox("Indirizzo", "Indirizzo", campoIndirizzo);
 
-        // Mostra l'email del titolare ma non consentire la modifica
-        emailTitolareLabel = Utilities.createLabel("Email Titolare: " + emailTitolare, "email-label");
 
-        // Pulsante per confermare l'inserimento
-        Button confermaButton = Utilities.createButton("Inserisci Ristorante", this::inserisciRistorante);
-
-        // Pulsante per tornare alla schermata di gestione ristoranti
-        Button tornaButton = Utilities.createButton("Torna alla gestione ristoranti", this::tornaAllaGestioneRistoranti);
-
-        // Aggiungi i pulsanti in una HBox (vicini)
-        HBox buttonContainer = new HBox(10);
-        buttonContainer.setStyle("-fx-padding: 10;");
-        buttonContainer.getChildren().addAll(confermaButton, tornaButton);
+        etichettaEmailTitolare = Utilities.createLabel("Email Titolare: " + emailTitolare, "email-label");
+      
+        Button bottoneConferma = Utilities.createButton("Inserisci Ristorante", this::inserisciRistorante);
+        Button bottoneTorna = Utilities.createButton("Torna alla gestione ristoranti", this::tornaAllaGestioneRistoranti);
+        HBox contenitoreBottoni = new HBox(10);
+        contenitoreBottoni.setStyle("-fx-padding: 10;");
+        contenitoreBottoni.getChildren().addAll(bottoneConferma, bottoneTorna);
 
         // Aggiungi tutti gli elementi al layout
         this.getChildren().addAll(
             titolo,
-            nomeBox,
-            telefonoBox,
-            indirizzoBox,
-            emailTitolareLabel,
-            buttonContainer
+            boxNome,
+            boxTelefono,
+            boxIndirizzo,
+            etichettaEmailTitolare,
+            contenitoreBottoni
         );
     }
 
+    /**
+     * Inserisce un nuovo ristorante nel database.
+     */
     private void inserisciRistorante() {
         // Recupera i dati dai campi di input
-        String nome = nomeRistoranteField.getText();
-        String telefono = telefonoField.getText();
-        String indirizzo = indirizzoField.getText();
+        String nome = campoNomeRistorante.getText();
+        String telefono = campoTelefono.getText();
+        String indirizzo = campoIndirizzo.getText();
 
         if (nome.isEmpty() || telefono.isEmpty() || indirizzo.isEmpty()) {
             // Mostra un messaggio di errore se qualche campo è vuoto
@@ -77,12 +73,16 @@ public class InserisciRistorante extends VBox {
             Utilities.showAlert("Successo", "Ristorante inserito con successo!");
 
             // Torna alla schermata di gestione ristoranti
-            getScene().setRoot(new MainScreenTitolare());
+            tornaAllaGestioneRistoranti();
         } catch (SQLException e) {
             e.printStackTrace();
+            Utilities.showAlert("Errore", "Errore durante l'inserimento del ristorante.");
         }
     }
 
+    /**
+     * Torna alla schermata di gestione ristoranti.
+     */
     private void tornaAllaGestioneRistoranti() {
         // Torna alla schermata di gestione ristoranti
         getScene().setRoot(new MainScreenTitolare());

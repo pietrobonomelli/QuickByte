@@ -9,8 +9,8 @@ import sessione.SessioneRistorante;
 import utilities.Utilities;
 
 public class InserisciMenu extends VBox {
-    private TextField nomeMenuField;
-    private Label nomeRistoranteLabel;
+    private TextField campoNomeMenu;
+    private Label etichettaNomeRistorante;
     private int idRistorante;
 
     public InserisciMenu() {
@@ -19,26 +19,32 @@ public class InserisciMenu extends VBox {
 
         this.idRistorante = SessioneRistorante.getId();
 
-        // Usa il DAO per ottenere il nome del ristorante
-        String nomeRistorante = getNomeRistorante(idRistorante);
+        // Ottieni il nome del ristorante utilizzando il DAO
+        String nomeRistorante = ottieniNomeRistorante(idRistorante);
 
-        Label titoloLabel = new Label("INSERISCI NUOVO MENU");
-        titoloLabel.getStyleClass().add("title");
+        Label etichettaTitolo = new Label("INSERISCI NUOVO MENU");
+        etichettaTitolo.getStyleClass().add("title");
 
-        nomeRistoranteLabel = new Label("Ristorante: " + nomeRistorante);
-        Label nomeMenuLabel = new Label("Nome Menu:");
-        nomeMenuField = new TextField();
+        etichettaNomeRistorante = new Label("Ristorante: " + nomeRistorante);
+        Label etichettaNomeMenu = new Label("Nome Menu:");
+        campoNomeMenu = new TextField();
 
-        Button inserisciButton = Utilities.createButton("Inserisci Menu", this::inserisciMenu);
-        Button tornaButton = Utilities.createButton("Torna ai menu", this::switchToMenuTitolare);
+        Button bottoneInserisci = Utilities.createButton("Inserisci Menu", this::inserisciMenu);
+        Button bottoneTorna = Utilities.createButton("Torna ai menu", this::switchToMenuTitolare);
 
-        HBox buttonContainer = new HBox(10, inserisciButton, tornaButton);
+        HBox contenitoreBottoni = new HBox(10, bottoneInserisci, bottoneTorna);
 
-        VBox formContainer = new VBox(10, titoloLabel, nomeRistoranteLabel, nomeMenuLabel, nomeMenuField, buttonContainer);
-        this.getChildren().add(formContainer);
+        VBox contenitoreForm = new VBox(10, etichettaTitolo, etichettaNomeRistorante, etichettaNomeMenu, campoNomeMenu, contenitoreBottoni);
+        this.getChildren().add(contenitoreForm);
     }
 
-    private String getNomeRistorante(int idRistorante) {
+    /**
+     * Ottiene il nome del ristorante dall'ID.
+     *
+     * @param idRistorante L'ID del ristorante.
+     * @return Il nome del ristorante.
+     */
+    private String ottieniNomeRistorante(int idRistorante) {
         String nomeRistorante = "";
         try {
             nomeRistorante = MenuDAO.getInstance().getNomeRistorante(idRistorante);
@@ -48,8 +54,11 @@ public class InserisciMenu extends VBox {
         return nomeRistorante;
     }
 
+    /**
+     * Inserisce un nuovo menu nel database.
+     */
     private void inserisciMenu() {
-        String nomeMenu = nomeMenuField.getText().trim();
+        String nomeMenu = campoNomeMenu.getText().trim();
         if (nomeMenu.isEmpty()) {
             Utilities.showAlert("Errore", "Il nome del menu non può essere vuoto.");
             return;
@@ -60,7 +69,7 @@ public class InserisciMenu extends VBox {
         try {
             MenuDAO.getInstance().aggiungiMenu(menu);
             Utilities.showAlert("Successo", "Menu inserito correttamente.");
-            nomeMenuField.clear();
+            campoNomeMenu.clear();
             switchToMenuTitolare();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,8 +77,11 @@ public class InserisciMenu extends VBox {
         }
     }
 
+    /**
+     * Passa alla schermata del menu del titolare.
+     */
     private void switchToMenuTitolare() {
-        MenuTitolare menuTitolareScreen = new MenuTitolare(); // Passa l'ID del ristorante
-        this.getScene().setRoot(menuTitolareScreen);
+        MenuTitolare schermataMenuTitolare = new MenuTitolare(); // Passa l'ID del ristorante
+        this.getScene().setRoot(schermataMenuTitolare);
     }
 }

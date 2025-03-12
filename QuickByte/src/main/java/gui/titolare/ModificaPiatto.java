@@ -6,13 +6,9 @@ import javafx.stage.FileChooser;
 import utilities.Utilities;
 import sessione.SessionePiatto;
 import sessione.SessioneMenu;
-import database.DatabaseConnection;
 import dao.PiattoDAO;
 import model.Piatto;
-import gui.main.*;
-
 import java.io.File;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ModificaPiatto extends VBox {
@@ -64,6 +60,9 @@ public class ModificaPiatto extends VBox {
         this.getChildren().addAll(titoloLabel, prezzoBox, allergeniBox, disponibilitaCheckBox, buttonsBox);
     }
 
+    /*
+     * Carica i dati del piatto.
+     */
     private void loadPiattoData() throws SQLException {
         Piatto piatto = PiattoDAO.getInstance().getPiattoById(idPiatto);
         if (piatto != null) {
@@ -73,8 +72,11 @@ public class ModificaPiatto extends VBox {
         }
     }
 
+    /*
+     * Salvataggio delle modifiche del piatto.
+     */
     private void salvaModifiche() {
-        try (Connection conn = DatabaseConnection.connect()) {
+        try {
             Piatto piatto = new Piatto(idPiatto, "", disponibilitaCheckBox.isSelected(),
                                        prezzoField.getText(), allergeniField.getText(),
                                        fotoFile != null ? fotoFile.getAbsolutePath() : null, nomeMenu, 0);
@@ -88,6 +90,9 @@ public class ModificaPiatto extends VBox {
         }
     }
 
+    /*
+     * Apre file explorer per la scelta di una foto per il piatto.
+     */
     private void scegliFoto() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Immagini", "*.png", "*.jpg", "*.jpeg"));

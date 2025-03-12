@@ -14,6 +14,9 @@ import utilities.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.ScrollPane;
 
+/**
+ * Classe che rappresenta la schermata di registrazione.
+ */
 public class RegisterScreen extends StackPane {
 
     private TextField emailField;
@@ -57,6 +60,11 @@ public class RegisterScreen extends StackPane {
         getChildren().add(scrollPane);
     }
 
+    /**
+     * Crea il modulo di registrazione.
+     *
+     * @return Il VBox contenente il modulo di registrazione.
+     */
     private VBox createRegistrationForm() {
         VBox registrazioneForm = new VBox();
         registrazioneForm.setAlignment(Pos.CENTER);
@@ -65,16 +73,21 @@ public class RegisterScreen extends StackPane {
         Label titleRegistrazione = new Label("REGISTRAZIONE");
         titleRegistrazione.getStyleClass().add("title");
 
-        VBox emailBox = Utilities.createFieldBox("E-MAIL", "Inserisci l'e-mail", new TextField());
-        VBox nomeBox = Utilities.createFieldBox("NOME", "Inserisci il nominativo", new TextField());
-        VBox telefonoBox = Utilities.createFieldBox("NUMERO DI TELEFONO", "Inserisci il numero di telefono", new TextField());
-        VBox passwordBox = Utilities.createFieldBox("PASSWORD", "Inserisci la password", new PasswordField());
+        emailField = new TextField();
+        nameField = new TextField();
+        phoneField = new TextField();
+        passwordField = new PasswordField();
 
-        this.userTypeComboBox = new ComboBox<>();
+        VBox emailBox = Utilities.createFieldBox("E-MAIL", "Inserisci l'e-mail", emailField);
+        VBox nomeBox = Utilities.createFieldBox("NOME", "Inserisci il nominativo", nameField);
+        VBox telefonoBox = Utilities.createFieldBox("NUMERO DI TELEFONO", "Inserisci il numero di telefono", phoneField);
+        VBox passwordBox = Utilities.createFieldBox("PASSWORD", "Inserisci la password", passwordField);
+
+        userTypeComboBox = new ComboBox<>();
         userTypeComboBox.getItems().addAll("Cliente", "Titolare", "Corriere");
         userTypeComboBox.setPromptText("Seleziona il tipo di utente");
 
-        this.registerButton = new Button("Registrati");
+        registerButton = new Button("Registrati");
         registerButton.setOnAction(e -> {
             try {
                 handleRegistration();
@@ -87,6 +100,11 @@ public class RegisterScreen extends StackPane {
         return registrazioneForm;
     }
 
+    /**
+     * Crea la sezione del pulsante di login.
+     *
+     * @return Il VBox contenente il pulsante di login.
+     */
     private VBox createLoginButtonBox() {
         VBox loginButtonBox = new VBox();
         Text loginLabel = new Text("Se hai già un account: ");
@@ -94,13 +112,20 @@ public class RegisterScreen extends StackPane {
         loginButtonBox.setAlignment(Pos.CENTER);
         loginButtonBox.setSpacing(5);
         loginButtonBox.setMaxWidth(280);
+
         Button loginButton = new Button("Login");
         loginButton.getStyleClass().add("button-secondary");
         loginButton.setOnAction(e -> switchToLoginScreen());
+
         loginButtonBox.getChildren().addAll(loginLabel, loginButton);
         return loginButtonBox;
     }
 
+    /**
+     * Gestisce il processo di registrazione.
+     *
+     * @throws SQLException Se si verifica un errore SQL durante la registrazione.
+     */
     private void handleRegistration() throws SQLException {
         String email = emailField.getText().trim();
         String name = nameField.getText().trim();
@@ -124,11 +149,10 @@ public class RegisterScreen extends StackPane {
         }
 
         // Controlla se l'email è già in uso
-        System.out.println("return del get utente by email: " + UtenteDAO.getInstance().getUtenteByEmail(email));
         if (UtenteDAO.getInstance().getUtenteByEmail(email) != null) {
             showError("Email già in uso.");
         } else {
-            // Crea l'oggetto utente e lo inserisce nel database
+        	// Crea l'oggetto utente e lo inserisce nel database
             Utente utente = null;
             switch (userType) {
                 case "Cliente":
@@ -155,12 +179,20 @@ public class RegisterScreen extends StackPane {
         }
     }
 
+    /**
+     * Passa alla schermata di login.
+     */
     private void switchToLoginScreen() {
         Scene currentScene = getScene();
         LoginScreen loginScreen = new LoginScreen();
         currentScene.setRoot(loginScreen);
     }
 
+    /**
+     * Mostra un messaggio di errore.
+     *
+     * @param message Il messaggio di errore da visualizzare.
+     */
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Errore");
@@ -169,6 +201,11 @@ public class RegisterScreen extends StackPane {
         alert.showAndWait();
     }
 
+    /**
+     * Mostra un messaggio di successo.
+     *
+     * @param message Il messaggio di successo da visualizzare.
+     */
     private void showSuccess(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Successo");

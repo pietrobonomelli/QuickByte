@@ -26,28 +26,25 @@ public class PiattiTitolare extends VBox {
         this.setStyle("-fx-padding: 10;");
         container = new VBox(10);
         
-        // Titolo in grande
-        Label titleLabel = new Label("Piatti");
-        titleLabel.getStyleClass().add("title");
+        Label titleLabel = Utilities.createLabel("Piatti", "title");        
         container.getChildren().add(titleLabel);
         
-        // Carica i piatti
         loadPiatti();
         this.getChildren().add(container);
 
         HBox buttonContainer = new HBox(10);
         buttonContainer.setStyle("-fx-padding: 10;");
 
-        Button tornaButton = new Button("⬅ Torna ai menu");
-        tornaButton.setOnAction(e -> switchToMenuTitolare());
-        
-        Button inserisciPiattoButton = new Button("Inserisci Piatto");
-        inserisciPiattoButton.setOnAction(e -> switchToInserisciPiatto());
+        Button tornaButton = Utilities.createButton("⬅ Torna ai menu", this::switchToMenuTitolare);
+        Button inserisciPiattoButton = Utilities.createButton("Inserisci Piatto", this::switchToInserisciPiatto);
 
         buttonContainer.getChildren().addAll(tornaButton, inserisciPiattoButton);
         this.getChildren().add(buttonContainer);
     }
 
+    /*
+     * Carica la tabella dei piatti del menu.
+     */
     private void loadPiatti() {
         try {
             // Ottenere piatti dal database tramite DAO
@@ -57,6 +54,7 @@ public class PiattiTitolare extends VBox {
             TableView<Piatto> tablePiatti = new TableView<>();
             tablePiatti.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
             tablePiatti.getStyleClass().add("table-view");
+            
             // Creazione delle colonne
             TableColumn<Piatto, String> colNomePiatto = new TableColumn<>("Nome Piatto");
             colNomePiatto.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
@@ -67,7 +65,6 @@ public class PiattiTitolare extends VBox {
             TableColumn<Piatto, String> colAllergeni = new TableColumn<>("Allergeni");
             colAllergeni.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAllergeni()));
 
-         // Colonna Disponibilità con EmojiTextFlow
             TableColumn<Piatto, Void> colDisponibile = new TableColumn<>("Disponibilità");
             colDisponibile.setCellFactory(param -> new TableCell<Piatto, Void>() {
                 private final EmojiTextFlow emojiDisponibile = new EmojiTextFlow();
@@ -89,7 +86,6 @@ public class PiattiTitolare extends VBox {
                 }
             });
 
-            // Colonna Modifica con icona matita
             TableColumn<Piatto, Void> colModifica = new TableColumn<>("Modifica");
             colModifica.setCellFactory(param -> new TableCell<Piatto, Void>() {
                 private final Button modificaButton = new Button();

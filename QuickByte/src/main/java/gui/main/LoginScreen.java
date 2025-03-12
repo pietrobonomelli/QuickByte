@@ -29,8 +29,7 @@ public class LoginScreen extends VBox {
         Text title = new Text("Bentornato su QuickByte - Il gusto a portata di click!");
         title.getStyleClass().add("title");
 
-        Label titleLogin = new Label("LOGIN");
-        titleLogin.getStyleClass().add("title");
+        Label titleLogin = Utilities.createLabel("LOGIN", "title");
 
         VBox emailBox = Utilities.createFieldBox("E-MAIL", "Inserisci l'e-mail", new TextField());
         VBox passwordBox = Utilities.createFieldBox("PASSWORD", "Inserisci la password", new PasswordField());
@@ -51,6 +50,12 @@ public class LoginScreen extends VBox {
         this.getChildren().add(scrollPane);
     }
 
+    /**
+     * Gestisce il login.
+     *
+     * @param emailBox    Il VBox contenente il campo email.
+     * @param passwordBox Il VBox contenente il campo password.
+     */
     private void handleLogin(VBox emailBox, VBox passwordBox) {
         TextField emailField = (TextField) emailBox.getChildren().get(1);
         PasswordField passwordField = (PasswordField) passwordBox.getChildren().get(1);
@@ -67,6 +72,11 @@ public class LoginScreen extends VBox {
         }
     }
 
+    /**
+     * Crea la sezione del pulsante di registrazione.
+     *
+     * @return Il VBox contenente il pulsante di registrazione.
+     */
     private VBox createRegisterButtonBox() {
         VBox registerButtonBox = new VBox();
         Text registrazioneLabel = new Text("Se non hai un account: ");
@@ -83,6 +93,9 @@ public class LoginScreen extends VBox {
         return registerButtonBox;
     }
 
+    /**
+     * Passa alla schermata di registrazione.
+     */
     private void switchToRegisterScreen() {
         RegisterScreen registrationScreen = new RegisterScreen();
         Stage primaryStage = (Stage) this.getScene().getWindow();
@@ -90,7 +103,12 @@ public class LoginScreen extends VBox {
         registrationScene.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
         primaryStage.setScene(registrationScene);
     }
-
+    
+    /**
+     * Passa alla schermata principale in base al tipo di utente.
+     *
+     * @param email L'email dell'utente loggato.
+     */
     private void switchToMainScreen(String email) {
         String tipoUtente = LoginDAO.getInstance().getUserType(email);
 

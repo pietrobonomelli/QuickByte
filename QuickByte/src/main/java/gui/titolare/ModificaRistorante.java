@@ -69,6 +69,9 @@ public class ModificaRistorante extends VBox {
         }
     }
 
+    /*
+     * Salva le modifiche del ristorante.
+     */
     private void salvaModifiche() {
         String nuovoNome = nomeField.getText();
         String nuovoTelefono = telefonoField.getText();

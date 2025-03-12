@@ -14,7 +14,7 @@ public class DatabaseConnection {
      *
      * @param url Il nuovo URL del database.
      */
-    public static void impostaUrlDatabase(String url) {
+    public static void setDatabaseUrl(String url) {
         URL_DATABASE = url;
     }
 
