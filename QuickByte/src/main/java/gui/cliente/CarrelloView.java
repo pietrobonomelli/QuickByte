@@ -26,11 +26,10 @@ public class CarrelloView extends VBox {
 		this.emailUtente = SessioneUtente.getEmail();
 
 		// Aggiungi un titolo alla vista (solo una volta)
-		Label titolo = new Label("Carrello del Cliente");
-		titolo.getStyleClass().add("title");
+		Label titolo = Utilities.createLabel("Carrello del Cliente", "title");
 		this.getChildren().add(titolo);
 
-		loadCarrello();       
+		loadCarrello();
 	}
 
 	private void loadCarrello() {
@@ -52,25 +51,10 @@ public class CarrelloView extends VBox {
 		});
 
 		colAzioni.setCellFactory(param -> new TableCell<Carrello, Void>() {
-			private final Button addButton = new Button("");
-			private final Button minusButton = new Button("");
-			
+			private final Button addButton = Utilities.createButtonEmoji("", ":heavy_plus_sign:", () -> modificaQuantita(getTableRow().getItem(), 1));
+			private final Button minusButton = Utilities.createButtonEmoji("", ":heavy_minus_sign:", () -> modificaQuantita(getTableRow().getItem(), -1));
+
 			private final HBox buttonBox = new HBox(5, minusButton, addButton);
-			
-			private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
-			private final EmojiTextFlow emojiTextFlow2 = new EmojiTextFlow();
-			{            					
-				emojiTextFlow1.parseAndAppend(":heavy_minus_sign:");
-				minusButton.setGraphic(emojiTextFlow1);
-				minusButton.getStyleClass().add("table-button-emoji");
-
-				emojiTextFlow2.parseAndAppend(":heavy_plus_sign:");
-				addButton.setGraphic(emojiTextFlow2);
-				addButton.getStyleClass().add("table-button-emoji");
-
-				addButton.setOnAction(event -> modificaQuantita(getTableRow().getItem(), 1));
-				minusButton.setOnAction(event -> modificaQuantita(getTableRow().getItem(), -1));
-			}
 
 			@Override
 			protected void updateItem(Void item, boolean empty) {
@@ -93,11 +77,8 @@ public class CarrelloView extends VBox {
 			Utilities.showAlert("Errore", "Errore nel caricamento del carrello.");
 		}
 
-		Button tornaAllaListaButton = new Button("⬅ HOME");
-		tornaAllaListaButton.setOnAction(event -> tornaAllaHome());
-
-		Button confermaOrdineButton = new Button("CONFERMA ORDINE");
-		confermaOrdineButton.setOnAction(event -> {
+		Button tornaAllaListaButton = Utilities.createButton("⬅ HOME", this::tornaAllaHome);
+		Button confermaOrdineButton = Utilities.createButton("CONFERMA ORDINE", () -> {
 			try {
 				confermaOrdine();
 			} catch (SQLException e) {
@@ -110,7 +91,7 @@ public class CarrelloView extends VBox {
 		// Aggiungi la tabella e i pulsanti alla VBox senza rimuovere il titolo
 		this.getChildren().addAll(table, buttonBox);
 	}
-	
+
 	private void modificaQuantita(Carrello item, int delta) {
 		try {
 			int nuovaQuantita = item.getQuantitaPiatti() + delta;
@@ -140,7 +121,7 @@ public class CarrelloView extends VBox {
         MainScreenCliente mainScreenCliente = new MainScreenCliente();
         this.getScene().setRoot(mainScreenCliente);
     }
-	
+
 	public String getDataOraCorrente() {
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

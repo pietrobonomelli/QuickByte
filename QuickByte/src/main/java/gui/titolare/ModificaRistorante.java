@@ -17,46 +17,40 @@ public class ModificaRistorante extends VBox {
         super(10);
         this.nomeRistorante = nomeRistorante;
         this.setStyle("-fx-padding: 10;");
-        
-        // Titolo grande
-        Label titolo = new Label("Modifica Ristorante: " + nomeRistorante);
-        titolo.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
-        // Crea un HBox per il titolo (senza il pulsante torna indietro in alto)
+        // Titolo grande
+        Label titolo = Utilities.createLabel("Modifica Ristorante: " + nomeRistorante, "title");
+
+        // Crea un HBox per il titolo
         HBox header = new HBox(10);
         header.getChildren().addAll(titolo);
         header.setStyle("-fx-padding: 10;");
-        
+
         // Campi di input con i rispettivi Label
-        Label nomeLabel = new Label("Nome Pizzeria");
         nomeField = new TextField();
-        nomeField.setPromptText("Nome pizzeria");
-        
-        Label telefonoLabel = new Label("Numero di Telefono");
+        VBox nomeBox = Utilities.createFieldBox("Nome Pizzeria", "Nome pizzeria", nomeField);
+
         telefonoField = new TextField();
-        telefonoField.setPromptText("Numero di telefono");
-        
-        Label indirizzoLabel = new Label("Indirizzo");
+        VBox telefonoBox = Utilities.createFieldBox("Numero di Telefono", "Numero di telefono", telefonoField);
+
         indirizzoField = new TextField();
-        indirizzoField.setPromptText("Indirizzo");
+        VBox indirizzoBox = Utilities.createFieldBox("Indirizzo", "Indirizzo", indirizzoField);
 
         // Carica i dati attuali
         caricaDatiRistorante();
 
         // Pulsante per salvare le modifiche
-        Button salvaButton = new Button("Salva Modifiche");
-        salvaButton.setOnAction(e -> salvaModifiche());
-        
+        Button salvaButton = Utilities.createButton("Salva Modifiche", this::salvaModifiche);
+
         // Pulsante per tornare alla gestione ristoranti
-        Button tornaButton2 = new Button("Torna alla Gestione Ristoranti");
-        tornaButton2.setOnAction(e -> getScene().setRoot(new MainScreenTitolare()));
+        Button tornaButton = Utilities.createButton("Torna alla Gestione Ristoranti", () -> getScene().setRoot(new MainScreenTitolare()));
 
         // Aggiunta degli elementi al layout
         HBox buttonContainer = new HBox(10);
         buttonContainer.setStyle("-fx-padding: 10;");
-        buttonContainer.getChildren().addAll(salvaButton, tornaButton2);
+        buttonContainer.getChildren().addAll(salvaButton, tornaButton);
 
-        this.getChildren().addAll(header, nomeLabel, nomeField, telefonoLabel, telefonoField, indirizzoLabel, indirizzoField, buttonContainer);
+        this.getChildren().addAll(header, nomeBox, telefonoBox, indirizzoBox, buttonContainer);
     }
 
     private void caricaDatiRistorante() {
@@ -67,7 +61,7 @@ public class ModificaRistorante extends VBox {
                 telefonoField.setText(ristorante.getTelefono());
                 indirizzoField.setText(ristorante.getIndirizzo());
             } else {
-            	Utilities.showAlert("Errore", "Ristorante non trovato.");
+                Utilities.showAlert("Errore", "Ristorante non trovato.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,24 +75,23 @@ public class ModificaRistorante extends VBox {
         String nuovoIndirizzo = indirizzoField.getText();
 
         if (nuovoNome.isEmpty() || nuovoTelefono.isEmpty() || nuovoIndirizzo.isEmpty()) {
-        	Utilities.showAlert("Errore", "Tutti i campi devono essere compilati.");
+            Utilities.showAlert("Errore", "Tutti i campi devono essere compilati.");
             return;
         }
 
         try {
             Ristorante ristorante = new Ristorante(nuovoNome, nuovoTelefono, nuovoIndirizzo, emailTitolare);
-            boolean success = RistoranteDAO.getInstance().aggiornaRistorante(ristorante ,nomeRistorante);
-            
+            boolean success = RistoranteDAO.getInstance().aggiornaRistorante(ristorante, nomeRistorante);
+
             if (success) {
-            	Utilities.showAlert("Successo", "Ristorante modificato con successo!");
+                Utilities.showAlert("Successo", "Ristorante modificato con successo!");
                 getScene().setRoot(new MainScreenTitolare());
             } else {
-            	Utilities.showAlert("Errore", "Modifica non riuscita.");
+                Utilities.showAlert("Errore", "Modifica non riuscita.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
             Utilities.showAlert("Errore", "Errore durante la modifica del ristorante.");
         }
     }
-
 }

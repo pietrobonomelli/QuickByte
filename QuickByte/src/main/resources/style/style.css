@@ -9,7 +9,7 @@
 }
 
 .title {
-    -fx-font-size: 18px;
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-text-fill: black;
 }
@@ -34,6 +34,11 @@
     -fx-padding: 10;  /* Margine interno più grande */
     -fx-font-size: 14px;
     -fx-min-width: 300px; /* Impostata larghezza minima */
+}
+
+.button-logout {
+	-fx-background-color: red !important; 
+	-fx-text-fill: white !important; 
 }
 
 .button {

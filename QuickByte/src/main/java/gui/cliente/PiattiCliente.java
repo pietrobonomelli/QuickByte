@@ -38,13 +38,12 @@ public class PiattiCliente extends VBox {
         
         // Crea un titolo da visualizzare sopra la tabella
         Label titleLabel = new Label("Piatti del menù: " + nomeMenu);
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        titleLabel.getStyleClass().add("title");
 
         // Aggiungi il titolo alla scena sopra la tabella
         setupTableView();
         loadPiatti();
         
-        // Bottone per tornare indietro
         Button btnIndietro = new Button("⬅ INDIETRO");
         btnIndietro.setOnAction(event -> tornaIndietro());
 

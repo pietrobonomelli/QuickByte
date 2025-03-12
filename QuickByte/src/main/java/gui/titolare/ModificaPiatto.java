@@ -23,7 +23,7 @@ public class ModificaPiatto extends VBox {
     private Button tornaIndietroButton;
     private Button scegliFotoButton;
     private File fotoFile;
-    
+
     private int idPiatto;
     private String nomeMenu;
 
@@ -34,67 +34,60 @@ public class ModificaPiatto extends VBox {
         this.nomeMenu = SessioneMenu.getNome();
 
         // Large Title
-        Label titoloLabel = new Label("MODIFICA PIATTO");
+        Label titoloLabel = Utilities.createLabel("MODIFICA PIATTO", "title-label");
         titoloLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
-        Label prezzoLabel = new Label("Prezzo:");
         prezzoField = new TextField();
-        
-        Label allergeniLabel = new Label("Allergeni:");
+        VBox prezzoBox = Utilities.createFieldBox("Prezzo:", "", prezzoField);
+
         allergeniField = new TextField();
-        
-        Label disponibilitaLabel = new Label("Disponibile:");
-        disponibilitaCheckBox = new CheckBox();
-                
-        tornaIndietroButton = new Button("⬅ INDIETRO");
-        tornaIndietroButton.setOnAction(e -> {
+        VBox allergeniBox = Utilities.createFieldBox("Allergeni:", "", allergeniField);
+
+        disponibilitaCheckBox = new CheckBox("Disponibile:");
+
+        tornaIndietroButton = Utilities.createButton("⬅ INDIETRO", () -> {
 			try {
 				tornaAiPiatti();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 		});
-        
-        scegliFotoButton = new Button("Scegli Foto");
-        scegliFotoButton.setOnAction(e -> scegliFoto());
+        scegliFotoButton = Utilities.createButton("Scegli Foto", this::scegliFoto);
+        salvaButton = Utilities.createButton("Salva Modifiche", this::salvaModifiche);
 
-        salvaButton = new Button("Salva Modifiche");
-        salvaButton.setOnAction(e -> salvaModifiche());
-        
         loadPiattoData();
-        
+
         // HBox for buttons to align them on the same row
         HBox buttonsBox = new HBox(10, tornaIndietroButton, scegliFotoButton, salvaButton);
         buttonsBox.setStyle("-fx-alignment: center;");
 
-        this.getChildren().addAll(titoloLabel, prezzoLabel, prezzoField, allergeniLabel, allergeniField,
-                disponibilitaLabel, disponibilitaCheckBox, buttonsBox);
+        this.getChildren().addAll(titoloLabel, prezzoBox, allergeniBox, disponibilitaCheckBox, buttonsBox);
     }
 
     private void loadPiattoData() throws SQLException {
-            Piatto piatto = PiattoDAO.getInstance().getPiattoById(idPiatto);
-            if (piatto != null) {
-                prezzoField.setText(piatto.getPrezzo());
-                allergeniField.setText(piatto.getAllergeni());
-                disponibilitaCheckBox.setSelected(piatto.isDisponibile());
-            }
+        Piatto piatto = PiattoDAO.getInstance().getPiattoById(idPiatto);
+        if (piatto != null) {
+            prezzoField.setText(piatto.getPrezzo());
+            allergeniField.setText(piatto.getAllergeni());
+            disponibilitaCheckBox.setSelected(piatto.isDisponibile());
+        }
     }
 
     private void salvaModifiche() {
         try (Connection conn = DatabaseConnection.connect()) {
-            Piatto piatto = new Piatto(idPiatto, "", disponibilitaCheckBox.isSelected(), 
-                                       prezzoField.getText(), allergeniField.getText(), 
+            Piatto piatto = new Piatto(idPiatto, "", disponibilitaCheckBox.isSelected(),
+                                       prezzoField.getText(), allergeniField.getText(),
                                        fotoFile != null ? fotoFile.getAbsolutePath() : null, nomeMenu, 0);
             PiattoDAO.getInstance().aggiornaPiatto(piatto);
-            
+
             Utilities.showAlert("Successo", "Modifiche salvate correttamente.");
-            tornaAiPiatti(); 
+            tornaAiPiatti();
         } catch (SQLException e) {
             e.printStackTrace();
             Utilities.showAlert("Errore", "Errore nel salvataggio delle modifiche.");
         }
     }
-    
+
     private void scegliFoto() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Immagini", "*.png", "*.jpg", "*.jpeg"));
@@ -110,13 +103,12 @@ public class ModificaPiatto extends VBox {
             fileChooser.setInitialDirectory(new File(currentDirectory));
         }
 
-        File fotoFile = fileChooser.showOpenDialog(null);
-        if (fotoFile != null) {
-            Utilities.showAlert("Foto Selezionata", "Foto selezionata: " + fotoFile.getName());
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            Utilities.showAlert("Foto Selezionata", "Foto selezionata: " + selectedFile.getName());
             // Aggiorna la foto nel database
             try {
-                PiattoDAO piattoDAO = PiattoDAO.getInstance();
-                piattoDAO.aggiornaFotoPiatto(idPiatto, fotoFile.getName());
+                PiattoDAO.getInstance().aggiornaFotoPiatto(idPiatto, selectedFile.getName());
                 Utilities.showAlert("Successo", "Foto aggiornata nel database!");
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -124,7 +116,7 @@ public class ModificaPiatto extends VBox {
             }
         }
     }
-    
+
     private void tornaAiPiatti() throws SQLException {
         PiattiTitolare piattiScreen = new PiattiTitolare();
         this.getScene().setRoot(piattiScreen);

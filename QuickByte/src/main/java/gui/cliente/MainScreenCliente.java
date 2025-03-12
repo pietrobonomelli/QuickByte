@@ -24,22 +24,22 @@ public class MainScreenCliente extends VBox {
         super(10);
         this.setStyle("-fx-padding: 10;");
 
-        //svuoto il carrello al login per comodità
+        // Clear the cart on login for convenience
         try {
             CarrelloDAO.getInstance().svuotaCarrello(SessioneUtente.getEmail());
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        // Etichetta del titolo
+        // Title label
         Label titleLabel = new Label("Ristoranti Disponibili");
         titleLabel.getStyleClass().add("title");
 
-        // Creazione della tabella dei ristoranti
+        // Create the restaurant table
         table = new TableView<>();
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         table.getStyleClass().add("table-view");
-        
+
         TableColumn<Ristorante, Integer> colId = new TableColumn<>("ID Ristorante");
         colId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdRistorante()).asObject());
 
@@ -57,40 +57,24 @@ public class MainScreenCliente extends VBox {
 
         TableColumn<Ristorante, Void> colMenu = new TableColumn<>("Menù");
         colMenu.setCellFactory(param -> new TableCell<Ristorante, Void>() {
-            private Button selezionaButton = new Button();
-            private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
-            {            	
-            	emojiTextFlow1.parseAndAppend(":fork_knife_plate:");
-            	selezionaButton.setGraphic(emojiTextFlow1);
-            	selezionaButton.getStyleClass().add("table-button-emoji");
-            	
-                selezionaButton.setOnAction(event -> {
-                    Ristorante ristorante = getTableView().getItems().get(getIndex());
-                    SessioneRistorante.setId(ristorante.getIdRistorante());
-                    switchToMenuCliente();
-                });
-            }
+            private final Button selezionaButton = Utilities.createButtonEmoji("", ":fork_knife_plate:", () -> {
+                Ristorante ristorante = getTableView().getItems().get(getIndex());
+                SessioneRistorante.setId(ristorante.getIdRistorante());
+                switchToMenuCliente();
+            });
 
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(selezionaButton);
-                }
+                setGraphic(empty ? null : selezionaButton);
             }
         });
 
         table.getColumns().addAll(colId, colNome, colIndirizzo, colTelefono, colEmail, colMenu);
         loadRistoranti();
 
-        Button logoutButton = new Button("Logout");
-        logoutButton.setOnAction(e -> switchToLoginScreen());
-        logoutButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
-        
-        Button ordiniButton = new Button("I TUOI ORDINI");
-        ordiniButton.setOnAction(event -> switchToOrdiniCliente());
+        Button logoutButton = Utilities.createButtonLogout("Logout", this::switchToLoginScreen);
+        Button ordiniButton = Utilities.createButton("I TUOI ORDINI", this::switchToOrdiniCliente);
 
         HBox buttonBox = new HBox(10, logoutButton, ordiniButton);
         buttonBox.setSpacing(10);
@@ -120,7 +104,7 @@ public class MainScreenCliente extends VBox {
         loginScreen.getStylesheets().add("style/style.css");
         this.getScene().setRoot(loginScreen);
     }
- 
+
     private void switchToOrdiniCliente() {
         OrdiniView ordiniScreen = new OrdiniView();
         ordiniScreen.getStylesheets().add("style/style.css");

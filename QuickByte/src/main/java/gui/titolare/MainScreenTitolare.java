@@ -18,7 +18,7 @@ public class MainScreenTitolare extends VBox {
 
     private String email;
     private TableView<Ristorante> tableView;
-    
+
     public MainScreenTitolare() {
         super(10);
         this.email = SessioneUtente.getEmail();
@@ -26,7 +26,7 @@ public class MainScreenTitolare extends VBox {
 
         Label titolo = new Label("Gestione Ristoranti");
         titolo.getStyleClass().add("title");
-        
+
         tableView = new TableView<>();
         tableView.getStyleClass().add("table-view");
         setupTable();
@@ -34,41 +34,30 @@ public class MainScreenTitolare extends VBox {
         HBox buttonContainer = new HBox(10);
         buttonContainer.setStyle("-fx-padding: 10;");
 
-        Button inserisciRistoranteButton = new Button("Inserisci nuovo Ristorante");
-        inserisciRistoranteButton.setOnAction(e -> switchToInserisciRistorante());
-
-        Button logoutButton = new Button("Logout");
-        logoutButton.setOnAction(e -> switchToLoginScreen());
-        logoutButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+        Button inserisciRistoranteButton = Utilities.createButton("Inserisci nuovo Ristorante", this::switchToInserisciRistorante);
+        Button logoutButton = Utilities.createButtonLogout("Logout", this::switchToLoginScreen);
 
         buttonContainer.getChildren().addAll(logoutButton, inserisciRistoranteButton);
 
-        // Aggiungi gli elementi nell'ordine corretto: Titolo -> Tabella -> Pulsanti
+        // Add elements in the correct order: Title -> Table -> Buttons
         this.getChildren().addAll(titolo, tableView, buttonContainer);
 
-        loadRistoranti(); // Carica i ristoranti
+        loadRistoranti(); 
     }
 
     private void setupTable() {
-        // Crea la colonna per il nome del ristorante
+        // Create column for restaurant name
         TableColumn<Ristorante, String> colNome = new TableColumn<>("Gestisci menu ed ordinazioni");
         colNome.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
 
-        // Crea la colonna per il pulsante "Visualizza Menu"
+        // Create column for "Visualizza Menu" button
         TableColumn<Ristorante, Void> colVisualizzaMenu = new TableColumn<>("Gestisci menu ed ordinazioni");
         colVisualizzaMenu.setCellFactory(param -> new TableCell<Ristorante, Void>() {
-        	private final EmojiTextFlow emojiTextFlow0 = new EmojiTextFlow();
-            private final Button visualizzaMenuButton = new Button("");
-            {
-            	emojiTextFlow0.parseAndAppend(":clipboard:");
-            	visualizzaMenuButton.setGraphic(emojiTextFlow0);
-
-            	visualizzaMenuButton.getStyleClass().add("table-button-emoji");
-                visualizzaMenuButton.setOnAction(event -> {
-                    Ristorante ristorante = getTableView().getItems().get(getIndex());
-                    switchToMenuTitolare(ristorante.getIdRistorante());  
-                });
-            }
+            private final Button visualizzaMenuButton = Utilities.createButtonEmoji("", ":clipboard:",
+                    () -> {
+                        Ristorante ristorante = getTableView().getItems().get(getIndex());
+                        switchToMenuTitolare(ristorante.getIdRistorante());
+                    });
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -81,22 +70,14 @@ public class MainScreenTitolare extends VBox {
             }
         });
 
-                
-        // Crea la colonna per il pulsante per gestire il ristorante
+        // Create column for "Modifica" button
         TableColumn<Ristorante, Void> colModifica = new TableColumn<>("Modifica");
         colModifica.setCellFactory(param -> new TableCell<Ristorante, Void>() {
-        	private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
-            private final Button modificaButton = new Button();
-            {            	
-            	emojiTextFlow1.parseAndAppend(":pencil:");
-                modificaButton.setGraphic(emojiTextFlow1);
-
-            	modificaButton.getStyleClass().add("table-button-emoji");
-                modificaButton.setOnAction(event -> {
-                    Ristorante ristorante = getTableView().getItems().get(getIndex());
-                    switchToModificaRistorante(ristorante.getNome());  
-                });
-            }
+            private final Button modificaButton = Utilities.createButtonEmoji("", ":pencil:",
+                    () -> {
+                        Ristorante ristorante = getTableView().getItems().get(getIndex());
+                        switchToModificaRistorante(ristorante.getNome());
+                    });
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -109,20 +90,14 @@ public class MainScreenTitolare extends VBox {
             }
         });
 
-        // Crea la colonna per il pulsante "Elimina"
+        // Create column for "Elimina" button
         TableColumn<Ristorante, Void> colElimina = new TableColumn<>("Elimina");
         colElimina.setCellFactory(param -> new TableCell<Ristorante, Void>() {
-        	private final EmojiTextFlow emojiTextFlow2 = new EmojiTextFlow();
-            private final Button eliminaButton = new Button();
-            {
-            	emojiTextFlow2.parseAndAppend(":wastebasket:");
-            	eliminaButton.setGraphic(emojiTextFlow2);
-            	eliminaButton.getStyleClass().add("table-button-emoji");
-                eliminaButton.setOnAction(event -> {
-                    Ristorante ristorante = getTableView().getItems().get(getIndex());
-                    confermaEliminazione(ristorante);
-                });
-            }
+            private final Button eliminaButton = Utilities.createButtonEmoji("", ":wastebasket:",
+                    () -> {
+                        Ristorante ristorante = getTableView().getItems().get(getIndex());
+                        confermaEliminazione(ristorante);
+                    });
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -135,7 +110,7 @@ public class MainScreenTitolare extends VBox {
             }
         });
 
-        // Aggiungi le colonne alla TableView
+        // Add columns to the TableView
         tableView.getColumns().addAll(colNome, colVisualizzaMenu, colModifica, colElimina);
     }
 
@@ -158,7 +133,7 @@ public class MainScreenTitolare extends VBox {
     }
 
     private void switchToMenuTitolare(int idRistorante) {
-        SessioneRistorante.setId(idRistorante); // Imposta l'id del ristorante nella sessione
+        SessioneRistorante.setId(idRistorante); // Set the restaurant id in the session
         this.getScene().setRoot(new MenuTitolare());
     }
 
@@ -183,7 +158,7 @@ public class MainScreenTitolare extends VBox {
         try {
             RistoranteDAO.getInstance().rimuoviRistorante(ristorante.getIdRistorante());
             Utilities.showAlert("Successo", "Ristorante eliminato con successo.");
-            loadRistoranti(); // Ricarica la lista dei ristoranti dopo la cancellazione
+            loadRistoranti(); // Reload the list of restaurants after deletion
         } catch (SQLException e) {
             e.printStackTrace();
             Utilities.showAlert("Errore", "Errore durante l'eliminazione del ristorante.");

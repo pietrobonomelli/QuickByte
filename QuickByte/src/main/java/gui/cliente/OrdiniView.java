@@ -13,7 +13,6 @@ import model.*;
 import sessione.SessioneUtente;
 import utilities.Utilities;
 import java.util.List;
-import com.pavlobu.emojitextflow.EmojiTextFlow;
 
 public class OrdiniView extends VBox {
 
@@ -23,8 +22,9 @@ public class OrdiniView extends VBox {
         super(10);
         this.setStyle("-fx-padding: 10;");
 
-        Label titleLabel = new Label("I Tuoi Ordini");
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        Label titleLabel = Utilities.createLabel("I Tuoi Ordini", "title");
+        titleLabel.getStyleClass().add("title");
+
 
         // Tabella ordini
         table = new TableView<>();
@@ -55,18 +55,10 @@ public class OrdiniView extends VBox {
 
         TableColumn<Ordine, Void> colAzione = new TableColumn<>("Azione");
         colAzione.setCellFactory(param -> new TableCell<Ordine, Void>() {
-            private final Button eliminaButton = new Button();
-            private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
-            {            	
-            	emojiTextFlow1.parseAndAppend(":wastebasket:");
-            	eliminaButton.setGraphic(emojiTextFlow1);
-
-            	eliminaButton.getStyleClass().add("table-button-emoji");
-                eliminaButton.setOnAction(event -> {
-                    Ordine ordine = getTableView().getItems().get(getIndex());
-                    eliminaOrdine(ordine);
-                });
-            }
+            private final Button eliminaButton = Utilities.createButtonEmoji("", ":wastebasket:", () -> {
+                Ordine ordine = getTableView().getItems().get(getIndex());
+                eliminaOrdine(ordine);
+            });
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -82,8 +74,7 @@ public class OrdiniView extends VBox {
         table.getColumns().addAll(colId, colCosto, colData, colEmail, colIndirizzo, colStato, colAzione);
         loadOrdini();
 
-        Button tornaAllaListaButton = new Button("⬅ INDIETRO");
-        tornaAllaListaButton.setOnAction(event -> tornaAllaLista());
+        Button tornaAllaListaButton = Utilities.createButton("⬅ INDIETRO", this::tornaAllaLista);
 
         // Aggiungi tutte le componenti nella scena
         this.getChildren().addAll(titleLabel, table, tornaAllaListaButton);

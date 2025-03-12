@@ -21,7 +21,7 @@ public class IndirizzoForm extends VBox {
         this.emailUtente = SessioneUtente.getEmail();
         setAlignment(Pos.CENTER);
 
-        Label titolo = new Label("Aggiungi un indirizzo");
+        Label titolo = Utilities.createLabel("Aggiungi un indirizzo", "title");
 
         TextField indirizzoField = new TextField();
         indirizzoField.setPromptText("Indirizzo");
@@ -35,8 +35,7 @@ public class IndirizzoForm extends VBox {
         TextField provinciaField = new TextField();
         provinciaField.setPromptText("Provincia");
 
-        Button salvaButton = new Button("Salva indirizzo");
-        salvaButton.setOnAction(e -> {
+        Button salvaButton = Utilities.createButton("Salva indirizzo", () -> {
             String indirizzo = indirizzoField.getText();
             String citta = cittaField.getText();
             String cap = capField.getText();
@@ -52,8 +51,7 @@ public class IndirizzoForm extends VBox {
             salvaIndirizzo(nuovoIndirizzo);
         });
 
-        Button annullaButton = new Button("Annulla");
-        annullaButton.setOnAction(e -> tornaIndietro());
+        Button annullaButton = Utilities.createButton("Annulla", this::tornaIndietro);
 
         getChildren().addAll(titolo, indirizzoField, cittaField, capField, provinciaField, salvaButton, annullaButton);
     }

@@ -6,14 +6,12 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import sessione.*;
-import sessione.SessioneRistorante;
 import utilities.Utilities;
 import database.DatabaseConnection;
 import dao.MenuDAO;
 import model.Menu;
 import java.sql.*;
 import java.util.List;
-import com.pavlobu.emojitextflow.EmojiTextFlow;
 
 public class MenuCliente extends VBox {
 
@@ -31,10 +29,9 @@ public class MenuCliente extends VBox {
             Utilities.showAlert("Errore", "Errore nel caricamento del nome del ristorante.");
         }
 
-        
         // Etichetta del titolo
-        Label titleLabel = new Label("Menù disponibili del ristorante: " + nomeRistorante);
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        Label titleLabel = Utilities.createLabel("Menù disponibili del ristorante: " + nomeRistorante, "title");
+        titleLabel.getStyleClass().add("title");
 
         // Tabella per i menu
         table = new TableView<>();
@@ -45,23 +42,15 @@ public class MenuCliente extends VBox {
 
         TableColumn<Menu, Void> colAzione = new TableColumn<>("Piatti");
         colAzione.setCellFactory(param -> new TableCell<Menu, Void>() {
-            private final Button vediPiattiButton = new Button();
-            private final EmojiTextFlow emojiTextFlow1 = new EmojiTextFlow();
-            {            	
-            	emojiTextFlow1.parseAndAppend(":pencil:");
-            	vediPiattiButton.setGraphic(emojiTextFlow1);
-
-            	vediPiattiButton.getStyleClass().add("table-button-emoji");
-                vediPiattiButton.setOnAction(event -> {
-                    Menu menu = getTableView().getItems().get(getIndex());
-                    SessioneMenu.setNome(menu.getNome());
-                    try {
-                        switchToPiattiCliente();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
+            private final Button vediPiattiButton = Utilities.createButtonEmoji("", ":pencil:", () -> {
+                Menu menu = getTableView().getItems().get(getIndex());
+                SessioneMenu.setNome(menu.getNome());
+                try {
+                    switchToPiattiCliente();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -77,14 +66,11 @@ public class MenuCliente extends VBox {
         table.getColumns().addAll(colNome, colAzione);
         loadMenu();
 
-        Button carrelloButton = new Button("🛒 CARRELLO");
-        carrelloButton.setOnAction(event -> switchToCarrello());
-        
-        Button tornaAllaListaRistorantiButton = new Button("⬅ INDIETRO");
-        tornaAllaListaRistorantiButton.setOnAction(event -> tornaAllaListaRistoranti());
+        Button carrelloButton = Utilities.createButton("🛒 CARRELLO", this::switchToCarrello);
+        Button tornaAllaListaRistorantiButton = Utilities.createButton("⬅ INDIETRO", this::tornaAllaListaRistoranti);
 
         HBox buttonBox = new HBox(10, tornaAllaListaRistorantiButton, carrelloButton);
-        buttonBox.setSpacing(10);  
+        buttonBox.setSpacing(10);
 
         this.getChildren().addAll(titleLabel, table, buttonBox);
     }
@@ -114,4 +100,4 @@ public class MenuCliente extends VBox {
         CarrelloView carrelloScreen = new CarrelloView();
         this.getScene().setRoot(carrelloScreen);
     }
-    }
+}

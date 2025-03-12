@@ -18,25 +18,22 @@ public class InserisciMenu extends VBox {
         this.setStyle("-fx-padding: 10;");
 
         this.idRistorante = SessioneRistorante.getId();
-        
+
         // Usa il DAO per ottenere il nome del ristorante
         String nomeRistorante = getNomeRistorante(idRistorante);
-        
+
         Label titoloLabel = new Label("INSERISCI NUOVO MENU");
-        titoloLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
-        
+        titoloLabel.getStyleClass().add("title");
+
         nomeRistoranteLabel = new Label("Ristorante: " + nomeRistorante);
         Label nomeMenuLabel = new Label("Nome Menu:");
         nomeMenuField = new TextField();
-        
-        Button inserisciButton = new Button("Inserisci Menu");
-        inserisciButton.setOnAction(e -> inserisciMenu());
 
-        Button tornaButton = new Button("Torna ai menu");
-        tornaButton.setOnAction(e -> switchToMenuTitolare());
-        
+        Button inserisciButton = Utilities.createButton("Inserisci Menu", this::inserisciMenu);
+        Button tornaButton = Utilities.createButton("Torna ai menu", this::switchToMenuTitolare);
+
         HBox buttonContainer = new HBox(10, inserisciButton, tornaButton);
-        
+
         VBox formContainer = new VBox(10, titoloLabel, nomeRistoranteLabel, nomeMenuLabel, nomeMenuField, buttonContainer);
         this.getChildren().add(formContainer);
     }
@@ -54,7 +51,7 @@ public class InserisciMenu extends VBox {
     private void inserisciMenu() {
         String nomeMenu = nomeMenuField.getText().trim();
         if (nomeMenu.isEmpty()) {
-        	Utilities.showAlert("Errore", "Il nome del menu non può essere vuoto.");
+            Utilities.showAlert("Errore", "Il nome del menu non può essere vuoto.");
             return;
         }
 
@@ -75,5 +72,4 @@ public class InserisciMenu extends VBox {
         MenuTitolare menuTitolareScreen = new MenuTitolare(); // Passa l'ID del ristorante
         this.getScene().setRoot(menuTitolareScreen);
     }
-
 }

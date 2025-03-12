@@ -28,42 +28,39 @@ public class InserisciPiatto extends VBox {
         this.idRistorante = SessioneRistorante.getId();
         this.setStyle("-fx-padding: 10;");
 
-        Label titolo = new Label("Inserisci un nuovo piatto nel menu: " + nomeMenu);
+        // Creazione delle etichette utilizzando il metodo di utilità
+        Label titolo = Utilities.createLabel("Inserisci un nuovo piatto nel menu: " + nomeMenu, "title");
         titolo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
-        Label nomeLabel = new Label("Nome del piatto:");
+        Label nomeLabel = Utilities.createLabel("Nome del piatto:", "label");
         nomeField = new TextField();
         nomeField.setPromptText("Nome del piatto");
 
-        Label prezzoLabel = new Label("Prezzo:");
+        Label prezzoLabel = Utilities.createLabel("Prezzo:", "label");
         prezzoField = new TextField();
         prezzoField.setPromptText("Prezzo");
 
-        Label allergeniLabel = new Label("Allergeni:");
+        Label allergeniLabel = Utilities.createLabel("Allergeni:", "label");
         allergeniField = new TextField();
         allergeniField.setPromptText("Allergeni");
 
         disponibilitaCheckBox = new CheckBox("Disponibile");
 
-        Label fotoLabel = new Label("Foto:");
+        Label fotoLabel = Utilities.createLabel("Foto:", "label");
         fotoField = new TextField();
         fotoField.setPromptText("Nome della foto");
         fotoField.setEditable(false);
 
-        scegliFotoButton = new Button("Scegli Foto");
-        scegliFotoButton.setOnAction(e -> scegliFoto());
+        scegliFotoButton = Utilities.createButton("Scegli Foto", this::scegliFoto);
 
-        Button inserisciButton = new Button("Inserisci Piatto");
-        inserisciButton.setOnAction(e -> inserisciPiatto());
-
-        Button tornaIndietroButton = new Button("Torna ai Piatti");
-        tornaIndietroButton.setOnAction(e -> {
-            try {
-                tornaAiPiatti();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-        });
+        Button inserisciButton = Utilities.createButton("Inserisci Piatto", this::inserisciPiatto);
+        Button tornaIndietroButton = Utilities.createButton("Torna ai Piatti", () -> {
+			try {
+				tornaAiPiatti();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		});
 
         HBox buttonContainer = new HBox(10, scegliFotoButton, inserisciButton, tornaIndietroButton);
 

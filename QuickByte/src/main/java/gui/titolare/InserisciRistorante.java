@@ -19,38 +19,27 @@ public class InserisciRistorante extends VBox {
         this.setStyle("-fx-padding: 10;");
 
         // Titolo grande
-        Label titolo = new Label("Inserisci Ristorante");
+        Label titolo = Utilities.createLabel("Inserisci Ristorante", "title-label");
         titolo.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
         // Crea i campi di inserimento con le Label sopra
-        Label nomeLabel = new Label("Nome Ristorante");
         nomeRistoranteField = new TextField();
-        nomeRistoranteField.setPromptText("Nome del ristorante");
+        VBox nomeBox = Utilities.createFieldBox("Nome Ristorante", "Nome del ristorante", nomeRistoranteField);
 
-        Label telefonoLabel = new Label("Numero di Telefono");
         telefonoField = new TextField();
-        telefonoField.setPromptText("Numero di telefono");
+        VBox telefonoBox = Utilities.createFieldBox("Numero di Telefono", "Numero di telefono", telefonoField);
 
-        Label indirizzoLabel = new Label("Indirizzo");
         indirizzoField = new TextField();
-        indirizzoField.setPromptText("Indirizzo");
+        VBox indirizzoBox = Utilities.createFieldBox("Indirizzo", "Indirizzo", indirizzoField);
 
         // Mostra l'email del titolare ma non consentire la modifica
-        emailTitolareLabel = new Label("Email Titolare: " + emailTitolare);
+        emailTitolareLabel = Utilities.createLabel("Email Titolare: " + emailTitolare, "email-label");
 
         // Pulsante per confermare l'inserimento
-        Button confermaButton = new Button("Inserisci Ristorante");
-        confermaButton.setOnAction(e -> {
-            try {
-                inserisciRistorante();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-        });
+        Button confermaButton = Utilities.createButton("Inserisci Ristorante", this::inserisciRistorante);
 
         // Pulsante per tornare alla schermata di gestione ristoranti
-        Button tornaButton = new Button("Torna alla gestione ristoranti");
-        tornaButton.setOnAction(e -> tornaAllaGestioneRistoranti());
+        Button tornaButton = Utilities.createButton("Torna alla gestione ristoranti", this::tornaAllaGestioneRistoranti);
 
         // Aggiungi i pulsanti in una HBox (vicini)
         HBox buttonContainer = new HBox(10);
@@ -59,36 +48,39 @@ public class InserisciRistorante extends VBox {
 
         // Aggiungi tutti gli elementi al layout
         this.getChildren().addAll(
-            titolo, 
-            nomeLabel, nomeRistoranteField, 
-            telefonoLabel, telefonoField, 
-            indirizzoLabel, indirizzoField, 
-            emailTitolareLabel, 
+            titolo,
+            nomeBox,
+            telefonoBox,
+            indirizzoBox,
+            emailTitolareLabel,
             buttonContainer
         );
     }
 
-    private void inserisciRistorante() throws SQLException {
+    private void inserisciRistorante() {
         // Recupera i dati dai campi di input
         String nome = nomeRistoranteField.getText();
         String telefono = telefonoField.getText();
         String indirizzo = indirizzoField.getText();
-        String emailTitolare = SessioneUtente.getEmail(); // Recupera l'email del titolare dalla sessione
 
         if (nome.isEmpty() || telefono.isEmpty() || indirizzo.isEmpty()) {
             // Mostra un messaggio di errore se qualche campo è vuoto
-        	Utilities.showAlert("Errore", "Tutti i campi devono essere compilati.");
+            Utilities.showAlert("Errore", "Tutti i campi devono essere compilati.");
             return;
         }
 
-        // Utilizza il DAO per inserire il ristorante nel database
-        RistoranteDAO.getInstance().inserisciRistorante(nome, telefono, indirizzo, emailTitolare);
+        try {
+            // Utilizza il DAO per inserire il ristorante nel database
+            RistoranteDAO.getInstance().inserisciRistorante(nome, telefono, indirizzo, emailTitolare);
 
-        // Successo, mostra un messaggio di conferma
-        Utilities.showAlert("Successo", "Ristorante inserito con successo!");
+            // Successo, mostra un messaggio di conferma
+            Utilities.showAlert("Successo", "Ristorante inserito con successo!");
 
-        // Torna alla schermata di gestione ristoranti
-        getScene().setRoot(new MainScreenTitolare());
+            // Torna alla schermata di gestione ristoranti
+            getScene().setRoot(new MainScreenTitolare());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void tornaAllaGestioneRistoranti() {

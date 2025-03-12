@@ -1,9 +1,13 @@
 package utilities;
 
+import com.pavlobu.emojitextflow.EmojiTextFlow;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+
 
 public class Utilities {
 
@@ -25,5 +29,35 @@ public class Utilities {
         fieldBox.getChildren().addAll(label, field);
         fieldBox.getStyleClass().add("field-box");
         return fieldBox;
+    }
+    
+    public static Label createLabel(String text, String styleClass) {
+        Label label = new Label(text);
+        label.getStyleClass().add(styleClass);
+        return label;
+    }
+
+    public static Button createButtonEmoji(String text, String emoji, Runnable action) {
+        Button button = new Button(text);
+        EmojiTextFlow emojiTextFlow = new EmojiTextFlow();
+        emojiTextFlow.parseAndAppend(emoji);
+        button.setGraphic(emojiTextFlow);
+        button.setOnAction(event -> action.run());
+        button.getStyleClass().add("table-button-emoji");
+        return button;
+    }
+
+    public static Button createButton(String text, Runnable action) {
+        Button button = new Button(text);
+        button.setOnAction(event -> action.run());
+        button.getStyleClass().add("button");
+        return button;
+    }
+
+    public static Button createButtonLogout(String text, Runnable action) {
+        Button button = new Button(text);
+        button.setOnAction(event -> action.run());
+        button.getStyleClass().add("button-logout");
+        return button;
     }
 }
