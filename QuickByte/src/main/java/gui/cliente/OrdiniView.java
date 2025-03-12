@@ -15,59 +15,63 @@ import utilities.Utilities;
 import java.util.List;
 
 /**
- * Classe che rappresenta la vista degli ordini del cliente.
+ * Classe che rappresenta la vista degli ordini per il cliente.
  */
 public class OrdiniView extends VBox {
 
-    private TableView<Ordine> tabellaOrdini;
+    private TableView<Ordine> table;
 
     /**
-     * Costruttore della vista degli ordini del cliente.
+     * Costruttore della vista degli ordini.
      */
     public OrdiniView() {
         super(10);
         this.setStyle("-fx-padding: 10;");
 
-        Label etichettaTitolo = Utilities.createLabel("I Tuoi Ordini", "title");
-        etichettaTitolo.getStyleClass().add("title");
+        Label titleLabel = Utilities.createLabel("I tuoi ordini", "title");
 
-        inizializzaTabellaOrdini();
-        caricaOrdini();
+        // Inizializza la tabella degli ordini
+        table = new TableView<>();
+        table.getStyleClass().add("table-view");
+        table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        Button pulsanteIndietro = Utilities.createButton("⬅ INDIETRO", this::tornaAllaLista);
+        // Configura le colonne della tabella
+        configuraColonneTabella();
 
-        this.getChildren().addAll(etichettaTitolo, tabellaOrdini, pulsanteIndietro);
+        // Carica gli ordini nella tabella
+        loadOrdini();
+
+        Button tornaAllaListaButton = Utilities.createButton("⬅ INDIETRO", this::tornaAllaLista);
+
+        // Aggiungi tutte le componenti nella scena
+        this.getChildren().addAll(titleLabel, table, tornaAllaListaButton);
     }
 
     /**
-     * Inizializza la tabella degli ordini.
+     * Configura le colonne della tabella degli ordini.
      */
-    private void inizializzaTabellaOrdini() {
-        tabellaOrdini = new TableView<>();
-        tabellaOrdini.getStyleClass().add("table-view");
-        tabellaOrdini.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+    private void configuraColonneTabella() {
+        TableColumn<Ordine, Integer> colId = new TableColumn<>("ID Ordine");
+        colId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdOrdine()).asObject());
 
-        TableColumn<Ordine, Integer> colonnaId = new TableColumn<>("ID Ordine");
-        colonnaId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdOrdine()).asObject());
+        TableColumn<Ordine, Double> colCosto = new TableColumn<>("Costo (€)");
+        colCosto.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCosto()).asObject());
 
-        TableColumn<Ordine, Double> colonnaCosto = new TableColumn<>("Costo (€)");
-        colonnaCosto.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getCosto()).asObject());
+        TableColumn<Ordine, String> colStato = new TableColumn<>("Stato");
+        colStato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato().name()));
 
-        TableColumn<Ordine, String> colonnaStato = new TableColumn<>("Stato");
-        colonnaStato.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStato().name()));
+        TableColumn<Ordine, String> colEmail = new TableColumn<>("Email corriere");
+        colEmail.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailCorriere()));
 
-        TableColumn<Ordine, String> colonnaEmailCorriere = new TableColumn<>("Email corriere");
-        colonnaEmailCorriere.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmailCorriere()));
+        TableColumn<Ordine, String> colData = new TableColumn<>("Data");
+        colData.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFormattedDataOraOrdine()));
 
-        TableColumn<Ordine, String> colonnaData = new TableColumn<>("Data");
-        colonnaData.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFormattedDataOraOrdine()));
+        TableColumn<Ordine, String> colIndirizzo = new TableColumn<>("Indirizzo");
+        colIndirizzo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));
 
-        TableColumn<Ordine, String> colonnaIndirizzo = new TableColumn<>("Indirizzo");
-        colonnaIndirizzo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIndirizzo()));
-
-        TableColumn<Ordine, Void> colonnaAzioni = new TableColumn<>("Azione");
-        colonnaAzioni.setCellFactory(param -> new TableCell<Ordine, Void>() {
-            private final Button pulsanteElimina = Utilities.createButtonEmoji("", ":wastebasket:", () -> {
+        TableColumn<Ordine, Void> colAzione = new TableColumn<>("Azione");
+        colAzione.setCellFactory(param -> new TableCell<Ordine, Void>() {
+            private final Button eliminaButton = Utilities.createButtonEmoji("", ":wastebasket:", () -> {
                 Ordine ordine = getTableView().getItems().get(getIndex());
                 eliminaOrdine(ordine);
             });
@@ -75,28 +79,28 @@ public class OrdiniView extends VBox {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || !getTableView().getItems().get(getIndex()).getStato().equals(StatoOrdine.PENDENTE.name())) {
+                if (empty || getTableView().getItems().get(getIndex()).getStato() != StatoOrdine.PENDENTE) {
                     setGraphic(null);
                 } else {
-                    setGraphic(pulsanteElimina);
+                    setGraphic(eliminaButton);
                 }
             }
         });
 
-        tabellaOrdini.getColumns().addAll(colonnaId, colonnaCosto, colonnaData, colonnaEmailCorriere, colonnaIndirizzo, colonnaStato, colonnaAzioni);
+        table.getColumns().addAll(colId, colCosto, colData, colEmail, colIndirizzo, colStato, colAzione);
     }
 
     /**
-     * Carica gli ordini nella tabella.
+     * Carica gli ordini del cliente nella tabella.
      */
-    private void caricaOrdini() {
-        List<Ordine> listaOrdini = OrdineDAO.getInstance().getOrdiniByEmailCliente(SessioneUtente.getEmail());
-        ObservableList<Ordine> ordini = FXCollections.observableArrayList(listaOrdini);
-        tabellaOrdini.setItems(ordini);
+    private void loadOrdini() {
+        List<Ordine> ordiniList = OrdineDAO.getInstance().getOrdiniByEmailCliente(SessioneUtente.getEmail());
+        ObservableList<Ordine> ordini = FXCollections.observableArrayList(ordiniList);
+        table.setItems(ordini);
     }
 
     /**
-     * Elimina un ordine.
+     * Elimina un ordine specificato.
      *
      * @param ordine L'ordine da eliminare.
      */
@@ -112,18 +116,18 @@ public class OrdiniView extends VBox {
 
         if (statoAggiornato) {
             Utilities.showAlert("Successo", "Hai eliminato l'ordine " + ordine.getIdOrdine());
-            caricaOrdini();
+            loadOrdini(); // Aggiorna la tabella degli ordini
         } else {
             Utilities.showAlert("Errore", "Non è stato possibile eliminare l'ordine. Riprova.");
         }
     }
 
     /**
-     * Torna alla lista principale.
+     * Torna alla schermata principale del cliente.
      */
     private void tornaAllaLista() {
-        MainScreenCliente schermataPrincipale = new MainScreenCliente();
-        Scene scenaCorrente = this.getScene();
-        scenaCorrente.setRoot(schermataPrincipale);
+        MainScreenCliente mainClienteScreen = new MainScreenCliente();
+        Scene currentScene = this.getScene();
+        currentScene.setRoot(mainClienteScreen);
     }
 }

@@ -201,7 +201,7 @@ public class PiattoDAOTest {
     @Test
     public void testGetPiattiByMenuAndIdRistorante() throws SQLException {
         System.out.println("Test: Recupero piatti per menu e ID ristorante...");
-        List<Piatto> piatti = piattoDAO.getQualsiasiPiattiByMenuAndIdRistorante("Menu1", TEST_ID_RISTORANTE);
+        List<Piatto> piatti = piattoDAO.getPiattiByMenuAndIdRistorante("Menu1", TEST_ID_RISTORANTE);
         assertTrue("Dovrebbero esserci piatti", piatti.size() > 0);
     }
 

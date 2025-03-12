@@ -10,269 +10,311 @@ import sessione.SessioneCarrello;
 
 public class PiattoDAO {
 
-	private static PiattoDAO instance;
-	private Connection connection;
-	private static boolean alertEnabled = true;
+    private static PiattoDAO instance;
+    private Connection connection;
+    private static boolean alertEnabled = true;
 
-	
-	
-	private PiattoDAO() {
-		try {
-			this.connection = DatabaseConnection.connect();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+    private PiattoDAO() {
+        try {
+            this.connection = DatabaseConnection.connect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public static PiattoDAO getInstance() {
-		if(instance == null) {
-			instance = new PiattoDAO();
-		}
-		return instance;
-	}	   
+    public static PiattoDAO getInstance() {
+        if (instance == null) {
+            instance = new PiattoDAO();
+        }
+        return instance;
+    }
 
-	// Metodo per ottenere un piatto tramite il suo ID
-	public Piatto getPiattoById(int idPiatto) throws SQLException {
-		String query = "SELECT * FROM Piatto WHERE idPiatto = ?";
-		try (PreparedStatement ps = this.connection.prepareStatement(query)) {
-			ps.setInt(1, idPiatto);
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					return new Piatto(
-							rs.getInt("idPiatto"),
-							rs.getString("nome"),
-							rs.getInt("disponibile") == 1,
-							rs.getString("prezzo"),
-							rs.getString("allergeni"),
-							rs.getString("foto"),
-							rs.getString("nomeMenu"),
-							rs.getInt("idRistorante")
-							);
-				}
-			}
-		}
-		return null;
-	}
+    /**
+     * Recupera un piatto tramite il suo ID.
+     *
+     * @param idPiatto l'ID del piatto da recuperare.
+     * @return il piatto corrispondente all'ID specificato.
+     * @throws SQLException se si verifica un errore durante l'accesso al database.
+     */
+    public Piatto getPiattoById(int idPiatto) throws SQLException {
+        String query = "SELECT * FROM Piatto WHERE idPiatto = ?";
+        try (PreparedStatement ps = this.connection.prepareStatement(query)) {
+            ps.setInt(1, idPiatto);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return creaPiattoDaResultSet(rs);
+                }
+            }
+        }
+        return null;
+    }
 
-	// Metodo per aggiungere un piatto
-	public void aggiungiPiatto(Piatto piatto) throws SQLException {
-	    // Inizia una transazione
-	    connection.setAutoCommit(false);
-	    
-	    try {
-	        // Verifica che l'idRistorante esista
-	        String checkRistoranteQuery = "SELECT 1 FROM Ristorante WHERE idRistorante = ?";
-	        try (PreparedStatement checkPs = connection.prepareStatement(checkRistoranteQuery)) {
-	            checkPs.setInt(1, piatto.getIdRistorante());
-	            try (ResultSet rs = checkPs.executeQuery()) {
-	                if (!rs.next()) {
-	                    throw new SQLException("Ristorante con ID " + piatto.getIdRistorante() + " non esistente.");
-	                }
-	            }
-	        }
+    /**
+     * Aggiunge un nuovo piatto al database.
+     *
+     * @param piatto il piatto da aggiungere.
+     * @throws SQLException se si verifica un errore durante l'accesso al database.
+     */
+    public void aggiungiPiatto(Piatto piatto) throws SQLException {
+        connection.setAutoCommit(false);
+        try {
+            verificaEsistenzaRistorante(piatto.getIdRistorante());
+            inserisciPiatto(piatto);
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw new SQLException("Errore durante l'aggiunta del piatto: " + e.getMessage(), e);
+        } finally {
+            connection.setAutoCommit(true);
+        }
+    }
 
-	        // Inserisci il piatto se l'idRistorante è valido
-	        String insertQuery = "INSERT INTO Piatto (nome, disponibile, prezzo, allergeni, foto, nomeMenu, idRistorante) " +
-	                "VALUES (?, ?, ?, ?, ?, ?, ?)";
-	        try (PreparedStatement ps = connection.prepareStatement(insertQuery)) {
-	            ps.setString(1, piatto.getNome());
-	            ps.setInt(2, piatto.isDisponibile() ? 1 : 0);
-	            ps.setString(3, piatto.getPrezzo());
-	            ps.setString(4, piatto.getAllergeni());
-	            ps.setString(5, piatto.getFoto());
-	            ps.setString(6, piatto.getNomeMenu());
-	            ps.setInt(7, piatto.getIdRistorante());
-	            ps.executeUpdate();
-	        }
+    private void verificaEsistenzaRistorante(int idRistorante) throws SQLException {
+        String query = "SELECT 1 FROM Ristorante WHERE idRistorante = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, idRistorante);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    throw new SQLException("Ristorante con ID " + idRistorante + " non esistente.");
+                }
+            }
+        }
+    }
 
-	        // Commetti la transazione
-	        connection.commit();
-	    } catch (SQLException e) {
-	        // In caso di errore, annulla la transazione
-	        connection.rollback();
-	        throw new SQLException("Errore durante l'aggiunta del piatto: " + e.getMessage(), e);
-	    } finally {
-	        // Riattiva la modalità di auto-commit
-	        connection.setAutoCommit(true);
-	    }
-	}
+    private void inserisciPiatto(Piatto piatto) throws SQLException {
+        String query = "INSERT INTO Piatto (nome, disponibile, prezzo, allergeni, foto, nomeMenu, idRistorante) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, piatto.getNome());
+            ps.setInt(2, piatto.isDisponibile() ? 1 : 0);
+            ps.setString(3, piatto.getPrezzo());
+            ps.setString(4, piatto.getAllergeni());
+            ps.setString(5, piatto.getFoto());
+            ps.setString(6, piatto.getNomeMenu());
+            ps.setInt(7, piatto.getIdRistorante());
+            ps.executeUpdate();
+        }
+    }
+
+    /**
+     * Recupera tutti i piatti di un menu per un determinato ristorante.
+     *
+     * @param nomeMenu il nome del menu.
+     * @param idRistorante l'ID del ristorante.
+     * @return una lista di piatti corrispondenti al menu e al ristorante specificati.
+     * @throws SQLException se si verifica un errore durante l'accesso al database.
+     */
+    public List<Piatto> getPiattiByMenuAndIdRistorante(String nomeMenu, int idRistorante) throws SQLException {
+        String query = "SELECT * FROM Piatto WHERE nomeMenu = ? AND idRistorante = ?";
+        return eseguiQueryPiatti(query, nomeMenu, idRistorante);
+    }
+
+    /**
+     * Recupera tutti i piatti disponibili di un menu per un determinato ristorante.
+     *
+     * @param nomeMenu il nome del menu.
+     * @param idRistorante l'ID del ristorante.
+     * @return una lista di piatti disponibili corrispondenti al menu e al ristorante specificati.
+     * @throws SQLException se si verifica un errore durante l'accesso al database.
+     */
+    public List<Piatto> getPiattiDisponibiliByMenuAndIdRistorante(String nomeMenu, int idRistorante) throws SQLException {
+        String query = "SELECT * FROM Piatto WHERE nomeMenu = ? AND idRistorante = ? AND disponibile = 1";
+        return eseguiQueryPiatti(query, nomeMenu, idRistorante);
+    }
+
+    private List<Piatto> eseguiQueryPiatti(String query, String nomeMenu, int idRistorante) throws SQLException {
+        List<Piatto> piatti = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, nomeMenu);
+            ps.setInt(2, idRistorante);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    piatti.add(creaPiattoDaResultSet(rs));
+                }
+            }
+        }
+        return piatti;
+    }
+
+    private Piatto creaPiattoDaResultSet(ResultSet rs) throws SQLException {
+        return new Piatto(
+                rs.getInt("idPiatto"),
+                rs.getString("nome"),
+                rs.getInt("disponibile") == 1,
+                rs.getString("prezzo"),
+                rs.getString("allergeni"),
+                rs.getString("foto"),
+                rs.getString("nomeMenu"),
+                rs.getInt("idRistorante")
+        );
+    }
+
+    /**
+     * Aggiorna le informazioni di un piatto esistente.
+     *
+     * @param piatto il piatto con le informazioni aggiornate.
+     * @throws SQLException se si verifica un errore durante l'accesso al database.
+     */
+    public void aggiornaPiatto(Piatto piatto) throws SQLException {
+        String query = "UPDATE Piatto SET disponibile = ?, prezzo = ?, allergeni = ? WHERE idPiatto = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, piatto.isDisponibile() ? 1 : 0);
+            ps.setString(2, piatto.getPrezzo());
+            ps.setString(3, piatto.getAllergeni());
+            ps.setInt(4, piatto.getIdPiatto());
+            ps.executeUpdate();
+        }
+    }
+
+    /**
+     * Rimuove un piatto dal database.
+     *
+     * @param idPiatto l'ID del piatto da rimuovere.
+     * @throws SQLException se si verifica un errore durante l'accesso al database.
+     */
+    public void rimuoviPiatto(int idPiatto) throws SQLException {
+        String deletePiatto = "DELETE FROM Piatto WHERE idPiatto = ?";
+        try (PreparedStatement psPiatto = connection.prepareStatement(deletePiatto)) {
+            psPiatto.setInt(1, idPiatto);
+            int rowsAffected = psPiatto.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("Nessun piatto trovato con l'ID: " + idPiatto);
+            }
+        }
+    }
 
 
-
-
-	// Metodo per ottenere tutti i piatti di un menu per un determinato ristorante
-	public List<Piatto> getQualsiasiPiattiByMenuAndIdRistorante(String nomeMenu, int idRistorante) throws SQLException {
-		String selectQuery = "SELECT * FROM Piatto WHERE nomeMenu = ? AND idRistorante = ?";
-		List<Piatto> piatti = new ArrayList<>();
-		try (PreparedStatement ps = connection.prepareStatement(selectQuery)) {
-			ps.setString(1, nomeMenu);
-			ps.setInt(2, idRistorante);
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					int idPiatto = rs.getInt("idPiatto");
-					String nome = rs.getString("nome");
-					int disponibile = rs.getInt("disponibile");
-					boolean isDisponibile = disponibile == 1;
-					String prezzo = rs.getString("prezzo");
-					String allergeni = rs.getString("allergeni");
-					String foto = rs.getString("foto");
-					piatti.add(new Piatto(idPiatto, nome, isDisponibile, prezzo, allergeni, foto, nomeMenu, idRistorante));
-				}
-			}
-		}
-		return piatti;
-	}
-	
-	// Metodo per ottenere tutti i piatti di un menu per un determinato ristorante
-	public List<Piatto> getPiattiByMenuAndIdRistoranteDisponibili(String nomeMenu, int idRistorante) throws SQLException {
-		String selectQuery = "SELECT * FROM Piatto WHERE nomeMenu = ? AND idRistorante = ? AND disponibile = 1";
-		List<Piatto> piatti = new ArrayList<>();
-		try (PreparedStatement ps = connection.prepareStatement(selectQuery)) {
-			ps.setString(1, nomeMenu);
-			ps.setInt(2, idRistorante);
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					int idPiatto = rs.getInt("idPiatto");
-					String nome = rs.getString("nome");
-					int disponibile = rs.getInt("disponibile");
-					boolean isDisponibile = disponibile == 1;
-					String prezzo = rs.getString("prezzo");
-					String allergeni = rs.getString("allergeni");
-					String foto = rs.getString("foto");
-					piatti.add(new Piatto(idPiatto, nome, isDisponibile, prezzo, allergeni, foto, nomeMenu, idRistorante));
-				}
-			}
-		}
-		return piatti;
-	}
-
-
-	// Metodo per aggiornare un piatto
-	public void aggiornaPiatto(Piatto piatto) throws SQLException {
-		String updateQuery = "UPDATE Piatto SET disponibile = ?, prezzo = ?, allergeni = ? " +
-				"WHERE idPiatto = ?";
-		try (PreparedStatement ps = connection.prepareStatement(updateQuery)) {
-			ps.setInt(1, piatto.isDisponibile() ? 1 : 0);
-			ps.setString(2, piatto.getPrezzo());
-			ps.setString(3, piatto.getAllergeni());
-			ps.setInt(4, piatto.getIdPiatto());
-			ps.executeUpdate();
-		}
-	}
-
-	// Metodo per eliminare un piatto
-	public void rimuoviPiatto(int idPiatto) throws SQLException {
-		String deleteQuery = "DELETE FROM Piatto WHERE idPiatto = ?";
-		try (PreparedStatement ps = connection.prepareStatement(deleteQuery)) {
-			ps.setInt(1, idPiatto);
-			ps.executeUpdate();
-		}
-	}
-
-	// Metodo per aggiungere un piatto al carrello
-	public void aggiungiPiattoAlCarrello(int idPiatto, String emailCliente) throws SQLException {
-	    // Inizia una transazione
-	    connection.setAutoCommit(false);
-	    
-	    try {
-	        String checkClienteQuery = "SELECT 1 FROM Utente WHERE email = ?";
-	        try (PreparedStatement checkPs = connection.prepareStatement(checkClienteQuery)) {
-	            checkPs.setString(1, emailCliente);
-	            try (ResultSet rs = checkPs.executeQuery()) {
-	                if (!rs.next()) {
-	                    throw new SQLException("Cliente con email " + emailCliente + " non esistente.");
-	                }
-	            }
-	        }
-
-	        String checkCarrelloQuery = "SELECT quantitaPiatti FROM Carrello WHERE idPiatto = ? AND emailUtente = ?";
-	        String updateCarrelloQuery = "UPDATE Carrello SET quantitaPiatti = quantitaPiatti + 1 WHERE idPiatto = ? AND emailUtente = ?";
-	        String insertCarrelloQuery = "INSERT INTO Carrello (idPiatto, emailUtente, quantitaPiatti) VALUES (?, ?, ?)";
-	        
-	        try (PreparedStatement checkPs = connection.prepareStatement(checkCarrelloQuery)) {
-	            checkPs.setInt(1, idPiatto);
-	            checkPs.setString(2, emailCliente);
-	            try (ResultSet rs = checkPs.executeQuery()) {
-	                if (rs.next()) {
-	                    // Il piatto è già presente nel carrello, aggiorniamo la quantità
-	                    try (PreparedStatement updatePs = connection.prepareStatement(updateCarrelloQuery)) {
-	                        updatePs.setInt(1, idPiatto);
-	                        updatePs.setString(2, emailCliente);
-	                        updatePs.executeUpdate();
-	                    }
-	                } else {
-	                    // Il piatto non è presente nel carrello, lo inseriamo
-	                    try (PreparedStatement insertPs = connection.prepareStatement(insertCarrelloQuery)) {
-	                        insertPs.setInt(1, idPiatto);
-	                        insertPs.setString(2, emailCliente);
-	                        insertPs.setInt(3, 1); // Quantità iniziale di 1
-	                        insertPs.executeUpdate();
-	                    }
-	                }
-	            }
-	        }
-	        
-	        // Commetti la transazione
-	        connection.commit();
+    /**
+     * Aggiunge un piatto al carrello di un cliente.
+     *
+     * @param idPiatto l'ID del piatto da aggiungere.
+     * @param emailCliente l'email del cliente.
+     * @throws SQLException se si verifica un errore durante l'accesso al database.
+     */
+    public void aggiungiPiattoAlCarrello(int idPiatto, String emailCliente) throws SQLException {
+        connection.setAutoCommit(false);
+        try {
+            verificaEsistenzaCliente(emailCliente);
+            aggiornaCarrello(idPiatto, emailCliente);
+            connection.commit();
             showAlert("Successo", "Piatto aggiunto al carrello!");
-	    } catch (SQLException e) {
-	        // In caso di errore, annulla la transazione
-	        connection.rollback();
-	        throw e;
-	    } finally {
-	        // Riattiva la modalità di auto-commit
-	        connection.setAutoCommit(true);
-	    }
-	}
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(true);
+        }
+    }
 
+    private void verificaEsistenzaCliente(String emailCliente) throws SQLException {
+        String query = "SELECT 1 FROM Utente WHERE email = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, emailCliente);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    throw new SQLException("Cliente con email " + emailCliente + " non esistente.");
+                }
+            }
+        }
+    }
 
-	public static void setAlertEnabled(boolean enabled) {
-	    alertEnabled = enabled;
-	}
+    private void aggiornaCarrello(int idPiatto, String emailCliente) throws SQLException {
+        String checkQuery = "SELECT quantitaPiatti FROM Carrello WHERE idPiatto = ? AND emailUtente = ?";
+        String updateQuery = "UPDATE Carrello SET quantitaPiatti = quantitaPiatti + 1 WHERE idPiatto = ? AND emailUtente = ?";
+        String insertQuery = "INSERT INTO Carrello (idPiatto, emailUtente, quantitaPiatti) VALUES (?, ?, ?)";
 
-	private void showAlert(String title, String message) {
-	    if (!alertEnabled) return;
-	    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-	    alert.setTitle(title);
-	    alert.setHeaderText(null);
-	    alert.setContentText(message);
-	    alert.showAndWait();
-	}
+        try (PreparedStatement checkPs = connection.prepareStatement(checkQuery)) {
+            checkPs.setInt(1, idPiatto);
+            checkPs.setString(2, emailCliente);
+            try (ResultSet rs = checkPs.executeQuery()) {
+                if (rs.next()) {
+                    aggiornaQuantitaPiatto(updateQuery, idPiatto, emailCliente);
+                } else {
+                    inserisciNuovoPiattoInCarrello(insertQuery, idPiatto, emailCliente);
+                }
+            }
+        }
+    }
 
-	// Metodo per svuotare il carrello
-	public void svuotaCarrello(String emailUtente) throws SQLException {
-		String deleteCarrelloQuery = "DELETE FROM Carrello WHERE emailUtente = ?";
-		try (PreparedStatement ps = connection.prepareStatement(deleteCarrelloQuery)) {
-			ps.setString(1, emailUtente);
-			ps.executeUpdate();
-			SessioneCarrello.setPieno(false);
-			SessioneCarrello.setIdRistorante(0);
-		}
-	}
-	
-	// Metodo per aggiornare la foto di un piatto
-	public void aggiornaFotoPiatto(int idPiatto, String nomeFoto) throws SQLException {
-	    String updateQuery = "UPDATE Piatto SET foto = ? WHERE idPiatto = ?";
-	    try (PreparedStatement ps = connection.prepareStatement(updateQuery)) {
-	        ps.setString(1, nomeFoto);
-	        ps.setInt(2, idPiatto);
-	        ps.executeUpdate();
-	    }
-	}
-	
-	// Metodo per ottenere il nome della foto di un piatto
-	public String mostraFoto(int idPiatto) throws SQLException {
-	    String query = "SELECT foto FROM Piatto WHERE idPiatto = ?";
-	    try (PreparedStatement ps = connection.prepareStatement(query)) {
-	        ps.setInt(1, idPiatto);
-	        try (ResultSet rs = ps.executeQuery()) {
-	            if (rs.next()) {
-	                return rs.getString("foto");
-	            }
-	        }
-	    }
-	    return null;
-	}
+    private void aggiornaQuantitaPiatto(String query, int idPiatto, String emailCliente) throws SQLException {
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, idPiatto);
+            ps.setString(2, emailCliente);
+            ps.executeUpdate();
+        }
+    }
 
+    private void inserisciNuovoPiattoInCarrello(String query, int idPiatto, String emailCliente) throws SQLException {
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, idPiatto);
+            ps.setString(2, emailCliente);
+            ps.setInt(3, 1);
+            ps.executeUpdate();
+        }
+    }
 
+    public static void setAlertEnabled(boolean enabled) {
+        alertEnabled = enabled;
+    }
+
+    private void showAlert(String title, String message) {
+        if (!alertEnabled) return;
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**
+     * Svuota il carrello di un utente.
+     *
+     * @param emailUtente l'email dell'utente.
+     * @throws SQLException se si verifica un errore durante l'accesso al database.
+     */
+    public void svuotaCarrello(String emailUtente) throws SQLException {
+        String query = "DELETE FROM Carrello WHERE emailUtente = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, emailUtente);
+            ps.executeUpdate();
+            SessioneCarrello.setPieno(false);
+            SessioneCarrello.setIdRistorante(0);
+        }
+    }
+
+    /**
+     * Aggiorna la foto di un piatto.
+     *
+     * @param idPiatto l'ID del piatto da aggiornare.
+     * @param nomeFoto il nome della nuova foto.
+     * @throws SQLException se si verifica un errore durante l'accesso al database.
+     */
+    public void aggiornaFotoPiatto(int idPiatto, String nomeFoto) throws SQLException {
+        String query = "UPDATE Piatto SET foto = ? WHERE idPiatto = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, nomeFoto);
+            ps.setInt(2, idPiatto);
+            ps.executeUpdate();
+        }
+    }
+
+    /**
+     * Recupera il nome della foto di un piatto.
+     *
+     * @param idPiatto l'ID del piatto.
+     * @return il nome della foto del piatto.
+     * @throws SQLException se si verifica un errore durante l'accesso al database.
+     */
+    public String mostraFoto(int idPiatto) throws SQLException {
+        String query = "SELECT foto FROM Piatto WHERE idPiatto = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, idPiatto);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("foto");
+                }
+            }
+        }
+        return null;
+    }
 }
