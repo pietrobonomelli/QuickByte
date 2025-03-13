@@ -95,6 +95,9 @@ Seguendo lo standard IEEE 830:
   - Prendere in carica un'ordinazione.(MUST HAVE)
   - Aggiornare lo stato di una consegna (presa in carico, terminata).(SHOULD HAVE)
 
+
+    <img src="./UML/Images_UML/Use_Case_Diagram.png" width="800px" align="center">
+
 3.3 Requisiti di prestazione
 - 3.3.1. Supportare 1'000 utenti simultanei senza degrado delle prestazioni.
 - 3.3.2. Database con capacità di memorizzare almeno: 1'000 menu, 10'000 utenti, 1000 ristoranti.
