@@ -61,7 +61,7 @@ Nel nostro software usiamo i seguenti design pattern:
 Per garantire la qualità del codice, usiamo strumenti di analisi:
 
 - JDepend: per analizzare le dipendenze tra pacchetti.
-  ([report]())
+  ([report](./reports/jdepend-report.xml))
 
 - SonarLint per identificare potenziali problemi di qualità e complessità.
 
