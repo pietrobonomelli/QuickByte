@@ -23,7 +23,7 @@ public class CarrelloDAOTest {
     private Carrello testCarrello;
 
     @BeforeClass
-    public static void initDatabase() throws Exception {
+    public static void initDatabase(){
         DatabaseConnection.setDatabaseUrl(TEST_DB_URL);
         new DatabaseManager();
         DatabaseManager.createTables();
@@ -131,26 +131,6 @@ public class CarrelloDAOTest {
         assertEquals(testPiatto.getIdPiatto(), carrello.get(0).getIdPiatto());
     }
 
-    /*@Test
-    public void testRimuoviDalCarrello_Success() throws SQLException {
-        // Recupera l'idCarrello generato
-        int idCarrello = -1;
-        try (Connection conn = DatabaseConnection.connect();
-             PreparedStatement stmt = conn.prepareStatement(
-                "SELECT idCarrello FROM Carrello WHERE emailUtente = ? AND idPiatto = ?")) {
-            stmt.setString(1, testCliente.getEmail());
-            stmt.setInt(2, testPiatto.getIdPiatto());
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                idCarrello = rs.getInt("idCarrello");
-            }
-        }
-        
-        assertTrue(CarrelloDAO.getInstance().rimuoviDalCarrello(idCarrello));
-        List<Carrello> carrello = CarrelloDAO.getInstance().getCarrelloByUtente(testCliente.getEmail());
-        assertTrue(carrello.isEmpty());
-    }
-*/
     @Test
     public void testSvuotaCarrello_Success() throws SQLException {
         CarrelloDAO.getInstance().svuotaCarrello(testCliente.getEmail());
@@ -170,23 +150,4 @@ public class CarrelloDAOTest {
         assertEquals("Test Piatto", nome);
     }
 
-    /*@Test
-    public void testAggiornaQuantita_Success() throws SQLException {
-        // Recupera l'idCarrello generato
-        int idCarrello = -1;
-        try (Connection conn = DatabaseConnection.connect();
-             PreparedStatement stmt = conn.prepareStatement(
-                "SELECT idCarrello FROM Carrello WHERE emailUtente = ? AND idPiatto = ?")) {
-            stmt.setString(1, testCliente.getEmail());
-            stmt.setInt(2, testPiatto.getIdPiatto());
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                idCarrello = rs.getInt("idCarrello");
-            }
-        }
-        
-        assertTrue(CarrelloDAO.getInstance().aggiornaQuantita(idCarrello, 5));
-        List<Carrello> carrello = CarrelloDAO.getInstance().getCarrelloByUtente(testCliente.getEmail());
-        assertEquals(5, carrello.get(0).getQuantitaPiatti());
-    }*/
 }
