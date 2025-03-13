@@ -7,7 +7,7 @@ L’architettura del nostro sistema si basa su un’architettura Cliente-server 
 1.1) **Architectural Views**
 - **Logical View:** che descrive il sistema in termini di elementi di progettazione principali e delle loro interazioni:
 
-<img src="./UML/images_UML/Class_Diagram.png" width="800px" align="center">
+<img src="./UML/Images_UML/Class_Diagram.png" width="800px" align="center">
 
 Diagramma di classe
 
