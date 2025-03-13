@@ -96,6 +96,7 @@ Seguendo lo standard IEEE 830:
   - Aggiornare lo stato di una consegna (presa in carico, terminata).(SHOULD HAVE)
 
 
+Use Case Diagram per i requisiti:
     <img src="./UML/Images_UML/Use_Case_Diagram.png" width="800px" align="center">
 
 3.3 Requisiti di prestazione
