@@ -26,35 +26,37 @@ public class PiattiTitolare extends VBox {
         this.setStyle("-fx-padding: 10;");
         container = new VBox(10);
         
-        Label titleLabel = Utilities.createLabel("Piatti", "title");        
+        // Titolo in grande
+        Label titleLabel = new Label("Piatti");
+        titleLabel.getStyleClass().add("title");
         container.getChildren().add(titleLabel);
         
+        // Carica i piatti
         loadPiatti();
         this.getChildren().add(container);
 
         HBox buttonContainer = new HBox(10);
         buttonContainer.setStyle("-fx-padding: 10;");
 
-        Button tornaButton = Utilities.createButton("⬅ Torna ai menu", this::switchToMenuTitolare);
-        Button inserisciPiattoButton = Utilities.createButton("Inserisci Piatto", this::switchToInserisciPiatto);
+        Button tornaButton = new Button("⬅ Torna ai menu");
+        tornaButton.setOnAction(e -> switchToMenuTitolare());
+        
+        Button inserisciPiattoButton = new Button("Inserisci Piatto");
+        inserisciPiattoButton.setOnAction(e -> switchToInserisciPiatto());
 
         buttonContainer.getChildren().addAll(tornaButton, inserisciPiattoButton);
         this.getChildren().add(buttonContainer);
     }
 
-    /*
-     * Carica la tabella dei piatti del menu.
-     */
     private void loadPiatti() {
         try {
             // Ottenere piatti dal database tramite DAO
-            List<Piatto> piatti = PiattoDAO.getInstance().getQualsiasiPiattiByMenuAndIdRistorante(nomeMenu, SessioneRistorante.getId());
+            List<Piatto> piatti = PiattoDAO.getInstance().getPiattiByMenuAndIdRistorante(nomeMenu, SessioneRistorante.getId());
             
             // Creazione della TableView per i piatti
             TableView<Piatto> tablePiatti = new TableView<>();
             tablePiatti.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
             tablePiatti.getStyleClass().add("table-view");
-            
             // Creazione delle colonne
             TableColumn<Piatto, String> colNomePiatto = new TableColumn<>("Nome Piatto");
             colNomePiatto.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
@@ -86,26 +88,18 @@ public class PiattiTitolare extends VBox {
                 }
             });
 
+            // Colonna Modifica con icona matita
             TableColumn<Piatto, Void> colModifica = new TableColumn<>("Modifica");
             colModifica.setCellFactory(param -> new TableCell<Piatto, Void>() {
-                private final Button modificaButton = new Button();
-                private final EmojiTextFlow emojiMatita = new EmojiTextFlow();
-
-                {
-                    emojiMatita.parseAndAppend(":pencil:"); // ✏️
-                    modificaButton.setGraphic(emojiMatita);
-                    modificaButton.getStyleClass().add("table-button-emoji");
-
-                    modificaButton.setOnAction(event -> {
-                        Piatto piatto = getTableView().getItems().get(getIndex());
-                        try {
-                            SessionePiatto.setId(piatto.getIdPiatto()); // Salva l'ID del piatto selezionato
-                            switchToModificaPiatto();
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
-                        }
-                    });
-                }
+            	private final Button modificaButton = Utilities.createButtonEmoji("", ":pencil:", () -> {
+					Piatto piatto = getTableView().getItems().get(getIndex());
+					try {
+						SessionePiatto.setId(piatto.getIdPiatto()); // Salva l'ID del piatto selezionato
+						switchToModificaPiatto();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				});
 
                 @Override
                 protected void updateItem(Void item, boolean empty) {
@@ -117,18 +111,10 @@ public class PiattiTitolare extends VBox {
 
             TableColumn<Piatto, Void> colElimina = new TableColumn<>("Elimina");
             colElimina.setCellFactory(param -> new TableCell<Piatto, Void>() {
-                private final Button eliminaButton = new Button();
-                private final EmojiTextFlow emojiTextFlow2 = new EmojiTextFlow();
-                {            	
-                	emojiTextFlow2.parseAndAppend(":wastebasket:");
-                	eliminaButton.setGraphic(emojiTextFlow2);
-
-                	eliminaButton.getStyleClass().add("table-button-emoji");
-                    eliminaButton.setOnAction(event -> {
-                        Piatto piatto = getTableView().getItems().get(getIndex());
-                        eliminaPiatto(piatto.getIdPiatto());
-                    });
-                }
+            	private final Button eliminaButton = Utilities.createButtonEmoji("", ":wastebasket:", () -> {
+					Piatto piatto = getTableView().getItems().get(getIndex());
+					eliminaPiatto(piatto.getIdPiatto());
+				});
 
                 @Override
                 protected void updateItem(Void item, boolean empty) {
@@ -158,14 +144,15 @@ public class PiattiTitolare extends VBox {
     }
 
     private void eliminaPiatto(int idPiatto) {
+        System.out.println("Provando a cancellare il piatto con ID: " + idPiatto);
         try {
             PiattoDAO.getInstance().rimuoviPiatto(idPiatto);
+            System.out.println("Piatto cancellato correttamente.");
             container.getChildren().removeIf(node -> node instanceof TableView);
-            loadPiatti(); 
-            
+            loadPiatti();
         } catch (SQLException e) {
             e.printStackTrace();
-            Utilities.showAlert("Errore", "Errore durante l'eliminazione del piatto.");
+            Utilities.showAlert("Errore", "Errore durante l'eliminazione del piatto: " + e.getMessage());
         }
     }
 

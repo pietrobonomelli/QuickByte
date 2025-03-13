@@ -1,16 +1,19 @@
 package dao;
 
 import java.sql.*;
-import database.DatabaseConnection;
 import java.util.ArrayList;
 import java.util.List;
 import model.Indirizzo;
+import database.DatabaseConnection;
 
 public class IndirizzoDAO {
-    
+
     private static IndirizzoDAO instance;
     private Connection connection;
 
+    /**
+     * Costruttore privato per implementare il pattern SINGLETON.
+     */
     private IndirizzoDAO() {
         try {
             this.connection = DatabaseConnection.connect();
@@ -19,6 +22,9 @@ public class IndirizzoDAO {
         }
     }
 
+    /**
+     * @return L'istanza singola di IndirizzoDAO.
+     */
     public static IndirizzoDAO getInstance() {
         if (instance == null) {
             instance = new IndirizzoDAO();
@@ -26,9 +32,13 @@ public class IndirizzoDAO {
         return instance;
     }
 
-    // Metodo per creare la tabella Indirizzo
+    /**
+     * Crea la tabella Indirizzo nel database.
+     *
+     * @throws SQLException Se si verifica un errore SQL.
+     */
     public void createTable() throws SQLException {
-        String createIndirizzoTable = "CREATE TABLE IF NOT EXISTS Indirizzo (" +
+        String createTableSQL = "CREATE TABLE IF NOT EXISTS Indirizzo (" +
                 "idIndirizzo INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "indirizzo TEXT NOT NULL, " +
                 "citta TEXT NOT NULL, " +
@@ -37,48 +47,82 @@ public class IndirizzoDAO {
                 "emailUtente TEXT, " +
                 "FOREIGN KEY(emailUtente) REFERENCES Utente(email) ON DELETE CASCADE" +
                 ");";
-        try (Statement stmt = connection.createStatement()) {
-            stmt.executeUpdate(createIndirizzoTable);
-        }
+        executeUpdate(createTableSQL);
     }
 
-    // Metodo per aggiungere un indirizzo
+    /**
+     *
+     * @param indirizzo L'indirizzo da aggiungere.
+     * @throws SQLException Se si verifica un errore SQL.
+     */
     public void aggiungiIndirizzo(Indirizzo indirizzo) throws SQLException {
-        String insertQuery = "INSERT INTO Indirizzo (indirizzo, citta, cap, provincia, emailUtente) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = connection.prepareStatement(insertQuery)) {
-            ps.setString(1, indirizzo.getIndirizzo());
-            ps.setString(2, indirizzo.getCitta());
-            ps.setString(3, indirizzo.getCap());
-            ps.setString(4, indirizzo.getProvincia());
-            ps.setString(5, indirizzo.getEmailUtente());
+        String insertSQL = "INSERT INTO Indirizzo (indirizzo, citta, cap, provincia, emailUtente) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(insertSQL)) {
+            setIndirizzoParameters(ps, indirizzo);
             ps.executeUpdate();
         }
     }
 
-    // Metodo per ottenere tutti gli indirizzi di un utente
+    /**
+     * Imposta i parametri per il PreparedStatement.
+     *
+     * @param ps Il PreparedStatement da configurare.
+     * @param indirizzo L'indirizzo con i dati da impostare.
+     * @throws SQLException Se si verifica un errore SQL.
+     */
+    private void setIndirizzoParameters(PreparedStatement ps, Indirizzo indirizzo) throws SQLException {
+        ps.setString(1, indirizzo.getIndirizzo());
+        ps.setString(2, indirizzo.getCitta());
+        ps.setString(3, indirizzo.getCap());
+        ps.setString(4, indirizzo.getProvincia());
+        ps.setString(5, indirizzo.getEmailUtente());
+    }
+
+    /**
+     * Ottiene tutti gli indirizzi di un utente.
+     *
+     * @param emailUtente L'email dell'utente di cui ottenere gli indirizzi.
+     * @return Una lista di indirizzi.
+     * @throws SQLException Se si verifica un errore SQL.
+     */
     public List<Indirizzo> getIndirizziByUtente(String emailUtente) throws SQLException {
-        String selectQuery = "SELECT * FROM Indirizzo WHERE emailUtente = ?";
+        String selectSQL = "SELECT * FROM Indirizzo WHERE emailUtente = ?";
         List<Indirizzo> indirizzi = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(selectQuery)) {
+        try (PreparedStatement ps = connection.prepareStatement(selectSQL)) {
             ps.setString(1, emailUtente);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    int idIndirizzo = rs.getInt("idIndirizzo");
-                    String indirizzo = rs.getString("indirizzo");
-                    String citta = rs.getString("citta");
-                    String cap = rs.getString("cap");
-                    String provincia = rs.getString("provincia");
-                    indirizzi.add(new Indirizzo(idIndirizzo, indirizzo, citta, cap, provincia, emailUtente));
+                    indirizzi.add(mapResultSetToIndirizzo(rs));
                 }
             }
         }
         return indirizzi;
     }
 
-    // Metodo per aggiornare un indirizzo
+    /**
+     * Mappa un ResultSet a un oggetto Indirizzo.
+     *
+     * @param rs Il ResultSet da mappare.
+     * @return Un oggetto Indirizzo.
+     * @throws SQLException Se si verifica un errore SQL.
+     */
+    private Indirizzo mapResultSetToIndirizzo(ResultSet rs) throws SQLException {
+        int idIndirizzo = rs.getInt("idIndirizzo");
+        String indirizzo = rs.getString("indirizzo");
+        String citta = rs.getString("citta");
+        String cap = rs.getString("cap");
+        String provincia = rs.getString("provincia");
+        String emailUtente = rs.getString("emailUtente");
+        return new Indirizzo(idIndirizzo, indirizzo, citta, cap, provincia, emailUtente);
+    }
+
+    /**
+     * @param indirizzo L'indirizzo da aggiornare.
+     * @throws SQLException Se si verifica un errore SQL.
+     */
     public void aggiornaIndirizzo(Indirizzo indirizzo) throws SQLException {
-        String updateQuery = "UPDATE Indirizzo SET indirizzo = ?, citta = ?, cap = ?, provincia = ? WHERE idIndirizzo = ?";
-        try (PreparedStatement ps = connection.prepareStatement(updateQuery)) {
+        String updateSQL = "UPDATE Indirizzo SET indirizzo = ?, citta = ?, cap = ?, provincia = ? WHERE idIndirizzo = ?";
+        try (PreparedStatement ps = connection.prepareStatement(updateSQL)) {
             ps.setString(1, indirizzo.getIndirizzo());
             ps.setString(2, indirizzo.getCitta());
             ps.setString(3, indirizzo.getCap());
@@ -88,24 +132,33 @@ public class IndirizzoDAO {
         }
     }
 
-    // Metodo per eliminare un indirizzo
+    /**
+     * @param idIndirizzo L'ID dell'indirizzo da rimuovere.
+     * @throws SQLException Se si verifica un errore SQL.
+     */
     public void rimuoviIndirizzo(int idIndirizzo) throws SQLException {
-        String deleteQuery = "DELETE FROM Indirizzo WHERE idIndirizzo = ?";
-        try (PreparedStatement ps = connection.prepareStatement(deleteQuery)) {
+        String deleteSQL = "DELETE FROM Indirizzo WHERE idIndirizzo = ?";
+        try (PreparedStatement ps = connection.prepareStatement(deleteSQL)) {
             ps.setInt(1, idIndirizzo);
             ps.executeUpdate();
         }
     }
 
-    // Metodo per ottenere gli indirizzi di un utente
+    /**
+     * Ottiene gli indirizzi di un utente.
+     *
+     * @param emailUtente L'email dell'utente di cui ottenere gli indirizzi.
+     * @return Una lista di indirizzi.
+     */
     public List<String> getIndirizzi(String emailUtente) {
         List<String> indirizzi = new ArrayList<>();
         String sql = "SELECT indirizzo FROM Indirizzo WHERE emailUtente = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, emailUtente);
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                indirizzi.add(rs.getString("indirizzo"));
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    indirizzi.add(rs.getString("indirizzo"));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -113,7 +166,9 @@ public class IndirizzoDAO {
         return indirizzi;
     }
 
-    // Metodo per chiudere la connessione, che può essere chiamato quando l'oggetto IndirizzoDAO non è più necessario
+    /**
+     * Chiude la connessione al database.
+     */
     public void closeConnection() {
         if (this.connection != null) {
             try {
@@ -121,6 +176,18 @@ public class IndirizzoDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * Esegue aggiornamento SQL.
+     *
+     * @param sql La query SQL da eseguire.
+     * @throws SQLException Se si verifica un errore SQL.
+     */
+    private void executeUpdate(String sql) throws SQLException {
+        try (Statement stmt = connection.createStatement()) {
+            stmt.executeUpdate(sql);
         }
     }
 }

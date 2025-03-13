@@ -1,31 +1,39 @@
 package dao;
 
 import java.sql.*;
-import model.Menu;
 import java.util.ArrayList;
 import java.util.List;
+import model.Menu;
 import database.DatabaseConnection;
 
 public class MenuDAO {
 
-	private static MenuDAO instance;
+    private static MenuDAO instance;
     private Connection connection;
 
     private MenuDAO() {
-    	try {
-			this.connection = DatabaseConnection.connect();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+        try {
+            this.connection = DatabaseConnection.connect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-    
-	public static MenuDAO getInstance() {
-    	if(instance == null) {
-    		instance = new MenuDAO();
-    	}
-    	return instance;
+
+    /**
+     * @return L'istanza singola di MenuDAO.
+     */
+    public static MenuDAO getInstance() {
+        if (instance == null) {
+            instance = new MenuDAO();
+        }
+        return instance;
     }
-    // Metodo per creare la tabella Menu
+
+    /**
+     * Crea la tabella Menu nel database.
+     * 
+     * @throws SQLException Se si verifica un errore SQL.
+     */
     public void createTable() throws SQLException {
         String createMenuTable = "CREATE TABLE IF NOT EXISTS Menu (" +
                 "nome TEXT NOT NULL, " +
@@ -33,12 +41,15 @@ public class MenuDAO {
                 "PRIMARY KEY (nome, idRistorante), " +
                 "FOREIGN KEY (idRistorante) REFERENCES Ristorante(idRistorante) ON DELETE CASCADE" +
                 ");";
-        try (Statement stmt = connection.createStatement()) {
-            stmt.executeUpdate(createMenuTable);
-        }
+        executeUpdate(createMenuTable);
     }
 
-    // Metodo per aggiungere un menu
+    /**
+     * Aggiunge un menu al database.
+     *
+     * @param menu Il menu da aggiungere.
+     * @throws SQLException Se si verifica un errore SQL.
+     */
     public void aggiungiMenu(Menu menu) throws SQLException {
         String insertQuery = "INSERT INTO Menu (nome, idRistorante) VALUES (?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(insertQuery)) {
@@ -48,7 +59,13 @@ public class MenuDAO {
         }
     }
 
-    // Metodo per ottenere il nome del ristorante
+    /**
+     * Ottiene il nome del ristorante dato il suo ID.
+     *
+     * @param idRistorante L'ID del ristorante.
+     * @return Il nome del ristorante.
+     * @throws SQLException Se si verifica un errore SQL.
+     */
     public String getNomeRistorante(int idRistorante) throws SQLException {
         String nomeRistorante = "";
         String query = "SELECT nome FROM Ristorante WHERE idRistorante = ?";
@@ -63,7 +80,13 @@ public class MenuDAO {
         return nomeRistorante;
     }
 
-    // Metodo per ottenere tutti i menu di un ristorante
+    /**
+     * Ottiene tutti i menu di un ristorante.
+     *
+     * @param idRistorante L'ID del ristorante di cui ottenere i menu.
+     * @return Una lista di menu.
+     * @throws SQLException Se si verifica un errore SQL.
+     */
     public List<Menu> getMenuByRistorante(int idRistorante) throws SQLException {
         String selectQuery = "SELECT * FROM Menu WHERE idRistorante = ?";
         List<Menu> menuList = new ArrayList<>();
@@ -79,13 +102,31 @@ public class MenuDAO {
         return menuList;
     }
 
-    // Metodo per eliminare un menu
+    /**
+     * Rimuove un menu dal database.
+     *
+     * @param nome Il nome del menu da rimuovere.
+     * @param idRistorante L'ID del ristorante associato al menu.
+     * @throws SQLException Se si verifica un errore SQL.
+     */
     public void rimuoviMenu(String nome, int idRistorante) throws SQLException {
         String deleteQuery = "DELETE FROM Menu WHERE nome = ? AND idRistorante = ?";
         try (PreparedStatement ps = connection.prepareStatement(deleteQuery)) {
             ps.setString(1, nome);
             ps.setInt(2, idRistorante);
             ps.executeUpdate();
+        }
+    }
+
+    /**
+     * Esegue un aggiornamento SQL.
+     *
+     * @param sql La query SQL da eseguire.
+     * @throws SQLException Se si verifica un errore SQL.
+     */
+    private void executeUpdate(String sql) throws SQLException {
+        try (Statement stmt = connection.createStatement()) {
+            stmt.executeUpdate(sql);
         }
     }
 }
