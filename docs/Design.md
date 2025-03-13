@@ -14,6 +14,9 @@ Diagramma di classe
 <img src="./UML/Images_UML/State_Machine_Diagram.png" width="800px" align="center">
 Diagramma di stato
 
+<img src="./UML/Images_UML/Component_Diagram.png" width="800px" align="center">
+Component Diagram
+
 - **Process View**: che descrive la struttura dinamica del sistema in termini di attività, processi, loro comunicazione e allocazione di funzionalità agli elementi di runtime;
 
   <img src="./UML/Images_UML/Sequence_Diagram.png" width="800px" align="center">
