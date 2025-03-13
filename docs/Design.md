@@ -60,9 +60,8 @@ Nel nostro software usiamo i seguenti design pattern:
 
 Per garantire la qualità del codice, usiamo strumenti di analisi:
 
-- Stan4J: per analizzare le dipendenze tra pacchetti.
-
-(screen)
+- JDepend: per analizzare le dipendenze tra pacchetti.
+  ([report]())
 
 - SonarLint per identificare potenziali problemi di qualità e complessità.
 
