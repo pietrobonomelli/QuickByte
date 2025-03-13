@@ -7,24 +7,24 @@ L’architettura del nostro sistema si basa su un’architettura Cliente-server 
 1.1) **Architectural Views**
 - **Logical View:** che descrive il sistema in termini di elementi di progettazione principali e delle loro interazioni:
 
-<img src="./UML/UML_Images/Class_Diagram.png" width="800px" align="center">
+<img src="./UML/images_UML/Class_Diagram.png" width="800px" align="center">
 
 Diagramma di classe
 
-<img src="./UML/UML_Images/State_Machine_Diagram.png" width="800px" align="center">
+<img src="./UML/images_UML/State_Machine_Diagram.png" width="800px" align="center">
 Diagramma di stato
 
 - **Process View**: che descrive la struttura dinamica del sistema in termini di attività, processi, loro comunicazione e allocazione di funzionalità agli elementi di runtime;
 
-  <img src="./UML/UML_Images/Sequence_Diagram.png" width="800px" align="center">
+  <img src="./UML/images_UML/Sequence_Diagram.png" width="800px" align="center">
 
 Diagramma di sequenza
 
-<img src="./UML/UML_Images/Communication_Diagram.PNG" width="800px" align="center">
+<img src="./UML/images_UML/Communication_Diagram.PNG" width="800px" align="center">
 
 Diagramma di comunicazione
 
-<img src="./UML/UML_Images/Activity_Diagram.png" width="800px" align="center">
+<img src="./UML/images_UML/Activity_Diagram.png" width="800px" align="center">
 
 Diagramma di attivita
 
