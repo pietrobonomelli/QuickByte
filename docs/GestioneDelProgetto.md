@@ -47,7 +47,13 @@ Adottiamo un'organizzazione di sprint flessibile, senza un periodo di tempo fiss
 
 # Capitolo 4: Configuration Managment 
 Per il configuration management useremo github con i relativi comandi.
-Alcune Statistiche: (**TODO**)
+Alcune Statistiche:
+
+<img src="./images/KanBan Board Project.png" width="1000px" high="800px" align="center">
+
+<img src="./images/Issues.png" width="1000px" high="800px" align="center">
+
+<img src="./images/Pull Request.png" width="1000px" high="800px" align="center">
 
 # Capitolo 5: People Management and Team Organization
 Il team è composto da 3 persone: Anes Hamza, Bonomelli Pietro, Rota Leonardo. è un team che si basa sugli approcci agili, quindi è una squadra agile, senza gerarchie interne ed è un team Cross-Funzionale cioè ogni membro del team può assumere più ruoli (sviluppatore, tester…). I membri del team sono a stretto contatto con canali di comunicazione non formali.
