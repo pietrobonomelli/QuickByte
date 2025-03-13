@@ -11,20 +11,20 @@ L’architettura del nostro sistema si basa su un’architettura Cliente-server 
 
 Diagramma di classe
 
-<img src="./UML/images_UML/State_Machine_Diagram.png" width="800px" align="center">
+<img src="./UML/Images_UML/State_Machine_Diagram.png" width="800px" align="center">
 Diagramma di stato
 
 - **Process View**: che descrive la struttura dinamica del sistema in termini di attività, processi, loro comunicazione e allocazione di funzionalità agli elementi di runtime;
 
-  <img src="./UML/images_UML/Sequence_Diagram.png" width="800px" align="center">
+  <img src="./UML/Images_UML/Sequence_Diagram.png" width="800px" align="center">
 
 Diagramma di sequenza
 
-<img src="./UML/images_UML/Communication_Diagram.PNG" width="800px" align="center">
+<img src="./UML/Images_UML/Communication_Diagram.PNG" width="800px" align="center">
 
 Diagramma di comunicazione
 
-<img src="./UML/images_UML/Activity_Diagram.png" width="800px" align="center">
+<img src="./UML/Images_UML/Activity_Diagram.png" width="800px" align="center">
 
 Diagramma di attivita
 
