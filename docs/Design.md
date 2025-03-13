@@ -65,6 +65,6 @@ Per garantire la qualità del codice, usiamo strumenti di analisi:
 
 - SonarLint per identificare potenziali problemi di qualità e complessità.
 
-<img src="./UML/Images_UML/SonarLint.png" width="800px" align="center">
+<img src="./UML/images/SonarLint.png" width="800px" align="center">
 
 
