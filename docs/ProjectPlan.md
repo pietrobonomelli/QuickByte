@@ -33,13 +33,12 @@ Sviluppato da:
 
 
 
-## 1. Introduzione TODO
+## 1. Introduzione
 Durante l’anno 2024, un team di tre studenti di Ingegneria Informatica decide di sviluppare un’applicazione per la gestione di un sistema software di delivery food, per via della scarsa presenza di prodotti simili sul mercato.
 
 L’obiettivo del progetto è quello di sviluppare una piattaforma che permetta all’utente, che può essere di tipo: cliente, titolare di un ristorante o corriere, rispettivamente di: effettuare ordini, ampliare le modalità di vendita o guadagnare completando consegne.
 Il team di sviluppo è composto da 3 partecipanti: Anes Hamza, Bonomelli Pietro e Rota Leonardo.
 
--TODO: conclusioni-
 
 ## 2. Modello di processo
 Il modello del ciclo di vita che verrà usato è il Rational Unified Process (RUP).
