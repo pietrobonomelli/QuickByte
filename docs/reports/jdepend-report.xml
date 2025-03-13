@@ -1,0 +1,329 @@
+<?xml version="1.0"?>
+<JDepend>
+    <Packages>
+
+        <Package name="com.pavlobu.emojitextflow">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="dao">
+            <Stats>
+                <TotalClasses>5</TotalClasses>
+                <ConcreteClasses>5</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>5</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="CarrelloDAO.java">
+                    dao.CarrelloDAO
+                </Class>
+                <Class sourceFile="DettaglioOrdineDAO.java">
+                    dao.DettaglioOrdineDAO
+                </Class>
+                <Class sourceFile="IndirizzoDAO.java">
+                    dao.IndirizzoDAO
+                </Class>
+                <Class sourceFile="MenuDAO.java">
+                    dao.MenuDAO
+                </Class>
+                <Class sourceFile="RistoranteDAO.java">
+                    dao.RistoranteDAO
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>database</Package>
+                <Package>java.lang</Package>
+                <Package>java.sql</Package>
+                <Package>java.util</Package>
+                <Package>model</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="database">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="gui.main">
+            <Stats>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>1</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>10</Ce>
+                <A>0.5</A>
+                <I>1</I>
+                <D>0.5</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="MainScreen.java">
+                    gui.main.MainScreen
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Main.java">
+                    gui.main.Main
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>database</Package>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.net</Package>
+                <Package>javafx.application</Package>
+                <Package>javafx.collections</Package>
+                <Package>javafx.geometry</Package>
+                <Package>javafx.scene</Package>
+                <Package>javafx.scene.layout</Package>
+                <Package>javafx.stage</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="gui.titolare">
+            <Stats>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>1</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>6</Ce>
+                <A>0.5</A>
+                <I>1</I>
+                <D>0.5</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="MainScreenTitolare.java">
+                    gui.titolare.MainScreenTitolare$AzioneSuRistorante
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="PiattiTitolare.java">
+                    gui.titolare.PiattiTitolare$1
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>com.pavlobu.emojitextflow</Package>
+                <Package>java.lang</Package>
+                <Package>javafx.collections</Package>
+                <Package>javafx.scene</Package>
+                <Package>javafx.scene.control</Package>
+                <Package>model</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="java.io">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="java.lang">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="java.net">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="java.sql">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="java.util">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="javafx.application">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="javafx.collections">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="javafx.geometry">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="javafx.scene">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="javafx.scene.control">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="javafx.scene.image">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="javafx.scene.layout">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="javafx.scene.shape">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="javafx.stage">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="model">
+            <Stats>
+                <TotalClasses>9</TotalClasses>
+                <ConcreteClasses>9</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>2</Ca>
+                <Ce>1</Ce>
+                <A>0</A>
+                <I>0.33</I>
+                <D>0.67</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Carrello.java">
+                    model.Carrello
+                </Class>
+                <Class sourceFile="Cliente.java">
+                    model.Cliente
+                </Class>
+                <Class sourceFile="Corriere.java">
+                    model.Corriere
+                </Class>
+                <Class sourceFile="DettaglioOrdine.java">
+                    model.DettaglioOrdine
+                </Class>
+                <Class sourceFile="Menu.java">
+                    model.Menu
+                </Class>
+                <Class sourceFile="MetodoDiPagamento.java">
+                    model.MetodoDiPagamento
+                </Class>
+                <Class sourceFile="Piatto.java">
+                    model.Piatto
+                </Class>
+                <Class sourceFile="StatoOrdine.java">
+                    model.StatoOrdine
+                </Class>
+                <Class sourceFile="Titolare.java">
+                    model.Titolare
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>dao</Package>
+                <Package>gui.titolare</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="sessione">
+            <Stats>
+                <TotalClasses>5</TotalClasses>
+                <ConcreteClasses>5</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>1</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="SessioneCarrello.java">
+                    sessione.SessioneCarrello
+                </Class>
+                <Class sourceFile="SessioneMenu.java">
+                    sessione.SessioneMenu
+                </Class>
+                <Class sourceFile="SessionePiatto.java">
+                    sessione.SessionePiatto
+                </Class>
+                <Class sourceFile="SessioneRistorante.java">
+                    sessione.SessioneRistorante
+                </Class>
+                <Class sourceFile="SessioneUtente.java">
+                    sessione.SessioneUtente
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="utilities">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>4</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="LogoUtilities.java">
+                    utilities.LogoUtilities
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>javafx.scene.image</Package>
+                <Package>javafx.scene.shape</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+    </Packages>
+
+    <Cycles>
+    </Cycles>
+</JDepend>
