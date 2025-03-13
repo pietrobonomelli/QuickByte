@@ -68,29 +68,32 @@ Seguendo lo standard IEEE 830:
 3.2 Richieste funzionali
 
 - 3.2.1. **Cliente** può:
-  - Creare e modificare un account Cliente fornendo nome, email, password e numero di telefono (con possibilità di cancellarlo).
-  - Visualizzare la lista dei ristoranti disponibili.
-  - Cliccare su un ristorante.
-  - Visualizzare i dettagli del ristorante (menu con lista dei piatti e rispettivi prezzi, orari di apertura, valutazione media, recensioni).
-  - Aggiungere i piatti al carrello specificando la quantità.
-  - Effettuare un ordine inserendo i dati della carta (con la possibilità di decidere di memorizzare il metodo di pagamento) e l'indirizzo(da inserire ogni volta).  
-  - Riceve la conferma che l'ordine è stato accettato dal ristorante.
-  - Riceve la conferma che l'ordine è stato preso in carica dal corriere.
-  - Monitorare lo stato dell’ordine.
-  - Recensire il ristorante da cui ha acquistato.
-  - Eliminare il proprio account dalla piattaforma.
+  - Creare un account Cliente fornendo nome, email, password e numero di telefono.(MUST HAVE)
+  - Modificare il suo account (con possibilità di cancellarlo).(COULD HAVE)
+  - Visualizzare la lista dei ristoranti disponibili.(MUST HAVE)
+  - Cliccare su un ristorante.(MUST HAVE)
+  - Visualizzare i dettagli del ristorante (menu con lista dei piatti e rispettivi prezzi, orari di apertura, valutazione media, recensioni).(MUST HAVE)
+  - Aggiungere i piatti al carrello specificando la quantità.(MUST HAVE)
+  - Effettuare un ordine inserendo i dati della carta (con la possibilità di decidere di memorizzare il metodo di pagamento) e l'indirizzo(da inserire ogni volta). (MUST HAVE) 
+  - Riceve la conferma che l'ordine è stato accettato dal ristorante.(SHOULD HAVE)
+  - Riceve la conferma che l'ordine è stato preso in carica dal corriere.(SHOULD HAVE)
+  - Monitorare lo stato dell’ordine.(SHOULD HAVE)
+  - Recensire il ristorante da cui ha acquistato.(COULD HAVE)
+  - Eliminare il proprio account dalla piattaforma.(COULD HAVE)
 - 3.2.2. **Titolare** può:
-  - Creare e modificare un account Titolare fornendo nome, email, password e numero di telefono (con possibilità di cancellarlo).
-  - Creare e modificare il ristorante aggiungendo i vari dati (menu con lista dei piatti e rispettivi prezzi, orari di apertura).
-  - Visualizzare e gestire ordini ricevuti (visualizzare contatti clientie, monitora stato ordine, accetta o rifiuta ordine).
-  - Visualizzare le recensioni riguardanti il ristorante.
+  - Creare un account Titolare fornendo nome, email, password e numero di telefono.(MUST HAVE)
+  - modificare il suo account (con possibilità di cancellarlo).(COULD HAVE)
+  - Creare e modificare il ristorante aggiungendo i vari dati (menu con lista dei piatti e rispettivi prezzi, orari di apertura).(MUST HAVE)
+  - Visualizzare e gestire ordini ricevuti (visualizzare contatti clientie, monitora stato ordine, accetta o rifiuta ordine).(MUST HAVE)
+  - Visualizzare le recensioni riguardanti il ristorante.(COULD HAVE)
 - 3.2.3. **Corriere** può:
-  - Creare e modificare un account Corriere fornendo nome, email, password e numero di telefono (con possibilità di cancellarlo).
-  - Dare la disponibilità se può prendere consegne in quel momento o meno.
-  - Visualizzare le consegne disponibili e selezionarne una.
-  - Visualizzare i dati inerenti all'ordinazione e i dati del cliente.
-  - Prendere in carica un'ordinazione.
-  - Aggiornare lo stato di una consegna (presa in carico, terminata).
+  - Creare un account Corriere fornendo nome, email, password e numero di telefono.(MUST HAVE)
+  - Modificare il suo account (con possibilità di cancellarlo).(COULD HAVE)
+  - Dare la disponibilità se può prendere consegne in quel momento o meno.(COULD HAVE)
+  - Visualizzare le consegne disponibili e selezionarne una.(MUST HAVE)
+  - Visualizzare i dati inerenti all'ordinazione e i dati del cliente.(MUST HAVE)
+  - Prendere in carica un'ordinazione.(MUST HAVE)
+  - Aggiornare lo stato di una consegna (presa in carico, terminata).(SHOULD HAVE)
 
 3.3 Requisiti di prestazione
 - 3.3.1. Supportare 1'000 utenti simultanei senza degrado delle prestazioni.
