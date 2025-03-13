@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class LoginDAO {
 
@@ -40,18 +41,22 @@ public class LoginDAO {
      * @return true se le credenziali sono corrette, false altrimenti.
      */
     public boolean verifyUser(String email, String password) {
-        String query = "SELECT * FROM Utente WHERE email = ? AND password = ?";
+        String query = "SELECT password FROM Utente WHERE email = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);
-            statement.setString(2, password);
             try (ResultSet resultSet = statement.executeQuery()) {
-                return resultSet.next();
+                if (resultSet.next()) {
+                    String storedHashedPassword = resultSet.getString("password");
+                    //confronta la password con l'hash salvato nel db
+                    return BCrypt.checkpw(password, storedHashedPassword);
+                }
             }
         } catch (SQLException e) {
             System.out.println("Errore durante la verifica dell'utente: " + e.getMessage());
-            return false;
         }
+        return false;
     }
+
 
     /**
      * Ottiene il tipo di utente.

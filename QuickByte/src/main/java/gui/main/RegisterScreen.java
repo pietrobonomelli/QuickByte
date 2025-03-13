@@ -13,6 +13,7 @@ import model.*;
 import utilities.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.ScrollPane;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * Classe che rappresenta la schermata di registrazione.
@@ -152,17 +153,20 @@ public class RegisterScreen extends StackPane {
         if (UtenteDAO.getInstance().getUtenteByEmail(email) != null) {
             showError("Email già in uso.");
         } else {
+        	//hasha la password
+        	String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
+        	
         	// Crea l'oggetto utente e lo inserisce nel database
             Utente utente = null;
             switch (userType) {
                 case "Cliente":
-                    utente = new Cliente(email, password, name, phone);
+                    utente = new Cliente(email, hashedPassword, name, phone);
                     break;
                 case "Titolare":
-                    utente = new Titolare(email, password, name, phone);
+                    utente = new Titolare(email, hashedPassword, name, phone);
                     break;
                 case "Corriere":
-                    utente = new Corriere(email, password, name, phone);
+                    utente = new Corriere(email, hashedPassword, name, phone);
                     break;
             }
 
