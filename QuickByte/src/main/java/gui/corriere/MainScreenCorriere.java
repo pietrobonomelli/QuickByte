@@ -13,6 +13,7 @@ import model.StatoOrdine;
 import sessione.SessioneUtente;
 import utilities.Utilities;
 import gui.main.LoginScreen;
+import gui.main.ModificaProfilo;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +39,7 @@ public class MainScreenCorriere extends VBox {
 
         // Titolo per la tabella ordini presi in carico
         Label titoloOrdiniPassati = Utilities.createLabel("Ordini Presi in Carico", "title");
+        Button pulsanteProfilo = Utilities.createButton("Modifica Profilo", this::passaASchermataProfilo);
         Button bottoneLogout = Utilities.createButtonLogout("Logout", this::passaASchermataLogin);
 
         // Aggiungi tutte le componenti nella scena
@@ -227,5 +229,14 @@ public class MainScreenCorriere extends VBox {
     private void passaASchermataLogin() {
         LoginScreen loginScreen = new LoginScreen();
         this.getScene().setRoot(loginScreen);
+    }
+    
+    /**
+     * Passa alla schermata di modifica del profilo.
+     */
+    private void passaASchermataProfilo() {
+        ModificaProfilo schermataProfilo = new ModificaProfilo();
+        schermataProfilo.getStylesheets().add("style/style.css");
+        this.getScene().setRoot(schermataProfilo);
     }
 }

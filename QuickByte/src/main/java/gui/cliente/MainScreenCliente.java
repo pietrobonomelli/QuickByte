@@ -38,9 +38,10 @@ public class MainScreenCliente extends VBox {
         caricaRistoranti();
 
         Button pulsanteLogout = Utilities.createButtonLogout("Logout", this::passaASchermataLogin);
+        Button pulsanteProfilo = Utilities.createButton("Modifica Profilo", this::passaASchermataProfilo);
         Button pulsanteOrdini = Utilities.createButton("I TUOI ORDINI", this::passaASchermataOrdini);
 
-        HBox boxPulsanti = new HBox(10, pulsanteLogout, pulsanteOrdini);
+        HBox boxPulsanti = new HBox(10, pulsanteLogout, pulsanteProfilo, pulsanteOrdini);
         boxPulsanti.setSpacing(10);
 
         this.getChildren().addAll(titolo, tabellaRistoranti, boxPulsanti);
@@ -129,6 +130,16 @@ public class MainScreenCliente extends VBox {
         schermataLogin.getStylesheets().add("style/style.css");
         this.getScene().setRoot(schermataLogin);
     }
+    
+    /**
+     * Passa alla schermata di modifica del profilo.
+     */
+    private void passaASchermataProfilo() {
+        ModificaProfilo schermataProfilo = new ModificaProfilo();
+        schermataProfilo.getStylesheets().add("style/style.css");
+        this.getScene().setRoot(schermataProfilo);
+    }
+
 
     /**
      * Passa alla schermata degli ordini del cliente.

@@ -32,6 +32,7 @@ public class MainScreenTitolare extends VBox {
         HBox contenitoreBottoni = new HBox(10);
         contenitoreBottoni.setStyle("-fx-padding: 10;");
         Button bottoneInserisciRistorante = Utilities.createButton("Inserisci nuovo Ristorante", this::passaAInserisciRistorante);
+        Button pulsanteProfilo = Utilities.createButton("Modifica Profilo", this::passaASchermataProfilo);
         Button bottoneLogout = Utilities.createButtonLogout("Logout", this::passaASchermataLogin);
 
         contenitoreBottoni.getChildren().addAll(bottoneLogout, bottoneInserisciRistorante);
@@ -118,6 +119,15 @@ public class MainScreenTitolare extends VBox {
      */
     private void passaASchermataLogin() {
         this.getScene().setRoot(new LoginScreen());
+    }
+    
+    /**
+     * Passa alla schermata di modifica del profilo.
+     */
+    private void passaASchermataProfilo() {
+        ModificaProfilo schermataProfilo = new ModificaProfilo();
+        schermataProfilo.getStylesheets().add("style/style.css");
+        this.getScene().setRoot(schermataProfilo);
     }
 
     /**

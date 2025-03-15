@@ -176,6 +176,28 @@ public class UtenteDAO {
         }
         return false;
     }
+    
+    /**
+     * Aggiorna le informazioni di un utente nel database.
+     *
+     * @param utente L'oggetto Utente con le nuove informazioni.
+     * @return true se l'aggiornamento è avvenuto con successo, false altrimenti.
+     */
+    public boolean updateUtente(String emailUtente, String nuovaPassword, String nuovoNome, String nuovoTelefono) {
+        String query = "UPDATE Utente SET password = ?, nome = ?, telefono = ? WHERE email = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, nuovaPassword);
+            stmt.setString(2, nuovoNome);
+            stmt.setString(3, nuovoTelefono);
+            stmt.setString(4, emailUtente);
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     /**
      * Crea un oggetto Utente da un ResultSet.
@@ -202,5 +224,28 @@ public class UtenteDAO {
 	            Utilities.showAlert("Errore", "Tipo utente non riconosciuto.");
 	            return null;
         }
+    }
+    
+    /**
+     * Recupera il tipo di utente dal database tramite l'email.
+     *
+     * @param email L'email dell'utente da cui recuperare il tipo.
+     * @return la stringa contentente tipoUtente se trovato, altrimenti null.
+     */
+    public String getTipoUtenteByEmail(String email) {
+        String query = "SELECT tipoUtente FROM Utente WHERE email = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    System.out.println("Ritorna utente esistente");
+                    return rs.getString("tipoUtente");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Ritorna nessun utente esistente");
+        return null;
     }
 }

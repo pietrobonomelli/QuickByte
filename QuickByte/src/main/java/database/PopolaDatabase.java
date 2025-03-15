@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.Connection;
+import org.mindrot.jbcrypt.BCrypt;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -11,13 +12,18 @@ public class PopolaDatabase {
      * Popola il Database. Richiamato in RegisterScreen.
      */
 	public static void popolaDatabase() {
-	    String insertUtenti = "INSERT INTO Utente (email, password, nome, telefono, tipoUtente) VALUES " +
-	            "('cliente@gmail.com', 'cliente', 'Mario Rossi', '1234567890', 'Cliente'), " +
-	            "('titolare@gmail.com', 'titolare', 'Luca Bianchi', '0987654321', 'Titolare'), " +
-	            "('corriere@gmail.com', 'corriere', 'Anna Verdi', '1122334455', 'Corriere'), " +
-	            "('titolare2@gmail.com', 'titolare', 'Giovanni Neri', '2233445566', 'Titolare');";
+		// Hash delle password
+        String passwordCliente = BCrypt.hashpw("cliente", BCrypt.gensalt());
+        String passwordTitolare = BCrypt.hashpw("titolare", BCrypt.gensalt());
+        String passwordCorriere = BCrypt.hashpw("corriere", BCrypt.gensalt());
+        
+        String insertUtenti = "INSERT INTO Utente (email, password, nome, telefono, tipoUtente) VALUES " +
+                "('cliente@gmail.com', '" + passwordCliente + "', 'Mario Rossi', '1234567890', 'Cliente'), " +
+                "('titolare@gmail.com', '" + passwordTitolare + "', 'Luca Bianchi', '0987654321', 'Titolare'), " +
+                "('corriere@gmail.com', '" + passwordCorriere + "', 'Anna Verdi', '1122334455', 'Corriere'), " +
+                "('titolare2@gmail.com', '" + passwordTitolare + "', 'Giovanni Neri', '2233445566', 'Titolare');";
 
-	    String insertRistoranti = "INSERT INTO Ristorante (nome, telefono, indirizzo, emailTitolare) VALUES " +
+        String insertRistoranti = "INSERT INTO Ristorante (nome, telefono, indirizzo, emailTitolare) VALUES " +
 	            "('Pizzeria Bella Napoli', '3331112222', 'Via Roma 10, Napoli', 'titolare@gmail.com'), " +
 	            "('Trattoria da Mario', '4445556666', 'Corso Italia 25, Milano', 'titolare2@gmail.com'), " +
 	            "('Sushi Yama', '7778889999', 'Piazza Duomo 3, Firenze', 'titolare2@gmail.com');";
