@@ -71,12 +71,12 @@ Per garantire la qualità del codice, usiamo strumenti di analisi:
 
   <img src="./images/SonarQube.png" width="800px" align="center">
 
-Quality Gate(Passed): Il codice ha superato i controlli minimi richiesti da SonarQube
-Security(3 Open Issues): sono vulnerabilità potenziali nel codice nuovo.
-Reliability(5 Open Issues): sono Bug che potrebbero causare crash o comportamenti inaspettati.
-Maintainability(162 Open Issues) sono "Code smells" che rendono il codice difficile da mantenere.
-Duplications(0.9%): Una piccola parte del codice è duplicata.
-Security Hotspots(72): sono Aree del codice che potrebbero nascondere vulnerabilità, ma richiedono una revisione manuale.
+-Quality Gate(Passed): Il codice ha superato i controlli minimi richiesti da SonarQube
+-Security(3 Open Issues): sono vulnerabilità potenziali nel codice nuovo.
+-Reliability(5 Open Issues): sono Bug che potrebbero causare crash o comportamenti inaspettati.
+-Maintainability(162 Open Issues) sono "Code smells" che rendono il codice difficile da mantenere.
+-Duplications(0.9%): Una piccola parte del codice è duplicata.
+-Security Hotspots(72): sono Aree del codice che potrebbero nascondere vulnerabilità, ma richiedono una revisione manuale.
 
 
 
