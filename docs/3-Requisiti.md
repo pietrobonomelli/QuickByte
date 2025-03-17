@@ -7,13 +7,19 @@ Per garantire che il software soddisfi le aspettative degli utenti e sia in grad
 - **Affidabilità**: Per il nostro sistema, l'affidabilità è particolarmente critica nel processo di gestione degli ordini e del pagamento. Devono essere garantiti:
   - L'elaborazione corretta degli ordini senza perdita di dati.
   - La sicurezza e il completamento delle transazioni di pagamento.
-- **Usabilità**: Per il nostro progetto adottiamo questa definizione per tre tipi di utente:
+- **Usabilità**: Ci impegniamo per rendere il software più user-friendly possibile. Per il nostro progetto adottiamo questa definizione per tre tipi di utente:
   - **Clienti**: L'interfaccia utente deve essere intuitiva e user-friendly.
   - **Ristoranti**: La gestione degli ordini deve essere semplice e non richiedere competenze tecniche.
   - **Corrieri**: Le operazioni per accettare e consegnare ordini devono essere immediate.
 - **Efficienza**: I tempi di risposta devono essere rapidi per garantire una buona esperienza utente, specialmente durante la ricerca di ristoranti o il tracciamento degli ordini in tempo reale.
+- **Manutenibilità**:
+    - Refactoring del Codice: Il codice è stato sottoposto a un processo di refactoring per migliorare la leggibilità e la modificabilità. Le modifiche includono:
+    - Rinomina di Variabili e Funzioni: Sono stati utilizzati nomi descrittivi per variabili e funzioni, seguendo le convenzioni di denominazione del progetto, per rendere il codice più intuitivo.
+    - Rimozione di Codice Duplicato: Sono state eliminate le duplicazioni attraverso l'uso di funzioni e metodi riutilizzabili.
+    - Suddivisione di Moduli: I file di grandi dimensioni sono stati suddivisi in moduli più piccoli e gestibili, ciascuno con una responsabilità ben definita. (utilizzando package Java)
+    - Aggiunta di Commenti: Sono stati aggiunti commenti chiari e concisi per spiegare le parti più complesse del codice e le decisioni di progettazione.
+    - Utilizzo di Pattern di Progettazione: Sono stati implementati pattern di progettazione appropriati per migliorare l'organizzazione e la riusabilità del codice.
 - **Portabilità**: Il prodotto software deve essere trasferibile da un ambiente all'altro. Il nostro sistema deve essere compatibile con browser web su desktop e dispositivi mobili.
-
 
 
 ## Requirement Engineering

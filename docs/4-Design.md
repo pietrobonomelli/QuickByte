@@ -7,25 +7,25 @@ L’architettura del nostro sistema si basa su un’architettura Cliente-server 
 ### 1.1 Architectural Views
 - **Logical View:** che descrive il sistema in termini di elementi di progettazione principali e delle loro interazioni:
 
-Diagramma delle classi: 
-<img src="./UML/Images_UML/Class_Diagram.png" width="800px" align="center">
+  Diagramma delle classi: 
+  <img src="./UML/Images_UML/Class_Diagram.png" width="800px" align="center">
 
-Diagramma di stato:
-<img src="./UML/Images_UML/State_Machine_Diagram.png" width="800px" align="center">
+  Diagramma di stato:
+  <img src="./UML/Images_UML/State_Machine_Diagram.png" width="800px" align="center">
 
-Diagramma delle componenti:
-<img src="./UML/Images_UML/Component_Diagram.PNG" width="800px" align="center">
+  Diagramma delle componenti:
+  <img src="./UML/Images_UML/Component_Diagram.PNG" width="800px" align="center">
 
-**Process View**: che descrive la struttura dinamica del sistema in termini di attività, processi, loro comunicazione e allocazione di funzionalità agli elementi di runtime;
+- **Process View**: che descrive la struttura dinamica del sistema in termini di attività, processi, loro comunicazione e allocazione di funzionalità agli elementi di runtime;
 
-Diagramma di sequenza:
-<img src="./UML/Images_UML/Sequence_Diagram.png" width="800px" align="center">
+  Diagramma di sequenza:
+  <img src="./UML/Images_UML/Sequence_Diagram.png" width="800px" align="center">
 
-Diagramma di comunicazione:
-<img src="./UML/Images_UML/Communication_Diagram.PNG" width="800px" align="center">
+  Diagramma di comunicazione:
+  <img src="./UML/Images_UML/Communication_Diagram.PNG" width="800px" align="center">
 
-Diagramma delle attivita:
-<img src="./UML/Images_UML/Activity_Diagram.png" width="800px" align="center">
+  Diagramma delle attivita:
+  <img src="./UML/Images_UML/Activity_Diagram.png" width="800px" align="center">
 
 
 

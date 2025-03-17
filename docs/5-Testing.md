@@ -1,4 +1,4 @@
-# TESTING
+# Testing
 
 ### Introduzione
 
