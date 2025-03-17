@@ -45,3 +45,20 @@ mvn clean javafx:run
 Click destro sul progetto**→ Run As → Maven build**\
 Inserire **javafx:run** nel campo Goals e confermare con Run
 
+## Come testare l'applicazione
+
+Per testare l'applicazione, sono stati preconfigurati alcuni account. Segui questi passaggi:
+
+- Avvia l'Applicazione: Esegui l'applicazione seguendo le istruzioni di installazione.
+- Popola il Database: Nella pagina di registrazione, premi il pulsante "Popola il database". Questo popolerà il database con gli utenti di test.
+- Accedi con gli Account di Test: Utilizza uno degli account preconfigurati per accedere e testare le funzionalità dell'applicazione.
+
+  Account di Test Disponibili:
+
+  | Email         | Password     | 
+  | ------------- | -------------  |
+  | cliente1@gmail.com  | cliente  |
+  | cliente2@gmail.com  | cliente  |
+  | titolare1@gmail.com | titolare |
+  | titolare2@gmail.com | titolare | 
+  | corriere@gmail.com  | corriere | 
