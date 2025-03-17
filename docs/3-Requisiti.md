@@ -1,6 +1,6 @@
 # Requisiti
 
-## Software Quality (Capitolo 6)
+## Software Quality
 
 Per garantire che il software soddisfi le aspettative degli utenti e sia in grado di adattarsi a futuri scenari d'uso, implementiamo alcune Caratteristiche e metriche di qualità del software definite dallo Standard ISO 9126:
 
@@ -16,7 +16,7 @@ Per garantire che il software soddisfi le aspettative degli utenti e sia in grad
 
 
 
-## Requirement Engineering (Capitolo 9)
+## Requirement Engineering
 
 ### 9.1 Elicitazione dei requisiti
 

@@ -1,4 +1,4 @@
-# Capitolo 3: Software Life Cycle
+# Software Life Cycle
 
 Il modello del ciclo di vita che adottiamo è il **Rational Unified Process (RUP)**, Strutturiamo le sue fasi:
 
