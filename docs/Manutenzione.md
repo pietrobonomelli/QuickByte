@@ -1,14 +1,14 @@
 **Software Maintenance**
 
-**Introduzione**
+### Introduzione 
 
 Questo documento descrive le attività di manutenzione svolte sul progetto evidenziando eventuali operazioni di refactoring effettuati.
 
-**1)Attività di refactoring**
+## Attività di refactoring
 
 Diverse attività di refactoring sono state eseguite per migliorare la qualità del codice, ridurre la complessità e ottimizzare le prestazioni del software.
 
-Esempi:
+### Esempi di refactoring:
 
 ## 1. Utilizzo di css per rendere il codice più leggibile.
 ![Before1](images/Code1Before.png)
@@ -27,3 +27,8 @@ Esempi:
 
 ## 4. Aggiunta di commenti
 ![After4](images/Code4After.png)
+
+---
+
+*Data di creazione: 16/02/2025 \
+Ultima modifica: 22/02/2025*

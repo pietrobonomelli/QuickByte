@@ -53,7 +53,7 @@ Nel nostro software usiamo i seguenti design pattern:
 - MVC: per la separazione tra la logica e l'interfaccia utente
 - Singleton: Utilizzato per la gestione della connessione al database, garantendo un'unica istanza condivisa.
 
-### 2.2. Misurazione del codice: (Da riportare gli screenshot)
+### 2.2. Misurazione del codice:
 
 Per garantire la qualità del codice, usiamo strumenti di analisi:
 
@@ -80,4 +80,7 @@ Per garantire la qualità del codice, usiamo strumenti di analisi:
 - Security Hotspots (72): sono Aree del codice che potrebbero nascondere vulnerabilità, ma richiedono una revisione manuale.
 
 
+---
 
+*Data di creazione: 10/12/2024 \
+Ultima modifica: 17/03/2025*
