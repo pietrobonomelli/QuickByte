@@ -47,7 +47,23 @@ Adottiamo un'organizzazione di sprint flessibile, senza un periodo di tempo fiss
 | 7  | Analisi qualità  | 16/02/2025 - 19/02/2025
 | 8  | Presentazione PPT e completamento documentazione  | 19/02/2025 - 24/02/2025
 
-	
+### Come gestiamo le pull Request: 
+
+#### Titolo e Descrizione: Il titolo della pull request dovrebbe essere chiaro e descrittivo. La descrizione dovrebbe includere: 
+- Il contesto del cambiamento.
+- Cosa è stato modificato e perché.
+- Eventuali problemi risolti o miglioramenti apportati.
+- Screenshot se ci sono modifiche all'interfaccia utente.
+
+#### Test e Validazione
+Test Automatici: Eseguire test automatici per assicurarsi che il nuovo codice non introduca regressioni.\
+Test Manuali: Se necessario, eseguire test manuali per verificare funzionalità specifiche.
+
+#### Approvazione e Merge
+Approvazione: Una volta che tutti i revisori hanno approvato la pull request e tutti i test sono passati, la pull request può essere approvata.\
+Merge: Il codice può essere unito al ramo principale (main).
+
+#### Chiusura della Pull Request
 
 # Capitolo 4: Configuration Managment 
 Per la gestione della configurazione del software utilizziamo GitHub, che ci permette di tenere traccia delle modifiche al codice, collaborare in modo efficace e mantenere un flusso di lavoro organizzato.
